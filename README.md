@@ -1,10 +1,13 @@
 # Intro to Python II
 
+Up to this point, you've gotten your feet wet by working on a bunch of small Python programs. In this module, we're going to continue to solidify your Python chops by implementing a full-featured project according to a provided specification. 
+
 ## Goals
 
-* Solidify the Python basics by implementing a simple text adventure game
+* Solidify the Python basics by implementing a text adventure game
+* Get more comfortable writing code that conforms to an (imperfect) specification
 
-## Summary
+## Tasks
 
 * Add classes for rooms and the player
 * Add a simple parser that reads user input and performs actions
@@ -14,11 +17,11 @@
 * Add two-word commands to the parser
 * Add the `get` and `drop` commands to the parser
 
-## Instructions
+## Specification
 
-This is in `src/adv/`. Check it out!
+The `/src` directory contains the files `adv.py`, which is where the main logic for the entire game should live, `room.py`, which will contain the definition of the Room class, and `player.py`, which will contain the definition of the Player class. 
 
-* Put the Room class in room.py based on what you see in `adv.py`.
+* Put the Room class in `room.py` based on what you see in `adv.py`.
 
 * Put the Player class in `player.py`.
 
