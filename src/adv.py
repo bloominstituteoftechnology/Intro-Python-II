@@ -42,10 +42,14 @@ room['treasure'].s_to = room['narrow']
 
 
 pc = Player("Default", room["outside"], [], 50)
+location = pc.location
 
 print("You wake up, you only remember your name")
 pc.name = input("What is your name: ")
 print(f"Welcome, {pc.name}, your adventure begins.")
+print("---------------------------------------------------")
+print(location.desc)
+
 # Write a loop that:
 #
 # * Prints the current room name
