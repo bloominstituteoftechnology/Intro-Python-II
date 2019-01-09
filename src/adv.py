@@ -43,11 +43,18 @@ name = input('Hello adventurer. What is your name? ')
 player = Player(name, room['outside'])
 
 while True:
-    currentLocation = player.location
-    print(currentLocation)
-   
-    player.move(currentLocation)
+  currentLocation = player.location
+  print(currentLocation)
+  choice = input('What would ' + name + ' like to do next? \n m(Move location) || c(Check Something)') 
 
+  if choice[0]. == 'm':
+    player.move(currentLocation)
+  if choice[0] == 'c':
+    check = input('What would ' + name + ' like to check? \n i(inventory) || r(Room)')
+    if check[0].lower() == i:
+      player.checkInventory()
+    if check[0].lower() == r:
+      player.checkRoom()
 
 # Write a loop that:
 #
