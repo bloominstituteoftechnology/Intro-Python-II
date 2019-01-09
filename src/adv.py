@@ -1,4 +1,8 @@
 from room import Room
+from player import Player
+from item import Item
+import sys
+import os
 
 # Declare all the rooms
 
@@ -9,7 +13,8 @@ room = {
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
+    'overlook': Room("Grand Overlook",
+     """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
@@ -33,10 +38,48 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+starting_items = [Item("Steel Sword", "Something To Stab With."), Item("Lions Mane", "Increases Health Slightly")]
+
 #
 # Main
 #
+def main():
+    print(os.environ)
+    os.system('clear')
+    print("Welcome To Troy's Text Adventure Game!\n")
+    print("1.) Start")
+    print("2.) Load")
+    print("3.) Exit")
+    option = input("-> ")
+    if option == "1":
+        start()
+    elif option == "2":
+        pass
+    elif option == "3":
+        sys.exit()
+    else:
+        print("Requires 1, 2, or 3 inputs")
+        main()
 
+def start():
+    os.system('clear')
+    print("Hello, what is your name?")
+    global room
+    # print(room['outside'])
+    options = input('-->')
+    default_location = room['outside']
+    global starting_items
+    default_inventory = starting_items
+    global PlayerIG
+    PlayerIG = Player(options, default_location, default_inventory)
+    start1()
+
+def start1():
+    os.system('clear')
+    print("Hello {}, how are you?".format(PlayerIG.name))
+    
+
+main()
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
