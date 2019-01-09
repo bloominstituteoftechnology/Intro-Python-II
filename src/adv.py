@@ -53,27 +53,59 @@ room['treasure'].s_to = room['narrow']
 # If the user enters "q", quit the game.
 
 def initiate_game():
-    player = Player(room['foyer'])
+    player = Player(room['outside'])
     print("Let's play a game")
     print_user_info(player.room.name, player.room.description)
 
+    # user = int(input("[1] Rock  [2] Paper   [3] Scissors    [9] Quit\n"))
+
     while True:
-        direction = input("In which direction shall we move? Go to: ")
+        direction = get_direction()
 
         if direction == "q":
             print("Saionara my friend")
             break
 
+        elif direction == "n":
+            try:
+                player.room = player.room.n_to
+                print_user_info(player.room.name, player.room.description)
+            except AttributeError:
+                print_direction_error(direction)
+
+        elif direction == "e":
+            try:
+                player.room = player.room.e_to
+                print_user_info(player.room.name, player.room.description)
+            except AttributeError:
+                print_direction_error(direction)
+
+        elif direction == "s":
+            try:
+                player.room = player.room.s_to
+                print_user_info(player.room.name, player.room.description)
+            except AttributeError:
+                print_direction_error(direction)
+
+        elif direction == "w":
+            try:
+                player.room = player.room.w_to
+                print_user_info(player.room.name, player.room.description)
+            except AttributeError:
+                print_direction_error(direction)
+        else:
+            print("Cannot parse your input. Please try again.")
+
 def print_user_info(room, description):
-    print(f"You are currently in the {room} room.")
+    print(f"You are currently in the {room}.")
     for line in textwrap.wrap(description):
         print(line)
 
-def ask_direction():
-    return input("In which direction shall we move? Go to: ")
+def get_direction():
+    return input("In which direction shall we move? Go to [n] north, [e] east, [s] south, [w] west: ")
 
-def print_error(room):
-    print(f"You cannot move to the {room} room from here.")
+def print_direction_error(direction):
+    print(f"You cannot move {direction} from here.")
 
 if __name__ == '__main__':
     initiate_game()
