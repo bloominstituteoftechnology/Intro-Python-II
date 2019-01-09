@@ -32,6 +32,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add room items
+room['outside'].room_items.append("sword")
+room['foyer'].room_items.append('coins')
+room['overlook'].room_items.append('ruby')
+room['narrow'].room_items.append('key')
+room['treasure'].room_items.append('treasure box')
+
 #
 # Main
 #
@@ -54,39 +61,43 @@ print('Welcome to the adventure game!')
 
 
 def display_current_room_info():
-    print('======================')
-    print(f'You\'re character is currently located in the room named "{player.current_room}".')
-    print(f'The room description says: "{player.current_room.room_description}"')
-    print(f'The items available in this room are: {[item for item in player.current_room.room_items]}')
-    print('======================')
+    print('========== ROOM INFO ==========')
+    print(f'You\'re character is currently located in the room named "{ player.current_room }".')
+    print(f'The room description says: "{ player.current_room.room_description }"')
+    print(f'The items available in this room are: { [item for item in player.current_room.room_items] }')
+    print('========== END ROOM INFO ==========')
 
 
 def user_choose_action(action):
     action = action.lower()
-    if action == "move":
-        return "move"
-    elif action == "take items":
-        player.add_item_to_inventory(player.current_room.room_items[0])
-        return "items added"
-    elif action == "exit":
-        return "exit"
+    if action == "move" or action == "1":
+        return "1"
+    elif action == "take items" or action == "2":
+        for item in player.current_room.room_items:
+            player.add_item_to_inventory(item)
+        player.current_room.room_items = []
+        return "2"
+    elif action == "show inventory" or action == "3":
+        return "3"
+    elif action == "show room info" or action == "4":
+        return "4"
+    elif action == "exit" or action == "5":
+        return "5"
     else:
         return "incorrect action"
 
 
+display_current_room_info()
+
+
 while True:
-    display_current_room_info()
-    user_action = input("Please choose an action \nMove, \nTake Items, \nExit\n")
+    user_action = input("Please choose an action \n 1. Move \n 2. Take Items \n 3. Show Inventory \n 4. Show Room Info "
+                        "\n 5. Exit \n Action: ")
     user_chosen_action = user_choose_action(user_action)
 
     if user_chosen_action == "incorrect action":
         print("Incorrect action, please try again.")
-    elif user_chosen_action == "exit":
-        print("Exiting!")
-        break
-    elif user_chosen_action == "take items":
-        print(f'Items have been added to your inventory: {player.inventory}')
-    elif user_chosen_action == "move":
+    elif user_chosen_action == "1":
         user_chosen_direction = input("Please enter a direction to move in (n, s, w, e): ")
         if user_chosen_direction == "n" and player.current_room.n_to != "":
             player.current_room = player.current_room.n_to
@@ -98,4 +109,21 @@ while True:
             player.current_room = player.current_room.w_to
         else:
             print("Incorrect movement, try a different direction")
+
+        display_current_room_info()
         continue
+    elif user_chosen_action == "2":
+        print("==========")
+        print(f'Items have been added to your inventory: {player.inventory}')
+        print("==========")
+    elif user_chosen_action == "3":
+        print("========== USER ITEMS ==========")
+        print(f'Items: {[item for item in player.inventory]}')
+        print("========== END USER ITEMS ==========")
+    elif user_chosen_action == "4":
+        display_current_room_info()
+    elif user_chosen_action == "5":
+        print("Exiting!")
+        break
+
+
