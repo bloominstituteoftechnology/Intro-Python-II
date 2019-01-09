@@ -82,8 +82,11 @@ def user_choose_action(action):
     elif action == "show room info" or action == "4":
         return "4"
     elif action == "take a particular item" or action == "5":
+        if len(player.current_room.room_items) == 0:
+            print("There are no items in this room!")
+            return "incorrect action"
         while True:
-            item_to_take = input("Please type the name of the item: ").lower()
+            item_to_take = input("Please type the name of the item to take: ").lower()
             if item_to_take not in player.current_room.room_items:
                 print("Item does not exist, try again.")
                 continue
@@ -95,6 +98,19 @@ def user_choose_action(action):
             break
         return "5"
     elif action == "drop a particular item" or action == "6":
+        if len(player.inventory) == 0:
+            print("You have no items!")
+            return "incorrect action"
+        while True:
+            item_to_remove = input("Please type the name of the item to remove: ").lower()
+            if item_to_remove not in player.inventory:
+                print("Item does not exist, try again.")
+                continue
+            else:
+                for item in player.inventory:
+                    if item_to_remove == item:
+                        player.remove_item_from_inventory(item)
+            break
         return "6"
     elif action == "exit" or action == "7":
         return "7"
@@ -142,6 +158,10 @@ while True:
     elif user_chosen_action == "5":
         print("==========")
         print(f'An item has been added to your inventory: {player.inventory}')
+        print("==========")
+    elif user_chosen_action == "6":
+        print("==========")
+        print(f'You\'ve removed an item, here is your current inventory: {player.inventory}')
         print("==========")
     elif user_chosen_action == "7":
         print("Exiting!")

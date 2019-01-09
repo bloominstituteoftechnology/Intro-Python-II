@@ -6,3 +6,6 @@ class Player:
 
     def add_item_to_inventory(self, item):
         self.inventory.append(item)
+
+    def remove_item_from_inventory(self, item):
+        self.inventory.remove(item)
