@@ -5,7 +5,7 @@ class Room:
     def __init__(self, name, description):
         self.name = name
         self.description = description
-    def direction(self, direction):
+    def room_direction(self, direction):
         if direction == 'n':
             return self.n_to
         elif direction == 's':
@@ -16,5 +16,5 @@ class Room:
             return self.e_to
         else:
             return None
-        def __repr__(self):
-            return str(f'{self.name}')
+    def __repr__(self):
+        return str(f'{self.name}')
