@@ -34,6 +34,7 @@ room['treasure'].s_to = room['narrow']
 
 # Add room items
 room['outside'].room_items.append("sword")
+room['outside'].room_items.append('shield')
 room['foyer'].room_items.append('coins')
 room['overlook'].room_items.append('ruby')
 room['narrow'].room_items.append('key')
@@ -69,7 +70,6 @@ def display_current_room_info():
 
 
 def user_choose_action(action):
-    action = action.lower()
     if action == "move" or action == "1":
         return "1"
     elif action == "take items" or action == "2":
@@ -81,8 +81,19 @@ def user_choose_action(action):
         return "3"
     elif action == "show room info" or action == "4":
         return "4"
-    elif action == "exit" or action == "5":
-        return "5"
+    elif action == "take a particular item" or action == "5":
+        item_to_take = input("Please type the name of the item: ").lower()
+        if item_to_take not in player.current_room.room_items:
+            print("Item does not exist, try again.")
+            return "incorrect action"
+        else:
+            for item in player.current_room.room_items:
+                if item_to_take == item:
+                    player.add_item_to_inventory(item)
+                    player.current_room.room_items.remove(item)
+                    return "5"
+    elif action == "exit" or action == "7":
+        return "7"
     else:
         return "incorrect action"
 
@@ -90,9 +101,10 @@ def user_choose_action(action):
 display_current_room_info()
 
 while True:
-    user_action = input("Please choose an action \n 1. Move \n 2. Take Items \n 3. Show Inventory \n 4. Show Room Info "
-                        "\n 5. Exit \n Action: ")
-    user_chosen_action = user_choose_action(user_action)
+    user_action = input("Please choose an action \n 1. Move \n 2. Take All Items \n 3. Show Inventory "
+                        "\n 4. Show Room Info \n 5. Take a particular item \n 6. Drop a particular item \n "
+                        "7. Exit \n Action: ")
+    user_chosen_action = user_choose_action(user_action.lower())
 
     if user_chosen_action == "incorrect action":
         print("Incorrect action, please try again.")
@@ -122,5 +134,9 @@ while True:
     elif user_chosen_action == "4":
         display_current_room_info()
     elif user_chosen_action == "5":
+        print("==========")
+        print(f'An item has been added to your inventory: {player.inventory}')
+        print("==========")
+    elif user_chosen_action == "7":
         print("Exiting!")
         break
