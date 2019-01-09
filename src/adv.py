@@ -1,5 +1,7 @@
 from room import Room
-
+from player import Player
+from item import Item
+import sys
 # Declare all the rooms
 
 room = {
@@ -37,14 +39,43 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
 
+
+#Instantiate a few items
+sword = Item('sword', "this is a magical sword")
+phone = Item('phone', 'this is the best phone')
+coins = Item('coins', 'these coins can buy you more items')
+
+# Make a new player object that is currently in the 'outside' room.
+alejandrok = Player('Alejandro', room['outside'])
+alejandrok.currentRoom.items = [sword, phone, coins]
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
-#
+
+while True:
+    print('\n-----------\n')
+    print(f'Current room: {alejandrok.currentRoom.name}')
+    print(f'Room description: {alejandrok.currentRoom.description}')
+    user_action = input('What do you want to do? \n Look around the room to find objects (use: list)\n Go to another room (use: north/south/east/west)\n')
+    if user_action == 'list' or user_action == 'ls':
+        print('Items found in current room:')
+        for item in alejandrok.currentRoom.items:
+            print(f'Name: {item.name}')
+            print(f'Description: {item.description}')
+    elif user_action == 'north' or user_action == 'n' or user_action == "North":
+        print('you wish to go {}'.format(user_action))
+        alejandrok.currentRoom = alejandrok.currentRoom.n_to
+    elif user_action == 'south' or 's' or "South":
+        if alejandrok.currentRoom.name != 'outside':
+            print('you wish to go {}'.format(user_action))
+            alejandrok.currentRoom = alejandrok.currentRoom.s_to
+        else:
+            print('You cannot go South from the outside')
+   
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
