@@ -19,7 +19,7 @@ the distance, but there is no way across the chasm.""")
 n = Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air.""")
 
-
+#basically same as defining below init, as self.---
 o.n_to = f
 f.s_to = o
 f.n_to = ov

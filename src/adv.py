@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -35,6 +36,11 @@ room['treasure'].s_to = room['narrow']
 
 #
 # Main
+'''ADD PARSER
+-Add a simple parser that reads user input and 
+performs actions, as described below
+-then, Add two-word commands to the parser
+-then, Add the get and drop commands to the parser'''
 #
 
 # Make a new player object that is currently in the 'outside' room.
