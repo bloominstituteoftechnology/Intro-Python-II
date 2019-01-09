@@ -7,4 +7,4 @@ class Room:
     self.description = description
 
   def __repr__(self):
-    return "Current room: {}; Room description: {}".format(self.name, self.description)
+    return "You are approaching the {}. {}.".format(self.name, self.description)
