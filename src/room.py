@@ -2,10 +2,21 @@
 # description attributes.
 
 class Room():
-    def __init__(self, name, text, item):
+    def __init__(self, name, text, items):
         self.name = name
         self.text = text
-        self.item = item
+        self.items = items
         
-        def addItem(self, item):
+        def add_item(self, item):
             self.items.append(item)
+        
+        def get_items_list(self):
+            if (self.items):
+                return [x.name for x in self.items]
+            else:
+                return []
+
+# hello = Room()
+# hello.add_item("Kili Kili Power")
+# hello.get_items_list()
+
