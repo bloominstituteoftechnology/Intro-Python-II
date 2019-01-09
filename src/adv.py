@@ -67,3 +67,11 @@ print(textwrap.dedent('''
         [b] look in bag
         [q] Quit
     '''))
+
+while True:
+    choice = input()
+
+    if choice.count(" ") > 1:
+        choice = input("\nMove not allowed.\n")
+    else:
+        action = choice
