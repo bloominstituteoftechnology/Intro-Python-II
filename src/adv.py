@@ -7,7 +7,7 @@ import textwrap
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons",
-                     ["Sword", "Egg sandwich"]),
+                     ["Sword", "Shield"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -96,19 +96,27 @@ def initiate_game():
                 except AttributeError:
                     print_direction_error(input)
             else:
-                print("Cannot parse your input. Please try again.")
+                print("Cannot parse your input. Please try again.\n")
         elif len(input) == 2:
             action = input[0]
-            object = input[1]
+            item = input[1]
+
+            if item not in player.room.items:
+                print("Item doesn't exist. Choose an item in the room: " + player.room.get_all_items() + "\n")
+                pass
 
             if action == "take":
-                pass
+                player.add_item(item)
+                player.room.remove_item(item)
+                print(f"Your current items: {player.get_all_items()}\n")
             elif action == "drop":
-                pass
+                player.remove_item(item)
+                player.room.add_item(item)
+                print(f"Your current items: {player.get_all_items()}\n")
             else:
-                print("Cannot parse your input. Please try again.")
+                print("Cannot parse your input. Please try again.\n")
         else:
-            print("Cannot parse your input. Please try again.")
+            print("Cannot parse your input. Please try again.\n")
 
 def print_user_info(room):
     print(f"You are currently in the {room.name}.")
