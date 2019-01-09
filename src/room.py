@@ -8,10 +8,17 @@ class Room:
     def __init__(self, room, description):
         self.room = room
         self.description = description
+        self.items = []
 
     def __repr__(self):
         desc = wrapper.wrap(self.description)
         string = ''
         for line in desc:
             string += line + '\n'
-        return string
+        string += 'Items: '
+        if len(self.items) > 0:
+            for i in self.items:
+                string += i
+        else:
+            string += 'none'
+        return string + '\n'
