@@ -102,3 +102,10 @@ while not inits[0] == 'q':
     inits = input('Enter a direction: \n')
     move_area(inits)
 
+    if len(current_room.items) > 0:
+        inits = input('Would you like to pick up an Item?: \n').split(' ')
+        if inits[0] == 'get':
+            for i in current_room.items:
+                if inits[1] == i.name:
+                    player.items.append(i)
+                    print(f"You have picked up the {i.name}")
