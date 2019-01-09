@@ -62,9 +62,9 @@ print('Welcome to the adventure game!')
 
 def display_current_room_info():
     print('========== ROOM INFO ==========')
-    print(f'You\'re character is currently located in the room named "{ player.current_room }".')
-    print(f'The room description says: "{ player.current_room.room_description }"')
-    print(f'The items available in this room are: { [item for item in player.current_room.room_items] }')
+    print(f'You\'re character is currently located in the room named "{player.current_room}".')
+    print(f'The room description says: "{player.current_room.room_description}"')
+    print(f'The items available in this room are: {[item for item in player.current_room.room_items]}')
     print('========== END ROOM INFO ==========')
 
 
@@ -88,7 +88,6 @@ def user_choose_action(action):
 
 
 display_current_room_info()
-
 
 while True:
     user_action = input("Please choose an action \n 1. Move \n 2. Take Items \n 3. Show Inventory \n 4. Show Room Info "
@@ -125,5 +124,3 @@ while True:
     elif user_chosen_action == "5":
         print("Exiting!")
         break
-
-
