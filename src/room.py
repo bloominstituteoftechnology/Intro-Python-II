@@ -6,7 +6,7 @@ class Room:
     def __init__(self, room_name, room_description):
         self.room_name = room_name
         self.room_description = room_description
-        self.items = []
+        self.inventory = []
 
     def add_item(self, item):
-        self.items.append(item)
+        self.inventory.append(item)
