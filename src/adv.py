@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -41,6 +42,19 @@ room["narrow"].w_to = room["foyer"]
 room["narrow"].n_to = room["treasure"]
 room["treasure"].s_to = room["narrow"]
 
+# Add items to rooms
+room["foyer"].list_items.append(Item("sword", "a magical sword"))
+room["foyer"].list_items.append(Item("ring", "a magical ring"))
+
+room["overlook"].list_items.append(Item("lamp", "a magical lamp"))
+room["overlook"].list_items.append(Item("potion", "a magical potion"))
+room["overlook"].list_items.append(Item("hammer", "a magical hammer"))
+
+room["narrow"].list_items.append(Item("food", "a magical food"))
+room["narrow"].list_items.append(Item("book", "a magical book"))
+room["narrow"].list_items.append(Item("key", "a magical key"))
+room["narrow"].list_items.append(Item("shield", "a magical shield"))
+
 #
 # Main
 #
@@ -52,11 +66,23 @@ def prompt(message):
 
 def location_info():
     prompt(f"You are now in the {player.room.name}")
-    prompt(f"{player.room.desc}\n")
+    prompt(f"{player.room.desc}")
+    prompt(f"Found items: {prompt_items(player.room.list_items)}\n")
 
 
-def wrong_direction():
+def direction_error():
     prompt("There's no way out here")
+
+
+def prompt_items(items):
+    output = ""
+    if len(items) == 0:
+        return None
+    else:
+        for item in items:
+            output += f"{item.name} "
+
+    return output
 
 
 # Make a new player object that is currently in the 'outside' room.
@@ -95,29 +121,29 @@ while True:
             player.room = player.room.n_to
             location_info()
         else:
-            wrong_direction()
+            direction_error()
     elif command == "e":
         if hasattr(player.room, "e_to"):
             player.room = player.room.e_to
             location_info()
         else:
-            wrong_direction()
+            direction_error()
     elif command == "s":
         if hasattr(player.room, "s_to"):
             player.room = player.room.s_to
             location_info()
         else:
-            wrong_direction()
+            direction_error()
     elif command == "w":
         if hasattr(player.room, "w_to"):
             player.room = player.room.w_to
             location_info()
         else:
-            wrong_direction()
+            direction_error()
     elif command == "q":
         break
     else:
-        prompt(f"I don't quite understand")
+        prompt("I don't quite understand")
 
 
 prompt("Thank you for playing!")
