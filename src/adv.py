@@ -1,25 +1,26 @@
 from room import Room
 from player import Player
+from item import Item
 import time
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [Item('torch', "it's used to light the way"), Item('coin', "One shiny coin.")]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""",  [Item('sword', "its very sharp. Ow!"), Item('coin', "One shiny coin.")]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""",  [Item('chestpiece', "Heavy, but effective!"), Item('coin', "One shiny coin.")]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""",  [Item('rock', "its pretty heavy"), Item('dagger', "Why was this stuck here?.")]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""",  [Item('note', "it says IOU. Funny."), Item('coin', "One shiny coin.")]),
 }
 
 
@@ -57,6 +58,7 @@ while True:
     time.sleep(1)
     print(newPlayer.currentRoom)
     print('--------------------------------------')
+    print(f'You can see {newPlayer.currentRoom.items}')
     time.sleep(2)
     print("\nPlease enter n to go up, e to go right, w to go left, or s to go down. Or enter q to quit.")
     choice = input().lower()
