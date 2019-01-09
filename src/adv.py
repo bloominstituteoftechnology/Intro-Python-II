@@ -40,11 +40,7 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 from player import Player
 
-player = Player()
-#if no input, player is initialized with currentRoom='outside'
-
-print(player)
-print(player.currentRoom)
+player = Player() #if no input, player is initialized with currentRoom='outside'
 
 # Write a loop that:
 #
@@ -56,3 +52,11 @@ print(player.currentRoom)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+currentRoom = room[player.currentRoom].name
+print(f'Current location: {currentRoom}')
+roomDesc = room[player.currentRoom].description
+print(roomDesc)
+print('Where do you want to go?')
+input('Enter a direction:')
