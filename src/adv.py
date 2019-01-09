@@ -46,6 +46,10 @@ location = 'outside'
 player = Player('Austin')
 current_room = room['outside']
 
+#============== FUNCTIONS ====================#
+
+
+# moves player to user given direction
 def move_area(p_inpt):
     global current_room
     if p_inpt == 'n':
@@ -67,6 +71,11 @@ def move_area(p_inpt):
     else:
         print('That is not a direction!')
 
+
+
+
+
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -78,7 +87,7 @@ def move_area(p_inpt):
 #
 # If the user enters "q", quit the game.
 
-print(f"\n Welcome to your first adventure, {player.name}! \n Use 'n' to go North \n Use 's' to go South \n Use 'w' to go West \n Use 'e' to go East " )
+print(f"\n Welcome to your first adventure, {player.name}! \n Use 'n' to go North \n Use 's' to go South \n Use 'w' to go West \n Use 'e' to go East \n Press 'q' to quit game" )
 
 while not inits[0] == 'q':
     if current_room == room['outside']:
