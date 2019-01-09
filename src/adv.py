@@ -28,7 +28,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link locations together
 
 location['outside'].n_to = location['foyer']
@@ -39,6 +38,16 @@ location['overlook'].s_to = location['foyer']
 location['narrow'].w_to = location['foyer']
 location['narrow'].n_to = location['treasure']
 location['treasure'].s_to = location['narrow']
+
+# Declare all items
+item = {
+    'red_card_1': Item("Red Card 1", '''A thin red card with a scrap of beige tape peeling off on one side. Labeled "1".''')
+}
+
+# Link items to locations
+location['treasure'].items = {
+    item['red_card_1'].name: item['red_card_1']
+}
 
 # Declare Player
 player = Player('Chosen One', location['outside'])
@@ -85,9 +94,9 @@ Welcome to Lambda Adventure!
 
 Please enter your commands below. 
 
-Enter 'q' to quit the game.
----
-''')
+Enter 'q' to quit the game.''')
+enter_to_continue()
+print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
 
 #
 # Main
@@ -109,11 +118,19 @@ Enter 'q' to quit the game.
 while True:
 
     # Location Name
-    print(f'Location: {player.location.name} \n')
+    print(f'You find yourself at the {player.location.name}. \n')
 
     # Location Description
-    print(f'Description: {player.location.description}')
+    location_description_wrapper = textwrap.TextWrapper(80)
+    current_location_description = location_description_wrapper.wrap(player.location.description)
+    for line in current_location_description:
+        print(line)
     
+    # Location Items
+    if (len(list(player.location.items.keys())) > 0):
+        print("\nYou see the following items: ")
+        for item in player.location.items:
+            print(player.location.items[item].name)
 
     # Main Input + Convert to Lowercase and a List
     print('________________________________________________________________________________')
@@ -144,8 +161,8 @@ while True:
     # Movement Commands
     #
 
-    move_commands = ("walk", "go", "move", "travel", "venture", "proceed", "n", "s", "e", "w")
-    move_directions = {
+    move_command = ("walk", "go", "move", "travel", "venture", "proceed", "n", "s", "e", "w")
+    move_direction = {
         'north': ("northward", "north", "n"),
         'south': ("southward", "south", "s"),
         'east': ("eastward", "east", "e"),
@@ -159,33 +176,33 @@ while True:
         enter_to_continue()
 
     # Check if Command Was a Movement Command
-    if command_action in move_commands:
+    if command_action in move_command:
         
         # Check Movement Type and Whether Movement is Valid
         
         # North
-        if command_action == "n" or command_object in move_directions['north']:
+        if command_action == "n" or command_object in move_direction['north']:
             if hasattr(player.location, 'n_to'):
                 player.location = player.location.n_to
             else:
                 invalid_direction()
 
         # South 
-        elif command_action == "s" or command_object in move_directions['south']:
+        elif command_action == "s" or command_object in move_direction['south']:
             if hasattr(player.location, 's_to'):
                 player.location = player.location.s_to
             else:
                 invalid_direction()
 
         # East
-        elif command_action == "e" or command_object in move_directions['east']:
+        elif command_action == "e" or command_object in move_direction['east']:
             if hasattr(player.location, 'e_to'):
                 player.location = player.location.e_to
             else:
                 invalid_direction()
 
         # West
-        elif command_action == "w" or command_object in move_directions['west']:
+        elif command_action == "w" or command_object in move_direction['west']:
             if hasattr(player.location, 'w_to'):
                 player.location = player.location.w_to
             else:
