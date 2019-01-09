@@ -82,16 +82,20 @@ def user_choose_action(action):
     elif action == "show room info" or action == "4":
         return "4"
     elif action == "take a particular item" or action == "5":
-        item_to_take = input("Please type the name of the item: ").lower()
-        if item_to_take not in player.current_room.room_items:
-            print("Item does not exist, try again.")
-            return "incorrect action"
-        else:
-            for item in player.current_room.room_items:
-                if item_to_take == item:
-                    player.add_item_to_inventory(item)
-                    player.current_room.room_items.remove(item)
-                    return "5"
+        while True:
+            item_to_take = input("Please type the name of the item: ").lower()
+            if item_to_take not in player.current_room.room_items:
+                print("Item does not exist, try again.")
+                continue
+            else:
+                for item in player.current_room.room_items:
+                    if item_to_take == item:
+                        player.add_item_to_inventory(item)
+                        player.current_room.room_items.remove(item)
+            break
+        return "5"
+    elif action == "drop a particular item" or action == "6":
+        return "6"
     elif action == "exit" or action == "7":
         return "7"
     else:
@@ -107,7 +111,9 @@ while True:
     user_chosen_action = user_choose_action(user_action.lower())
 
     if user_chosen_action == "incorrect action":
+        print("========== ERROR ==========")
         print("Incorrect action, please try again.")
+        print("========== END ERROR ==========")
     elif user_chosen_action == "1":
         user_chosen_direction = input("Please enter a direction to move in (n, s, w, e): ")
         if user_chosen_direction == "n" and player.current_room.n_to != "":
