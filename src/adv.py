@@ -1,6 +1,8 @@
 from room import Room
+from player import Player
 
-# Declare all the rooms
+
+ #Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -33,12 +35,35 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+initial = "begin"
+location = 'outside'
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player('Hunter')
+current_room = room['outside']
 
+def move_area(p_inpt):
+    global current_room
+    if p_inpt == 'n':
+        new_room = current_room.n_to
+        current_room = new_room
+        print(f"You are now at the {current_room.name}. {current_room.description}")
+    elif p_inpt == 's':
+        new_room = current_room.s_to
+        current_room = new_room
+        print(f"You are now at the {current_room.name}. {current_room.description}")
+    elif p_inpt == 'e':
+        new_room = current_room.e_to
+        current_room = new_room
+        print(f"You are now at the {current_room.name}. {current_room.description}")
+    elif p_inpt == 'w':
+        new_room = current_room.w_to
+        current_room = new_room
+        print(f"You are now at the {current_room.name}. {current_room.description}")
+    else:
+        print('That is not a direction!')
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +74,14 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+print(f"\n Welcome to your first adventure, {player.name}! \n Use 'n' to go North \n Use 's' to go South \n Use 'w' to go West \n Use 'e' to go East " )
+
+while not initial[0] == 'q':
+    if current_room == room['outside']:
+        print(f'You are currently {current_room}')
+    else:
+        print('\n<==================> \n')
+    
+
+    initial = input('Enter a direction: \n')
+    move_area(initial)
