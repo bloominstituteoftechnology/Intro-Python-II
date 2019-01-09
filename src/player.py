@@ -2,6 +2,9 @@
 # currently.
 
 class Player:
-    def __init__(self, room):
+    def __init__(self, room, items=[]):
         self.room = room
-        self.items = None
+        self.items = items
+
+    def add_item(self, item):
+        self.items.append(item)
