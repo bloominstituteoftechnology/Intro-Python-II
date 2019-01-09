@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 import textwrap as tw
 
 # Declare all the rooms
@@ -34,6 +35,16 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+
+items = {
+    'this': Item("this", "this item"),
+    'that': Item("that", "that item")
+}
+
+room['outside'].add_item(items['this'])
+room['outside'].add_item(items['that'])
+
 
 #
 # Main
@@ -72,6 +83,31 @@ while True:
 
     choice = input(prompt)
 
-    print(choice)
+    if choice.count(" ") > 1:
+        choice = input("\nInvalid input.\n" + prompt)
+    elif choice.count(" ") == 1:
+        verb, noun = choice.split(" ")
+    else:
+        verb = choice
+
+    print(verb)
+
+    if verb == "get" or verb == "take":
+        if isinstance(noun, str):
+            if noun in items:
+                item = items[noun]
+                if item in player.current_room.items:
+                    player.add_item_to_inventory(item)
+                    player.current_room.remove_item(item)
+                    item.on_take()
+                else:
+                    # TODO
+                    print(f"That item is not in {player.current_room}")
+            else:
+                # TODO
+                input("That's not an item, please try again")
+
+    print(player.inventory)
+    print(player.current_room.items)
 
     break

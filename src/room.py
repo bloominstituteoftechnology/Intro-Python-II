@@ -2,13 +2,14 @@
 # description attributes.
 
 
-class Empty_Room:
+class Room():
     def __init__(self, name, description):
         self.name = name
         self.description = description
+        self.items = []
 
+    def add_item(self, item):
+        self.items.append(item)
 
-class Room(Empty_Room):
-    def __init__(self, name, description, *items):
-        super().__init__(name, description)
-        self.items = [i for i in items]
+    def remove_item(self, item):
+        self.items.remove(item)
