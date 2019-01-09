@@ -6,7 +6,8 @@ import textwrap
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                     ["Sword", "Egg sandwich"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -55,54 +56,68 @@ room['treasure'].s_to = room['narrow']
 def initiate_game():
     player = Player(room['outside'])
     print("Let's play a game")
-    print_user_info(player.room.name, player.room.description)
+    print_user_info(player.room)
 
     # user = int(input("[1] Rock  [2] Paper   [3] Scissors    [9] Quit\n"))
 
     while True:
-        direction = get_direction()
+        input = get_input()
 
-        if direction == "q":
-            print("Saionara my friend")
-            break
+        if len(input) == 1:
+            if input[0] == "q":
+                print("Saionara my friend")
+                break
 
-        elif direction == "n":
-            try:
-                player.room = player.room.n_to
-                print_user_info(player.room.name, player.room.description)
-            except AttributeError:
-                print_direction_error(direction)
+            elif input[0] == "n":
+                try:
+                    player.room = player.room.n_to
+                    print_user_info(player.room)
+                except AttributeError:
+                    print_direction_error(input)
 
-        elif direction == "e":
-            try:
-                player.room = player.room.e_to
-                print_user_info(player.room.name, player.room.description)
-            except AttributeError:
-                print_direction_error(direction)
+            elif input[0] == "e":
+                try:
+                    player.room = player.room.e_to
+                    print_user_info(player.room)
+                except AttributeError:
+                    print_direction_error(input)
 
-        elif direction == "s":
-            try:
-                player.room = player.room.s_to
-                print_user_info(player.room.name, player.room.description)
-            except AttributeError:
-                print_direction_error(direction)
+            elif input[0] == "s":
+                try:
+                    player.room = player.room.s_to
+                    print_user_info(player.room)
+                except AttributeError:
+                    print_direction_error(input)
 
-        elif direction == "w":
-            try:
-                player.room = player.room.w_to
-                print_user_info(player.room.name, player.room.description)
-            except AttributeError:
-                print_direction_error(direction)
+            elif input[0] == "w":
+                try:
+                    player.room = player.room.w_to
+                    print_user_info(player.room)
+                except AttributeError:
+                    print_direction_error(input)
+            else:
+                print("Cannot parse your input. Please try again.")
+        elif len(input) == 2:
+            action = input[0]
+            object = input[1]
+
+            if action == "take":
+                pass
+            elif action == "drop":
+                pass
+            else:
+                print("Cannot parse your input. Please try again.")
         else:
             print("Cannot parse your input. Please try again.")
 
-def print_user_info(room, description):
-    print(f"You are currently in the {room}.")
-    for line in textwrap.wrap(description):
+def print_user_info(room):
+    print(f"You are currently in the {room.name}.")
+    for line in textwrap.wrap(room.description):
         print(line)
+    print(room.get_all_items() + "\n")
 
-def get_direction():
-    return input("In which direction shall we move? Go to [n] north, [e] east, [s] south, [w] west: ")
+def get_input():
+    return input("What shall we do?\nGo to [n] north, [e] east, [s] south, [w] west, \n[take] or [drop] [items]: ").split()
 
 def print_direction_error(direction):
     print(f"You cannot move {direction} from here.")
