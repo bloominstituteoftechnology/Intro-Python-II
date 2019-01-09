@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -37,8 +38,11 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+def game():  
 # Make a new player object that is currently in the 'outside' room.
-
+    player = Player(room['outside'])
+    currRoom = 'outside'
+    print(player)
 # Write a loop that:
 #
 # * Prints the current room name
@@ -47,5 +51,25 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
+    print('Game Options:')
+    direction = input('[N] North [S] South [E] East [W] WEST [Q] Quit\n').upper()
+    while not direction == 'Q':
+        if (direction == 'N') and (player.room == room['outside'] or player.room == room['narrow'] or player.room == room['foyer']):
+            player.room = room[currRoom].n_to
+        elif direction == 'S' and (player.room == room['foyer'] or player.room == room['treasure'] or player.room == room['overlook']):
+            player.room = room[currRoom].s_to
+        elif direction == 'E' and (player.room == room['foyer']):
+            player.room = room[currRoom].e_to
+        elif direction == 'W' and (player.room == room['narrow']):
+            player.room = room[currRoom].w_to
+        else:
+            print('Could not move in that direction')
+        currRoom = list(room.keys())[list(room.values()).index(player.room)]
+        print(player)
+        print('Game Options:\n')
+        direction = input('[N] North [S] South [E] East [W] WEST [Q] Quit\n').upper()
+
+game()
+
 #
 # If the user enters "q", quit the game.
