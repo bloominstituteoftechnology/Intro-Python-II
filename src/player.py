@@ -3,8 +3,9 @@
 
 
 class Player:
-    def current_room(self):
-        print("Player is currently in the outside room.")
-
-    def next_room(self):
-        print("Player is moving to the next room.")
+    # def current_room(self):
+    #     print("Player is currently in the current room.")
+    # I think that I need to define the methods more generally and then use the specific objects to reference the generalized methods.
+    # __init__ is like a constructr method.
+    # def next_room(self):
+    #     print("Player is moving to the next room.")
