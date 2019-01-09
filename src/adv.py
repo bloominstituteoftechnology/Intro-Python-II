@@ -65,39 +65,38 @@ player = Player(room['outside'])
 #
 # If the user enters "q", quit the game.
 
+print(tw.dedent(
+    f"""\
+    You are in room: {player.current_room.name}
+    {player.current_room.description}!\
+    """))
+
+print(tw.dedent('''
+        What would you like to do?
+        [n] Go North [e] Go East [s] Go South [w] Go West
+        [l] Look around
+        [get <item>] or [take <item>] Put <item> in your inventory
+        [drop <item>] Remove item from your inventory
+        [i] Show inventory
+        [q] Quit
+    '''))
+
 while True:
-
-    description = tw.dedent(
-        f'''
-        Current room: {player.current_room.name}
-        {player.current_room.description}
-        Items in sight: {player.current_room.items}\
-        '''
-    )
-    print(description)
-
-    prompt = tw.dedent('''
-        Where would you like to go?
-        [n] North [e] East [s] South [w] West [q] Quit
-    ''')
-
-    choice = input(prompt)
+    choice = input()
 
     if choice.count(" ") > 1:
-        choice = input("\nInvalid input.\n" + prompt)
+        choice = input("\nInvalid input.\n")
     elif choice.count(" ") == 1:
         verb, noun = choice.split(" ")
     else:
         verb = choice
-
-    print(verb)
 
     if verb == "get" or verb == "take":
         if isinstance(noun, str):
             if noun in items:
                 item = items[noun]
                 if item in player.current_room.items:
-                    player.add_item_to_inventory(item)
+                    player.take_item(item)
                     player.current_room.remove_item(item)
                     item.on_take()
                 else:
@@ -107,7 +106,45 @@ while True:
                 # TODO
                 input("That's not an item, please try again")
 
-    print(player.inventory)
-    print(player.current_room.items)
+    elif verb == "drop":
+        if isinstance(noun, str):
+            if noun in items:
+                item = items[noun]
+                if item in player.inventory:
+                    player.drop_item(item)
+                    player.current_room.add_item(item)
+                    item.on_drop()
 
-    break
+    elif verb == "q" or verb == "Q":
+        print("goodbye!")
+        break
+
+    elif verb == "i" or verb == "I":
+        player.show_inventory()
+
+    elif verb == "n" or verb == "N":
+        if isinstance(player.current_room.n_to, Room):
+            player.move_to(player.current_room.n_to)
+        else:
+            print("There is nothing ahead of you.")
+
+    elif verb == "s" or verb == "S":
+        if isinstance(player.current_room.s_to, Room):
+            player.move_to(player.current_room.s_to)
+        else:
+            print("There is nothing behind you.")
+
+    elif verb == "w" or verb == "W":
+        if isinstance(player.current_room.w_to, Room):
+            player.move_to(player.current_room.w_to)
+        else:
+            print("There is nothing to the left of you.")
+
+    elif verb == "e" or verb == "E":
+        if isinstance(player.current_room.e_to, Room):
+            player.move_to(player.current_room.e_to)
+        else:
+            print("There is nothing to the right of you.")
+
+    elif verb == "l" or verb == "L":
+        print(player.current_room.items)

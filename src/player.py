@@ -7,5 +7,17 @@ class Player:
         self.current_room = current_room
         self.inventory = []
 
-    def add_item_to_inventory(self, item):
+    def take_item(self, item):
         self.inventory.append(item)
+
+    def drop_item(self, item):
+        self.inventory.remove(item)
+
+    def show_inventory(self):
+        print("You have the following items in your inventory:")
+        for item in self.inventory:
+            print(f"{item.name}: {item.description}")
+
+    def move_to(self, room):
+        print(f"You have now entered: {room.name}, {room.description}")
+        self.current_room = room
