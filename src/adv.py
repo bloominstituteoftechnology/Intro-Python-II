@@ -46,7 +46,7 @@ location = 'outside'
 # Make a new player object that is currently in the 'outside' room.
 player = Player('Austin')
 current_room = room['outside']
-
+print(current_room)
 #============== FUNCTIONS ====================#
 
 
@@ -59,18 +59,26 @@ def move_area(p_inpt):
         print(f"You are now at the {current_room.name}. {current_room.description}.")
         if len(current_room.items) > 0:
             print(f"You see a {current_room.items[0]}.")
+        
     elif p_inpt == 's':
         new_room = current_room.s_to
         current_room = new_room
         print(f"You are now at the {current_room.name}. {current_room.description}")
+        if len(current_room.items) > 0:
+            print(f"You see a {current_room.items[0]}.")
     elif p_inpt == 'e':
         new_room = current_room.e_to
         current_room = new_room
         print(f"You are now at the {current_room.name}. {current_room.description}")
+        if len(current_room.items) > 0:
+            print(f"You see a {current_room.items[0]}.")
     elif p_inpt == 'w':
         new_room = current_room.w_to
         current_room = new_room
         print(f"You are now at the {current_room.name}. {current_room.description}")
+        if len(current_room.items) > 0:
+            print(f"You see a {current_room.items[0]}.")
+       
     else:
         print('That is not a direction!')
 
@@ -90,7 +98,7 @@ def move_area(p_inpt):
 #
 # If the user enters "q", quit the game.
 
-print(f"\n Welcome to your first adventure, {player.name}! \n Use 'n' to go North \n Use 's' to go South \n Use 'w' to go West \n Use 'e' to go East \n Press 'q' to quit game" )
+print(f"\n Welcome to your first adventure, {player.name}! \n Use 'n' to go North \n Use 's' to go South \n Use 'w' to go West \n Use 'e' to go East \n Press 'q' to quit game \n Type 'get' followed by the item name, separated by a space" )
 
 while not inits[0] == 'q':
     if current_room == room['outside']:
@@ -98,14 +106,21 @@ while not inits[0] == 'q':
     else:
         print('\n<=========================================> \n')
     
-
-    inits = input('Enter a direction: \n')
-    move_area(inits)
+    try:
+        inits = input('Enter a direction: \n')
+        move_area(inits)
+    except AttributeError:
+      print("Can't go this way")
+      continue
 
     if len(current_room.items) > 0:
         inits = input('Would you like to pick up an Item?: \n').split(' ')
-        if inits[0] == 'get':
+        if inits[0] == 'get' or inits[0] == 'take':
             for i in current_room.items:
                 if inits[1] == i.name:
                     player.items.append(i)
                     print(f"You have picked up the {i.name}")
+                else:
+                    print('There is no item with that name here')
+
+    
