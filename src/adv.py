@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -49,3 +50,39 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+currentRoom = room['outside']
+
+userName = input('What is your name? ')
+player = Player(userName)
+
+print(f'Hello {userName}! Let\'s go on an adventure!')
+
+userInput = ''
+
+while not userInput == 'q':
+    newRoom = ''
+    print(currentRoom)
+
+    userInput = input('Which way do you want to go?\n'
+                      '[n] North [s] South [e] East [w] West [q] Quit: ')
+
+    if userInput == 'n' or userInput == 's' or userInput == 'e' or userInput == 'w' or userInput == 'q':
+        try:
+            if userInput == 'n':
+                newRoom = currentRoom.n_to
+            elif userInput == 'e':
+                newRoom = currentRoom.e_to
+            elif userInput == 's':
+                newRoom = currentRoom.s_to
+            elif userInput == 'w':
+                newRoom = currentRoom.w_to
+        except AttributeError:
+            print('Can not go this way.')
+
+        if newRoom:
+            currentRoom = newRoom
+
+    else:
+        print('Incorrect input. Please use n, e, s, or w')
