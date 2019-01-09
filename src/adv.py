@@ -1,4 +1,11 @@
+# Global Imports
+import os
+import textwrap
+
+# Local Imports
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -33,6 +40,41 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Declare Player
+player = Player('Chosen One', room['outside'])
+
+# Centers Header Text
+
+#
+# Intro
+#
+
+# Clear Screen
+clear = lambda: os.system('cls')
+clear()
+
+
+print(r'''   
+             /\    
+            /  \   
+           / /\ \  
+          / /  \ \ 
+         /_/    \_\
+
+Welcome to Lambda Adventure! 
+============================
+
+Please enter your commands below. 
+
+Enter 'q' to quit the game.
+---
+''')
+
+player_name = input('Please enter your name: ')
+player.name = player_name
+
+print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
+
 #
 # Main
 #
@@ -49,3 +91,35 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+
+    # Room Name
+    print(f'Location: {player.location.name} \n')
+
+    # Room Description
+    print(f'Description: {player.location.description}')
+    
+
+    # Main Input - Convert to Lowercase
+    print('________________________________________________________________________________')
+    command = input("Enter Command Here: ")
+    command = command.lower()
+
+    #
+    # Commands --------------------------------------------------------------------------------
+    #
+
+    #
+    # System Commands
+    #
+
+    # Commands to Quit Game
+    if command in ["q", "quit", "esc", "end"]:
+        break
+    
+    #
+    # Movement Commands
+    #     
+
+    print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
