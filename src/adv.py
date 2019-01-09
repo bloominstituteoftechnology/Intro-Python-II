@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -49,3 +51,29 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def initiate_game():
+    player = Player(room['foyer'])
+    print("Let's play a game")
+    print_user_info(player.room.name, player.room.description)
+
+    while True:
+        direction = input("In which direction shall we move? Go to: ")
+
+        if direction == "q":
+            print("Saionara my friend")
+            break
+
+def print_user_info(room, description):
+    print(f"You are currently in the {room} room.")
+    for line in textwrap.wrap(description):
+        print(line)
+
+def ask_direction():
+    return input("In which direction shall we move? Go to: ")
+
+def print_error(room):
+    print(f"You cannot move to the {room} room from here.")
+
+if __name__ == '__main__':
+    initiate_game()
