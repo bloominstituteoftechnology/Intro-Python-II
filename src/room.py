@@ -10,3 +10,6 @@ class Room:
 
   def nextRoom(self, direction):
     return getattr(self, direction)  
+  
+  def additems(self, items):
+    self.items = [item for item in items]
