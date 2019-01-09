@@ -1,21 +1,22 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [Item('wand', 'Does not really work well, in really rough shape')]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [Item('sword', 'Looks as if it were just sharpened. Too bad its merely a training sword')]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", [Item('potion', 'This can heal your health 25 points')]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
@@ -55,7 +56,9 @@ def move_area(p_inpt):
     if p_inpt == 'n':
         new_room = current_room.n_to
         current_room = new_room
-        print(f"You are now at the {current_room.name}. {current_room.description}")
+        print(f"You are now at the {current_room.name}. {current_room.description}.")
+        if len(current_room.items) > 0:
+            print(f"You see a {current_room.items[0]}.")
     elif p_inpt == 's':
         new_room = current_room.s_to
         current_room = new_room

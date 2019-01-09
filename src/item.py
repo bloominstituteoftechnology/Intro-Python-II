@@ -5,4 +5,4 @@ class Item:
         self.name = name
         self.description = description
     def __repr__(self):
-        return str(f"{self.name}")
+        return str(f"{self.name} {self.description}")
