@@ -4,3 +4,4 @@ class Room:
     def __init__(self, name, description):
         self.name = name
         self.description = description
+        print('You have chosen the room "{}", the room says "{}"'.format(name, description))
