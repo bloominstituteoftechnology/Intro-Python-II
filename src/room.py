@@ -13,8 +13,3 @@ class Room:
     def __init__(self, name, description):
         self.name = name
         self.description = description
-
-    def player_enter(self):
-        """Display the room title, and description in the console
-        when a player enters the room."""
-        print(f'You have entered {self.name} \n {self.description}')
