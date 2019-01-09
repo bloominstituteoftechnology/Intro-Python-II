@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 room = {
@@ -33,12 +34,12 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Add room items
-room['outside'].room_items.append("sword")
-room['outside'].room_items.append('shield')
-room['foyer'].room_items.append('coins')
-room['overlook'].room_items.append('ruby')
-room['narrow'].room_items.append('key')
-room['treasure'].room_items.append('treasure box')
+room['outside'].room_items.append(Item('Sword', 'A rusty old iron sword'))
+room['outside'].room_items.append(Item('Shield', 'A wooden shield'))
+room['foyer'].room_items.append(Item('Coins', 'Bronze coins'))
+room['overlook'].room_items.append(Item('Ruby', 'A large, cut, Ruby'))
+room['narrow'].room_items.append(Item('Key', 'A key, I wonder what this is for?'))
+room['treasure'].room_items.append(Item('Treasure Box', 'I hear something inside, how do I open it?'))
 
 #
 # Main
@@ -65,7 +66,7 @@ def display_current_room_info():
     print('========== ROOM INFO ==========')
     print(f'You\'re character is currently located in the room named "{player.current_room}".')
     print(f'The room description says: "{player.current_room.room_description}"')
-    print(f'The items available in this room are: {[item for item in player.current_room.room_items]}')
+    print(f'The items available in this room are: {[item.name for item in player.current_room.room_items]}')
     print('========== END ROOM INFO ==========')
 
 
@@ -82,33 +83,35 @@ def user_choose_action(action):
     elif action == "show room info" or action == "4":
         return "4"
     elif action == "take a particular item" or action == "5":
+        available_items = [item.name.lower() for item in player.current_room.room_items]
         if len(player.current_room.room_items) == 0:
             print("There are no items in this room!")
             return "incorrect action"
         while True:
             item_to_take = input("Please type the name of the item to take: ").lower()
-            if item_to_take not in player.current_room.room_items:
+            if item_to_take not in available_items:
                 print("Item does not exist, try again.")
                 continue
             else:
                 for item in player.current_room.room_items:
-                    if item_to_take == item:
+                    if item_to_take == item.name.lower():
                         player.add_item_to_inventory(item)
                         player.current_room.room_items.remove(item)
             break
         return "5"
     elif action == "drop a particular item" or action == "6":
+        items_inventory = [item.name.lower() for item in player.inventory]
         if len(player.inventory) == 0:
             print("You have no items!")
             return "incorrect action"
         while True:
             item_to_remove = input("Please type the name of the item to remove: ").lower()
-            if item_to_remove not in player.inventory:
+            if item_to_remove not in items_inventory:
                 print("Item does not exist, try again.")
                 continue
             else:
                 for item in player.inventory:
-                    if item_to_remove == item:
+                    if item_to_remove == item.name.lower():
                         player.remove_item_from_inventory(item)
             break
         return "6"
