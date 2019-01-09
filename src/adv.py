@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import textwrap as tw
 
 # Declare all the rooms
 
@@ -39,6 +41,8 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player(room['outside'])
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +53,25 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+
+    description = tw.dedent(
+        f'''
+        Current room: {player.current_room.name}
+        {player.current_room.description}
+        Items in sight: {player.current_room.items}\
+        '''
+    )
+    print(description)
+
+    prompt = tw.dedent('''
+        Where would you like to go?
+        [n] North [e] East [s] South [w] West [q] Quit
+    ''')
+
+    choice = input(prompt)
+
+    print(choice)
+
+    break
