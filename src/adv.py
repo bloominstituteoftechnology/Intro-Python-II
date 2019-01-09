@@ -1,4 +1,7 @@
 from room import Room
+import textwrap as tw
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -21,7 +24,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -33,11 +35,61 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+items = {
+    'this': Item("this", "this item"),
+    'that': Item("that", "that item")
+}
+
+room['outside'].add_item(items["this"])
+room['outside'].add_item(items["that"])
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+player = Player(room['outside'])
+
+while True:
+
+    description = tw.dedent(
+        f'''
+        Current room: {player.current_room.name}
+        {player.current_room.description}
+        Items in sight: {player.current_room.items}
+        '''
+    )
+    print(description)
+
+    prompt = tw.dedent('''
+        Where would you like to go?
+        [n] North, [e] East, [s] South, [w] West, [q] Quit
+    ''')
+
+
+    verb = input(prompt)
+
+    if verb.count(" ") > 1:
+        choice = input("Invalid input." + prompt)
+    elif verb.count(" ") == 1:
+        verb, noun = verb.split(" ")
+
+    if verb == "get" or verb == "take":
+        if isinstance(noun, str):
+            if noun in items:
+                item = items[noun]
+                if item in player.current_room.items:
+                    player.add_item_to_inventory(item)
+                    player.current_room.remove_item(item)
+                    item.on_take()
+                else:
+                    print(f"That item is not in {player.current_room}")
+            else:
+                input("Item doesn't exist, please try again.")
+
+    print(player.inventory)
+    print(player.current_room.items)
 
 # Write a loop that:
 #
