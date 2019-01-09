@@ -3,19 +3,19 @@
 
 class Player:
   def __init__(self, name, location):
-    self.name = name
+    self.name = name[0].upper() + name[1:]
     self.location = location
 
   def move(self, room):
     directionOption = ['south', 'north', 'west', 'east']    
-    direction = input('Which direction would you like to go? \n')
+    direction = input('Which direction would '+ self.name + ' like to go? \n')
 
     if direction.lower() in directionOption:      
       directionKey = direction[0] + '_to'
       try:
         self.location = room.nextRoom(directionKey)
       except AttributeError:
-        print(f'\nYou turn {direction} and see no path. You remain where you are.north\n')
+        print(f'\nYou turn {direction} and see no path. You remain where you are.\n')
 
 
 
