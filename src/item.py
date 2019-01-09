@@ -2,6 +2,9 @@ class Item:
     def __init__(self, name, description):
         self.name = name
         self.description = description
+    
+    def __repr__(self)
+        return f'{self.name} {self.description}'
 
 class Treasure(Item):
     def __init__(self, name, description):
@@ -18,6 +21,6 @@ class Weapon(Item):
             self.variety = variety
             self.damagePoints = damagePoints
 
-class Sword(Weapon)
+"""class Sword(Weapon)
     def __init__(self, ):
-        super().__init__(variety, damagePoints)
+        super().__init__(variety, damagePoints)"""
