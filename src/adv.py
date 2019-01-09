@@ -54,6 +54,7 @@ player = Player("Conner")
 while True:
     print('Welcome to the game!')
     print(f'You\'re character is currently located in the room named "{ player.current_room }".')
+    print(f'The items available in this room are: { [item for item in room.items] }')
     user_chosen_direction = input("Please enter a direction to move in (n, s, w, e): ")
 
     break
