@@ -44,8 +44,8 @@ location = 'outside'
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player('Kevin')
-current_room = room['outside']
+player = Player('Kevin', room['outside'])
+current_room = player.current_room
 
 #============== FUNCTIONS ====================#
 
@@ -54,27 +54,31 @@ current_room = room['outside']
 def move_area(p_inpt):
     global current_room
     if p_inpt == 'n':
-        new_room = current_room.n_to
-        current_room = new_room
-        print(
-            f"You are now at the {current_room.name}. {current_room.description}.")
-        if len(current_room.items) > 0:
-            print(f"You see a {current_room.items[0]}.")
+        if hasattr(current_room, "n_to"):
+            new_room = current_room.n_to
+            current_room = new_room
+            print(
+                f"You are now at the {current_room.name}. {current_room.description}.")
+            if len(current_room.items) > 0:
+                print(f"You see a {current_room.items[0]}.")
     elif p_inpt == 's':
-        new_room = current_room.s_to
-        current_room = new_room
-        print(
-            f"You are now at the {current_room.name}. {current_room.description}")
+        if hasattr(current_room, "s_to"):
+            new_room = current_room.s_to
+            current_room = new_room
+            print(
+                f"You are now at the {current_room.name}. {current_room.description}")
     elif p_inpt == 'e':
-        new_room = current_room.e_to
-        current_room = new_room
-        print(
-            f"You are now at the {current_room.name}. {current_room.description}")
+        if hasattr(current_room, "e_to"):
+            new_room = current_room.e_to
+            current_room = new_room
+            print(
+                f"You are now at the {current_room.name}. {current_room.description}")
     elif p_inpt == 'w':
-        new_room = current_room.w_to
-        current_room = new_room
-        print(
-            f"You are now at the {current_room.name}. {current_room.description}")
+        if hasattr(current_room, "w_to"):
+            new_room = current_room.w_to
+            current_room = new_room
+            print(
+                f"You are now at the {current_room.name}. {current_room.description}")
     else:
         print('That is not a direction!')
 
