@@ -34,6 +34,8 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+
 # Create a function to give a player a random name if
 # they leave it blank
 def random_name():
@@ -47,6 +49,7 @@ def random_name():
 current_room = 'outside'
 game_active = True
 print("Welcome!")
+print(f"Current Room {room[current_room]}")
 
 # Prompt the player to name thier character and store it in a variable
 char_name = input("Please name your hero to begin your quest:\n")
@@ -60,12 +63,16 @@ print(f'Welcome {player1.name}!')
 
 # Write a loop that:
 #
-# * Prints the current room name
-print(f'Current location: {current_room}')
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+while game_active:
+
+    # * Prints the current room name
+    print(f'Current location: {player1.location}')
+    # * Prints the current description (the textwrap module might be useful here).
+    print(f'--')
+    # * Waits for user input and decides what to do.
+    #
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    # Print an error message if the movement isn't allowed.
+    #
+    game_active = False
+    # If the user enters "q", quit the game.
