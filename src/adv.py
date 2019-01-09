@@ -50,3 +50,10 @@ player = Player("Conner")
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+    print('Welcome to the game!')
+    print(f'You\'re character is currently located in the room named "{ player.current_room }".')
+    user_chosen_direction = input("Please enter a direction to move in (n, s, w, e): ")
+
+    break
