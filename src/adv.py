@@ -50,6 +50,15 @@ def prompt(message):
     print(f">> {message}")
 
 
+def location_info():
+    prompt(f"You are now in the {player.room.name}")
+    prompt(f"{player.room.desc}\n")
+
+
+def wrong_direction():
+    prompt("There's no way out here")
+
+
 # Make a new player object that is currently in the 'outside' room.
 player_name = input("Enter player name: ")
 player = Player(player_name)
@@ -84,35 +93,31 @@ while True:
     if command == "n":
         if hasattr(player.room, "n_to"):
             player.room = player.room.n_to
-            prompt(f"You are now in the {player.room.name}")
-            prompt(f"{player.room.desc}")
+            location_info()
         else:
-            prompt("There's no way out here")
+            wrong_direction()
     elif command == "e":
         if hasattr(player.room, "e_to"):
             player.room = player.room.e_to
-            prompt(f"You are now in the {player.room.name}")
-            prompt(f"{player.room.desc}")
+            location_info()
         else:
-            prompt("There's no way out here")
+            wrong_direction()
     elif command == "s":
         if hasattr(player.room, "s_to"):
             player.room = player.room.s_to
-            prompt(f"You are now in the {player.room.name}")
-            prompt(f"{player.room.desc}")
+            location_info()
         else:
-            prompt("There's no way out here")
+            wrong_direction()
     elif command == "w":
         if hasattr(player.room, "w_to"):
             player.room = player.room.w_to
-            prompt(f"You are now in the {player.room.name}")
-            prompt(f"{player.room.desc}")
+            location_info()
         else:
-            prompt("There's no way out here")
+            wrong_direction()
+    elif command == "q":
+        break
     else:
         prompt(f"I don't quite understand")
 
-    if command == "q":
-        break
 
 prompt("Thank you for playing!")
