@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+import time
 # Declare all the rooms
 
 room = {
@@ -38,7 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+newPlayer = Player("Grobak The Barbarian", room['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +50,49 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while True:
+    print('-----')
+    print(f'\nThe current room is {newPlayer.currentRoom.name}\n')
+    print('--------------------------------------')
+    time.sleep(1)
+    print(newPlayer.currentRoom)
+    print('--------------------------------------')
+    time.sleep(2)
+    print("\nPlease enter n to go up, e to go right, w to go left, or s to go down. Or enter q to quit.")
+    choice = input().lower()
+    if(choice == "n"):
+        try:
+            time.sleep(1)
+            newPlayer.currentRoom = newPlayer.currentRoom.n_to
+        except AttributeError:
+            print("Cannot move North, try a different direction")
+            time.sleep(3)
+    elif(choice == "e"):
+        try:
+            time.sleep(1)
+            newPlayer.currentRoom = newPlayer.currentRoom.e_to
+        except AttributeError:
+            print("Cannot move East, try a different direction")
+            time.sleep(3)
+    elif(choice == "w"):
+        try:
+            time.sleep(1)
+            newPlayer.currentRoom = newPlayer.currentRoom.w_to
+        except AttributeError:
+            print("Cannot move West, try a different direction")
+            time.sleep(3)
+    elif(choice == "s"):
+        try:
+            time.sleep(1)
+            newPlayer.currentRoom = newPlayer.currentRoom.s_to
+        except AttributeError:
+            print("Cannot move South, try a different direction")
+            time.sleep(3)
+    elif(choice == "q"):
+        quit(1)
+    else:
+        time.sleep(1)
+        print("Invalid choice. Please try again.")
+        time.sleep(3)
+        print('-----\n')
+        print('-----\n')
