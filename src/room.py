@@ -8,3 +8,4 @@ class Room:
     def __init__(self, name, desc):
         self.name = name
         self.desc = desc
+
