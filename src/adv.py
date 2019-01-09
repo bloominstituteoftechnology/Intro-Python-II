@@ -95,6 +95,8 @@ def initiate_game():
                     print_user_info(player.room)
                 except AttributeError:
                     print_direction_error(input)
+            elif input[0] == "i" or input[0] == "inventory":
+                show_inventory(player)
             else:
                 print("Cannot parse your input. Please try again.\n")
         elif len(input) == 2:
@@ -103,16 +105,16 @@ def initiate_game():
 
             if item not in player.room.items:
                 print("Item doesn't exist. Choose an item in the room: " + player.room.get_all_items() + "\n")
-                pass
+                continue
 
             if action == "take":
                 player.add_item(item)
                 player.room.remove_item(item)
-                print(f"Your current items: {player.get_all_items()}\n")
+                show_inventory(player)
             elif action == "drop":
                 player.remove_item(item)
                 player.room.add_item(item)
-                print(f"Your current items: {player.get_all_items()}\n")
+                show_inventory(player)
             else:
                 print("Cannot parse your input. Please try again.\n")
         else:
@@ -125,7 +127,10 @@ def print_user_info(room):
     print(room.get_all_items() + "\n")
 
 def get_input():
-    return input("What shall we do?\nGo to [n] north, [e] east, [s] south, [w] west, \n[take] or [drop] [items]: ").split()
+    return input("What shall we do?\nGo to [n] north, [e] east, [s] south, [w] west, \n[take] or [drop] [items] or show inventory [inventory]: ").split()
+
+def show_inventory(player):
+    print(f"Your current items: {player.get_all_items()}\n")
 
 def print_direction_error(direction):
     print(f"You cannot move {direction} from here.")
