@@ -2,7 +2,7 @@
 # currently.
 
 
-class Room:
+class Player:
     def __init__(self, name, location, inv, health):
         self.name = name
         self.location = location
