@@ -24,14 +24,14 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['outside'].n_to = 'foyer'
+room['foyer'].s_to = 'outside'
+room['foyer'].n_to = 'overlook'
+room['foyer'].e_to = 'narrow'
+room['overlook'].s_to = 'foyer'
+room['narrow'].w_to = 'foyer'
+room['narrow'].n_to = 'treasure'
+room['treasure'].s_to = 'narrow'
 
 #
 # Main
@@ -53,10 +53,26 @@ player = Player() #if no input, player is initialized with currentRoom='outside'
 #
 # If the user enters "q", quit the game.
 
-
-currentRoom = room[player.currentRoom].name
-print(f'Current location: {currentRoom}')
-roomDesc = room[player.currentRoom].description
+currentRoom = room[player.currentRoom]
+roomName = currentRoom.name
+print(f'Current location: {roomName}')
+roomDesc = currentRoom.description
 print(roomDesc)
 print('Where do you want to go?')
-input('Enter a direction:')
+direction = input('Enter a direction:')
+
+
+if direction == 'n' and type(currentRoom.n_to) is str:
+    player.currentRoom = currentRoom.n_to
+    print(player.currentRoom)
+elif direction == 's' and len(currentRoom.s_to) > 0:
+    player.currentRoom = currentRoom.s_to
+elif direction == 'e' and type(currentRoom.e_to) is str:
+    player.currentRoom = currentRoom.e_to
+elif direction == 'w' and type(currentRoom.w_to) is str:
+    player.currentRoom = currentRoom.w_to
+elif ['n', 's', 'e', 'w'].count(direction) == 0: 
+    print('Use one of [n, s, e, w]')
+else:
+    print("You can't go that way!")
+    
