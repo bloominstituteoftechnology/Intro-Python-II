@@ -151,8 +151,10 @@ while True:
 
     # Command Groups:
 
+    # System
     quit_command = ("q", "quit", "esc", "end") # Quit Commands
-    get_item_command = ("get", "take", "pickup") # Get Items Commands
+
+    # Movement
     move_command = ("walk", "go", "move", "travel", "venture", "proceed", "n", "s", "e", "w") # Movement Commands
     move_direction = { # Movement Objects
         'north': ("northward", "north", "n"),
@@ -160,6 +162,10 @@ while True:
         'east': ("eastward", "east", "e"),
         'west': ("westward", "west", "w")
     }
+
+    # Items
+    get_item_command = ("get", "take", "pickup") # Get Item Commands
+    drop_item_command = ("drop", "discard") # Drop Item Commands
 
     #
     # System Commands
@@ -221,12 +227,24 @@ while True:
 
     elif command_action in get_item_command:
 
-        # Check if Item is In Location
+        # Check if item is in location
         if command_object in player.location.items:
+            player.location.items[command_object].on_get()
             player.items[command_object] = player.location.items[command_object]
             player.location.items.pop(command_object, None)
         else: 
             print(f"You don't see a(n) {command_object} in the {player.location.name}.")
-            enter_to_continue()
+        enter_to_continue()
+    
+    elif command_action in drop_item_command:
+
+        # Check if item is in player inventory
+        if command_object in player.items:
+            player.items[command_object].on_drop()
+            player.location.items[command_object] = player.items[command_object]
+            player.items.pop(command_object, None)
+        else: 
+            print(f"You don't have a(n) {command_object} in your inventory.")
+        enter_to_continue()
 
     print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
