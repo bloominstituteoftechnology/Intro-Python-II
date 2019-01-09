@@ -10,7 +10,7 @@ from item import Item
 # Declare all the locations
 
 location = {
-    'outside':  Location("Outside Cave Entrance",
+    'outside':  Location("Cave Entrance",
                      "North of you, the cave mount beckons"),
 
     'foyer':    Location("Foyer", """Dim light filters in from the south. Dusty
@@ -46,7 +46,7 @@ item = {
 
 # Link items to locations
 location['treasure'].items = {
-    item['red_card_1'].name: item['red_card_1']
+    item['red_card_1'].name.lower(): item['red_card_1']
 }
 
 # Declare Player
@@ -149,25 +149,29 @@ while True:
     # Commands --------------------------------------------------------------------------------
     #
 
-    #
-    # System Commands
-    #
+    # Command Groups:
 
-    # Commands to Quit Game
-    if command_action in ("q", "quit", "esc", "end"):
-        break
-    
-    #
-    # Movement Commands
-    #
-
-    move_command = ("walk", "go", "move", "travel", "venture", "proceed", "n", "s", "e", "w")
-    move_direction = {
+    quit_command = ("q", "quit", "esc", "end") # Quit Commands
+    get_item_command = ("get", "take", "pickup") # Get Items Commands
+    move_command = ("walk", "go", "move", "travel", "venture", "proceed", "n", "s", "e", "w") # Movement Commands
+    move_direction = { # Movement Objects
         'north': ("northward", "north", "n"),
         'south': ("southward", "south", "s"),
         'east': ("eastward", "east", "e"),
         'west': ("westward", "west", "w")
     }
+
+    #
+    # System Commands
+    #
+
+    # Commands to Quit Game
+    if command_action in quit_command:
+        break
+    
+    #
+    # Movement Commands
+    #
     
     # Movement Error Message
     def invalid_direction():
@@ -210,5 +214,19 @@ while True:
         
         else:
             invalid_direction()
+
+    #
+    # Item Commands
+    #
+
+    elif command_action in get_item_command:
+
+        # Check if Item is In Location
+        if command_object in player.location.items:
+            player.items[command_object] = player.location.items[command_object]
+            player.location.items.pop(command_object, None)
+        else: 
+            print(f"You don't see a(n) {command_object} in the {player.location.name}.")
+            enter_to_continue()
 
     print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
