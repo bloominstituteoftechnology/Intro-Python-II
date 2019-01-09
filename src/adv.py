@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from items import Lightsource
 import textwrap
 
 # Declare all the rooms
@@ -10,7 +11,7 @@ room = {
                      ["Sword", "Shield"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [], False),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -121,13 +122,17 @@ def initiate_game():
             print("Cannot parse your input. Please try again.\n")
 
 def print_user_info(room):
+    if not room.is_light:
+        print("It's pitch black in here!\n")
+        return
+
     print(f"You are currently in the {room.name}.")
     for line in textwrap.wrap(room.description):
         print(line)
     print(room.get_all_items() + "\n")
 
 def get_input():
-    return input("What shall we do?\nGo to [n] north, [e] east, [s] south, [w] west, \n[take] or [drop] [items] or show inventory [inventory]: ").split()
+    return input("What shall we do?\nGo to [n] north, [e] east, [s] south, [w] west, \n[take <item>] or [drop <item>] or show inventory [inventory]: ").split()
 
 def show_inventory(player):
     print(f"Your current items: {player.get_all_items()}\n")
