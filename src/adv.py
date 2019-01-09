@@ -1,3 +1,4 @@
+import sys
 from room import Room
 from player import Player
 # Declare all the rooms
@@ -38,16 +39,19 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player_one = Player('sean', 'overlook')
 
 # Write a loop that:
 #
 def adv_game():
+    # get the player name from the sys arguments
+    player_one = Player(sys.argv[1])
+    
+    # welcome message
     print(f'Welcome {player_one.name.capitalize()}')
     if player_one.room == 'outside':
-        print(f'You are currently standing outside')
+        print(f'You are currently standing {room[player_one.room].area}')
     else:
-        print(f'You are currently standing in the {player_one.room}')
+        print(f'You are currently standing in the {room[player_one.room].area}')
 
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
@@ -57,5 +61,7 @@ def adv_game():
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-
-adv_game()
+if len(sys.argv) != 2:
+    print('usage: python adv.py [player name (no spaces)]')
+else:
+    adv_game()
