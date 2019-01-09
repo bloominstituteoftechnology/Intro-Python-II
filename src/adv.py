@@ -38,10 +38,17 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-sean = Player('sean')
+player_one = Player('sean', 'overlook')
 
 # Write a loop that:
 #
+def adv_game():
+    print(f'Welcome {player_one.name.capitalize()}')
+    if player_one.room == 'outside':
+        print(f'You are currently standing outside')
+    else:
+        print(f'You are currently standing in the {player_one.room}')
+
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -50,3 +57,5 @@ sean = Player('sean')
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+adv_game()
