@@ -166,6 +166,9 @@ while True:
     # Items
     get_item_command = ("get", "take", "pickup") # Get Item Commands
     drop_item_command = ("drop", "discard") # Drop Item Commands
+    
+    # Player
+    inventory_command = ("i", "inventory", "bag")
 
     #
     # System Commands
@@ -225,6 +228,7 @@ while True:
     # Item Commands
     #
 
+    # Get Item
     elif command_action in get_item_command:
 
         # Check if item is in location
@@ -236,6 +240,7 @@ while True:
             print(f"You don't see a(n) {command_object} in the {player.location.name}.")
         enter_to_continue()
     
+    # Drop Item
     elif command_action in drop_item_command:
 
         # Check if item is in player inventory
@@ -245,6 +250,15 @@ while True:
             player.items.pop(command_object, None)
         else: 
             print(f"You don't have a(n) {command_object} in your inventory.")
+        enter_to_continue()
+
+    #
+    # Player
+    #
+
+    # Inventory
+    elif command_action in inventory_command:
+        player.inventory()
         enter_to_continue()
 
     print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
