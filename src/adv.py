@@ -66,15 +66,27 @@ while True:
             print(f'Name: {item.name}')
             print(f'Description: {item.description}')
     elif user_action == 'north' or user_action == 'n' or user_action == "North":
-        print('you wish to go {}'.format(user_action))
-        alejandrok.currentRoom = alejandrok.currentRoom.n_to
-    elif user_action == 'south' or 's' or "South":
-        if alejandrok.currentRoom.name != 'outside':
-            print('you wish to go {}'.format(user_action))
-            alejandrok.currentRoom = alejandrok.currentRoom.s_to
+        if alejandrok.currentRoom == room['overlook'] or alejandrok.currentRoom == room['treasure']:
+            print('\nYou cannot go north. Please go back\n')
+            break
         else:
-            print('You cannot go South from the outside')
-   
+            alejandrok.currentRoom = alejandrok.currentRoom.n_to
+    elif user_action == 'south' or user_action ==  's' or  user_action == "South":
+        if alejandrok.currentRoom == room['outside'] or alejandrok.currentRoom == room['narrow']:
+            print('\nYou cannot go south. Please go back\n')
+            break
+        else:
+            alejandrok.currentRoom = alejandrok.currentRoom.s_to
+    elif user_action == 'east' or user_action == 'e' or user_action == 'East':
+        if alejandrok.currentRoom == room['outside'] or alejandrok.currentRoom == room['overlook'] or alejandrok.currentRoom == room['treasure']:
+            print('\nYou cannot go east. Please go back\n')
+            break
+        alejandrok.currentRoom = alejandrok.currentRoom.e_to
+    elif user_action == 'west' or user_action == 'w' or user_action == 'West':
+        if alejandrok.currentRoom == room['outside'] or alejandrok.currentRoom == room['overlook'] or alejandrok.currentRoom == room['foyer'] or alejandrok.currentRoom == room['treasure']:
+            print('\nYou cannot go east. Please go back\n')
+            break
+        alejandrok.currentRoom = alejandrok.currentRoom.w_to
 
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
