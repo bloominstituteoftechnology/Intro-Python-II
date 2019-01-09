@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -33,15 +34,34 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Create a function to give a player a random name if
+# they leave it blank
+def random_name():
+    return 'Fanny Pack Shaman'
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+current_room = 'outside'
+game_active = True
+print("Welcome!")
+
+# Prompt the player to name thier character and store it in a variable
+char_name = input("Please name your hero to begin your quest:\n")
+
+if char_name == '':
+    char_name = random_name()
+
+player1 = Player(char_name, current_room)
+
+print(f'Welcome {player1.name}!')
 
 # Write a loop that:
 #
 # * Prints the current room name
+print(f'Current location: {current_room}')
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
