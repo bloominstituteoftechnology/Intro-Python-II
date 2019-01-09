@@ -79,7 +79,7 @@ while not userInput == 'q':
             elif userInput == 'w':
                 newRoom = currentRoom.w_to
         except AttributeError:
-            print('Can not go this way.')
+            print('\nCan not go this way!!! \n')
 
         if newRoom:
             currentRoom = newRoom
