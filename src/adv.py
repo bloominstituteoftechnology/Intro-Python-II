@@ -40,7 +40,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-newPlayer = Player("Grobak The Barbarian", room['outside'])
+newPlayer = Player("Grobak The Barbarian", room['outside'], [''])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -58,43 +58,83 @@ while True:
     time.sleep(1)
     print(newPlayer.currentRoom)
     print('--------------------------------------')
-    print(f'You can see {newPlayer.currentRoom.items}')
     time.sleep(2)
-    print("\nPlease enter n to go up, e to go right, w to go left, or s to go down. Or enter q to quit.")
+    for item in newPlayer.currentRoom.items:
+        print(f'You see a {item.name}, {item.description}')
+    time.sleep(2)
+    print("\nPlease enter n to go up, e to go right, w to go left, or s to go down. Or enter q to quit. ")
+    print("\nIf the room has an item, type 'get' and the item name to pick it up!")
     choice = input().lower()
-    if(choice == "n"):
-        try:
+    print('-----')
+    print(f'You chose {choice}')
+    print('-----')
+    choice = choice.split(" ")
+    if(len(choice) == 1):
+        if(choice[0] == "n"):
+            try:
+                time.sleep(1)
+                newPlayer.currentRoom = newPlayer.currentRoom.n_to
+            except AttributeError:
+                print("Cannot move North, try a different direction")
+                time.sleep(3)
+        elif(choice[0] == "e"):
+            try:
+                time.sleep(1)
+                newPlayer.currentRoom = newPlayer.currentRoom.e_to
+            except AttributeError:
+                print("Cannot move East, try a different direction")
+                time.sleep(3)
+        elif(choice[0] == "w"):
+            try:
+                time.sleep(1)
+                newPlayer.currentRoom = newPlayer.currentRoom.w_to
+            except AttributeError:
+                print("Cannot move West, try a different direction")
+                time.sleep(3)
+        elif(choice[0] == "s"):
+            try:
+                time.sleep(1)
+                newPlayer.currentRoom = newPlayer.currentRoom.s_to
+            except AttributeError:
+                print("Cannot move South, try a different direction")
+                time.sleep(3)
+        elif(choice[0] == "q"):
+            quit(1)
+        elif(choice[0] == "i" or "inventory"):
+            if(newPlayer.inventory == ['']):
+                print("\nYou have no items. . .")
+                time.sleep(3)
+            else:
+                print(f'\nYou cuurently have {newPlayer.inventory}')
+                time.sleep(3)
+        else:
             time.sleep(1)
-            newPlayer.currentRoom = newPlayer.currentRoom.n_to
-        except AttributeError:
-            print("Cannot move North, try a different direction")
+            print("Invalid choice. Please try again.")
             time.sleep(3)
-    elif(choice == "e"):
-        try:
-            time.sleep(1)
-            newPlayer.currentRoom = newPlayer.currentRoom.e_to
-        except AttributeError:
-            print("Cannot move East, try a different direction")
-            time.sleep(3)
-    elif(choice == "w"):
-        try:
-            time.sleep(1)
-            newPlayer.currentRoom = newPlayer.currentRoom.w_to
-        except AttributeError:
-            print("Cannot move West, try a different direction")
-            time.sleep(3)
-    elif(choice == "s"):
-        try:
-            time.sleep(1)
-            newPlayer.currentRoom = newPlayer.currentRoom.s_to
-        except AttributeError:
-            print("Cannot move South, try a different direction")
-            time.sleep(3)
-    elif(choice == "q"):
-        quit(1)
-    else:
-        time.sleep(1)
-        print("Invalid choice. Please try again.")
-        time.sleep(3)
-        print('-----\n')
-        print('-----\n')
+            print('-----\n')
+            print('-----\n')
+    elif(len(choice) == 2):
+        keywords = ["get", "take", "drop"]
+        if any(keyword in choice for keyword in keywords):
+            if(choice[0] == 'get'):
+                for item in newPlayer.currentRoom.items:
+                    print(item.name)
+                    if(item.name == choice[1]):
+                        newPlayer.currentRoom.items.remove(choice[1])
+                        newPlayer.inventory.append(choice[1])
+                        print(f'You picked up a {choice[1]}')
+                        time.sleep(3)
+                        break
+                    else:
+                        print("There is no item in this room with that name")
+                        time.sleep(3)
+            elif(choice[0] == 'take'):
+                if(newPlayer.currentRoom.items["name"] == choice[1]):
+                    newPlayer.inventory.append(choice[1])
+                else:
+                    print("There is no item in this room with that name")
+                    time.sleep(3)
+            elif(choice[0] == 'drop'):
+                if(newPlayer.inventory.name == choice[1]):
+                    print(f'You dropped a {choice[1]}')
+                    time.sleep(3)

@@ -3,9 +3,10 @@
 
 
 class Player():
-    def __init__(self, playerName, currentRoom):
+    def __init__(self, playerName, currentRoom, inventory):
         self.playerName = playerName
         self.currentRoom = currentRoom
+        self.inventory = inventory
 
     def __repr__(self):
         return f'{self.playerName} is in the {self.currentRoom}'
