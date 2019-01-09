@@ -117,10 +117,9 @@ while True:
         keywords = ["get", "take", "drop"]
         if any(keyword in choice for keyword in keywords):
             if(choice[0] == 'get'):
-                for item in newPlayer.currentRoom.items:
-                    print(item.name)
+                for index, item in enumerate(newPlayer.currentRoom.items):
                     if(item.name == choice[1]):
-                        newPlayer.currentRoom.items.remove(choice[1])
+                        newPlayer.currentRoom.items.remove(item)
                         newPlayer.inventory.append(choice[1])
                         print(f'You picked up a {choice[1]}')
                         time.sleep(3)
