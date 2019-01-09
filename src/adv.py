@@ -21,7 +21,7 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
+# name of the room to the instance of each room 
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
