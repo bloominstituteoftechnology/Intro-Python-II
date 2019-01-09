@@ -3,7 +3,8 @@
 
 class Player:
     # constructor
-    def __init__(self, location):
+    def __init__(self, name, location):
+        self.name = name
         self.location = location
     # default representation
     def __repr__(self):
