@@ -1,4 +1,8 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 
-# comment for initial commit
+class Player:
+    # constructor
+    def __init__(self, location):
+        self.location = location
+    
