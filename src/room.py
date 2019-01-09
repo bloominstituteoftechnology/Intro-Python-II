@@ -3,6 +3,6 @@
 
 
 class Room:
-    def __init__(self, room_name):
+    def __init__(self, room_name, description):
         self.room_name = room_name
-        pass
+        self.description = description

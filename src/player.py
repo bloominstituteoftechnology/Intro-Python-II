@@ -16,4 +16,13 @@ class Player:
     def pickup_item(self, item):
         self.inventory.append(item)
 
-    # def try_move(self, direction):
+    def try_move(self, direction):
+
+        d = direction + "_to"
+
+        # Checking to see if player can move a specific direction
+        if not hasattr(self.currentRoom, d):
+            print("You can't go that way!")
+            return self.currentRoom
+        else:
+            self.currentRoom = self.currentRoom[d]
