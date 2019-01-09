@@ -4,6 +4,10 @@ class Item:
         self.description = description
 
 
+    def __repr__(self):
+        return ": ".join((self.name, self.description))
+
+
     def on_take(self):
         print(f"{self.name} was picked up.")
 

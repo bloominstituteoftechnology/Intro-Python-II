@@ -6,17 +6,17 @@ from item import Item
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside': Room("Outside Cave Entrance",
+                    "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
+    'foyer': Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
+    'narrow': Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
@@ -51,29 +51,27 @@ room['outside'].add_item(items["that"])
 
 player = Player(room['outside'])
 
+print(tw.dedent(f"""You are in room: {player.current_room.name}, {player.current_room.description}"""))
+prompt = tw.dedent('''
+    What would you like to do?
+    [n] Go North, [e] Go East, [s] Go South, [w] Go West
+    [i] Show inventory 
+    [l] Look around
+    [get/take <item>] pick up an item, [drop <item>] drops an item
+    [q] Quit
+''')
+print(prompt)
+
 while True:
 
-    description = tw.dedent(
-        f'''
-        Current room: {player.current_room.name}
-        {player.current_room.description}
-        Items in sight: {player.current_room.items}
-        '''
-    )
-    print(description)
+    choice = input()
 
-    prompt = tw.dedent('''
-        Where would you like to go?
-        [n] North, [e] East, [s] South, [w] West, [q] Quit
-    ''')
-
-
-    verb = input(prompt)
-
-    if verb.count(" ") > 1:
+    if choice.count(" ") > 1:
         choice = input("Invalid input." + prompt)
-    elif verb.count(" ") == 1:
-        verb, noun = verb.split(" ")
+    elif choice.count(" ") == 1:
+        verb, noun = choice.split(" ")
+    else:
+        verb = choice
 
     if verb == "get" or verb == "take":
         if isinstance(noun, str):
@@ -88,8 +86,54 @@ while True:
             else:
                 input("Item doesn't exist, please try again.")
 
-    print(player.inventory)
-    print(player.current_room.items)
+    elif verb == "drop":
+        if isinstance(noun, str):
+            if noun in items:
+                item = items[noun]
+                if item in player.inventory:
+                    player.drop_item(item)
+                    player.current_room.add_item(item)
+                    item.on_drop()
+
+    elif verb == "i" or verb == "I":
+        player.show_inventory()
+
+    elif verb == "q" or verb == "Q":
+        print("Goodbye!")
+        break
+
+    elif verb == "l" or verb == "L":
+        description = tw.dedent(f'''
+            Current room: {player.current_room.name}
+            {player.current_room.description}
+            Items in sight: {player.current_room.items}
+            '''
+        )
+        print(description)
+
+    elif verb == "n" or verb == "N":
+        if isinstance(player.current_room.n_to, Room):
+            player.move_to(player.current_room.n_to)
+        else:
+            print("There is nothing ahead of you.")
+
+    elif verb == "e" or verb == "E":
+        if isinstance(player.current_room.e_to, Room):
+            player.move_to(player.current_room.e_to)
+        else:
+            print("There is nothing to the east.")
+
+    elif verb == "s" or verb == "S":
+        if isinstance(player.current_room.s_to, Room):
+            player.move_to(player.current_room.s_to)
+        else:
+            print("There is nothing to the south.")
+
+    elif verb == "v" or verb == "V":
+        if isinstance(player.current_room.v_to, Room):
+            player.move_to(player.current_room.v_to)
+        else:
+            print("There is nothing to the west.")
 
 # Write a loop that:
 #
