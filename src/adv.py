@@ -75,3 +75,12 @@ while True:
         choice = input("\nMove not allowed.\n")
     else:
         action = choice
+
+    if action == "take out" or action == "return":
+        ## do item action stuff
+    elif action == "drop":
+        if isinstance(itemName, str):
+            if itemName in items:
+                item = items[itemName]
+                if item in player.inventory:
+                    player.drop_item(item)
