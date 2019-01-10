@@ -75,12 +75,16 @@ while True:
     if len(s) == 1:
         # user has passed a direction
         if s == 'n':
+            print("you chose n")
             player.current_room = player.current_room.n_to
         elif s == 's':
+            print("you chose s")
             player.current_room = player.current_room.s_to
         elif s == 'e':
+            print("you chose e")
             player.current_room = player.current_room.e_to
         elif s == 'w':
+            print("you chose w")
             player.current_room = player.current_room.w_to
         elif s == 'q':
             print('see you later!')
