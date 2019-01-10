@@ -39,65 +39,68 @@ room['treasure'].s_to = room['narrow']
 #
 def adv_game():
     # Make a new player object that is currently in the 'outside' room.
-    player = Player("Bob", "outside")
-    roomKey = player.location
-    roomName = room[player.location].name
-    roomDesc = room[player.location].description
+    player = Player("Bob", room['outside'])
+    print(player)
+    #player = Player("Bob", "outside")
+    #roomKey = player.location
+    #roomName = room[player.location].name
+    #roomDesc = room[player.location].description
+
+    def try_direction(direction, location):
+        attribute = direction + '_to'
+
+        # see if the inputted direction is one we can move to
+        if hasattr(location, attribute):
+            return getattr(location, attribute)
+        else:
+            print("You can't go that way")
+            return location
     # Write a loop that:
     #
     while True:
         # * Prints the current room name
-        print(roomName)
+        print(player.location.name)
         # * Prints the current description (the textwrap module might be useful here).
-        print(roomDesc)
+        print(player.location.description)
         # * Waits for user input and decides what to do.
-        userInput = input("Pick a direction to move: n, s, e, or w: ")
+        s = input("\n").lower()[0]
+
+        # s = input("\n> ").lower().split()
+        #check to see if one  or two word command
+        # if len(s) == 1:
+            #the user passed us a direction
+            # grab the first character of the first word
+            # s = s[0][0]
+            #if s == 'q':
+            #print("You quit")
+            #break
+
+            #player.location = try_direction(s, player.location)
+        # elif len(s) ==2:
+            #user passed us a two-word command
+            # first_word = s[0]
+            # second_word = s[1]
+
+            # if first_word in ['get', 'drop']:
+
+        # else:
+            #print("I don't understand that")
+            #continue
+
         # If the user enters "q", quit the game.
-        if userInput == "q":
+        if s == 'q':
             print("You quit")
             break
+
+        player.location = try_direction(s, player.location)
+
+        """
+        North, South, East, West, north, south, east, west
+        N, S, E, W, n, s, e, w
+        """
+            
         # If the user enters a cardinal direction, attempt to move to the room there.
-        elif roomKey == 'outside':
-            if userInput == 'n':
-                roomName = room[roomKey].n_to.name
-                roomDesc = room[roomKey].n_to.description
-                roomKey = [key for key in room.keys() if key == 'foyer'][0]
-        elif roomKey == 'foyer':
-            if userInput == 's':
-                roomName = room[roomKey].s_to.name
-                roomDesc = room[roomKey].s_to.description
-                roomKey = [key for key in room.keys() if key == 'outside'][0]
-            elif userInput == 'n':
-                roomName = room[roomKey].n_to.name
-                roomDesc = room[roomKey].n_to.description
-                roomKey = [key for key in room.keys() if key == 'overlook'][0]
-            elif userInput == 'e':
-                roomName = room[roomKey].e_to.name
-                roomDesc = room[roomKey].e_to.description
-                roomKey = [key for key in room.keys() if key == 'narrow'][0]
-        elif roomKey == 'overlook':
-            if userInput == 's':
-                roomName = room[roomKey].s_to.name
-                roomDesc = room[roomKey].s_to.description
-                roomKey = [key for key in room.keys() if key == 'foyer'][0]
-        elif roomKey == 'narrow':
-            if userInput == 'w':
-                roomName = room[roomKey].w_to.name
-                roomDesc = room[roomKey].w_to.description
-                roomKey = [key for key in room.keys() if key == 'foyer'][0]
-            elif userInput == 'n':
-                roomName = room[roomKey].n_to.name
-                roomDesc = room[roomKey].n_to.description
-                roomKey = [key for key in room.keys() if key == 'treasure'][0]
-        elif roomKey == 'treasure':
-            if userInput == 's':
-                roomName = room[roomKey].s_to.name
-                roomDesc = room[roomKey].s_to.description
-                roomKey = [key for key in room.keys() if key == 'narrow'][0]
-        else:
-            # Print an error message if the movement isn't allowed.
-            print("Cannot move that direction, try another: ")
-            continue
+        
 
 if __name__ == '__main__':
     adv_game()
