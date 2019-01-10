@@ -8,9 +8,8 @@ class Player:
         self.name = name
         self.location = location
 
-    # def current_room(self):
-    #     print("Player is currently in the current room.")
-    # I think that I need to define the methods more generally and then use the specific objects to reference the generalized methods.
-    # __init__ is like a constructr method.
-    # def next_room(self):
-    #     print("Player is moving to the next room.")
+    def __repr__(self):
+        return f"{name} is in {location}."
+
+    def set_current_room(self, new_room):
+        self.current_room = new_room
