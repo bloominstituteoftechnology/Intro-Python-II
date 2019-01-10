@@ -2,7 +2,7 @@
 # description attributes.
 
 class Room():
-    def __init__(self, name, text, items):
+    def __init__(self, name, text, items, is_hungry):
         self.name = name
         self.text = text
         self.items = items
@@ -10,11 +10,12 @@ class Room():
         self.s_to = None
         self.w_to = None
         self.e_to = None
+        self.is_hungry = is_hungry
         
         def add_item(self, item):
             self.items.append(item)
         
-        def getItemsList(self):
+        def get_items_list(self):
             if (self.items):
                 return [i.name for i in self.items]
             else:
