@@ -170,8 +170,12 @@ while True:
                 print(player.current_room)
                 print(player.current_room.items)
                 if hasattr(player.current_room, "monster"):
-                    print(f"Uh oh! There's a {player.current_room.monster.name} in here!")
-                    print(f"It has {player.current_room.monster.hitpoints} HP and deals {player.current_room.monster.attack} damage")
+                    if player.current_room.monster.is_alive:
+                        print(f"Uh oh! There's a {player.current_room.monster.name} in here!")
+                        print(f"It has {player.current_room.monster.hitpoints} HP and deals {player.current_room.monster.attack} damage")
+
+                    else:
+                        print(f"{player.current_room.monster.name} is already dead.")
             else:
                 print("It's too dark to see anything, you need a lightsource.")
         else:
