@@ -114,7 +114,12 @@ while not userInput == 'q':
                 print('Item is not in the room')
 
         elif actionVerb == 'drop':
-            print('drop')
+            if items[actionItem] in player.items:
+                player.currentRoom.addItem(items[actionItem])
+                player.dropItem(items[actionItem])
+                print(items[actionItem].on_drop())
+            else:
+                print('You do not have this item.')
 
         print(f'{player.name} items:', player.items)
 

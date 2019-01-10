@@ -11,3 +11,6 @@ class Item:
 
     def on_take(self):
         return f'\nPicked up {self.name}\n{self.description}\n'
+
+    def on_drop(self):
+        return f'Dropped {self.name}'
