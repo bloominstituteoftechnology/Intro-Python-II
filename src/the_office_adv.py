@@ -5,7 +5,10 @@ from item import Item
 # Declare all the rooms
 room = {
     'outside':  Room("Outside Scranton Business Park",
-                     "North of you, is the main enterance"),
+                     """Welcome to Scranton Business Park. \n
+    1725 Slouh Ave. \n
+    Scranton, PA 45342 \n
+    North of you, is the main enterance"""),
     'fun_run':  Room("""Michael Scott's Dunder Mifflin Scranton Meredith Palmer
     Memorial Celebrity Rabies Awareness Pro-Am Fun Run Race For The Cure""",
                      "A race to cure rabbies."),
@@ -114,10 +117,10 @@ room['344'].w_to = room['hallway_three_cont']
 
 
 # Place items in rooms
-# room['foyer'].items = [items['key'].name, items['sword'].name]
-# room['overlook'].items = [items['mouse'].name, items['yo-yo'].name]
-# room['narrow'].items = [items['backpack'].name]
-# room['treasure'].items = [items['water'].name]
+room['fun-run'].items = [items['shirt']]
+room['overlook'].items = [items['mouse'].name, items['yo-yo'].name]
+room['narrow'].items = [items['backpack'].name]
+room['treasure'].items = [items['water'].name]
 
 #
 # Main

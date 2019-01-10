@@ -44,10 +44,10 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Place items in rooms
-room['foyer'].items = [items['key'].name, items['sword'].name]
-room['overlook'].items = [items['mouse'].name, items['yo-yo'].name]
-room['narrow'].items = [items['backpack'].name]
-room['treasure'].items = [items['water'].name]
+room['foyer'].items = [items['key'], items['sword']]
+room['overlook'].items = [items['mouse'], items['yo-yo']]
+room['narrow'].items = [items['backpack']]
+room['treasure'].items = [items['water']]
 
 #
 # Main
@@ -84,15 +84,17 @@ while True:
         if user_input[0] == 'get' or user_input[0] == 'take':
             item_count = len(player.current_room.items)
             for i, item in enumerate(player.current_room.items):
-                if item.lower() == user_input[1]:
+                if item.name.lower() == user_input[1]:
                     player.items.append(player.current_room.items.pop(i))
-                    print(f"Updated inventory: {player.items}")
+                    item.on_get(player)
+                    print(f"Updated inventory: {player.print_item_names()}")
         elif user_input[0] == 'drop':
             item_count = len(player.items)
             for i, item in enumerate(player.items):
-                if item.lower() == user_input[1]:
+                if item.name.lower() == user_input[1]:
                     player.current_room.items.append(player.items.pop(i))
-                    print(f"Updated inventory: {player.items}")
+                    item.on_drop(player)
+                    print(f"Updated inventory: {player.print_item_names()}")
     elif len(user_input) == 1:
         if user_input[0] == 'q':
             print('You left the game, game over!')
@@ -101,3 +103,8 @@ while True:
             print(f"inventory: {player.items}")
 
         player.current_room = try_direction(user_input[0], player.current_room)
+
+    if player.happiness <= 0:
+        print(
+            'Happiness is too low you lost the will to go on. You lose')
+        break
