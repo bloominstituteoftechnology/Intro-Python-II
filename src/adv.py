@@ -42,12 +42,16 @@ room['treasure'].s_to = room['narrow']
 def random_name():
     return 'Fanny Pack Shaman'
 
+# A function to handle wrong direction
+def wrong_direction():
+    print('You can not go that way')
+
 # Create a function that interprets the user input
 
 def analize_input(string):
     global game_active
     s = string.lower().split(" ")
-    # print("Debugging input string ", s)
+    print("Debugging input string ", s)
 
     if s[0][0] == 'q':
         print('\nAre you sure you wish to quit the game? [Y/N]\n')
@@ -77,10 +81,17 @@ def analize_input(string):
             return
 
 def attempt_move(direction):
-    global current_room
     print('\nAttempted to move... \n')
+    attribute = direction + '_to'
 
-    return
+    if hasattr(player1.location, attribute):
+        next_room = getattr(player1.location, attribute)
+        player1.location = next_room
+        return
+    
+    else:
+        wrong_direction()
+
 
 
 # MAIN
