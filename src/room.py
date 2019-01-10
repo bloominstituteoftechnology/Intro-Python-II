@@ -1,5 +1,6 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
+from item import Item
 
 class Room:
     def __init__ (self, name, description):
@@ -47,7 +48,5 @@ n.inventory =[Item("beer", """who doesn't want beer in narrow passages??"""),Ite
 
 #treasury 
 t.s_to = n
-t..inventory =[Item("gold", """it's about time this pays off"""),Item("job offer", """ongoing income is always nice"""),]
-
-
+t.inventory =[Item("gold", """it's about time this pays off"""),Item("job offer", """ongoing income is always nice"""),]
 

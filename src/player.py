@@ -19,6 +19,7 @@ class Player:
             return self.current_room
         else:
             new_room = getattr(self.current_room, attribute)
+            print(self.current_room.inventory)
             return new_room
 
 

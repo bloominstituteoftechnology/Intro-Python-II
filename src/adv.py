@@ -43,6 +43,7 @@ performs actions, as described below
 
 #done: Make a new player object that is currently in the 'outside' room.
 player =  Player(room['outside']) 
+
 # done: Write a loop that:
 
 # * done: Prints the current room name
@@ -52,12 +53,17 @@ player =  Player(room['outside'])
 while True:
     print(player.current_room.name)
     print(player.current_room.description)
-    s = input("enter N/S/E/W direction to move: ")
-    
+    print(f"Inventory: {player.current_room.inventory}")
+    s = input("enter N/S/E/W direction to move OR enter 'take' to take inventory: ").lower()[0] 
+
     if s == 'q':
         print('see you later')
-    else:
+    elif s == 't':
+        player.current_room.inventory.on_take()
+    elif s == 'n'or's'or'e'or'q':
         player.current_room = player.try_move(s)
+    else:
+        print("oops")
 
 
 
