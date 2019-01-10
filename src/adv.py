@@ -37,31 +37,67 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+def adv_game():
+    # Make a new player object that is currently in the 'outside' room.
+    player = Player("Bob", "outside")
+    roomKey = player.location
+    roomName = room[player.location].name
+    roomDesc = room[player.location].description
+    # Write a loop that:
+    #
+    while True:
+        # * Prints the current room name
+        print(roomName)
+        # * Prints the current description (the textwrap module might be useful here).
+        print(roomDesc)
+        # * Waits for user input and decides what to do.
+        userInput = input("Pick a direction to move: n, s, e, or w: ")
+        # If the user enters "q", quit the game.
+        if userInput == "q":
+            print("You quit")
+            break
+        # If the user enters a cardinal direction, attempt to move to the room there.
+        elif roomKey == 'outside':
+            if userInput == 'n':
+                roomName = room[roomKey].n_to.name
+                roomDesc = room[roomKey].n_to.description
+                roomKey = [key for key in room.keys() if key == 'foyer'][0]
+        elif roomKey == 'foyer':
+            if userInput == 's':
+                roomName = room[roomKey].s_to.name
+                roomDesc = room[roomKey].s_to.description
+                roomKey = [key for key in room.keys() if key == 'outside'][0]
+            elif userInput == 'n':
+                roomName = room[roomKey].n_to.name
+                roomDesc = room[roomKey].n_to.description
+                roomKey = [key for key in room.keys() if key == 'overlook'][0]
+            elif userInput == 'e':
+                roomName = room[roomKey].e_to.name
+                roomDesc = room[roomKey].e_to.description
+                roomKey = [key for key in room.keys() if key == 'narrow'][0]
+        elif roomKey == 'overlook':
+            if userInput == 's':
+                roomName = room[roomKey].s_to.name
+                roomDesc = room[roomKey].s_to.description
+                roomKey = [key for key in room.keys() if key == 'foyer'][0]
+        elif roomKey == 'narrow':
+            if userInput == 'w':
+                roomName = room[roomKey].w_to.name
+                roomDesc = room[roomKey].w_to.description
+                roomKey = [key for key in room.keys() if key == 'foyer'][0]
+            elif userInput == 'n':
+                roomName = room[roomKey].n_to.name
+                roomDesc = room[roomKey].n_to.description
+                roomKey = [key for key in room.keys() if key == 'treasure'][0]
+        elif roomKey == 'treasure':
+            if userInput == 's':
+                roomName = room[roomKey].s_to.name
+                roomDesc = room[roomKey].s_to.description
+                roomKey = [key for key in room.keys() if key == 'narrow'][0]
+        else:
+            # Print an error message if the movement isn't allowed.
+            print("Cannot move that direction, try another: ")
+            continue
 
-# Make a new player object that is currently in the 'outside' room.
-player = Player("Bob", "outside")
-roomKey = player.location
-roomName = room[player.location].name
-roomDesc = room[player.location].description
-# Write a loop that:
-#
-while True:
-    # * Prints the current room name
-    print(roomName)
-    # * Prints the current description (the textwrap module might be useful here).
-    print(roomDesc)
-    # * Waits for user input and decides what to do.
-    userInput = input("Pick a direction to move: n, s, e, or w")
-    # If the user enters a cardinal direction, attempt to move to the room there.
-    if userInput == "n" and roomKey == 'outside':
-        roomKey = room[player.location].n_to
-        roomName = room[player.location].n_to.name
-        roomDesc = room[player.location].n_to.description
-    # If the user enters "q", quit the game.
-    elif userInput == "q":
-        print("You quit")
-        break
-    else:
-        # Print an error message if the movement isn't allowed.
-        print("Cannot move that direction, try another: ")
-        continue
+if __name__ == '__main__':
+    adv_game()
