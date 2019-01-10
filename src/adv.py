@@ -41,6 +41,10 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside'])
 
+def try_direction(direction, current_room):
+    attribute = direction + '_to'
+    if hasattr(current_room, attribute):
+        return getattr(current_room, attribute)
 
 
 # Write a loop that:
@@ -55,9 +59,9 @@ player = Player(room['outside'])
 # If the user enters "q", quit the game.
 
 while True:
-    print('The current room is {}'.format(player.current_room.name))
-    print('Enter a new room by chosing a direction: n for up, s for down, e for right, w for left')
-    direction = input('\nEnter a direction ')
-    if direction == 'n':
-        player.current_room = player.current_room.n_to
-        print(f'You have entered the room "{player.current_room.name}"')
+    print(f'The current room is {player.current_room.name}')
+    print(f'{player.current_room.description}')
+    print(f'Enter a new room by chosing a direction: n for up, s for down, e for right, w for left')
+    direction = input('\nEnter a direction: ').lower()[0]
+    
+    player.current_room = try_direction(direction, player.current_room)
