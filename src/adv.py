@@ -75,12 +75,25 @@ while True:
 
     # Player action responses
     if action == 'take':
-        takeThis = input('\nWhat do you want to take? Enter item: e.g. sword ')
-        player.inventory.append(takeThis)
+        itemToTake = input('\nWhat do you want to take? Enter item: e.g. sword ')
+        # Items players currently hold are kept in inventory
+        items[itemToTake].location = 'inventory'
+        player.inventory.append(itemToTake)
     elif action == 'drop':
-        print(action)
+        # Show the player's current inventory
+        for item in player.inventory:
+            print(item)
+
+        itemToDrop = input('\nWhat do you want to drop? Enter item: e.g. daffodil ')
+        # The item's new location is the room in which it was dropped
+        items[itemToDrop].location = player.currentRoom
+
+        #remove item from inventory
+        player.inventory.remove(itemToDrop)
+
     elif action == 'inventory':
-        print(player.inventory)
+        for item in player.inventory:
+            print(item)
     elif action == 'move':
         # Player movement input **
         print('\nWhere do you want to go? n s e w q')

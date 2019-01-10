@@ -4,3 +4,5 @@ class Player:
     def __init__(self, currentRoom="outside"):
         self.currentRoom = currentRoom
         self.inventory = []
+
+    
