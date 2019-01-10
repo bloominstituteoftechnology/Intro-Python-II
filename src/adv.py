@@ -42,6 +42,14 @@ room['treasure'].s_to = room['narrow']
 name = input('Hello n00b. What is your name?')
 player = Player(name, room['outside'])
 
+
+def try_direction(direction, current_room):
+    attribute = direction + '_to'
+
+    if hasattr(current_room, attribute):
+        return getattr(current_room, attribute)
+
+
 while True:
     print(player.current_location.room_name)
     print(player.current_location.room_description)
