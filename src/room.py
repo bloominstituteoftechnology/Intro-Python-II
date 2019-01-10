@@ -23,14 +23,31 @@ n = Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air.""")
 
 
-#tying location attribute to room instances
+#tying location attribute to room instances, and item instances to each room
 #basically same as defining below init, as self.---
+
+#outside
 o.n_to = f
+o.inventory = [Item("key", """key to treasure box"""),Item("lantern", """a light to guide you"""),]
+
+#foyer
 f.s_to = o
 f.n_to = ov
 f.e_to = n
+f.inventory = [Item("wand", """just in case you need magic"""),Item("shield", """to protect you"""),]
+
+#overlook
 ov.s_to = f
+ov.inventory = [Item("cape", """because it's cold out here"""),Item("snack", """because low blood sugar"""),]
+
+#narrow passage
 n.w_to = f
+n.n_to = t
+n.inventory =[Item("beer", """who doesn't want beer in narrow passages??"""),Item("diamond", """because shiney"""),]
+
+#treasury 
 t.s_to = n
+t..inventory =[Item("gold", """it's about time this pays off"""),Item("job offer", """ongoing income is always nice"""),]
+
 
 
