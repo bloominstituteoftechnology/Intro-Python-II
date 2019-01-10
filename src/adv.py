@@ -91,10 +91,9 @@ to north. The smell of gold permeates the air.""",
 ),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""",
+chamber. Leroy Jenkins stands before you,\nand he looks hungry and ready to rap.\nIf you answer his riddle, he will give you his WoW account information.""",
                      "Your palms are sweaty, knees weak, mom's spaghetti. The cake is a lie,\nbecause Leroy Jenkins ate it with what kind of food?",
-                     "False",
+                     "True",
                      "False",
                      'narrow',
                      "False",
@@ -261,14 +260,14 @@ def movement_handler(destination):
         action = input("--->" + "\n")
         acceptable_actions = ['move', 'go', 'travel', 'walk', 'quit', 'q', 'examine', 'inspect', 'interact', 'look']
         while action.lower() not in acceptable_actions:
-            print("Unknown Action, Try Again.\n")
+            print("Unknown Action, Try Again.\n try 'move', 'go', 'travel', 'walk'")
             action = input("-->")
         if action.lower() in ['quit', 'q']:
             sys.exit()
-            return
+            
         elif action.lower() in ['move', 'go', 'travel', 'walk']:
             if PlayerIG.current_room.solved == "False":
-                print("\nPlease `examine` Your Surroundings")
+                print("\n### Please `examine` Your Surroundings ###")
                 movement_handler(destination)
             else:
                 player_move(action.lower())
@@ -286,7 +285,7 @@ def movement_handler(destination):
 def start1(x):
     os.system('clear')
     # print_location()
-    print("Hello {} {},\nyou have been chosen to infiltrate and retrieve \nan item of great power.".format(x ,PlayerIG.name))
+    print("Hello {} {},\nyou have been chosen to infiltrate and retrieve \nan `item` of great power.".format(x ,PlayerIG.name))
     print("\n" + "======================================")
     destination = PlayerIG.current_room
     movement_handler(destination)
@@ -312,13 +311,14 @@ def player_examine(action):
     if PlayerIG.current_room.name == 'Outside Cave Entrance':
         if PlayerIG.current_room.solved == True:
             print("You have already exhausted this zone")
+            movement_handler(destination)
         else:
             print('# ' + PlayerIG.current_room.examination + ' #')
             word = input('->')
             if word == 'nucleus':
                 PlayerIG.current_room.solved = True
                 print(PlayerIG.current_room.solved)
-                print("Great Job, the word is `nucleus`, You May Move North.")
+                print("\nGreat Job, the word is `nucleus`, You May Move North.")
 
                 movement_handler(destination)
             else:
@@ -331,13 +331,14 @@ def player_examine(action):
     if PlayerIG.current_room.name == 'Foyer':
         if PlayerIG.current_room.solved == True:
             print("You have already exhausted this zone")
+            movement_handler(destination)
         else:
             print('# ' + PlayerIG.current_room.examination + ' #')
             word = input('->')
-            if word == '6.022*10**23':
+            if word == '6.022*10**23' or word == '6.022x10^23':
                 PlayerIG.current_room.solved = True
                 print(PlayerIG.current_room.solved)
-                print("Great Job, the tortured scientists rejoice, and laugh at you.\nThey unlock various passageways.")
+                print("\nGreat Job, the tortured scientists rejoice, and laugh at you.\nThey unlock various passageways.")
 
                 movement_handler(destination)
             else:
@@ -350,13 +351,14 @@ def player_examine(action):
     if PlayerIG.current_room.name == 'Grand Overlook':
         if PlayerIG.current_room.solved == True:
             print("You have already exhausted this zone")
+            movement_handler(destination)
         else:
             print('# ' + PlayerIG.current_room.examination + ' #')
             word = input('->')
             if word == '90' or word == '90 degrees':
                 PlayerIG.current_room.solved = True
                 print(PlayerIG.current_room.solved)
-                print("Great Job, the scientist realizes the meaning of his bald circular shaped head.\nThe door has now unlocked behind you.")
+                print("\nGreat Job, the scientist realizes the meaning of his bald circular shaped head.\nThe door has now unlocked behind you.")
 
                 movement_handler(destination)
             else:
@@ -369,13 +371,14 @@ def player_examine(action):
     if PlayerIG.current_room.name == 'Narrow Passage':
         if PlayerIG.current_room.solved == True:
             print("You have already exhausted this zone")
+            movement_handler(destination)
         else:
             print('# ' + PlayerIG.current_room.examination + ' #')
             word = input('->')
             if word == '1337':
                 PlayerIG.current_room.solved = True
                 print(PlayerIG.current_room.solved)
-                print("Great Job, but you aren't elite just yet, the next puzzle awaits.")
+                print("\nGreat Job, but you aren't elite just yet, the next puzzle awaits.")
 
                 movement_handler(destination)
             else:
@@ -385,25 +388,25 @@ def player_examine(action):
 
 ### Treasure Chamber EXAMINE PUZZLE ###
 
-    if PlayerIG.current_room.name == 'Treasure Chamber' and room['outside'].solved and room['foyer'].solved and room['overlook'].solved and room['narrow'].solved:
-        if PlayerIG.current_room.solved == True:
+    if PlayerIG.current_room.name == 'Treasure Chamber' and room['outside'].solved == True and room['foyer'].solved == True and room['overlook'].solved == True and room['narrow'].solved == True:
+        if PlayerIG.current_room.solved == False:
             print("You have already exhausted this zone, you won now go home.")
-        elif room['outside'].solved and room['foyer'].solved and room['overlook'].solved and room['narrow'].solved:
+        elif room['outside'].solved == True and room['foyer'].solved == True and room['overlook'].solved == True and room['narrow'].solved == True:
             print('# ' + PlayerIG.current_room.examination + ' #')
             word = input('->')
             if word == 'chicken':
-                PlayerIG.current_room.solved = True
+                PlayerIG.current_room.solved = False
                 print(PlayerIG.current_room.solved)
-                print("You Have Won The Game, gratz")
+                print("\nYou Have Won The Game, gratz.\nYou proceed to play World of Warcraft with Leroy for 2 months straight.\n At Least You Had Chicken.")
 
-                movement_handler(destination)
+                
             else:
                 print("Wrong, Try Again")
                 print(action)
                 player_examine(action)
-        else:
-            print("More Rooms Need Examining/Solving.")
-            movement_handler(destination)
+    else:
+        print("More Rooms Need Examining/Solving.")
+        movement_handler(destination)
 
 
 
