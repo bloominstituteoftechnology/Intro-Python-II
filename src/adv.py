@@ -5,7 +5,7 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", ["test"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -53,10 +53,17 @@ player = Player('outside')
 
 commandlist = ('n', 'e', 's', 'w', 'q')
 
+#  inventory item
+
+
+def inv_item(item):
+    player.items.append(item)
+    return 0
+
 
 while True:
-    print(player.room)
-    print(room['outside'].description)
+    print(player.items)
+    print(room['outside'].itemList)
     a = input("Please enter a direction (q to quit): ")
     if any(string in a for string in commandlist):
         print("passed!!")
