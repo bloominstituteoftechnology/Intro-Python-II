@@ -5,8 +5,5 @@ class Monster():
         self.health = health
         self.weapon = weapon
 
-    def on_attack(self):
-        print("You have picked up a {self.description}".format(self = self))
-
-    def def_attack(self):
-        print("You have ")
+    def on_attack(self, type):
+        return type == 'weapon'
