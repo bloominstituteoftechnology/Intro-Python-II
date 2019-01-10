@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from items import Item
 
 # Declare all the rooms
 
@@ -45,7 +46,7 @@ room['treasure'].s_to = room['narrow']
 
 name = input('Hello n00b. What is your name?')
 player = Player(name, room['outside'])
-print('Welcome' + ' ' + name + ',' + 'let\'s start the adventure!')
+print('Welcome' + ' ' + name + ',' + 'let\'s start the adventure! \v')
 
 
 def try_direction(direction, current_location):
@@ -56,7 +57,8 @@ def try_direction(direction, current_location):
 
 
 while True:
-    print(player.current_location.room_name)
+    print(player.name + ' ' + 'your current location is: \v')
+    print(player.current_location.room_name + '\v')
     print(player.current_location.room_description)
     print('Which direction do you choose? (n,s,e or w)')
 
