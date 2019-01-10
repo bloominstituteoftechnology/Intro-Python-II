@@ -377,7 +377,7 @@ def player_examine(action):
             if word == '90' or word == '90 degrees':
                 PlayerIG.current_room.solved = True
                 print(PlayerIG.current_room.solved)
-                print("\nGreat Job, the scientist realizes the meaning of his bald circular shaped head.\nThe door has now unlocked behind you.")
+                print("\nGreat Job, the scientist realizes the meaning of his bald circular 2πr shaped head.\nThe door has now unlocked behind you.")
 
                 movement_handler(destination)
             else:
@@ -415,7 +415,7 @@ def player_examine(action):
             word = input('->')
             if word == 'chicken':
                 PlayerIG.current_room.solved = False
-                print(PlayerIG.current_room.solved)
+                # print(PlayerIG.current_room.solved)
                 print("\nYou Have Won The Game, gratz.\nYou proceed to play World of Warcraft with Leroy for 2 months straight.\n At Least You Had Chicken.")
 
                 
@@ -424,7 +424,7 @@ def player_examine(action):
                 print(action)
                 player_examine(action)
     else:
-        print("More Rooms Need Examining/Solving.")
+        print("\n### More Rooms Need Examining/Solving.. Chum ###")
         movement_handler(destination)
 
 
