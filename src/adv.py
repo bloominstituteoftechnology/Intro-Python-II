@@ -20,7 +20,7 @@ to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", [Item("Club", "Blunt wooden weapon"), Item("Sword", "Damaged and rusted iron sword")]),
+earlier adventurers. The only exit is to the south.""", [Item("Club", "well worn wooden club"), Item("Sword", "damaged and rusted iron sword")]),
 }
 
 
@@ -54,32 +54,38 @@ def game():
     print('Game Options:')
     userInput = input("""[N] North [S] South [E] East [W] WEST [Q] Quit\n
     [(take) + (name of object)] Takes item [(drop) + (name of object)] Drops Item\n""").upper().split()
-    
+    print('#######################################################################################')
+
     while not userInput[0][0] == 'Q':
         
         if len(userInput) == 1:
-            userInput = userInput[0][0]
-            if (userInput == 'N') and (hasattr(player.room, 'n_to') == True):
+            if (userInput[0][0] == 'N') and (hasattr(player.room, 'n_to') == True):
                 player.room = player.room.n_to
-            elif userInput == 'S' and (hasattr(player.room, 's_to') == True):
+            elif userInput[0][0] == 'S' and (hasattr(player.room, 's_to') == True):
                 player.room = player.room.s_to
-            elif userInput == 'E' and (hasattr(player.room, 'e_to') == True):
+            elif userInput[0][0] == 'E' and (hasattr(player.room, 'e_to') == True):
                 player.room = player.room.e_to
-            elif userInput == 'W' and (hasattr(player.room, 'w_to') == True):
+            elif userInput[0][0] == 'W' and (hasattr(player.room, 'w_to') == True):
                 player.room = player.room.w_to
+            elif userInput[0] == 'I' or userInput[0] == 'INVENTORY':
+                print('\nMy Inventory:')
+                for item in player.inventory:
+                    print(item.name)
             else:
                 print('Could not move in that direction')
         elif len(userInput) == 2:
             targetItem = ''
-            if userInput[0] == 'TAKE':
+            if userInput[0] == 'TAKE' or userInput[0] == 'GET':
                 for item in player.room.items:
                     if item.name.upper() == userInput[1]:
+                        item.on_take()
                         player.inventory.append(item)
                         player.room.items.remove(item)
                         
             elif userInput[0] == 'DROP':
                 for item in player.inventory:
                     if item.name.upper() == userInput[1]:
+                        item.on_drop()
                         player.inventory.remove(item)
                         player.room.items.append(item)
                 
@@ -93,11 +99,10 @@ def game():
             print('Items in the room:')
             for item in player.room.items:
                 print(item.name)
-        print('\nMy Inventory:')
-        for item in player.inventory:
-            print(item.name)
+        
         userInput = input("""\n[N] North [S] South [E] East [W] WEST [Q] Quit\n
         [(take) + (name of object)] Takes item [(drop) + (name of object)] Drops Item\n""").upper().split()
+        print('#######################################################################################')
 game()
 
 
