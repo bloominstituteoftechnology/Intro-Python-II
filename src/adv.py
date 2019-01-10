@@ -63,7 +63,7 @@ Check Location: c
 Investigate Room: i
 : """)
 # try newLocation variable, and have the location change be assigned to newLocation before the True check, so that player location doesnt get lost
-# then assign location to new location of True check succeeds
+# then assign location to new location of True check succeed
 if entry == "n":
     if location.desc:
         location = pc.location.n_to
