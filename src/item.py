@@ -5,7 +5,7 @@ class Item:
   def __init__(self, type, descriptor, description, can_get = True):
     self.type = type
     self.name = type
-    self.descriptor = descriptor
+    self.descriptor = descriptor # Adjective like color, or quantity
     self.description = description
     self.can_get = can_get
   
@@ -18,6 +18,13 @@ class Item:
   # Drop Item
   def on_drop(self, player):
     print(f'\nYou drop the {self.type}')
+    player.location.items.append(self)
+    player.items.remove(self)
+
+  # Check Item
+  def on_check(self, player):
+    print(f"Examining the ${self.type}, you see...")
+    print(self.description)
 
 # Card Subclass
 class Card(Item):
@@ -32,3 +39,8 @@ class Credits(Item):
     super().__init__("credits", quantity, description)
     self.quantity = quantity
     self.name = self.quantity + " Credits"
+
+# Feature Subclass
+class Feature(Item):
+  def __init__(self, type, descriptor):
+    super().__init__(type, descriptor, description, False)

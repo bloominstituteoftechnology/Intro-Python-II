@@ -182,6 +182,7 @@ while True:
     # Items
     get_item_command = ("get", "take", "pickup") # Get Item Commands
     drop_item_command = ("drop", "discard") # Drop Item Commands
+    check_item_command = ("check", "examine", "inspect")
     
     # Player
     inventory_command = ("i", "inventory", "bag")
@@ -254,8 +255,6 @@ while True:
             # If there is only one item of the provided type, Get Item
             if len(location_item_type) == 1:
                 location_item_type[0].on_get(player)
-                # player.items.append(location_item_type[0])
-                # player.location.items.remove(location_item_type[0])
                 enter_to_continue()
 
             else: # If there is more than one item of the provided type...
@@ -286,8 +285,8 @@ while True:
         
         # If there is only one item of the provided type, Drop Item
         if len(player_item_type) == 1:
-            player.location.items.append(player_item_type[0])
-            player.items.remove(player_item_type[0])
+            player_item_type[0].on_drop(player)
+            enter_to_continue()
 
         else: # If there is more than one item of the provided type...
 
@@ -302,10 +301,14 @@ while True:
             if item_descriptor in [item.descriptor.lower() for item in player_item_type]:
                 for index, item in enumerate(player_item_type):
                     if item.descriptor.lower() == item_descriptor:
-                        player.location.items.append(player_item_type[0])
-                        player.items.remove(player_item_type[0])
+                        location_item_type[index].on_drop(player)
+                enter_to_continue()
             else:
                 print(f'Unable to drop {item_descriptor} {item_type}.')
+    
+    # Check Item
+
+
     
 
     #
