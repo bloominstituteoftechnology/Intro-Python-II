@@ -18,5 +18,6 @@ class Player:
             print(f"{item.name}: {item.description}")
 
     def change_room(self, room):
-        print(f"You've moved to the following room': {room.name}, {room.description}")
         self.current_room = room
+        print(f"You've moved to the following room': {room.name}, {room.description}")
+        

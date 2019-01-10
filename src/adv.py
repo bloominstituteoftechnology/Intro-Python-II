@@ -45,19 +45,16 @@ player = Player(room['outside'])
 
 # Write a loop that:
 #
+while True:
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
 print(textwrap.dedent(
     f"""\
     You are in room: {player.current_room.name}
     {player.current_room.description}!\
     """))
+# * Waits for user input and decides what to do.
+#
 
 print(textwrap.dedent('''
         What would you like to do?
@@ -67,6 +64,41 @@ print(textwrap.dedent('''
         [b] look in bag
         [q] Quit
     '''))
+
+s = input("\n>").lower().split()
+print("your input:" s)
+
+# If the user enters a cardinal direction, attempt to move to the room there.
+# Print an error message if the movement isn't allowed.
+#
+# If the user enters "q", quit the game.
+if len(s) == 1:
+    # user has passed a direction
+    if s == 'n':
+        player.current_room = player.current_room.n_to
+    elif s == 's':
+        player.current_room = player.current_room.s_to
+    elif s == 'e':
+        player.current_room = player.current_room.e_to
+    elif s == 'w':
+        player.current_room = player.current_room.w_to
+    elif s == 'q'
+        print('see you later!')
+        break
+    else: 
+        print("Not a valid direction!")
+
+elif len(s) == 2:
+    # user has passed two word command to interact with items
+
+else:
+    print("Sorry, I don't know that command")
+    continue
+
+
+
+
+
 
 while True:
     choice = input()
