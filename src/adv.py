@@ -1,27 +1,29 @@
 from room import Room
 from player import Player
 from item import Item
+from item import LightSource
 import textwrap as tw
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                     True),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", False),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", False),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", False),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", False),
 }
 
 
@@ -38,7 +40,7 @@ room['treasure'].s_to = room['narrow']
 
 
 items = {
-    'flashlight': Item("flashlight", "A device that provides a light source."),
+    'flashlight': LightSource("flashlight", "A device that provides a light source."),
     'mysterious_box': Item("mysterious_box", "A locked box of unknown origin.")
 }
 
@@ -95,6 +97,8 @@ help_str = tw.dedent('''\
 
 print(help_str)
 
+last_noun = ""
+
 while True:
     command = input("> ").lower().split()
 
@@ -109,12 +113,20 @@ while True:
         else:
             print("Invalid input. Type help for options.\n")
     elif len(command) == 2:
-        verb, noun = command[0], command[1]
+
+        if command[1] == "it" and last_noun != "":
+            verb, noun = command[0], last_noun
+        else:
+            last_noun = command[1]
+            verb, noun = command[0], command[1]
     else:
         command = print("Invalid input. Type help for options.\n")
         continue
 
     if verb == "get" or verb == "take":
+        if not player.current_room.is_light and not player.has_lightsource:
+            print("Good luck finding that in the dark.")
+            continue
         if isinstance(noun, str):
             if noun in items:
                 item = items[noun]
@@ -146,8 +158,11 @@ while True:
         if noun == "inventory":
             player.show_inventory()
         elif noun == "surroundings":
-            print(player.current_room.items)
-            print(player.current_room)
+            if player.current_room.is_light or player.has_lightsource:
+                print(player.current_room)
+                print(player.current_room.items)
+            else:
+                print("It's too dark to see anything, you need a lightsource.")
         else:
             print("You can't check that!\n")
 
