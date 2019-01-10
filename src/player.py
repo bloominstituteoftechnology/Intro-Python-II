@@ -6,12 +6,12 @@ from room import Room
 
 class Player:
      # Here we are describing our players attributes.
-    def __init__(self, currentRoom, health):
-        self.currentRoom = currentRoom
-        self.health = 100
-        self.inventory = []
-        self.movement_speed = 10
+    def __init__(self, startLocation):
+        self.location = startLocation
     # Here we are defining the methods for the Player class
+
+    def change_location(self, new_location):
+        self.location = new_location
 
     def pickup_item(self, item):
         self.inventory.append(item)
@@ -21,8 +21,8 @@ class Player:
         d = direction + "_to"
 
         # Checking to see if player can move a specific direction
-        if not hasattr(self.currentRoom, d):
+        if not hasattr(self.location, d):
             print("You can't go that way!")
-            return self.currentRoom
+            return self.location
         else:
-            self.currentRoom = self.currentRoom[d]
+            self.location = self.location[d]

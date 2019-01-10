@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,14 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+player = Player(room["outside"])
+
+
+while True:
+    inp = input("What is your command: ")
+    print(f"{player.location.title} \n  {player.location.description}")
+
 
 # Write a loop that:
 #
