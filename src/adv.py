@@ -43,18 +43,56 @@ room['treasure'].s_to = room['narrow']
 player = Player(room["outside"])
 
 
-while True:
-    inp = input("What is your command: ")
-    print(f"{player.location.title} \n  {player.location.description}")
+def try_direction(direction, location):
+    attribute = direction + "_to"
 
+    if hasattr(location, attribute):
+
+        return getattr(location, attribute)
+
+    else:
+        print("You can't head in that direction!")
+        return location
 
 # Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+
+
+while True:
+
+    # * Prints the current room name
+    # * Prints the current description (the textwrap module might be useful here).
+
+    print(
+        f"Your Location: {player.location.title} \n  {player.location.description}")
+
+    # * Waits for user input and decides what to do.
+    inp = input("\n >").lower().split()
+    # If the user enters a cardinal direction, attempt to move to the room there.
+
+    if len(inp) == 1:
+
+        inp = inp[0][0]
+
+        if inp == "q":
+            break
+
+        player.location = try_direction(inp, player.location)
+
+    elif len(inp) == 2:
+        first_word = s[0]
+        second_word = s[1]
+
+        # if inp == "n":
+        #     player.location = player.location.n_to
+        # elif inp == "e":
+        #     player.location = player.location.e_to
+        # elif inp == "s":
+        #     player.location = player.location.s_to
+        # elif inp == "w":
+        #     player.location = player.location.w_to
+        # elif inp == "q":
+        #     break
+
+        # Print an error message if the movement isn't allowed.
+        #
+        # If the user enters "q", quit the game.
