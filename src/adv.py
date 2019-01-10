@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -36,7 +37,13 @@ room['treasure'].s_to = room['narrow']
 
 # Item List
 
-
+items = {
+    'toast':  Item("toast", """A little burnt piece 
+    of bread. Better hang on to it!""", """You swallow 
+    the burnt toast in one gulp and immediatly regret 
+    the decision you just made. The horrible taste will 
+    haunt you to the grave.""")
+}
 
 # Create a function to give a player a random name if
 # they leave it blank
