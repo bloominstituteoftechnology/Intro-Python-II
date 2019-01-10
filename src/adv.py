@@ -8,7 +8,7 @@ import sys
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -48,11 +48,11 @@ potion = Item('potion', 'A suspicious-looking green potion.')
 torch = Item('torch', 'A standard torch.')
 
 # Make a new player object that is currently in the 'outside' room.
-newPlayer = Player('Player', 'outside')
-newPlayer.location.items = [dagger, pouch, potion, torch]
+newPlayer = Player('Player', room['outside'])
+newPlayer.items = [dagger, pouch, potion, torch]
 
 print(newPlayer) # testing to make sure class is working properly via default repr
-print(newPlayer.location.items)
+print(newPlayer.items)
 
 # Write a loop that:
 #
@@ -60,6 +60,15 @@ print(newPlayer.location.items)
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
+while True:
+    print('\n ********** \n')
+    print(f'You are currently at {newPlayer.location}')
+    print(f'{newPlayer.location.description}')
+    print('\n ********** \n')
+    # will try to add some kind of "directions" message or a directions command so these don't pop up every time
+    player_input = input('What would you like to do? Use list to find items, north/south/east/west to move. q to quit.')
+    
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
