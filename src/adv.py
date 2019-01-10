@@ -6,21 +6,21 @@ from item import Item
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-"North of you, the cave mount beckons", []),
+    "North of you, the cave mount beckons", ['toast']),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", []),
+    passages run north and east.""", []),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", []),
+    into the darkness. Ahead to the north, a light flickers in
+    the distance, but there is no way across the chasm.""", []),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", []),
+    to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", []),
+    chamber! Sadly, it has already been completely emptied by
+    earlier adventurers. The only exit is to the south.""", []),
 }
 
 
@@ -37,7 +37,7 @@ room['treasure'].s_to = room['narrow']
 
 # Item List
 
-items = {
+item_list = {
     'toast':  Item("toast", """A little burnt piece 
     of bread. Better hang on to it!""", """You swallow 
     the burnt toast in one gulp and immediatly regret 
@@ -89,6 +89,18 @@ def analize_input(string):
             print('You must include a direction [N/S/E/W] when trying to move')
             return
 
+    elif s[0][0] == 'g':
+        grab_item(s[1])
+
+    elif s[0][0] == 'd':
+        drop_item(s[1])
+
+    elif s[0][0] == 'u':
+        use_item(s[1])
+
+    elif s[0][0] == 'i':
+        print('Inventory', player1.inventory, '\n')
+
 def attempt_move(direction):
     print('\nAttempted to move... \n')
     attribute = direction + '_to'
@@ -101,6 +113,21 @@ def attempt_move(direction):
     else:
         wrong_direction()
 
+# Handle item functions
+def grab_item(item):
+    global item_list
+    player1.location.inventory.remove(item)
+    player1.inventory.append(item)
+    print(item_list[item].description, '\n')
+
+def drop_item(item):
+    player1.location.inventory.append(item)
+    player1.inventory.remove(item)
+
+def use_item(item):
+    global item_list
+    player1.inventory.remove(item)
+    print(item_list[item].usage, '\n')
 
 
 # MAIN
@@ -126,12 +153,13 @@ print(f'\nWelcome {player1.name}!\n')
 while game_active:
 
     # * Prints the current room name
-
     print(f'Current location: {player1.location.name}')
 
     # * Prints the current description (the textwrap module might be useful here).
+    print(f'-{player1.location.description}-')
 
-    print(f'-{player1.location.description}-\n')
+    # Prints the current room inventory
+    print("-Items in reach: ", player1.location.inventory, '-\n')
 
     # * Waits for user input and decides what to do.
     print('Please choose an action')
