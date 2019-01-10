@@ -1,7 +1,12 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
+
+# item = {
+
+# }
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -33,6 +38,8 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+# . notation accessing attribute on a class 
+# bracket notation for dictionary
 
 #
 # Main
@@ -40,6 +47,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside'])
+print(player)
 # Write a loop that:
 #
 # * Prints the current room name
@@ -54,27 +62,34 @@ player = Player(room['outside'])
 done = False 
 
 while not done:
-  # currentRoom = player.initialLocation
-  print(f'This is the current room {player.initialLocation.name}')
-  print((player.initialLocation.description))
-  s = input().lower()
+  # currentRoom = player.currentLocation
+  print(f'This is the current room {player.currentLocation.name}')
+  print((player.currentLocation.description))
+  s = input().lower().split()
+  s = s[0]
+  print(s, " this is s")
+  # split to get rid of white space
   
   if s == 'q':
     done = True
   # elif s in ["n", "w", "s, "e"]:
   #   key = f'{s}_to'
-  elif s == 'n':
-    # print(player.initialLocation.n_to)
-    player.initialLocation = player.initialLocation.n_to
-  elif s == 's':
-    player.initialLocation = player.initialLocation.s_to
-  elif s == 'e':
-    player.initialLocation = player.initialLocation.e_to
-  elif s == 'w':
-    player.initialLocation = player.initialLocation.w_to
 
+  elif s in ['n', 's', 'e', 'w']: 
+    print(room[player.currentLocation])
+    if hasattr(room[player.currentLocation], f'{s}_to'):
+      print("working", room[player.currentLocation])
 
-    
-  # else: print(f'unknown command "{s}"')
+  # elif s == 'n':
+  #   # print(player.currentLocation.n_to)
+  #   player.currentLocation = player.currentLocation.n_to
+  # elif s == 's':
+  #   player.currentLocation = player.currentLocation.s_to
+  # elif s == 'e':
+  #   player.currentLocation = player.currentLocation.e_to
+  # elif s == 'w':
+  #   player.currentLocation = player.currentLocation.w_to
+  
+  else: print(f'unknown command "{s}"')
   
 
