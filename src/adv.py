@@ -113,10 +113,20 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-starting_knight = [Item("Steel Sword", "Something To Slice With."), Item("Lions Mane", "Increases Health Slightly")]
-starting_magi = [Item("Magic Spell Book", "Provides Knowledge Of Ancient Spells"), Item("Lions Mane", "Increases Health Slightly")]
-starting_assassin = [Item("Steel Dagger", "Something To Stab With."), Item("Lions Mane", "Increases Health Slightly")]
+starting_knight = {
+    'weapon': Item("Steel Sword", "Something To Slice With."), 
+    'herb': Item("Lions Mane", "Increases Health Slightly")
+    }
 
+starting_magi = {
+    'weapon': Item("Magic Spell Book", "Provides Knowledge Of Ancient Spells"), 
+    'herb': Item("Lions Mane", "Increases Health Slightly")
+    }
+
+starting_assassin = {
+    'weapon': Item("Steel Dagger", "Something To Stab With."), 
+    'herb': Item("Lions Mane", "Increases Health Slightly")
+    }
 
 
 #
@@ -258,7 +268,7 @@ def movement_handler(destination):
         print("\n" + "======================================")
         print("What would you like to do?")
         action = input("--->" + "\n")
-        acceptable_actions = ['move', 'go', 'travel', 'walk', 'quit', 'q', 'examine', 'inspect', 'interact', 'look']
+        acceptable_actions = ['move', 'go', 'travel', 'walk', 'quit', 'q', 'examine', 'inspect', 'interact', 'look', 'inventory', 'items']
         while action.lower() not in acceptable_actions:
             print("Unknown Action, Try Again.\n try 'move', 'go', 'travel', 'walk'")
             action = input("-->")
@@ -273,6 +283,8 @@ def movement_handler(destination):
                 player_move(action.lower())
         elif action.lower() in ['examine', 'inspect', 'interact', 'look']:
             player_examine(action.lower())
+        elif action.lower() in ['inventory', 'items']:
+            player_items(action.lower())
 
     except: 
         if action.lower() in ['move', 'go', 'travel', 'walk']:
@@ -301,7 +313,14 @@ def start1(x):
     #     player_move(action.lower())
     # elif action.lower() in ['examine', 'inspect', 'interact', 'look']:
     #     player_examine(action.lower())
-    
+
+def player_items(item):
+    destination = PlayerIG.current_room
+    print("These are your items...\n")
+    print(PlayerIG.inventory['weapon'].name + ': ' + PlayerIG.inventory['weapon'].description)
+    print(PlayerIG.inventory['herb'].name + ': ' + PlayerIG.inventory['herb'].description)
+    movement_handler(destination)
+
 def player_examine(action):
     destination = PlayerIG.current_room
     print(PlayerIG.current_room.name)
