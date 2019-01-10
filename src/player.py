@@ -10,6 +10,7 @@ class Player:
         self.has_lightsource = False
         self.hit_points = 100
         self.attack = 10
+        self.is_alive = True
 
     def take_item(self, item):
         if isinstance(item, LightSource):
@@ -35,5 +36,9 @@ class Player:
                 print("You've changed location, but it's pitch black!")
 
     def attack_monster(self, monster):
-        monster.hit_points -= self.attack
-        print(f"{monster.name} was damaged! It's health is now at {monster.hit_points}.")
+        monster.on_attack(self.attack)
+        if monster.is_alive:
+            self.hit_points -= monster.attack
+        if self.hit_points <= 0:
+            self.is_alive = False
+        print(f"Your health: {self.hit_points}")

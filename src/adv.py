@@ -50,7 +50,7 @@ room['outside'].add_item(items['mysterious_box'])
 
 
 monsters = {
-    'dragon': Monster('Dragon', 'Big scary dragon', "fire", 20)
+    'dragon': Monster('Dragon', 'Big scary dragon', 100, 20)
 }
 
 room['foyer'].monster = monsters['dragon']
@@ -160,7 +160,11 @@ while True:
     elif verb == "go" or verb == "move":
         player.move_to(try_direction(noun))
         if hasattr(player.current_room, "monster"):
-            print(f"Uh oh! There's a {player.current_room.monster} in here!")
+            if player.current_room.monster.is_alive:
+                print(f"Uh oh! There's a {player.current_room.monster} in here!")
+            else:
+                dragon_item = Item('Dead Dragon', 'The dragon corpse')
+                player.current_room.add_item(dragon_item)
 
     elif verb == "check":
         if noun == "inventory":
@@ -178,6 +182,9 @@ while True:
             monster = monsters[noun]
             if hasattr(player.current_room, "monster") and player.current_room.monster == monster:
                 player.attack_monster(monster)
+                if not player.is_alive:
+                    print("You died!")
+                    break
 
     else:
         print("\nInvalid input. Type help for options.\n")
