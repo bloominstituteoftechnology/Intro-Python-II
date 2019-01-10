@@ -12,5 +12,4 @@ class Player:
         return self.name
 
     def takeItem(self, item):
-        print('taking')
         self.items.append(item)

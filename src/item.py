@@ -9,5 +9,5 @@ class Item:
     def __repr__(self):
         return self.name
 
-    def on_take(self, player, item):
-        return f'Picked up {self.name}\n {self.description}'
+    def on_take(self):
+        return f'\nPicked up {self.name}\n{self.description}\n'

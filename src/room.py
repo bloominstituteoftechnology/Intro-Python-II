@@ -28,12 +28,11 @@ class Room:
         string = '\n'
         for line in desc:
             string += line + '\n'
-        string += 'Items: '
+        string += 'Room items: '
         for line in items:
             string += line + '\n'
 
         return string + '\n'
 
     def removeItem(self, item):
-        print(self.items)
         self.items.remove(item)
