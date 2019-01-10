@@ -78,6 +78,8 @@ while not done:
       my_key = getattr(room[player.location], key)
       lst = ['outside', 'foyer','overlook','narrow', 'treasure']
       player.moveTo(lst, my_key)
+  elif user_input == 'i':
+    print(player.inventory)
   else:
     # print(f'unknown command {user_input}')
     print('\033[31m' + f'unknown command {user_input}')

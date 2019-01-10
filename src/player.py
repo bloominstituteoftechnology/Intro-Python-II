@@ -3,10 +3,11 @@
 from room import Room
 
 class Player:
-  def __init__(self, location, inventory=[None]* 3):
+  def __init__(self, location, inventory=['empty']* 3):
     self.location = location
     self.inventory = inventory
   def moveTo(self, lst, key):
     new_location = [extension for extension in lst if(extension in key.name.lower())]
     self.location = new_location[0]
-
+  def addTo(self, item):
+    pass
