@@ -5,7 +5,7 @@ import textwrap
 # Local Imports
 from location import Location
 from player import Player
-from item import Item
+from item import Item, Card
 
 # Declare all the locations
 
@@ -41,13 +41,13 @@ location['treasure'].s_to = location['narrow']
 
 # Declare all items
 item = {
-    'red_card_1': Item("Red Card 1", '''A thin red card with a scrap of beige tape peeling off on one side. Labeled "1".''')
+    'red_card_1': Card("Red", '''A thin red card with a scrap of beige tape peeling off on one side. Labeled "1".'''),
+    'blue_card_1': Card("Blue", '''A bulky blue card with a blackened corner that suggests a recent encounter with 
+fire.''')
 }
 
 # Link items to locations
-location['treasure'].items = {
-    item['red_card_1'].name.lower(): item['red_card_1']
-}
+location['treasure'].items = [item['red_card_1'], item['blue_card_1']]
 
 # Declare Player
 player = Player('Chosen One', location['outside'])
@@ -127,10 +127,10 @@ while True:
         print(line)
     
     # Location Items
-    if (len(list(player.location.items.keys())) > 0):
+    if (len(player.location.items) > 0):
         print("\nYou see the following items: ")
         for item in player.location.items:
-            print(player.location.items[item].name)
+            print(item.name)
 
     # Main Input + Convert to Lowercase and a List
     print('________________________________________________________________________________')
@@ -230,27 +230,72 @@ while True:
 
     # Get Item
     elif command_action in get_item_command:
+        # Check if command_object is more than one word
+        command_object_item = command_object.split(" ")
 
-        # Check if item is in location
-        if command_object in player.location.items:
-            player.location.items[command_object].on_get()
-            player.items[command_object] = player.location.items[command_object]
-            player.location.items.pop(command_object, None)
-        else: 
-            print(f"You don't see a(n) {command_object} in the {player.location.name}.")
-        enter_to_continue()
+        # If command_object is one word, assume that word is the item type
+        if len(command_object_item) == 1:
+            item_type = command_object_item[0]
+            item_descriptor = None
+
+        # If command_object is more than one word, assume that the second 
+        # word is the item type and the first word is a descriptor
+        else:
+            item_type = command_object_item[1]
+            item_descriptor = command_object_item[0]
+        
+        # Get a list of all items with a type that matches the provided type
+        location_item_type = [item for item in player.location.items if item.type == item_type]
+        
+        # If there is only one item of the provided type, Get Item
+        if len(location_item_type) == 1:
+            player.items.append(location_item_type[0])
+            # location.items = [item for item in player.location.items if item.type != location_item_type[0]]
+            player.location.items.remove(location_item_type[0])
+
+        else: # If there is more than one item of the provided type...
+
+            # If player did not provide a descriptor, prompt player to choose one
+            if item_descriptor == None:
+                print(f'''What type of {item_type}?''')
+                for item in location_item_type:
+                    print(item.descriptor)
+                item_descriptor = input('Enter one of the above options: ')
+
+            # Get item with the provided descriptor if it exists in the location
+            if item_descriptor in [item.descriptor.lower() for item in location_item_type]:
+                for index, item in enumerate(location_item_type):
+                    if item.descriptor.lower() == item_descriptor:
+                        player.items.append(location_item_type[index])
+                        # location.items = [item for item in player.location.items if item.type != location_item_type[index]]
+                        player.location.items.remove(location_item_type[index])
+            else:
+                print(f'Unable to pick up {item_descriptor} {item_type}.')
+            
+
+
+
+
+    #     # Check if item is in location
+    #     if command_object in player.location.items:
+    #         player.location.items[command_object].on_get()
+    #         player.items[command_object] = player.location.items[command_object]
+    #         player.location.items.pop(command_object, None)
+    #     else: 
+    #         print(f"You don't see a(n) {command_object} in the {player.location.name}.")
+    #     enter_to_continue()
     
-    # Drop Item
-    elif command_action in drop_item_command:
+    # # Drop Item
+    # elif command_action in drop_item_command:
 
-        # Check if item is in player inventory
-        if command_object in player.items:
-            player.items[command_object].on_drop()
-            player.location.items[command_object] = player.items[command_object]
-            player.items.pop(command_object, None)
-        else: 
-            print(f"You don't have a(n) {command_object} in your inventory.")
-        enter_to_continue()
+    #     # Check if item is in player inventory
+    #     if command_object in player.items:
+    #         player.items[command_object].on_drop()
+    #         player.location.items[command_object] = player.items[command_object]
+    #         player.items.pop(command_object, None)
+    #     else: 
+    #         print(f"You don't have a(n) {command_object} in your inventory.")
+    #     enter_to_continue()
 
     #
     # Player
@@ -260,5 +305,8 @@ while True:
     elif command_action in inventory_command:
         player.inventory()
         enter_to_continue()
+    
+    else:
+        print("That isn't possible in this world.")
 
     print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
