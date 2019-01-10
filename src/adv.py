@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from item import Item
+from monster import Monster
 
 # Declare all the rooms
 
@@ -24,6 +25,14 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 
+monster = {
+    'gorgon': Monster('Gorgon', """ With a head full of serpents, the creature flys above..stalking her prey.""", 150),
+
+    'giant': Monster('Giant', """ A massive human-like beast with immense strenth""", 300),
+
+    'tiger': Monster('Large Tiger', """ A very large tiger seems to be lurking around here..""", 100)
+}
+
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -35,6 +44,10 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+room['overlook'].monster = monster['gorgon']
+room['narrow'].monster = monster['tiger']
+room['treasure'].monster = monster['giant']
 
 inits = 'Start of Game'
 location = 'outside'
@@ -52,6 +65,14 @@ print(current_room)
 
 # moves player to user given direction
 def command(p_inpt):
+    """
+    The command function handles all the input for the user
+    directions are n s e or w.
+    verbs are q or quit for quit
+    drop for dropping item followed by item you want to drop separated by space
+    take or get for getting item followed by item you want to get seperated by space
+
+    """
     global current_room
     if p_inpt[0] == 'n':
         new_room = current_room.n_to
@@ -75,9 +96,9 @@ def command(p_inpt):
     elif p_inpt[0] == 'w':
         new_room = current_room.w_to
         current_room = new_room
-        print(f"You are now at the {current_room.name}. {current_room.description}")
+        print(f"You are now at the {current_room.name}. {current_room.description}\n")
         if len(current_room.items) > 0:
-            print(f"You see a {current_room.items[0]}.")   
+            print(f"You see a {current_room.items[0]}.\n")   
     
 
     if p_inpt[0] == 'get' or p_inpt[0] == 'take':
@@ -86,9 +107,9 @@ def command(p_inpt):
                 if p_inpt[1] == i.name:
                     player.items.append(i)
                     current_room.items.remove(i)
-                    print(f"You have picked up the {i.name}")
+                    print(f"You have picked up the {i.name}\n")
                 else:
-                    print('There is no item with that name here')
+                    print('There is no item with that name here\n')
 
     if p_inpt[0] == 'drop' or p_inpt[0] == 'd':
         if len(player.items) > 0:
@@ -96,7 +117,20 @@ def command(p_inpt):
                 if p_inpt[1] == i.name:
                     current_room.items.append(i)
                     player.items.remove(i)
-                    print(f"You don't need {i.name} any longer, so you drop it")
+                    print(f"You don't need {i.name} any longer, so you drop it\n")
+        else: 
+            print("You don't have any items to drop\n")
+
+    if p_inpt[0] == 'inventory' or p_inpt[0] == 'i':
+        if len(player.items) > 0:
+            for i in player.items:
+                print(i.name)
+        else:
+            print("Inventory is empty\n")
+    
+    if p_inpt[0] == 'q' or p_inpt[0] == 'quit':
+        print("Ending game....Goodbye! \n")
+
 
 
 
@@ -120,7 +154,7 @@ print(f"\n Welcome to your first adventure, {player.name}! \n Use 'n' to go Nort
 
 while not inits[0] == 'q':
     if current_room == room['outside']:
-        print(f'You are currently {current_room}')
+        print(f'You are currently {current_room}\n')
     else:
         print('\n<=========================================> \n')
     
@@ -128,7 +162,7 @@ while not inits[0] == 'q':
         inits = input('Enter a command: \n').split(' ')
         command(inits)
     except AttributeError:
-      print("Can't go this way")
+      print("Can't go this way\n")
       continue
 
     # if len(current_room.items) > 0:
