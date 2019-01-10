@@ -13,7 +13,12 @@ class Room:
     def __repr__(self):
         items = ''
         if len(self.items) > 0:
-            items = ' '.join(self.items)
+            for (ind, item) in enumerate(self.items):
+                if ind == 0 and len(self.items) < 1\
+                        or ind == len(self.items) - 1:
+                    items += f'{item.name} '
+                else:
+                    items += f'{item.name}, '
         else:
             items = 'none'
 
@@ -28,3 +33,7 @@ class Room:
             string += line + '\n'
 
         return string + '\n'
+
+    def removeItem(self, item):
+        print(self.items)
+        self.items.remove(item)
