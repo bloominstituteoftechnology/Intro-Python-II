@@ -1,5 +1,9 @@
 from room import Room
 from player import Player
+from item import Item
+
+import sys
+
 # Declare all the rooms
 
 room = {
@@ -37,9 +41,18 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+# adding some items to the game to test
+dagger = Item('dagger', 'A slightly rusty dagger.')
+pouch = Item('pouch', 'A small leather pouch containing some assorted coins.')
+potion = Item('potion', 'A suspicious-looking green potion.')
+torch = Item('torch', 'A standard torch.')
+
 # Make a new player object that is currently in the 'outside' room.
 newPlayer = Player('Player', 'outside')
-print(newPlayer)
+newPlayer.location.items = [dagger, pouch, potion, torch]
+
+print(newPlayer) # testing to make sure class is working properly via default repr
+print(newPlayer.location.items)
 
 # Write a loop that:
 #
@@ -51,3 +64,5 @@ print(newPlayer)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# loop begins here
