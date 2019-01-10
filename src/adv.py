@@ -34,28 +34,35 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
 # Main
 #
+def movement(direction, current_room):
+    attr = direction + '_to'
 
-# Make a new player object that is currently in the 'outside' room.
+    if hasattr(current_room, attr):
+        return getattr(current_room, attr)
 
-# Write a loop that:
-#
 def adv_game():
+# Make a new player object that is currently in the 'outside' room.
     # get the player name from the sys arguments
-    player_one = Player(sys.argv[1])
-    
+    player_one = Player(sys.argv[1], room['outside'])
+        
     # welcome message
     print(f'Welcome {player_one.name.capitalize()}')
-    if player_one.room == 'outside':
-        print(f'You are currently standing {room[player_one.room].area}')
-    else:
-        print(f'You are currently standing in the {room[player_one.room].area}')
 
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
+# Write a loop that:
+    while True:
+    # * Prints the current room name
+        print(f'\nYou are currently standing at the {player_one.room.area}')
+    # * Prints the current description (the textwrap module might be useful here).
+        print(f'{player_one.room.description}')
+    # * Waits for user input and decides what to do.
+        userS = input('\nWhat would you like to do?>>> ')
+        
+        player_one.room = movement(userS, player_one.room)
+        if userS == '9':
+            break
+
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
