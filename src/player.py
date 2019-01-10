@@ -14,13 +14,14 @@ class Player:
     def __repr__(self):
         return f"Player is in {self.location} "
 
+    def findItemByName(self, name):
+        for i in self.items:
+            if i.name.lower() == name.lower():
+                return i
+        return None
+
     def addItem(self, item):
         self.items.append(item)
 
     def removeItem(self, item):
-        if len(self.items) > 0:
-            for i in self.items:
-                if i.name == item:
-                    self.items.remove(i)
-        else:
-            print("Item can not be removed.")
+        self.items.remove(item)

@@ -77,8 +77,10 @@ while True:
 
     # * Waits for user input and decides what to do.
     inp = input(
-        "\n Enter a direction or pick up an item from the current room > ").lower().split()
+        "\n Enter a direction or pick up an item from the current room >").lower().split()
     # If the user enters a cardinal direction, attempt to move to the room there.
+
+    print("---------------------------------------------------------------")
 
     if len(inp) == 1:
 
@@ -94,5 +96,15 @@ while True:
         if itemToGet is not None:
             player.addItem(itemToGet)
             player.location.removeItem(itemToGet)
+            print(f" \n You picked up : {inp[1]}")
         else:
-            print(f"There is no {inp[1]} here.")
+            print(f"\n There is no {inp[1]} here.")
+
+    elif len(inp) > 1 and (inp[0] == "drop" or inp[0] == "remove"):
+        itemToGet = player.findItemByName(inp[1])
+        if itemToGet is not None:
+            player.removeItem(itemToGet)
+            player.location.addItem(itemToGet)
+        else:
+            print(
+                f"\n You have nothing in your inventory by the name of {inp[1]} ")
