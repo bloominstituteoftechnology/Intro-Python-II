@@ -36,50 +36,74 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+def try_direction(direction, current_room):
+    attribute = direction + '_to'
+
+    #to check if rhe direction is one where player can move
+    if hasattr(current_room, attribute):
+        #fetch the new room
+        return getattr(current_room, attribute)
+
+
 print(room['outside'])
 # Make a new player object that is currently in the 'outside' room.
 player_name = input("Enter your name  : ")
-game_player = Player(player_name, "outside")
+game_player = Player(player_name, room['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
+print("\n\t\t**** WELCOME ****")
 while True:
-    print('''\tCurrently you are in outside room .. 
-             Hint to move : "{}"
+    print('''\n\t\tHint to move : "{}"
              Keep moving around
              Press n : North direction
                    s : South direction
                    e : East direction
                    w : west direction
                    q : Quit'''.format(room['outside']))
-    player_direction = input()
+    player_direction = input().lower()
     a = ['n','s','e','w','q']
     if player_direction in a:
         if player_direction == 'q':
-            print("Thanks for playing!\n")
+            print("\n\n\tThanks for playing!\n")
             break
-        elif player_direction == 'n':
-            print('''\tYou are in Foyer room now 
-                     Keep moving 
-                     Next Hint to move :
-                     "{}"'''.format(room['foyer']))
-            print("Enter next direction : ")
-            player_direction = input()
+        
+        # else:
+        #     game_player.location = try_direction(player_direction, game_player.location)
+        #     if game_player.location != None:
+        #         print(f'You are at {game_player.location.room_name} \nNext Hint to move : {game_player.location.room_description}')
+        #         print("Enter next direction : ")
+        #         player_direction = input().lower()
             
+        #     else:
+        #         print("NO PATH FOUND IN THIS DIRECTION.. \nFOLLOW THE HINT")
+        #         player_direction = input().lower()
+        
+        elif player_direction == 'n':
+            game_player.location = try_direction(player_direction, game_player.location)
+            print(f'You are at {game_player.location.room_name} \nNext Hint to move : {game_player.location.room_description}')
+            print("Enter next direction : ")
+            player_direction = input().lower()
+        
             if player_direction == 'e':
-                print('''\tGoing in correct direction ...
-                         Now you are in Narrow Passage
-                         Hint to move forwoard : 
-                         "{}"'''.format(room['narrow']))
+                game_player.location = try_direction(player_direction, game_player.location)
+                print(game_player.location)
+                print(f'You are at {game_player.location.room_name} \nNext Hint to move : {game_player.location.room_description}')
                 print("Enter next direction : ")
-                player_direction = input()
+                player_direction = input().lower()
 
                 if player_direction == 'n':
                     print("WOW!! {}".format(room['treasure']))
-                    break
+                    print("\nWant to Continue...(Y/N)")
+                    choice = input().lower()
+                    if choice == 'y':
+                        continue
+                    else:
+                        print("TRY NEXT TIME..")
+                        break
                 elif player_direction == 'w':
                     print("OOPS Follow the HINT : {}".format(room['narrow']))
                     print("Keep Trying : ")
@@ -87,10 +111,17 @@ while True:
 
                     if player_direction == 'n':
                         print("WOW!! {}".format(room['treasure']))
-                        break
+                        print("\nWant to Continue...(Y/N)")
+                        choice = input().lower()
+                        if choice == 'y':
+                            continue
+                        else:
+                            print("TRY NEXT TIME..")
+                            break
+
                     else:
                         print("BAD LUCk ... TRY AGAIN")
-                        continue
+                        continue 
     else:
         print("\tPlease enter ['n','s','e','w' OR 'q to Quit]")
         continue

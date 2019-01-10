@@ -4,4 +4,8 @@
 class Player:
     def __init__(self, name, location):
         self.name = name
-        self.name = location
+        self.location = location
+    
+    def __repr__(self):
+        return f'{self.name} is in the {self.location}'
+
