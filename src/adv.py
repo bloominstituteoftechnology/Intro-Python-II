@@ -44,13 +44,12 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-
+# Links monsters to a room
 room['overlook'].monster = monster['gorgon']
 room['narrow'].monster = monster['tiger']
 room['treasure'].monster = monster['giant']
 
-inits = 'Start of Game'
-location = 'outside'
+inits = 'Start of Game' # input variable used
 
 #
 # Main
@@ -74,31 +73,39 @@ def command(p_inpt):
 
     """
     global current_room
-    if p_inpt[0] == 'n':
-        new_room = current_room.n_to
-        current_room = new_room
+    if p_inpt[0] == 'n':      # if the player input equals n for north
+        new_room = current_room.n_to # set the current room to the room 
+        current_room = new_room      # linked to the north by attr
         print(f"You are now at the {current_room.name}. {current_room.description}.")
-        if len(current_room.items) > 0:
+        if len(current_room.items) > 0: # if there are any items in the current room 
             print(f"You see a {current_room.items[0]}.")
+        if hasattr(current_room, 'monster') == True:
+            print(f"You can also see a {current_room.monster.name}. {current_room.monster.description}")
             
-    elif p_inpt[0] == 's':
+    elif p_inpt[0] == 's': 
         new_room = current_room.s_to
         current_room = new_room
         print(f"You are now at the {current_room.name}. {current_room.description}")
         if len(current_room.items) > 0:
             print(f"You see a {current_room.items[0]}.")
+        if hasattr(current_room, 'monster') == True:
+            print(f"You can also see a {current_room.monster.name}. {current_room.monster.description}")
     elif p_inpt[0] == 'e':
         new_room = current_room.e_to
         current_room = new_room
         print(f"You are now at the {current_room.name}. {current_room.description}")
         if len(current_room.items) > 0:
             print(f"You see a {current_room.items[0]}.")
+        if hasattr(current_room, 'monster') == True:
+            print(f"You can also see a {current_room.monster.name}. {current_room.monster.description}")
     elif p_inpt[0] == 'w':
         new_room = current_room.w_to
         current_room = new_room
         print(f"You are now at the {current_room.name}. {current_room.description}\n")
         if len(current_room.items) > 0:
             print(f"You see a {current_room.items[0]}.\n")   
+        if hasattr(current_room, 'monster') == True:
+            print(f"You can also see a {current_room.monster.name}. {current_room.monster.description}")
     
 
     if p_inpt[0] == 'get' or p_inpt[0] == 'take':
@@ -132,23 +139,7 @@ def command(p_inpt):
         print("Ending game....Goodbye! \n")
 
 
-
-
-
-
-
-
-
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+# ================ Game Loop ===========================#
 
 print(f"\n Welcome to your first adventure, {player.name}! \n Use 'n' to go North \n Use 's' to go South \n Use 'w' to go West \n Use 'e' to go East \n Press 'q' to quit game \n Type 'get' followed by the item name, separated by a space" )
 
