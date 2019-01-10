@@ -51,8 +51,8 @@ def try_direction(direction, location):
         return getattr(location, attribute)
 
     else:
-        print("You can't head in that direction!")
-        return location
+        print("You can't head in that direction!" + "\n")
+        return player.location
 
 # Write a loop that:
 
@@ -61,12 +61,12 @@ while True:
 
     # * Prints the current room name
     # * Prints the current description (the textwrap module might be useful here).
-
     print(
-        f"Your Location: {player.location.title} \n  {player.location.description}")
+        "\n " + f"Your Location: {player.location.title} \n \n {player.location.description}")
 
     # * Waits for user input and decides what to do.
-    inp = input("\n >").lower().split()
+    inp = input(
+        "\n Enter a direction or pick up an item from the current room > \n ").lower().split()
     # If the user enters a cardinal direction, attempt to move to the room there.
 
     if len(inp) == 1:
@@ -79,8 +79,8 @@ while True:
         player.location = try_direction(inp, player.location)
 
     elif len(inp) == 2:
-        first_word = s[0]
-        second_word = s[1]
+        first_word = inp[0]
+        second_word = inp[1]
 
         # if inp == "n":
         #     player.location = player.location.n_to
