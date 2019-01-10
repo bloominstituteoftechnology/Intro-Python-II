@@ -3,6 +3,10 @@ from room import Room
 from player import Player
 from items import Item
 
+# controls so far | for future reference
+# movement - (n)orth, (s)outh, (e)ast, (w)est
+# look around - (l)ook
+
 # Declare items
 backpack = Item('backpack')
 key = Item('key')
@@ -19,14 +23,14 @@ passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", flashlight),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", sword),
 }
 
 
@@ -56,13 +60,7 @@ def adv_game():
 # Make a new player object that is currently in the 'outside' room.
     # get the player name from the sys arguments
     player_one = Player(sys.argv[1], room['outside'])
-    print(f'{player_one.room.contains}')
-    room['outside'].add_item(flashlight)
-    print(f'{player_one.room.contains}')
-    room['outside'].add_item(sword)
-    print(f'{player_one.room.contains}')
-    room['outside'].remove_item(flashlight)
-    print(f'{player_one.room.contains}')
+
     # welcome message
     print(f'\nWelcome {player_one.name.capitalize()}')
 
@@ -73,12 +71,29 @@ def adv_game():
     # * Prints the current description (the textwrap module might be useful here).
         print(f'\n{player_one.room.description}')
     # * Waits for user input and decides what to do.
-        userS = input('\n\nWhat would you like to do?>>> ').lower()
+        userS = input('\n\nWhat would you like to do?>>> ').lower().split()
         
-        if userS != '9':
+        if len(userS) == 1:
+            
+            if userS[0] == '9':
+                break
+            elif userS[0] == 'l' or userS[0] == 'look':
+                if len(player_one.room.contains) < 1:
+                    print('There are no items here')
+                    continue
+                else:
+                    print(f'You see {player_one.room.contains}')
+                    continue
             player_one.room = movement(userS, player_one.room)
+        elif len(userS) == 2:
+            command = userS[0] + ' ' + userS[1]
+            if command == 'pick up':
+                print('sure!')
+            else:
+                print('i didnt get that')
+            # print(command)
         else:
-            break
+            print('I am not familiar with that command')
 
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
