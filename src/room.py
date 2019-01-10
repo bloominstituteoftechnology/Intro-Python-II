@@ -7,3 +7,6 @@ class Room:
         self.name = name
         self.desc = desc
         self.list_items = []
+
+    def add_item(self, item):
+        self.list_items.append(item)

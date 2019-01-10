@@ -32,7 +32,6 @@ earlier adventurers. The only exit is to the south.""",
 
 
 # Link rooms together
-
 room["outside"].n_to = room["foyer"]
 room["foyer"].s_to = room["outside"]
 room["foyer"].n_to = room["overlook"]
@@ -43,17 +42,17 @@ room["narrow"].n_to = room["treasure"]
 room["treasure"].s_to = room["narrow"]
 
 # Add items to rooms
-room["foyer"].list_items.append(Item("sword", "a magical sword"))
-room["foyer"].list_items.append(Item("ring", "a magical ring"))
+room["foyer"].add_item(Item("sword", "a magical sword"))
+room["foyer"].add_item(Item("ring", "a magical ring"))
 
-room["overlook"].list_items.append(Item("lamp", "a magical lamp"))
-room["overlook"].list_items.append(Item("potion", "a magical potion"))
-room["overlook"].list_items.append(Item("hammer", "a magical hammer"))
+room["overlook"].add_item(Item("lamp", "a magical lamp"))
+room["overlook"].add_item(Item("potion", "a magical potion"))
+room["overlook"].add_item(Item("hammer", "a magical hammer"))
 
-room["narrow"].list_items.append(Item("food", "a magical food"))
-room["narrow"].list_items.append(Item("book", "a magical book"))
-room["narrow"].list_items.append(Item("key", "a magical key"))
-room["narrow"].list_items.append(Item("shield", "a magical shield"))
+room["narrow"].add_item(Item("food", "a magical food"))
+room["narrow"].add_item(Item("book", "a magical book"))
+room["narrow"].add_item(Item("key", "a magical key"))
+room["narrow"].add_item(Item("shield", "a magical shield"))
 
 #
 # Main
