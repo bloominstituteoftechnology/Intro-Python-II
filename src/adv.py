@@ -1,4 +1,7 @@
+import os
 from room import Room
+from parser import input_command, Quit
+from player import Player
 
 # Declare all the rooms
 
@@ -49,3 +52,20 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+def mud_game():
+    print('\nWelcome Adventurer!\n')
+    player_name = input("What is your name? ")
+    player = Player(player_name, room['outside'])
+    os.system('cls' if os.name == 'nt' else 'clear')
+    try:
+        while True:
+            print(player.room)
+
+            input_command(player)
+    except Quit:
+        pass
+
+
+mud_game()
