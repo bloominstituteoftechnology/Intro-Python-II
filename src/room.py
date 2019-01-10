@@ -6,7 +6,10 @@ class Room:
         self.name = name
         self.description = description
         self.inventory = []
+    def __repr__ (self):
+        return f"Name: {self.name}, description: {self.description}"
 
+#instances of Room 
 o = Room("Outside", "North of you, the cave mount beckons")
 f = Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""")
@@ -19,6 +22,8 @@ the distance, but there is no way across the chasm.""")
 n = Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air.""")
 
+
+#tying location attribute to room instances
 #basically same as defining below init, as self.---
 o.n_to = f
 f.s_to = o
@@ -29,14 +34,3 @@ n.w_to = f
 t.s_to = n
 
 
-'''
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
-
-#'''

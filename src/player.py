@@ -4,20 +4,21 @@ from room import Room
 # currently.
 
 class Player:
-    def __init__(self, currentRoom):
-        self.currentRoom = currentRoom
+    def __init__(self, current_room):
+        self.current_room = current_room
         self.inventory = []
 
     def pickup_item(self, item):
         self.inventory.append(item)
     
     def try_move(self, direction):
-        d = direction + "_to"
+        attribute = str(direction) + "_to"
 
-        if not hasattr(self.currentRoom, d):
+        if not hasattr(self.current_room, attribute):
             print("you can't go that way")
-            return self.currentRoom
+            return self.current_room
         else:
-            self.currentRoom[d]
+            new_room = getattr(self.current_room, attribute)
+            return new_room
 
 

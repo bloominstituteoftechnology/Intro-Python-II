@@ -34,24 +34,39 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
 '''ADD PARSER
 -Add a simple parser that reads user input and 
 performs actions, as described below
 -then, Add two-word commands to the parser
 -then, Add the get and drop commands to the parser'''
-#
+# Main
 
-# Make a new player object that is currently in the 'outside' room.
+#done: Make a new player object that is currently in the 'outside' room.
+player =  Player(room['outside']) 
+# done: Write a loop that:
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+# * done: Prints the current room name
+# * done: Prints the current description (the textwrap module might be useful here).
+# * done: Waits for user input and decides what to do.
+
+while True:
+    print(player.current_room.name)
+    print(player.current_room.description)
+    s = input("enter N/S/E/W direction to move: ")
+    
+    if s == 'q':
+        print('see you later')
+    else:
+        player.current_room = player.try_move(s)
+
+
+
+'''Should work n, N, north, North, NORTH <---- for each cardinal direction, 
+could use .lower or .upper on input or just take first letter ("/n>").lower()[0]'''
+
+# done:If the user enters a cardinal direction, attempt to move to the room there.
+# done: Print an error message if the movement isn't allowed.
+
+# done:If the user enters "q", quit the game.
+
+
