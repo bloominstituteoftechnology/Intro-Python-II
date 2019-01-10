@@ -66,8 +66,20 @@ while True:
     print(f'{newPlayer.location.description}')
     print('\n ********** \n')
     # will try to add some kind of "directions" message or a directions command so these don't pop up every time
-    player_input = input('What would you like to do? Use list to find items, north/south/east/west to move. q to quit.')
-    
+    player_input = input('What would you like to do? Use list to find items, north/south/east/west to move. q to quit.').lower()
+    # going to implement a more succinct way later as per Jon's feedback, getting the basic version done now
+    if player_input == 'list':
+        print('The following items are in this room: \n')
+        for item in newPlayer.location.items:
+            print(f'{item.name}: {item.description}')
+    elif player_input == 'north' or player_input == 'n':
+        newPlayer.location = newPlayer.location.n_to
+        print('Successfully moved north.')
+    elif player_input == 'south' or player_input == 's':
+        newPlayer.location = newPlayer.location.s_to
+        print('Successfully moved south.')
+        else:
+            print('Cannot go this way! Try another direction.')
 
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
