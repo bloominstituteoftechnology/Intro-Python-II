@@ -51,36 +51,47 @@ print(current_room)
 
 
 # moves player to user given direction
-def move_area(p_inpt):
+def command(p_inpt):
     global current_room
-    if p_inpt == 'n':
+    if p_inpt[0] == 'n':
         new_room = current_room.n_to
         current_room = new_room
         print(f"You are now at the {current_room.name}. {current_room.description}.")
         if len(current_room.items) > 0:
             print(f"You see a {current_room.items[0]}.")
-        
-    elif p_inpt == 's':
+            
+    elif p_inpt[0] == 's':
         new_room = current_room.s_to
         current_room = new_room
         print(f"You are now at the {current_room.name}. {current_room.description}")
         if len(current_room.items) > 0:
             print(f"You see a {current_room.items[0]}.")
-    elif p_inpt == 'e':
+    elif p_inpt[0] == 'e':
         new_room = current_room.e_to
         current_room = new_room
         print(f"You are now at the {current_room.name}. {current_room.description}")
         if len(current_room.items) > 0:
             print(f"You see a {current_room.items[0]}.")
-    elif p_inpt == 'w':
+    elif p_inpt[0] == 'w':
         new_room = current_room.w_to
         current_room = new_room
         print(f"You are now at the {current_room.name}. {current_room.description}")
         if len(current_room.items) > 0:
-            print(f"You see a {current_room.items[0]}.")
-       
+            print(f"You see a {current_room.items[0]}.")   
     else:
         print('That is not a direction!')
+
+
+    if p_inpt[0] == 'get' or p_inpt[0] == 'take':
+        if len(current_room.items) > 0:
+            for i in current_room.items:
+                if p_inpt[1] == i.name:
+                    player.items.append(i)
+                    print(f"You have picked up the {i.name}")
+                else:
+                    print('There is no item with that name here')
+
+
 
 
 
@@ -107,20 +118,20 @@ while not inits[0] == 'q':
         print('\n<=========================================> \n')
     
     try:
-        inits = input('Enter a direction: \n')
-        move_area(inits)
+        inits = input('Enter a command: \n').split(' ')
+        command(inits)
     except AttributeError:
       print("Can't go this way")
       continue
 
-    if len(current_room.items) > 0:
-        inits = input('Would you like to pick up an Item?: \n').split(' ')
-        if inits[0] == 'get' or inits[0] == 'take':
-            for i in current_room.items:
-                if inits[1] == i.name:
-                    player.items.append(i)
-                    print(f"You have picked up the {i.name}")
-                else:
-                    print('There is no item with that name here')
+    # if len(current_room.items) > 0:
+    #     inits = input('Would you like to pick up an Item?: \n').split(' ')
+    #     if inits[0] == 'get' or inits[0] == 'take':
+    #         for i in current_room.items:
+    #             if inits[1] == i.name:
+    #                 player.items.append(i)
+    #                 print(f"You have picked up the {i.name}")
+    #             else:
+    #                 print('There is no item with that name here')
 
     
