@@ -38,12 +38,12 @@ room['treasure'].s_to = room['narrow']
 
 
 items = {
-    'this': Item("this", "this item"),
-    'that': Item("that", "that item")
+    'flashlight': Item("flashlight", "A device that provides a light source."),
+    'mysterious_box': Item("mysterious_box", "A locked box of unknown origin.")
 }
 
-room['outside'].add_item(items['this'])
-room['outside'].add_item(items['that'])
+room['outside'].add_item(items['flashlight'])
+room['outside'].add_item(items['mysterious_box'])
 
 
 #
@@ -65,31 +65,54 @@ player = Player(room['outside'])
 #
 # If the user enters "q", quit the game.
 
-print(tw.dedent(
-    f"""\
-    You are in room: {player.current_room.name}
-    {player.current_room.description}!\
-    """))
 
-print(tw.dedent('''
-        What would you like to do?
-        [n] Go North [e] Go East [s] Go South [w] Go West
-        [l] Look around
-        [get <item>] or [take <item>] Put <item> in your inventory
-        [drop <item>] Remove item from your inventory
-        [i] Show inventory
-        [q] Quit
-    '''))
+def try_direction(direction):
+    attribute = direction[0].lower() + "_to"
+
+    if hasattr(player.current_room, attribute):
+        return getattr(player.current_room, attribute)
+    else:
+        print("There's nothing there!")
+        return player.current_room
+
+
+print(tw.dedent(
+    f"""
+    You are in room: {player.current_room.name}
+    {player.current_room.description}!
+"""))
+
+help_str = tw.dedent('''\
+    What would you like to do?
+    [check surroundings] Look around
+    [check inventory] Show inventory
+    [get <item>] or [take <item>] Put <item> in your inventory
+    [drop <item>] Remove item from your inventory
+    [<go, move> <n, e, s, w>] Go North, East, South, or West
+    [help] check options
+    [q] Quit
+''')
+
+print(help_str)
 
 while True:
-    choice = input()
+    command = input("> ").lower().split()
 
-    if choice.count(" ") > 1:
-        choice = input("\nInvalid input.\n")
-    elif choice.count(" ") == 1:
-        verb, noun = choice.split(" ")
+    if len(command) == 1:
+        verb = command[0]
+        if verb == "help":
+            print("\n" + help_str)
+            continue
+        elif verb == "q":
+            print("\nGoodbye!\n")
+            break
+        else:
+            print("Invalid input. Type help for options.\n")
+    elif len(command) == 2:
+        verb, noun = command[0], command[1]
     else:
-        verb = choice
+        command = print("Invalid input. Type help for options.\n")
+        continue
 
     if verb == "get" or verb == "take":
         if isinstance(noun, str):
@@ -100,11 +123,12 @@ while True:
                     player.current_room.remove_item(item)
                     item.on_take()
                 else:
-                    # TODO
-                    print(f"That item is not in {player.current_room}")
+                    print(tw.dedent(f"That item is not in {player.current_room}, \
+                            please try again\n"))
+                    continue
             else:
-                # TODO
-                input("That's not an item, please try again")
+                input("That's not an item, please try again\n")
+                continue
 
     elif verb == "drop":
         if isinstance(noun, str):
@@ -115,36 +139,16 @@ while True:
                     player.current_room.add_item(item)
                     item.on_drop()
 
-    elif verb == "q" or verb == "Q":
-        print("goodbye!")
-        break
+    elif verb == "go" or verb == "move":
+        player.move_to(try_direction(noun))
 
-    elif verb == "i" or verb == "I":
-        player.show_inventory()
-
-    elif verb == "n" or verb == "N":
-        if isinstance(player.current_room.n_to, Room):
-            player.move_to(player.current_room.n_to)
+    elif verb == "check":
+        if noun == "inventory":
+            player.show_inventory()
+        elif noun == "surroundings":
+            print(player.current_room.items)
         else:
-            print("There is nothing ahead of you.")
+            print("You can't check that!\n")
 
-    elif verb == "s" or verb == "S":
-        if isinstance(player.current_room.s_to, Room):
-            player.move_to(player.current_room.s_to)
-        else:
-            print("There is nothing behind you.")
-
-    elif verb == "w" or verb == "W":
-        if isinstance(player.current_room.w_to, Room):
-            player.move_to(player.current_room.w_to)
-        else:
-            print("There is nothing to the left of you.")
-
-    elif verb == "e" or verb == "E":
-        if isinstance(player.current_room.e_to, Room):
-            player.move_to(player.current_room.e_to)
-        else:
-            print("There is nothing to the right of you.")
-
-    elif verb == "l" or verb == "L":
-        print(player.current_room.items)
+    else:
+        print("\nInvalid input. Type help for options.\n")

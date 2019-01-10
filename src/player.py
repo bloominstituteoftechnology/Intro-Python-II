@@ -19,5 +19,6 @@ class Player:
             print(f"{item.name}: {item.description}")
 
     def move_to(self, room):
-        print(f"You have now entered: {room.name}, {room.description}")
-        self.current_room = room
+        if self.current_room != room:
+            self.current_room = room
+            print(f"You have now entered: {room.name}, {room.description}")
