@@ -21,18 +21,24 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+def on_take_fn():
+    print("\nYou just never know when you'll need something like this...")
+
+def on_drop_fn():
+    print("\nWon't be needing this anymore!")
+
 from item import Item
 items = {
-    'sword': Item('outside',"sword", "notched and rusted blade."),
-    'daffodil': Item('outside','daffodil', 'lovely blooming flower.'),
-    'pipe': Item('foyer', 'pipe', 'intricately carved wood pipe.'),
-    'snakeskin': Item('foyer', 'snakeskin', 'big one, too.'),
-    'boot': Item('overlook', 'boot', 'bleached-white human skull!!'),
-    'spoon': Item('overlook', 'spoon', 'sturdy spoon for adventures!'),
-    'feathers': Item('narrow', 'feathers', 'mound of downy feathers'),
-    'bucket': Item('narrow', 'bucket', 'bucket with a hole in it'),
-    'sock': Item('treasure', 'sock', 'bleached-white human skull!!'),
-    'purse': Item('treasure', 'purse', 'bag of silver coins!'),
+    'sword': Item('outside',"sword", "notched and rusted blade.", on_take_fn, on_drop_fn),
+    'daffodil': Item('outside','daffodil', 'lovely blooming flower.', on_take_fn, on_drop_fn),
+    'pipe': Item('foyer', 'pipe', 'intricately carved wood pipe.', on_take_fn, on_drop_fn),
+    'snakeskin': Item('foyer', 'snakeskin', 'big one, too.', on_take_fn, on_drop_fn),
+    'boot': Item('overlook', 'boot', 'bleached-white human skull!!', on_take_fn, on_drop_fn),
+    'spoon': Item('overlook', 'spoon', 'sturdy spoon for adventures!', on_take_fn, on_drop_fn),
+    'feathers': Item('narrow', 'feathers', 'mound of downy feathers', on_take_fn, on_drop_fn),
+    'bucket': Item('narrow', 'bucket', 'bucket with a hole in it', on_take_fn, on_drop_fn),
+    'sock': Item('treasure', 'sock', 'bleached-white human skull!!', on_take_fn, on_drop_fn),
+    'purse': Item('treasure', 'purse', 'bag of silver coins!', on_take_fn, on_drop_fn),
 }
 
 # Link rooms together
@@ -79,6 +85,8 @@ while True:
         # Items players currently hold are kept in inventory
         items[itemToTake].location = 'inventory'
         player.inventory.append(itemToTake)
+        items[itemToTake].on_take()
+
     elif action == 'drop':
         # Show the player's current inventory
         for item in player.inventory:
@@ -91,9 +99,12 @@ while True:
         #remove item from inventory
         player.inventory.remove(itemToDrop)
 
+        items[itemToDrop].on_drop()
+
     elif action == 'inventory':
         for item in player.inventory:
             print(item)
+
     elif action == 'move':
         # Player movement input **
         print('\nWhere do you want to go? n s e w q')
