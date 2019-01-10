@@ -14,3 +14,6 @@ class Item:
 
     def on_drop(self):
         return f'Dropped {self.name}'
+
+    def inspect(self):
+        return f'Item: {self.name}\nDescription: {self.description}\n'
