@@ -3,7 +3,12 @@ class Item:
     self.name = name
     self.description = description
 
-  def __repr__(self):
-    return f'{self.name}'  
+  # def __repr__(self):
+  #   return f'{self.name}'  
+    
   def readDescription(self):
     print(f'{self.description}')
+  
+  def useItem(self):
+    print(self.name + 'can not be used')
+      

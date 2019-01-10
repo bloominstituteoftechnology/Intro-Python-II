@@ -1,7 +1,9 @@
 from room import Room
 from player import Player
+from itemDictionary import item
 
 # Declare all the rooms
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -39,21 +41,25 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room
-name = input('Hello adventurer. What is your name? ')
+name = input('\nHello adventurer. What is your name?\n')
 player = Player(name, room['outside'])
+player.inventory = item
 
 while True:
   currentLocation = player.location
   print(currentLocation)
-  choice = input('What would ' + name + ' like to do next? \n m(Move location) || c(Check Something)') 
+  print(player.inventory)
+  print(currentLocation.items)
+  choice = input('What would ' + name + ' like to do next? \n m(Move location) || c(Check Something): ') 
 
-  if choice[0]. == 'm':
-    player.move(currentLocation)
-  if choice[0] == 'c':
-    check = input('What would ' + name + ' like to check? \n i(inventory) || r(Room)')
-    if check[0].lower() == i:
+  if choice[0].lower() == 'm':
+    player.move()
+
+  if choice[0].lower() == 'c':
+    check = input('What would ' + name + ' like to check? \n i(inventory) || r(Room): ')
+    if check[0].lower() == 'i':
       player.checkInventory()
-    if check[0].lower() == r:
+    if check[0].lower() == 'r':
       player.checkRoom()
 
 # Write a loop that:
