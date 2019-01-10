@@ -7,6 +7,9 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
+    'cliff':    Room("The Cliff",
+                     "This feature comes from nowhere, you're dead. Try again."),
+
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
@@ -24,7 +27,7 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
+room['outside'].s_to = room['cliff']
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -43,11 +46,11 @@ name = input('Hello n00b. What is your name?')
 player = Player(name, room['outside'])
 
 
-def try_direction(direction, current_room):
+def try_direction(direction, current_location):
     attribute = direction + '_to'
 
-    if hasattr(current_room, attribute):
-        return getattr(current_room, attribute)
+    if hasattr(current_location, attribute):
+        return getattr(current_location, attribute)
 
 
 while True:
