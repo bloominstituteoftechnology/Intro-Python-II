@@ -9,4 +9,4 @@ class Player:
         self.items.append(item)
     
     def removeItem(self, item):
-        self.items.append(item)
+        self.items.remove(item)
