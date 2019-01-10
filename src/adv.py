@@ -114,12 +114,12 @@ def try_direction(direction, current_room):
         return current_room
 
 
-def validate_item_in_room(item):
+def valid_item_in_room(item):
     room_items = player.current_room.list_items
     return any(i.name == item for i in room_items)
 
 
-def validate_item_in_inventory(item):
+def valid_item_in_inventory(item):
     player_items = player.list_items
     return any(i == item for i in player_items)
 
@@ -196,16 +196,14 @@ while True:
         else:
             command_error()
     elif len(command) == 2:
-        first_word = command[0]
-        second_word = command[1]
+        word1 = command[0]
+        word2 = command[1]
 
-        if first_word in ["get", "drop"]:
-            if validate_item_in_room(second_word) or validate_item_in_inventory(
-                second_word
-            ):
-                item_action(first_word, second_word)
+        if word1 in ["get", "drop"]:
+            if valid_item_in_room(word2) or valid_item_in_inventory(word2):
+                item_action(word1, word2)
             else:
-                prompt(f"There's no item called {second_word}\n")
+                prompt(f"There's no item called {word2}\n")
         else:
             command_error()
     else:
