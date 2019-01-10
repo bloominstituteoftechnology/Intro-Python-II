@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -9,7 +10,7 @@ room = {
 
     'foyer':    Room("Foyer", """
     Dim light filters in from the south. 
-    Dusty passages run north and east."""),
+    Dusty passages run north and east.""", [Item('torch', 'Grab the torch to be able to shee in the dark.')]),
 
     'overlook': Room("Grand Overlook", """
     A steep cliff appears before you, falling into the darkness.
@@ -18,12 +19,12 @@ room = {
 
     'narrow':   Room("Narrow Passage", """
     The narrow passage bends here from west to north.
-    The smell of gold permeates the air."""),
+    The smell of gold permeates the air.""", [Item('oil', "Grab the oil to help you glide through the narrow passage.")]),
 
     'treasure': Room("Treasure Chamber", """
     You've found the long-lost treasure chamber! 
     Sadly, it has already been completely emptied by earlier adventurers. 
-    The only exit is to the south."""),
+    The only exit is to the south.""", [Item('magnifying glass', "Grab the magnifying glass, look for treasure that could've been dropped.")]),
 }
 
 
@@ -83,8 +84,10 @@ while True:
         if (not (decision in ['n','s','e','w', 'q'])):
             print(f'    {decision} is not an option, try again...')
         elif (decision == 'n'):
-            if (player.current_room.n_to):
-                print(player.current_room.n_to)
+            try:
+                player.current_room = player.current_room.n_to
+            except AttributeError:
+                print(f'    {player.name} cannot move north, try again...')
         elif (decision == 's'):
             try:
                 player.current_room = player.current_room.s_to
@@ -105,6 +108,11 @@ while True:
             print('    GAME OVER')
             print()
             break
-    # elif (len(decision) == 4):
+    elif (len(decision) == 4):
+        print(decision)
+        if (not (decision in ['grab', 'drop'])):
+            print(f'    {decision} is not an option, try again...')
+        elif (decision == 'grab'):
+            player.inventory.append(item)
         
 
