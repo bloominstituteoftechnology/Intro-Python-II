@@ -6,6 +6,8 @@ from items import Item
 # Declare items
 backpack = Item('backpack')
 key = Item('key')
+flashlight = Item('flashlight')
+sword = Item('sword')
 
 # Declare all the rooms
 room = {
@@ -54,7 +56,13 @@ def adv_game():
 # Make a new player object that is currently in the 'outside' room.
     # get the player name from the sys arguments
     player_one = Player(sys.argv[1], room['outside'])
-        
+    print(f'{player_one.room.contains}')
+    room['outside'].add_item(flashlight)
+    print(f'{player_one.room.contains}')
+    room['outside'].add_item(sword)
+    print(f'{player_one.room.contains}')
+    room['outside'].remove_item(flashlight)
+    print(f'{player_one.room.contains}')
     # welcome message
     print(f'\nWelcome {player_one.name.capitalize()}')
 
@@ -64,7 +72,6 @@ def adv_game():
         print(f'\n\nYou are currently standing at the {player_one.room.area}')
     # * Prints the current description (the textwrap module might be useful here).
         print(f'\n{player_one.room.description}')
-        print(f'{player_one.room.inventory}')
     # * Waits for user input and decides what to do.
         userS = input('\n\nWhat would you like to do?>>> ').lower()
         
