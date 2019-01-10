@@ -5,6 +5,9 @@ from enum import Enum
 
 
 class Action(Enum):
+    """
+    An enumeration for specifying potential user actions
+    """
     MOVE = 1
     TAKE_ALL_ITEMS = 2
     SHOW_INVENTORY = 3
@@ -15,6 +18,9 @@ class Action(Enum):
 
 
 class Direction(Enum):
+    """
+    An enumeration for specifying the available directions
+    """
     NORTH = 1
     SOUTH = 2
     WEST = 3
@@ -23,25 +29,24 @@ class Direction(Enum):
 
 # Setup rooms
 def room_setup():
-    # Declare all the rooms
+    """
+    Declares all rooms and connects those rooms in a specified way
+    """
     global room
     room = {
-        'outside': Room("Outside Cave Entrance",
-                        "North of you, the cave mount beckons"),
+        'outside': Room("Outside Cave Entrance", "North of you, the cave mount beckons"),
 
-        'foyer': Room("Foyer", """Dim light filters in from the south. Dusty
-    passages run north and east."""),
+        'foyer': Room("Foyer", """Dim light filters in from the south. Dusty passages run north and east."""),
 
-        'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-    into the darkness. Ahead to the north, a light flickers in
-    the distance, but there is no way across the chasm."""),
+        'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling 
+        into the darkness. Ahead to the north, a light flickers in
+        the distance, but there is no way across the chasm."""),
 
-        'narrow': Room("Narrow Passage", """The narrow passage bends here from west
-    to north. The smell of gold permeates the air."""),
+        'narrow': Room("Narrow Passage", """The narrow passage bends here from west to north. 
+        The smell of gold permeates the air."""),
 
-        'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-    chamber! Sadly, it has already been completely emptied by
-    earlier adventurers. The only exit is to the south."""),
+        'treasure': Room("Treasure Chamber", """You've found the long-lost treasure chamber! 
+        Sadly, it has already been completely emptied by earlier adventurers. The only exit is to the south."""),
     }
     room['outside'].n_to = room['foyer']
     room['foyer'].s_to = room['outside']
@@ -55,6 +60,9 @@ def room_setup():
 
 # Setup room items
 def room_item_setup():
+    """
+    Adds items to each specified room
+    """
     room['outside'].room_items.append(Item('Sword', 'A rusty old iron sword'))
     room['outside'].room_items.append(Item('Shield', 'A wooden shield'))
     room['foyer'].room_items.append(Item('Coins', 'Bronze coins'))
@@ -66,7 +74,6 @@ def room_item_setup():
 def display_current_room_info():
     """
     Will print the room info based on the players current room.
-    :None:
     """
     print('========== ROOM INFO ==========')
     print(f'You\'re character is currently located in the room named "{player.current_room}".')
@@ -76,6 +83,9 @@ def display_current_room_info():
 
 
 def move_user():
+    """
+    Moves user to a particular, specified room
+    """
     north_room = player.current_room.n_to
     south_room = player.current_room.s_to
     west_room = player.current_room.w_to
@@ -111,6 +121,9 @@ def move_user():
 
 
 def take_all_items():
+    """
+    Takes all items from the current room and puts them into the users inventory
+    """
     for item in player.current_room.room_items:
         player.add_item_to_inventory(item)
     player.current_room.room_items = []
@@ -118,10 +131,16 @@ def take_all_items():
 
 
 def show_inventory():
+    """
+    Prints the items in a users inventory
+    """
     print(f'================ Inventory: {[item for item in player.inventory]} ================')
 
 
 def take_single_item():
+    """
+    Allows the user to take a single, user specified item from a room
+    """
     available_items = [item.name.lower() for item in player.current_room.room_items]
     if len(player.current_room.room_items) == 0:
         print("There are no items in this room!")
@@ -140,6 +159,9 @@ def take_single_item():
 
 
 def drop_single_item():
+    """
+    Drops a single, user specified item from their inventory
+    """
     items_inventory = [item.name.lower() for item in player.inventory]
     if len(player.inventory) == 0:
         print("You have no items!")
@@ -157,11 +179,20 @@ def drop_single_item():
 
 
 def exit_game():
+    """
+    Exits the game by closing the script entirely
+    """
     print('Exiting...Thanks for playing!')
     raise SystemExit(0)
 
 
 def process_user_action(action):
+    """
+    Processes a user action based on the selection chosen in start_game()
+
+    arguments:
+    action -- the chosen user action, based on the Action enumeration
+    """
     if action == Action.MOVE:
         move_user()
     elif action == Action.TAKE_ALL_ITEMS:
@@ -181,6 +212,9 @@ def process_user_action(action):
 
 
 def start_game():
+    """
+    Starts the game and sets up each room for the game. It adds a player and enters a game loop until conditions are met
+    """
     room_setup()
     room_item_setup()
     global player
