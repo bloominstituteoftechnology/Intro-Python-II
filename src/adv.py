@@ -43,11 +43,21 @@ name = input('Hello n00b. What is your name?')
 player = Player(name, room['outside'])
 
 while True:
-    print(player.current_location.name)
+    print(player.current_location.room_name)
     print(player.current_location.room_description)
 
     s = input("\n>").lower()[0]
 
+    if s == 'n':
+        player.current_location = player.current_location.n_to
+    elif s == 's':
+        player.current_location = player.current_location.s_to
+    elif s == 'e':
+        player.current_location = player.current_location.e_to
+    elif s == 'w':
+        player.current_location = player.current_location.w_to
+    else:
+        print("Not a valid direction! Enter a new direction.")
 
 # Write a loop that:
 #
