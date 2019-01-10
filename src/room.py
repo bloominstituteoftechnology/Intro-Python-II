@@ -15,4 +15,5 @@ class Room:
     elif direction == 'e' and hasattr(self, 'e_to'):
       return self.e_to
     else:
-      print('You can not go to that direction.')
+      # print('You can not go to that direction.')
+      return self

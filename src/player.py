@@ -8,5 +8,3 @@ class Player:
   def move(self, room):
     if room:
       self.current_room = self.current_room.new_room(room)
-    else:
-      print('You can not go that way')
