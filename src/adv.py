@@ -38,10 +38,14 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
+# Make a new player object that is currently in
+name = input('Hello n00b. What is your name?')
+player = Player(name, room['outside'])
 
-player = Player('Player', room['outside'])
-print(player.location)
+while True:
+    currentLocation = player.location
+    print(currentLocation)
+    choice = input(name + 'in which direction would you like to go')
 
 # Write a loop that:
 #

@@ -1,5 +1,6 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
+from room import Room
 
 
 class Player:
@@ -9,7 +10,7 @@ class Player:
         self.location = location
 
     def __repr__(self):
-        return f"{name} is in {location}."
+        return f"{self.name} is in {self.location}."
 
     def set_current_room(self, new_room):
         self.current_room = new_room
