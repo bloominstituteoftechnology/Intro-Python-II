@@ -5,7 +5,7 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", []),
+                     "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", ['sword']),
@@ -19,7 +19,7 @@ to north. The smell of gold permeates the air.""", ['bat']),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", []),
+earlier adventurers. The only exit is to the south."""),
 }
 
 
@@ -52,45 +52,89 @@ room['treasure'].s_to = room['narrow']
 # If the user enters "q", quit the game.
 
 
-currentRoom = room['outside']
+def try_direction(direction, currentRoom):
+    attribute = direction + '_to'
+
+    if hasattr(currentRoom, attribute):
+        newRoom = getattr(currentRoom, attribute)
+        return newRoom
+    else:
+        print('\nCan not go this way!!!')
+        return currentRoom
+
 
 userName = input('What is your name? ')
-player = Player(userName)
+player = Player(userName, room['outside'])
 
 print(f'Hello {userName}! Let\'s go on an adventure!')
 
 userInput = ''
 
 while not userInput == 'q':
-    newRoom = ''
-    print(currentRoom)
+    # newRoom = ''
+    print(player.currentRoom)
     userInput = input('Which way do you want to do or go?\n'
                       'Directions: [n] North [s] South [e] East [w] West\n'
                       'Items: take (item) or drop (item)\n'
-                      'or [q] Quit: ')
+                      'or [q] Quit:\n')
 
     if userInput == 'n'\
             or userInput == 's'\
             or userInput == 'e'\
-            or userInput == 'w'\
-            or userInput == 'q':
-        try:
-            if userInput == 'n':
-                newRoom = currentRoom.n_to
-            elif userInput == 'e':
-                newRoom = currentRoom.e_to
-            elif userInput == 's':
-                newRoom = currentRoom.s_to
-            elif userInput == 'w':
-                newRoom = currentRoom.w_to
-        except AttributeError:
-            print('\nCan not go this way!!! \n')
+            or userInput == 'w':
 
-        if newRoom:
-            currentRoom = newRoom
+        player.currentRoom = try_direction(userInput, player.currentRoom)
 
     elif 'take' in userInput or 'drop' in userInput:
         print('yep')
 
+    elif userInput == 'q':
+        print('Thanks for playing!!!')
+
     else:
         print('Incorrect input. Please use n, e, s, or w')
+
+
+"""
+Previous work before lecture.
+Now has been refactored above.
+"""
+
+# currentRoom = room['outside']
+
+
+# userName = input('What is your name? ')
+# player = Player(userName)
+
+# print(f'Hello {userName}! Let\'s go on an adventure!')
+
+# userInput = ''
+
+# while not userInput == 'q':
+#     newRoom = ''
+#     print(currentRoom)
+#     userInput = input('Which way do you want to do or go?\n'
+#                       'Directions: [n] North [s] South [e] East [w] West\n'
+#                       'Items: take (item) or drop (item)\n'
+#                       'or [q] Quit:\n')
+
+#     if userInput == 'n'\
+#             or userInput == 's'\
+#             or userInput == 'e'\
+#             or userInput == 'w'\
+#             or userInput == 'q':
+
+#           # try:
+#             if userInput == 'n':
+#                newRoom = currentRoom.n_to
+#          elif userInput == 'e':
+#               newRoom = currentRoom.e_to
+#           elif userInput == 's':
+#              newRoom = currentRoom.s_to
+#          elif userInput == 'w':
+#                 newRoom = currentRoom.w_to
+#        except AttributeError:
+#          print('\nCan not go this way!!! \n')
+
+#       if newRoom:
+#            currentRoom = newRoom

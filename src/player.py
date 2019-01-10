@@ -3,8 +3,9 @@
 
 
 class Player:
-    def __init__(self, name):
+    def __init__(self, name, currentRoom):
         self.name = name
+        self.currentRoom = currentRoom
         self.items = []
 
     def __repr__(self):
