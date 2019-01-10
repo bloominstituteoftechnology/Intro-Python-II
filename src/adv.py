@@ -1,11 +1,16 @@
 import sys
 from room import Room
 from player import Player
-# Declare all the rooms
+from items import Item
 
+# Declare items
+backpack = Item('backpack')
+key = Item('key')
+
+# Declare all the rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [backpack, key]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -37,10 +42,13 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 def movement(direction, current_room):
-    attr = direction + '_to'
+    attr = direction[0] + '_to'
 
     if hasattr(current_room, attr):
         return getattr(current_room, attr)
+    
+    print('\n\n*****That is an unknown command*****')
+    return current_room
 
 def adv_game():
 # Make a new player object that is currently in the 'outside' room.
@@ -48,19 +56,21 @@ def adv_game():
     player_one = Player(sys.argv[1], room['outside'])
         
     # welcome message
-    print(f'Welcome {player_one.name.capitalize()}')
+    print(f'\nWelcome {player_one.name.capitalize()}')
 
 # Write a loop that:
     while True:
     # * Prints the current room name
-        print(f'\nYou are currently standing at the {player_one.room.area}')
+        print(f'\n\nYou are currently standing at the {player_one.room.area}')
     # * Prints the current description (the textwrap module might be useful here).
-        print(f'{player_one.room.description}')
+        print(f'\n{player_one.room.description}')
+        print(f'{player_one.room.inventory}')
     # * Waits for user input and decides what to do.
-        userS = input('\nWhat would you like to do?>>> ')
+        userS = input('\n\nWhat would you like to do?>>> ').lower()
         
-        player_one.room = movement(userS, player_one.room)
-        if userS == '9':
+        if userS != '9':
+            player_one.room = movement(userS, player_one.room)
+        else:
             break
 
 #
