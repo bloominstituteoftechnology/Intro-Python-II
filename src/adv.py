@@ -58,7 +58,13 @@ commandlist = ('n', 'e', 's', 'w', 'q')
 
 def inv_item(item):
     player.items.append(item)
-    return 0
+    return
+
+
+def move_player(direction, current_location):
+    attribute = direction + '_to'
+    if hasattr(current_location, attribute):
+        return getattr(current_location, attribute)
 
 
 while True:
