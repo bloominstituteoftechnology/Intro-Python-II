@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from item import Item
+import random
 
 # Declare all the rooms
 
@@ -20,7 +21,7 @@ to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", [Item("Club", "well worn wooden club",6, 'weapon'), Item("Sword", "damaged and rusted iron sword", 12, 'weapon'), Item("Bread", "a piece of moldy bread", 0, 'food')]),
+earlier adventurers. The only exit is to the south.""", [Item("Club", "well worn wooden club",random.randint(4,7), 'weapon'), Item("Sword", "damaged and rusted iron sword", random.randint(9,12), 'weapon'), Item("Bread", "a piece of moldy bread", 0, 'food')]),
 }
 
 
@@ -63,8 +64,7 @@ def game():
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
     print('Game Options:')
-    userInput = input("""[N] North [S] South [E] East [W] WEST [Q] Quit\n
-    [(take) + (name of object)] Takes item [(drop) + (name of object)] Drops Item\n""").upper().split()
+    userInput = input("""[N] North [S] South [E] East [W] WEST [Q] Quit [C] Controls\n""").upper().split()
     print('#######################################################################################')
 
     while not userInput[0][0] == 'Q':
@@ -81,8 +81,16 @@ def game():
             elif userInput[0] == 'I' or userInput[0] == 'INVENTORY':
                 print('My Inventory:')
                 for item in player.inventory:
-                    print(item.name)
-                print(f'Equipped Weapon: {player.onhand_weapon.name}')
+                    print(item.name + ' ' + item.type + ' ' + str(item.damage))
+                print(f'\nEquipped Weapon: {player.onhand_weapon.name}')
+            elif userInput[0][0] == 'C':
+                print("""
+                    I => Inventory
+                    Equip [item] => Equips selected weapon
+                    Unequip [item] => Unequips onhand item
+                    Take [item] => Takes selected item from room
+                    Drop [item] => Drops selected weapon
+                    """)
             else:
                 print('Could not move in that direction')
         elif len(userInput) == 2:
@@ -122,8 +130,7 @@ def game():
                 print(item.name)
 
         
-        userInput = input("""\n[N] North [S] South [E] East [W] WEST [Q] Quit\n
-        [(take) + (name of object)] Takes item [(drop) + (name of object)] Drops Item\n""").upper().split()
+        userInput = input("""\n[N] North [S] South [E] East [W] WEST [Q] Quit [C] Controls\n""").upper().split()
         print('#######################################################################################')
 game()
 
