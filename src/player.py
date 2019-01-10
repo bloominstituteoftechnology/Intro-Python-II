@@ -8,6 +8,8 @@ class Player:
         self.current_room = current_room
         self.inventory = []
         self.has_lightsource = False
+        self.hit_points = 100
+        self.attack = 10
 
     def take_item(self, item):
         if isinstance(item, LightSource):
@@ -31,3 +33,7 @@ class Player:
                 print(f"You have now entered: {room.name}, {room.description}")
             else:
                 print("You've changed location, but it's pitch black!")
+
+    def attack_monster(self, monster):
+        monster.hit_points -= self.attack
+        print(f"{monster.name} was damaged! It's health is now at {monster.hit_points}.")

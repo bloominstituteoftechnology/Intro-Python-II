@@ -173,5 +173,11 @@ while True:
         else:
             print("You can't check that!\n")
 
+    elif verb == "attack":
+        if noun in monsters:
+            monster = monsters[noun]
+            if hasattr(player.current_room, "monster") and player.current_room.monster == monster:
+                player.attack_monster(monster)
+
     else:
         print("\nInvalid input. Type help for options.\n")
