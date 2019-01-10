@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -39,49 +40,40 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(room['outside'])
+
+name = input("enter player's name\n>")
+player = Player(name, room["outside"])
+print(player)
 
 def try_direction(direction, room):
-    attr = direction + '_to'
+    attr = direction + "_to"
     if hasattr(room, attr):
         return getattr(room, attr)
     else:
-        print('you cant go that way')
+        print("you cant go that way")
         return room 
 
-
-# Write a loop that:
 while True:
-    # * Prints the current room name
     print(player.room.name)
-    # * Prints the current description (the textwrap module might be useful here).
     print(player.room.description)
-    # * Waits for user input and decides what to do.
+    user_input = input("\n> ").lower().split()
 
-    # s = input("\n> ").lower()[0]
-    # player.room = try_direction(s, player.room)
-
-    s = input("\n> ").lower().split()
-
-    if len(s) == 1:
-
-        s = s[0][0]
-        if s == 'q':
+    if len(user_input) == 1:
+        user_input = user_input[0][0]
+        if user_input == "q":
             break
+        player.room = try_direction(user_input, player.room)
 
-        player.room = try_direction(s, player.room)
-
-    elif len(s) == 2:
-        first_word = s[0]
-        second_word = s[1]
-
-        # if first_word in ['get', 'drop']:
+    elif len(user_input) == 4 or len(user_input) == 3:
+        if not first_word in ["get", "drop"]:
+            print(f"{user_input} is not an option")
+        elif user_input == "get":
+            player.inventory.append(item)
+            print("grabbed item")
+        elif user_input == "drop":
+            player.inventory.remove(item)
+            print("dropped item")
 
     else:
         print("I don't understand that")
         continue
-
-    # If the user enters a cardinal direction, attempt to move to the room there.
-    # Print an error message if the movement isn't allowed.
-    #
-    # If the user enters "q", quit the game.
