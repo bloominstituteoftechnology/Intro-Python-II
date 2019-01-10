@@ -65,41 +65,54 @@ def prompt(message):
 
 
 def location_info():
-    prompt(f"You are now in the {player.room.name}")
-    prompt(f"{player.room.desc}")
-    prompt(f"Found items: {prompt_items(player.room.list_items)}\n")
+    prompt(f"You are in the {player.current_room.name}\n")
+    prompt(f"{player.current_room.desc}\n")
+    prompt(f"Found items: {player.current_room.print_items()}\n")
 
 
-def direction_error():
-    prompt("There's no way out here")
+def direction_error(direction):
+    if direction == "n":
+        prompt("No way North!\n")
+    elif direction == "e":
+        prompt("No way East!\n")
+    elif direction == "s":
+        prompt("No way South!\n")
+    elif direction == "w":
+        prompt("No way West!\n")
 
 
-def prompt_items(items):
-    output = ""
-    if len(items) == 0:
-        return None
+def print_commands():
+    prompt(
+        f"""Commands:
+        N - go to North
+        E - go to East
+        S - go to South
+        W - go to West
+        Q - to quit game
+        """
+    )
+
+
+def try_direction(direction, current_room):
+    attribute = direction + "_to"
+
+    # See if the inputted direction is one we can move to
+    if hasattr(current_room, attribute):
+        # fetch the new room
+        return getattr(current_room, attribute)
     else:
-        for item in items:
-            output += f"{item.name} "
-
-    return output
+        direction_error(direction)
+        return current_room
 
 
 # Make a new player object that is currently in the 'outside' room.
 player_name = input("Enter player name: ")
-player = Player(player_name)
-player.room = room["outside"]
+player = Player(player_name, room["outside"])
+# player.current_room => room["outside"]
 
-prompt(f"Welcome {player.name}, you are now in the {player.room.name}")
-prompt(f"{player.room.desc}")
-prompt(
-    f"""Commands:
-    N - go to North
-    E - go to East
-    S - go to South
-    W - go to West
-    """
-)
+prompt(f"Welcome {player.name}, you are now in the {player.current_room.name}")
+prompt(f"{player.current_room.desc}\n")
+prompt('Type "help" for commands.\n')
 
 # Write a loop that:
 #
@@ -113,37 +126,28 @@ prompt(
 # If the user enters "q", quit the game.
 
 while True:
-    command = input("What do you want to do? (q to quit): ").lower()
+    command = input(f"What do you want to do, {player.name}? ").lower().split()
+    # => returns a list
 
-    # Make player move NESW
-    if command == "n":
-        if hasattr(player.room, "n_to"):
-            player.room = player.room.n_to
+    if len(command) == 1:
+        command = command[0]
+        print("command", command)
+
+        # Make player move NESW
+        if command in ["n", "s", "e", "w"]:
+            player.current_room = try_direction(command, player.current_room)
             location_info()
+            continue
+        if command == "help":
+            print_commands()
+        elif command == "q":
+            break
         else:
-            direction_error()
-    elif command == "e":
-        if hasattr(player.room, "e_to"):
-            player.room = player.room.e_to
-            location_info()
-        else:
-            direction_error()
-    elif command == "s":
-        if hasattr(player.room, "s_to"):
-            player.room = player.room.s_to
-            location_info()
-        else:
-            direction_error()
-    elif command == "w":
-        if hasattr(player.room, "w_to"):
-            player.room = player.room.w_to
-            location_info()
-        else:
-            direction_error()
-    elif command == "q":
-        break
+            prompt("I don't quite understand\n")
+    elif len(command) == 2:
+        print(command)
     else:
-        prompt("I don't quite understand")
+        prompt("I don't quite understand\n")
 
 
-prompt("Thank you for playing!")
+prompt("Thank you for playing!\n")
