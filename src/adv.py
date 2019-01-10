@@ -51,7 +51,8 @@ def try_direction(direction, location):
         return getattr(location, attribute)
 
     else:
-        print("You can't head in that direction!" + "\n")
+        print(
+            "\x1b[1;37;41m\n - You can't head in that direction - \x1b[0m" + "\n")
         return player.location
 
 # Write a loop that:
@@ -62,11 +63,11 @@ while True:
     # * Prints the current room name
     # * Prints the current description (the textwrap module might be useful here).
     print(
-        "\n " + f"Your Location: {player.location.title} \n \n {player.location.description}")
+        "\n " + f"Your Location: {player.location.title} \n \n     {player.location.description}")
 
     # * Waits for user input and decides what to do.
     inp = input(
-        "\n Enter a direction or pick up an item from the current room > \n ").lower().split()
+        "\n Enter a direction or pick up an item from the current room > ").lower().split()
     # If the user enters a cardinal direction, attempt to move to the room there.
 
     if len(inp) == 1:
@@ -80,19 +81,3 @@ while True:
 
     elif len(inp) == 2:
         first_word = inp[0]
-        second_word = inp[1]
-
-        # if inp == "n":
-        #     player.location = player.location.n_to
-        # elif inp == "e":
-        #     player.location = player.location.e_to
-        # elif inp == "s":
-        #     player.location = player.location.s_to
-        # elif inp == "w":
-        #     player.location = player.location.w_to
-        # elif inp == "q":
-        #     break
-
-        # Print an error message if the movement isn't allowed.
-        #
-        # If the user enters "q", quit the game.
