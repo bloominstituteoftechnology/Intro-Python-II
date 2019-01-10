@@ -6,21 +6,21 @@ from item import Item
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", ()),
+                     "North of you, the cave mount beckons", []),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", ()),
+passages run north and east.""", []),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", ()),
+the distance, but there is no way across the chasm.""", []),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", ()),
+to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", (Item("Club", "Blunt wooden weapon"), Item("Sword", "Damaged and rusted iron sword"))),
+earlier adventurers. The only exit is to the south.""", [Item("Club", "Blunt wooden weapon"), Item("Sword", "Damaged and rusted iron sword")]),
 }
 
 
@@ -41,8 +41,7 @@ room['treasure'].s_to = room['narrow']
 
 def game():  
 # Make a new player object that is currently in the 'outside' room.
-    player = Player(room['outside'])
-    currRoom = 'outside'
+    player = Player(room['outside'], [])
     print(player)
 # Write a loop that:
 #
@@ -53,27 +52,54 @@ def game():
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
     print('Game Options:')
-    direction = input('[N] North [S] South [E] East [W] WEST [Q] Quit\n').upper()
-    while not direction == 'Q':
-        if (direction == 'N') and (player.room == room['outside'] or player.room == room['narrow'] or player.room == room['foyer']):
-            player.room = room[currRoom].n_to
-        elif direction == 'S' and (player.room == room['foyer'] or player.room == room['treasure'] or player.room == room['overlook']):
-            player.room = room[currRoom].s_to
-        elif direction == 'E' and (player.room == room['foyer']):
-            player.room = room[currRoom].e_to
-        elif direction == 'W' and (player.room == room['narrow']):
-            player.room = room[currRoom].w_to
-        else:
-            print('Could not move in that direction')
+    userInput = input("""[N] North [S] South [E] East [W] WEST [Q] Quit\n
+    [(take) + (name of object)] Takes item [(drop) + (name of object)] Drops Item\n""").upper().split()
+    
+    while not userInput[0][0] == 'Q':
+        
+        if len(userInput) == 1:
+            userInput = userInput[0][0]
+            if (userInput == 'N') and (hasattr(player.room, 'n_to') == True):
+                player.room = player.room.n_to
+            elif userInput == 'S' and (hasattr(player.room, 's_to') == True):
+                player.room = player.room.s_to
+            elif userInput == 'E' and (hasattr(player.room, 'e_to') == True):
+                player.room = player.room.e_to
+            elif userInput == 'W' and (hasattr(player.room, 'w_to') == True):
+                player.room = player.room.w_to
+            else:
+                print('Could not move in that direction')
+        elif len(userInput) == 2:
+            targetItem = ''
+            if userInput[0] == 'TAKE':
+                for item in player.room.items:
+                    if item.name.upper() == userInput[1]:
+                        player.inventory.append(item)
+                        player.room.items.remove(item)
+                        
+            elif userInput[0] == 'DROP':
+                for item in player.inventory:
+                    if item.name.upper() == userInput[1]:
+                        player.inventory.remove(item)
+                        player.room.items.append(item)
+                
+        
+
+        print(player)
+
+        print('Game Options:\n')
+
         if len(player.room.items) > 0:
+            print('Items in the room:')
             for item in player.room.items:
                 print(item.name)
-        currRoom = list(room.keys())[list(room.values()).index(player.room)]
-        print(player)
-        print('Game Options:\n')
-        direction = input('[N] North [S] South [E] East [W] WEST [Q] Quit\n').upper()
-
+        print('\nMy Inventory:')
+        for item in player.inventory:
+            print(item.name)
+        userInput = input("""\n[N] North [S] South [E] East [W] WEST [Q] Quit\n
+        [(take) + (name of object)] Takes item [(drop) + (name of object)] Drops Item\n""").upper().split()
 game()
+
 
 #
 # If the user enters "q", quit the game.
