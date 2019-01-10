@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,9 +35,17 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Creating Items
+
+
+sword = Item("Sword", "This is a sword. *Shwing*")
+
+room['outside'].addItem(sword)
+
 #
 # Main
 #
+
 
 # Make a new player object that is currently in the 'outside' room.
 
@@ -62,8 +71,9 @@ while True:
 
     # * Prints the current room name
     # * Prints the current description (the textwrap module might be useful here).
+
     print(
-        "\n " + f"Your Location: {player.location.title} \n \n     {player.location.description}")
+        "\n " + f"Your Location: {player.location.title} \n \n     {player.location.description} \n\n  Items in room: {player.location.items}")
 
     # * Waits for user input and decides what to do.
     inp = input(
@@ -79,5 +89,9 @@ while True:
 
         player.location = try_direction(inp, player.location)
 
-    elif len(inp) == 2:
-        first_word = inp[0]
+    elif len(inp) > 1 and (inp[0] == "get" or [0] == "take"):
+        itemToGet = player.location.findItemByName(inp[1])
+        if itemToGet is not None:
+            player.addItem(itemToGet)
+        else:
+            print(f"There is no {inp[1]} here.")

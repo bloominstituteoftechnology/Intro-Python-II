@@ -8,6 +8,15 @@ class Room:
         self.description = description
         self.items = []
 
+    def __str__(self):
+        return f"{self.items}"
+
+    def findItemByName(self, name):
+        for i in self.items:
+            if i.name.lower() == name.lower():
+                return i
+        return None
+
     def addItem(self, item):
         self.items.append(item)
 
