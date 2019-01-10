@@ -4,19 +4,24 @@ from player import Player
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance", "North of you, the cave mount beckons."),
+    'outside':  Room("Outside Cave Entrance", """
+    North of you, the cave mount beckons."""),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. 
+    'foyer':    Room("Foyer", """
+    Dim light filters in from the south. 
     Dusty passages run north and east."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling into the darkness.
+    'overlook': Room("Grand Overlook", """
+    A steep cliff appears before you, falling into the darkness.
     Ahead to the north, a light flickers in the distance, 
     but there is no way across the chasm."""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west to north.
+    'narrow':   Room("Narrow Passage", """
+    The narrow passage bends here from west to north.
     The smell of gold permeates the air."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure chamber! 
+    'treasure': Room("Treasure Chamber", """
+    You've found the long-lost treasure chamber! 
     Sadly, it has already been completely emptied by earlier adventurers. 
     The only exit is to the south."""),
 }
@@ -56,9 +61,8 @@ player = Player(player_name, room['outside'])
 # Write a loop that:
 while True:
 # * Prints the current room name
-    print(player.current_room.name)
 # * Prints the current description (the textwrap module might be useful here).
-    print(player.current_room.desc)
+    print(f'    {player}')
     print()
 # * Waits for user input and decides what to do.
     print(f'''    Your options:
@@ -68,7 +72,7 @@ while True:
         w to go West
         q  to   Quit
     ''')
-    decision = input('    Where would you like to go? ').lower[0]
+    decision = input('    Where would you like to go? ').lower()
     print()
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
@@ -77,30 +81,29 @@ while True:
         # else:
         # player.current_room = try_direction(decision, player.current_room )
         if (not (decision in ['n','s','e','w', 'q'])):
-            print(f'    {decision} is not an option, try again.')
+            print(f'    {decision} is not an option, try again...')
         elif (decision == 'n'):
-            try:
-                player.current_room = player.current_room.n_to
-            except AttributeError:
-                print(f'    {player.name} cannot move north, try again.')
+            if (player.current_room.n_to):
+                print(player.current_room.n_to)
         elif (decision == 's'):
             try:
                 player.current_room = player.current_room.s_to
             except AttributeError:
-                print(f'    {player.name} cannot move south, try again.')
+                print(f'    {player.name} cannot move south, try again...')
         elif (decision == 'e'):
             try:
                 player.current_room = player.current_room.e_to
             except AttributeError:
-                print(f'    {player.name} cannot move east, try again.')
+                print(f'    {player.name} cannot move east, try again...')
         elif (decision == 'w'):
             try:
                 player.current_room = player.current_room.w_to
             except AttributeError:
-                print(f'    {player.name} cannot move west, try again.')
+                print(f'    {player.name} cannot move west, try again...')
     # If the user enters "q", quit the game.
         elif (decision == 'q'):
-            print('Game Over')
+            print('    GAME OVER')
+            print()
             break
     # elif (len(decision) == 4):
         

@@ -10,4 +10,4 @@ class Room:
         self.desc = desc
 
     def __repr__(self):
-        return (f'{self.name}, {self.desc}')
+        return (f'{self.name}. {self.desc}')

@@ -11,4 +11,4 @@ class Player:
         # self.inventory = inventory
 
     def __repr__(self):
-        return (f'{self.name} is currently in {self.current_room}.')
+        return (f'{self.name} is currently in the {self.current_room}')
