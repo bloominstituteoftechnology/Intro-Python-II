@@ -71,36 +71,48 @@ while True:
             print(f'There is a {items[item].name}, a {items[item].description}')
     
     # Player action input
-    wantPickup = input('\nWould you like to pick up an item here? y n')
-    itemToPickup = input('What would you like to pick up (e.g. sword)? Enter item: ')
+    action = input("Choose an action: take / drop / inventory / move. Enter action: ")
 
-    # Player movement input **
-    print('\nWhere do you want to go? n s e w q')
-    direction = input('Enter a direction: ')
+    # Player action responses
+    if action == 'take':
+        takeThis = input('\nWhat do you want to take? Enter item: e.g. sword ')
+        player.inventory.append(takeThis)
+    elif action == 'drop':
+        print(action)
+    elif action == 'inventory':
+        print(player.inventory)
+    elif action == 'move':
+        # Player movement input **
+        print('\nWhere do you want to go? n s e w q')
+        direction = input('Enter a direction: ')
 
-    # Player movement responses **
-    if direction =='n':
-        try:
-            player.currentRoom = currentRoom.n_to
-        except AttributeError:
-            print("\n*** You can't move north! ***")
-    elif direction == 's':
-        try:
-            player.currentRoom = currentRoom.s_to
-        except AttributeError:
-            print("\n*** You can't move south! ***")
-    elif direction == 'e':
-        try:
-            player.currentRoom = currentRoom.e_to
-        except AttributeError:
-            print("\n*** You can't move east! ***")
-    elif direction == 'w':
-        try:
-            player.currentRoom = currentRoom.w_to
-        except AttributeError:
-            print("\n*** You can't move west! ***")
-    elif direction == 'q':
-        break
-    else:
-        continue
+        # Player movement responses **
+        if direction =='n':
+            try:
+                player.currentRoom = currentRoom.n_to
+            except AttributeError:
+                print("\n*** You can't move north! ***")
+        elif direction == 's':
+            try:
+                player.currentRoom = currentRoom.s_to
+            except AttributeError:
+                print("\n*** You can't move south! ***")
+        elif direction == 'e':
+            try:
+                player.currentRoom = currentRoom.e_to
+            except AttributeError:
+                print("\n*** You can't move east! ***")
+        elif direction == 'w':
+            try:
+                player.currentRoom = currentRoom.w_to
+            except AttributeError:
+                print("\n*** You can't move west! ***")
+        elif direction == 'q':
+            break
+        else:
+            continue
+
+    
+
+
         
