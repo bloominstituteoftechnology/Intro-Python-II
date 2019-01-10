@@ -7,7 +7,7 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", ['Torch', 'Sword']),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -55,14 +55,15 @@ room['treasure'].s_to = room['narrow']
 
 
 def mud_game():
-    print('\nWelcome Adventurer!\n')
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print('Welcome Adventurer!\n')
     player_name = input("What is your name? ")
     player = Player(player_name, room['outside'])
     os.system('cls' if os.name == 'nt' else 'clear')
+    print(player.room)
+
     try:
         while True:
-            print(player.room)
-
             input_command(player)
     except Quit:
         pass
