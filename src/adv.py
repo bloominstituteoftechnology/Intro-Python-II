@@ -78,8 +78,8 @@ while True:
     elif player_input == 'south' or player_input == 's':
         newPlayer.location = newPlayer.location.s_to
         print('Successfully moved south.')
-        else:
-            print('Cannot go this way! Try another direction.')
+    else:
+        print('Cannot go this way! Try another direction.')
 
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
