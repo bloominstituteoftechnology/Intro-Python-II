@@ -6,10 +6,10 @@ class Room():
         self.name = name
         self.description = description
         self.items = []
-        self.n_dir = None
-        self.s_dir = None
-        self.e_dir = None
-        self.w_dir = None
+        self.n_to = None
+        self.s_to = None
+        self.e_to = None
+        self.w_to = None
 
     def add_item(self, item):
         self.items.append(item)
