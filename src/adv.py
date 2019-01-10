@@ -54,19 +54,27 @@ player = Player(room['outside'])
 done = False 
 
 while not done:
-  currentRoom = player.initialLocation
-
-  print(f'This is the current room{room[currentRoom]['name']}')
-  print((room[currentRoom]['description']))
-  s = input("Command> ").strip.string().lower()
-
-  if s = 'q':
+  # currentRoom = player.initialLocation
+  print(f'This is the current room {player.initialLocation.name}')
+  print((player.initialLocation.description))
+  s = input().lower()
+  
+  if s == 'q':
     done = True
-  elif s in ["n", "w", "s, "e"]:
-    key = f'{s}_to'
+  # elif s in ["n", "w", "s, "e"]:
+  #   key = f'{s}_to'
+  elif s == 'n':
+    # print(player.initialLocation.n_to)
+    player.initialLocation = player.initialLocation.n_to
+  elif s == 's':
+    player.initialLocation = player.initialLocation.s_to
+  elif s == 'e':
+    player.initialLocation = player.initialLocation.e_to
+  elif s == 'w':
+    player.initialLocation = player.initialLocation.w_to
 
-    if key in room[currentRoom]:
-      player.moveTo(room[currentRoom][key])
-  else: print(f'unknown command "{s}"')
+
+    
+  # else: print(f'unknown command "{s}"')
   
 
