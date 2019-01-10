@@ -35,9 +35,19 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+def checkLists(list, input):
+    for item in list:
+        if item.name.upper() == input:
+            return item
+        else:
+            print('That item is not in this room')
+
 #
 # Main
 #
+
+
 
 def game():  
 # Make a new player object that is currently in the 'outside' room.
@@ -68,26 +78,24 @@ def game():
             elif userInput[0][0] == 'W' and (hasattr(player.room, 'w_to') == True):
                 player.room = player.room.w_to
             elif userInput[0] == 'I' or userInput[0] == 'INVENTORY':
-                print('\nMy Inventory:')
+                print('My Inventory:')
                 for item in player.inventory:
                     print(item.name)
             else:
                 print('Could not move in that direction')
         elif len(userInput) == 2:
-            targetItem = ''
             if userInput[0] == 'TAKE' or userInput[0] == 'GET':
-                for item in player.room.items:
-                    if item.name.upper() == userInput[1]:
-                        item.on_take()
-                        player.inventory.append(item)
-                        player.room.items.remove(item)
-                        
+                item = checkLists(player.room.items, userInput[1])
+                if item: 
+                    item.on_take()
+                    player.inventory.append(item)
+                    player.room.items.remove(item)       
             elif userInput[0] == 'DROP':
-                for item in player.inventory:
-                    if item.name.upper() == userInput[1]:
-                        item.on_drop()
-                        player.inventory.remove(item)
-                        player.room.items.append(item)
+                item = checkLists(player.inventory, userInput[1])
+                if item:
+                    item.on_drop()
+                    player.inventory.remove(item)
+                    player.room.items.append(item)
                 
         
 
@@ -108,3 +116,5 @@ game()
 
 #
 # If the user enters "q", quit the game.
+
+
