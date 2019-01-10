@@ -47,8 +47,49 @@ location = pc.location
 print("You wake up, you only remember your name")
 pc.name = input("What is your name: ")
 print(f"Welcome, {pc.name}, your adventure begins.")
-print("---------------------------------------------------")
+print("""---------------------------------------------------
+  
+  
+  """)
 print(location.desc)
+print("""---------------------------------------------------
+  
+  
+  """)
+# make this a function
+entry = input("""What will you do?
+Move: n, e, s, w
+Check Location: c
+Investigate Room: i
+: """)
+# try newLocation variable, and have the location change be assigned to newLocation before the True check, so that player location doesnt get lost
+# then assign location to new location of True check succeeds
+if entry == "n":
+    if location.desc:
+        location = pc.location.n_to
+        print("You go North")
+elif entry == "e":
+    if location.desc:
+        location = pc.location.e_to
+        print("You go East")
+elif entry == 's':
+    if location.desc:
+        location = pc.location.s_to
+        print("You go South")
+elif entry == "w":
+    if location.desc:
+        location = pc.location.w_tp
+        print("You go West")
+print("""---------------------------------------------------
+
+  
+  
+  """)
+if location.desc:
+    print(location.desc)
+else:
+    print("You see no way forward in that direction")
+
 
 # Write a loop that:
 #
