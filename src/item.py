@@ -15,12 +15,20 @@ class Item:
 
 
 
-class Weapon(Item):
+"""class Weapon(Item):
     def __init__(self, variety, damagePoints):
         super().__init__(name, description)
         self.variety = variety
-        self.damagePoints = damagePoints
+        self.damagePoints = damagePoints"""
 
 """class Sword(Weapon)
     def __init__(self, ):
         super().__init__(variety, damagePoints)"""
+
+"""
+add inventory
+how pick up or drop?
+currency?  separate class?  or subclass?
+warlock class inherits from player?  
+health points? 
+"""

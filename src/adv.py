@@ -24,7 +24,7 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
+#accessing room instance via bracket notation so now access class to attributes via dot notation.
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -41,9 +41,7 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 player_name = input("Enter the name of your character: ")
 player = Player(player_name)
-player.room = room['outside']
-
-
+player = Player(room['outside'])
 
 # Write a loop that:
 #
@@ -56,9 +54,6 @@ player.room = room['outside']
 #
 # If the user enters "q", quit the game.
 
-print(f"{player.name}, you are in the {player.name.room}")
-print(f"{player.room.description}\n")
-
 print(
     f"""Commands:
     Press N to go north.
@@ -68,6 +63,29 @@ print(
     press q to quit."""
 )
 
+def try_direction(direction, current_room):
+    attribute = direction + '_to'
+    if hasattr(current_room, attribute):
+        return getattr(current_room, attribute)
+    else:
+        print("You can not go that way.  Please try again.")
+        return current_room
+
+while True:
+    print(f"{player}, you are in the {player.current_room.name}\n")
+    print(f"{player.current_room.description}\n")
+
+    c = input("\n>").lower()[0]
+
+    player.current_room = try_direction(c, player.current_room)
+
+if c == 'q'
+        break
+    
+
+
+
+"""
 while True:
     action = input("What is your next move? ").lower()
 
@@ -95,6 +113,5 @@ while True:
         break 
     else:
         print(f"That is not a valid action.")
-
-
+"""
 
