@@ -3,6 +3,6 @@ class Item:
     self.name = name
     self.description = description
 
-item = Item("pen", "writey thingy")
+# item = Item("pen", "writey thingy")
 
-print(item.name)
+# print(item.name)

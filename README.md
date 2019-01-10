@@ -9,7 +9,7 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 
 ## Tasks
 
-* Add classes for rooms and the player
+done * Add classes for rooms and the player
 * Add a simple parser that reads user input and performs actions
 * Add items to the game that the user can carry around
 * Make rooms able to hold multiple items
