@@ -53,26 +53,43 @@ player = Player() #if no input, player is initialized with currentRoom='outside'
 #
 # If the user enters "q", quit the game.
 
-currentRoom = room[player.currentRoom]
-roomName = currentRoom.name
-print(f'Current location: {roomName}')
-roomDesc = currentRoom.description
-print(roomDesc)
-print('Where do you want to go?')
-direction = input('Enter a direction:')
 
 
-if direction == 'n' and type(currentRoom.n_to) is str:
-    player.currentRoom = currentRoom.n_to
-    print(player.currentRoom)
-elif direction == 's' and len(currentRoom.s_to) > 0:
-    player.currentRoom = currentRoom.s_to
-elif direction == 'e' and type(currentRoom.e_to) is str:
-    player.currentRoom = currentRoom.e_to
-elif direction == 'w' and type(currentRoom.w_to) is str:
-    player.currentRoom = currentRoom.w_to
-elif ['n', 's', 'e', 'w'].count(direction) == 0: 
-    print('Use one of [n, s, e, w]')
-else:
-    print("You can't go that way!")
-    
+while True:
+    #Player status
+    currentRoom = room[player.currentRoom]
+    roomName = currentRoom.name
+    print(f'\nCurrent location: {roomName}')
+    roomDesc = currentRoom.description
+    print(roomDesc)
+
+    # Player actions input
+    print('\nWhere do you want to go?')
+    direction = input('Enter a direction:')
+
+    # Player actions response
+    if direction =='n':
+        try:
+            player.currentRoom = currentRoom.n_to
+        except AttributeError:
+            print("You can't move north!")
+    elif direction == 's':
+        try:
+            player.currentRoom = currentRoom.s_to
+        except AttributeError:
+            print("You can't move south!")
+    elif direction == 'e':
+        try:
+            player.currentRoom = currentRoom.e_to
+        except AttributeError:
+            print("You can't move east!")
+    elif direction == 'w':
+        try:
+            player.currentRoom = currentRoom.w_to
+        except AttributeError:
+            print("You can't move west!")
+    elif direction == 'q':
+        break
+    else:
+        continue
+        
