@@ -57,7 +57,7 @@ def try_direction(direction, current_location):
 
 
 while True:
-    print(player.name + ' ' + 'your current location is: \v')
+    print(Player(player.name, player.current_location))
     print(player.current_location.room_name + '\v')
     print(player.current_location.room_description)
     print('Which direction do you choose? (n,s,e or w)')
