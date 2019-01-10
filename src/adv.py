@@ -33,6 +33,53 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+# ========================================================================================> Variables ----<
+pc = Player("Default", room["outside"], [], 50)
+location = pc.location
+newLocation = ""
+# ========================================================================================> Functions ----<
+
+# Navigation function handles player movement
+
+
+def nav():
+    global location
+    global newLocation
+    print(f'''
+    {location.desc}
+    ''')
+    entry = input("""What will you do?
+    Move: n, e, s, w
+    Check Location: c
+    Investigate Room: i
+    : """)
+    if entry == 'n' or entry == 's' or entry == 'e' or entry == 'w' or entry == 'q':
+        try:
+            if entry == 'n':
+                newLocation = location.n_to
+            elif entry == 'e':
+                newLocation = location.e_to
+            elif entry == 's':
+                newLocation = location.s_to
+            elif entry == 'w':
+                newLocation = location.w_to
+        except AttributeError:
+            print('''
+    You do not see a way forward in that direction
+            ''')
+            nav()
+
+    if newLocation:
+        location = newLocation
+
+    else:
+        print('Incorrect input. Please use n, e, s, or w')
+        nav()
+    print(f'''
+    {location.desc}
+    ''')
+    nav()
+
 
 #
 # Main
@@ -41,54 +88,17 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 
 
-pc = Player("Default", room["outside"], [], 50)
-location = pc.location
-
 print("You wake up, you only remember your name")
 pc.name = input("What is your name: ")
 print(f"Welcome, {pc.name}, your adventure begins.")
-print("""---------------------------------------------------
-  
-  
-  """)
-print(location.desc)
-print("""---------------------------------------------------
-  
-  
-  """)
+
+
+nav()
+
 # make this a function
-entry = input("""What will you do?
-Move: n, e, s, w
-Check Location: c
-Investigate Room: i
-: """)
+
 # try newLocation variable, and have the location change be assigned to newLocation before the True check, so that player location doesnt get lost
 # then assign location to new location of True check succeed
-if entry == "n":
-    if location.desc:
-        location = pc.location.n_to
-        print("You go North")
-elif entry == "e":
-    if location.desc:
-        location = pc.location.e_to
-        print("You go East")
-elif entry == 's':
-    if location.desc:
-        location = pc.location.s_to
-        print("You go South")
-elif entry == "w":
-    if location.desc:
-        location = pc.location.w_tp
-        print("You go West")
-print("""---------------------------------------------------
-
-  
-  
-  """)
-if location.desc:
-    print(location.desc)
-else:
-    print("You see no way forward in that direction")
 
 
 # Write a loop that:
