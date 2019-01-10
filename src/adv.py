@@ -95,6 +95,7 @@ def print_commands():
 
         get [item] - to get an item
         drop [item] - to drop an item
+        i or inventory - to show inventory
 
         Q - to quit game
         """
@@ -111,6 +112,16 @@ def try_direction(direction, current_room):
     else:
         direction_error(direction)
         return current_room
+
+
+def validate_item_in_room(item):
+    room_items = player.current_room.list_items
+    return any(i.name == item for i in room_items)
+
+
+def validate_item_in_inventory(item):
+    player_items = player.list_items
+    return any(i == item for i in player_items)
 
 
 def item_action(action, item):
@@ -171,13 +182,15 @@ while True:
 
     if len(command) == 1:
         command = command[0]
-        prompt(f"command: {command}")
+        prompt(f"command: {command}\n")
 
         # Make player move NESW
         if command in ["n", "s", "e", "w"]:
             player.current_room = try_direction(command, player.current_room)
         elif command == "help":
             print_commands()
+        elif command == "i" or command == "inventory":
+            prompt(f"Inventory: {player.list_items}\n")
         elif command == "q":
             break
         else:
@@ -187,7 +200,12 @@ while True:
         second_word = command[1]
 
         if first_word in ["get", "drop"]:
-            item_action(first_word, second_word)
+            if validate_item_in_room(second_word) or validate_item_in_inventory(
+                second_word
+            ):
+                item_action(first_word, second_word)
+            else:
+                prompt(f"There's no item called {second_word}\n")
         else:
             command_error()
     else:
