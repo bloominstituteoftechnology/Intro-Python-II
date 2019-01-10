@@ -3,7 +3,7 @@ from player import Player
 from item import Item
 # Declare all the rooms
 
-rooms = {
+room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
@@ -57,9 +57,9 @@ player.room = room['outside']
 # If the user enters "q", quit the game.
 
 print(f"{player.name}, you are in the {player.name.room}")
-print(f"{player.room.description}")
+print(f"{player.room.description}\n")
 
-prompt(
+print(
     f"""Commands:
     Press N to go north.
     Press E to go east.
@@ -91,6 +91,10 @@ while True:
             player.room = player.room.w_to
         except AttributeError:
             print("You can not move that direction.  Try again.")
+    elif action == 'q':
+        break 
+    else:
+        print(f"That is not a valid action.")
 
 
 

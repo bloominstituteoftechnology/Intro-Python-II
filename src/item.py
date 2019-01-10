@@ -3,14 +3,14 @@ class Item:
         self.name = name
         self.description = description
     
-    def __repr__(self)
+    def __repr__(self):
         return f'{self.name} {self.description}'
 
-class Treasure(Item):
+"""class Treasure(Item):
     def __init__(self, name, description):
         super().__init__()
             self.name = name
-            self.description = description
+            self.description = description"""
 
 
 
@@ -18,8 +18,8 @@ class Treasure(Item):
 class Weapon(Item):
     def __init__(self, variety, damagePoints):
         super().__init__(name, description)
-            self.variety = variety
-            self.damagePoints = damagePoints
+        self.variety = variety
+        self.damagePoints = damagePoints
 
 """class Sword(Weapon)
     def __init__(self, ):
