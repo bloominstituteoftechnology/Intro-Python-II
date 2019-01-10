@@ -94,6 +94,7 @@ def print_commands():
         W - go to West
 
         get [item] - to get an item
+        drop [item] - to drop an item
 
         Q - to quit game
         """
@@ -126,10 +127,14 @@ def item_action(action, item):
                 # remove item from room
                 player.current_room.remove_item(i)
 
-        prompt(f"Got {item}!")
+        prompt(f"Got {item}!\n")
     else:
         # drop item
-        print("Dropped the item!")
+        if len(player_items) > 0:
+            player.drop_item(item)
+            prompt(f"Dropped {item}! You can't get it back, sorry.\n")
+        else:
+            prompt(f"You don't have anything to drop.\n")
 
 
 # Make a new player object that is currently in the 'outside' room.
