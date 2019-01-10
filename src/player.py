@@ -7,3 +7,9 @@ class Player:
         self.name = name
         self.current_room = current_room
         self.list_items = []
+
+    def get_item(self, item):
+        self.list_items.append(item)
+
+    def remove_item(self, item):
+        self.list_items.remove(item)

@@ -1,3 +1,4 @@
+import os
 from room import Room
 from player import Player
 from item import Item
@@ -80,6 +81,10 @@ def direction_error(direction):
         prompt("No way West!\n")
 
 
+def command_error():
+    prompt("I don't quite understand\n")
+
+
 def print_commands():
     prompt(
         f"""Commands:
@@ -87,6 +92,8 @@ def print_commands():
         E - go to East
         S - go to South
         W - go to West
+
+        get [item] - to get an item
 
         Q - to quit game
         """
@@ -105,12 +112,38 @@ def try_direction(direction, current_room):
         return current_room
 
 
+def item_action(action, item):
+    room_items = player.current_room.list_items
+    player_items = player.list_items
+    room = player.current_room
+
+    if action == "get":
+        # get item
+        player.get_item(item)
+
+        for i in room_items:
+            if i.name == item:
+                # remove item from room
+                player.current_room.remove_item(i)
+
+        prompt(f"Got {item}!")
+    else:
+        # drop item
+        print("Dropped the item!")
+
+
 # Make a new player object that is currently in the 'outside' room.
 player_name = input("Enter player name: ")
 player = Player(player_name, room["outside"])
 # player.current_room => room["outside"]
 
-prompt(f"Welcome {player.name}, you are now in the {player.current_room.name}")
+os.system("cls" if os.name == "nt" else "clear")
+
+# Initial prompt of the game
+welcome_title = f"Welcome to the Text Adventure Game, {player.name}!"
+prompt(welcome_title)
+prompt("=" * len(welcome_title))
+prompt(f"You are now in the {player.current_room.name}\n")
 prompt(f"{player.current_room.desc}\n")
 prompt('Type "help" for commands.\n')
 
@@ -129,25 +162,33 @@ while True:
     command = input(f"What do you want to do, {player.name}? ").lower().split()
     # => returns a list
 
+    os.system("cls" if os.name == "nt" else "clear")
+
     if len(command) == 1:
         command = command[0]
-        print("command", command)
+        prompt(f"command: {command}")
 
         # Make player move NESW
         if command in ["n", "s", "e", "w"]:
             player.current_room = try_direction(command, player.current_room)
-            location_info()
-            continue
-        if command == "help":
+        elif command == "help":
             print_commands()
         elif command == "q":
             break
         else:
-            prompt("I don't quite understand\n")
+            command_error()
     elif len(command) == 2:
-        print(command)
+        first_word = command[0]
+        second_word = command[1]
+
+        if first_word in ["get", "drop"]:
+            item_action(first_word, second_word)
+        else:
+            command_error()
     else:
-        prompt("I don't quite understand\n")
+        command_error()
+
+    location_info()
 
 
 prompt("Thank you for playing!\n")
