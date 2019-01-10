@@ -74,19 +74,19 @@ while True:
     # If the user enters "q", quit the game.
     if len(s) == 1:
         # user has passed a direction
-        if s == 'n':
+        if s[0] == 'n':
             print("you chose n")
             player.current_room = player.current_room.n_to
-        elif s == 's':
+        elif s[0] == 's':
             print("you chose s")
             player.current_room = player.current_room.s_to
-        elif s == 'e':
+        elif s[0] == 'e':
             print("you chose e")
             player.current_room = player.current_room.e_to
-        elif s == 'w':
+        elif s[0] == 'w':
             print("you chose w")
             player.current_room = player.current_room.w_to
-        elif s == 'q':
+        elif s[0] == 'q':
             print('see you later!')
             break
         else: 
