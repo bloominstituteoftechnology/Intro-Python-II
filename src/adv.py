@@ -69,7 +69,28 @@ prompt(
 )
 
 while True:
-    command = input("What is your next move? ").lower()
+    action = input("What is your next move? ").lower()
 
-    
+    if action == 'n':
+        try:
+            player.room = player.room.n_to
+        except AttributeError:
+            print("You can not move that direction.  Try again.")
+    elif action == 'e':
+        try:
+            player.room = player.room.e_to
+        except AttributeError:
+            print("You can not move that direction.  Try again.")
+    elif action == 's':
+        try:
+            player.room = player.room.s_to
+        except AttributeError:
+            print("You can not move that direction.  Try again.")
+    elif action == 'w':
+        try:
+            player.room = player.room.w_to
+        except AttributeError:
+            print("You can not move that direction.  Try again.")
+
+
 

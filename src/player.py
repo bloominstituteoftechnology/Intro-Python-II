@@ -5,5 +5,5 @@ class Player:
         self.player_name = player_name
         
 
-    def __repr__(self):
-        return f'{self.playerName}, you are in the {self.currentRoom}'
+"""    def __repr__(self):
+        return f'{self.playerName}, you are in the {}'"""
