@@ -10,3 +10,13 @@ class Room:
 
     def add_item(self, item):
         self.list_items.append(item)
+
+    def print_items(self):
+        output = ""
+        if len(self.list_items) == 0:
+            return None
+        else:
+            for item in self.list_items:
+                output += f"{item.name} "
+
+        return output
