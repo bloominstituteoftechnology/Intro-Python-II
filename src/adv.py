@@ -6,21 +6,21 @@ import time
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", [Item('torch', "it's used to light the way"), Item('coin', "One shiny coin.")]),
+                     "North of you, the cave mount beckons", [Item('torch'), Item('coin')]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""",  [Item('sword', "its very sharp. Ow!"), Item('coin', "One shiny coin.")]),
+passages run north and east.""",  [Item('sword'), Item('coin')]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""",  [Item('chestpiece', "Heavy, but effective!"), Item('coin', "One shiny coin.")]),
+the distance, but there is no way across the chasm.""",  [Item('chestpiece'), Item('coin')]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""",  [Item('rock', "its pretty heavy"), Item('dagger', "Why was this stuck here?.")]),
+to north. The smell of gold permeates the air.""",  [Item('rock'), Item('dagger')]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""",  [Item('note', "it says IOU. Funny."), Item('coin', "One shiny coin.")]),
+earlier adventurers. The only exit is to the south.""",  [Item('note'), Item('coin')]),
 }
 
 
@@ -72,7 +72,7 @@ while True:
     print('--------------------------------------')
     time.sleep(2)
     for item in newPlayer.currentRoom.items:
-        print(f'You see a {item.name}, {item.description}')
+        print(f'You see a {item}')
     time.sleep(2)
     print("\nPlease enter n to go up, e to go right, w to go left, or s to go down. Or enter q to quit.\nIf you need to access your inventory, you can do so by typing 'i' or 'inventory' ")
     print("\nIf the room has an item, type 'get' and the item name to pick it up!")
@@ -140,29 +140,57 @@ while True:
             print('-----\n')
     # checks if the length is two (has two words)
     elif(len(choice) == 2):
-        print(choice)
-        if(choice[0] == 'get' or 'take'):
+
+        if(choice[0] == 'get' or choice[0] == 'take'):
+            try:
                 # loops through the items in the room
-            for index, item in enumerate(newPlayer.currentRoom.items):
-                    # if it finds an item with the same name user typed in
-                if(item.name == choice[1]):
-                         # adds item to the Player inventory
-                    newPlayer.inventory.append(item)
+                for index, item in enumerate(newPlayer.currentRoom.items):
+                        # if it finds an item with the same name user typed in
+                    if(item.name == choice[1]):
+                        # adds item to the Player inventory
+                        newPlayer.inventory.append(item.name)
+                        # removes item from the room
+                        newPlayer.currentRoom.items.remove(item)
+                        print(f'You picked up a {choice[1]}')
+                        time.sleep(3)
+                        break
+                    elif(index == len(newPlayer.currentRoom.items)-1):
+                        # if no item is in the room, print it doesnt exist
+                        print("There is no item in this room with that name")
+                        time.sleep(3)
+                        break
+            except AttributeError:
+                for index, item in enumerate(newPlayer.currentRoom.items):
+                    if(item == choice[1]):
+                        # adds item to the Player inventory
+                        newPlayer.inventory.append(item)
                     # removes item from the room
-                    newPlayer.currentRoom.items.remove(item)
-                    print(f'You picked up a {choice[1]}')
-                    time.sleep(3)
-                    break
-                elif(index == len(newPlayer.currentRoom.items)-1):
-                     # if no item is in the room, print it doesnt exist
-                    print("There is no item in this room with that name")
-                    time.sleep(3)
-                    break
+                        newPlayer.currentRoom.items.remove(item)
+                        print(f'You picked up a {choice[1]}')
+                        time.sleep(3)
+                        break
+                    elif(index == len(newPlayer.currentRoom.items)-1):
+                        # if no item is in the room, print it doesnt exist
+                        print("There is no item in this room with that name")
+                        time.sleep(3)
+                        break
         elif(choice[0] == 'drop'):
+            # loops through inventory list and checks for item
             for index, item in enumerate(newPlayer.inventory):
-                print(newPlayer.inventory)
-                if(newPlayer.inventory == choice[1]):
+
+                # if it finds the item in inventory
+
+                if(newPlayer.inventory[index] == choice[1]):
+                    # remove item from inventory
                     newPlayer.inventory.remove(item)
+                    # add item to current room items
+
                     newPlayer.currentRoom.items.append(item)
+
                     print(f'You dropped a {choice[1]}')
                     time.sleep(3)
+                elif(index == len(newPlayer.inventory)-1):
+                    # if no item is in the room, print it doesnt exist
+                    print("There is no item in your inventory that matches that name")
+                    time.sleep(3)
+                    break

@@ -1,8 +1,7 @@
 
 class Item():
-    def __init__(self, name, description):
+    def __init__(self, name):
         self.name = name
-        self.description = description
 
     def __repr__(self):
-        return f'a {self.name}. {self.description}'
+        return f'{self.name}.'
