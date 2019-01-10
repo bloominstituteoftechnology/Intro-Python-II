@@ -87,6 +87,8 @@ def print_commands():
         E - go to East
         S - go to South
         W - go to West
+
+        Q - to quit game
         """
     )
 
@@ -124,17 +126,26 @@ prompt('Type "help" for commands.\n')
 # If the user enters "q", quit the game.
 
 while True:
-    command = input("What do you want to do? (q to quit): ").lower()
+    command = input(f"What do you want to do, {player.name}? ").lower().split()
+    # => returns a list
 
-    # Make player move NESW
-    if command in ["n", "s", "e", "w"]:
-        player.current_room = try_direction(command, player.current_room)
-        location_info()
-        continue
-    if command == "help":
-        print_commands()
-    elif command == "q":
-        break
+    if len(command) == 1:
+        command = command[0]
+        print("command", command)
+
+        # Make player move NESW
+        if command in ["n", "s", "e", "w"]:
+            player.current_room = try_direction(command, player.current_room)
+            location_info()
+            continue
+        if command == "help":
+            print_commands()
+        elif command == "q":
+            break
+        else:
+            prompt("I don't quite understand\n")
+    elif len(command) == 2:
+        print(command)
     else:
         prompt("I don't quite understand\n")
 
