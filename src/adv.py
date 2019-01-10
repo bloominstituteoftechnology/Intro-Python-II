@@ -61,7 +61,10 @@ def try_direction(direction, current_room):
 while True:
     print(f'The current room is {player.current_room.name}')
     print(f'{player.current_room.description}')
-    print(f'Enter a new room by chosing a direction: n for up, s for down, e for right, w for left')
+    print(f'Enter a new room by chosing a direction: n for up, s for down, e for right, w for left. \nType q to quit game')
     direction = input('\nEnter a direction: ').lower()[0]
     
+    if direction == 'q':
+        break
     player.current_room = try_direction(direction, player.current_room)
+    
