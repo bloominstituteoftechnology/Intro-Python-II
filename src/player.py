@@ -8,6 +8,8 @@ class Player:
         self.inventory = inventory
         self.maxhealth = 100
         self.health = self.maxhealth
+        self.mp = 100
         self.attack = 10
+        self.status_effects = []
     def __repr__(self):
         return "<Player | Name: {} | Location: {} | Inventory: {} ".format(self.name, self.current_room, self.inventory)

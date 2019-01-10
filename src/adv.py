@@ -3,6 +3,10 @@ from player import Player
 from item import Item
 import sys
 import os
+import cmd
+import textwrap
+import time
+import random
 
 # Declare all the rooms
 
@@ -38,7 +42,11 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-starting_items = [Item("Steel Sword", "Something To Stab With."), Item("Lions Mane", "Increases Health Slightly")]
+starting_knight = [Item("Steel Sword", "Something To Slice With."), Item("Lions Mane", "Increases Health Slightly")]
+starting_magi = [Item("Magic Spell Book", "Provides Knowledge Of Ancient Spells"), Item("Lions Mane", "Increases Health Slightly")]
+starting_assassin = [Item("Steel Dagger", "Something To Stab With."), Item("Lions Mane", "Increases Health Slightly")]
+
+
 
 #
 # Main
@@ -46,7 +54,7 @@ starting_items = [Item("Steel Sword", "Something To Stab With."), Item("Lions Ma
 def main():
     print(os.environ)
     os.system('clear')
-    print("Welcome To Troy's Text Adventure Game!\n")
+    print("Welcome To Troy's Text Adventure Game\n")
     print("1.) Start")
     print("2.) Load")
     print("3.) Exit")
@@ -61,23 +69,49 @@ def main():
         print("Requires 1, 2, or 3 inputs")
         main()
 
+
+def class_define(player_name):
+    print("Which Class Would You Like To Be {}: ".format(player_name))
+    print("1.) Knight")
+    print("2.) Magi")
+    print("3.) Assassin")
+
+    player_class = input('Class: \n').upper()
+    if player_class == "1" or player_class == "KNIGHT":
+        global starting_knight
+        default_inventory = starting_knight
+        class_name = "Knight"
+    elif player_class == "2" or player_class == "MAGI":
+        global starting_magi
+        default_inventory = starting_magi
+        class_name = "Magi"
+    elif player_class == "3" or player_class == "ASSASSIN":
+        global starting_assassin
+        default_inventory = starting_assassin
+        class_name = "Assassin"
+    else:
+        print("Requires 1, 2, or 3 inputs or specify as `knight`, `magi`, or `assassin`\n")
+        class_define(player_name)
+    
+    default_location = room['outside']
+    
+    global PlayerIG
+    PlayerIG = Player(player_name, default_location, default_inventory)
+    start1(class_name)
+
 def start():
     os.system('clear')
     print("Hello, what is your name?")
     global room
     # print(room['outside'])
     options = input('-->')
-    default_location = room['outside']
-    global starting_items
-    default_inventory = starting_items
-    global PlayerIG
-    PlayerIG = Player(options, default_location, default_inventory)
-    start1()
 
-def start1():
+    class_define(options)
+
+def start1(x):
     os.system('clear')
-    print("Hello {}, how are you?".format(PlayerIG.name))
-    
+    print("Hello {} {}, how are you?".format(x ,PlayerIG.name))
+
 
 main()
 # Make a new player object that is currently in the 'outside' room.
