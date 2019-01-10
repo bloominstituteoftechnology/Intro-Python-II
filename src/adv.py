@@ -50,7 +50,7 @@ room['outside'].add_item(items['mysterious_box'])
 
 
 monsters = {
-    'dragon': Monster('Dragon', 'Big scary dragon', 100, 20)
+    'dragon': Monster('Dragon', 'Big scary dragon', 5, 20)
 }
 
 room['foyer'].monster = monsters['dragon']
@@ -185,6 +185,10 @@ while True:
                 if not player.is_alive:
                     print("You died!")
                     break
+            else:
+                print(f"There's no {monster.name} here")
+        else:
+            print("That's not a monster!")
 
     else:
         print("\nInvalid input. Type help for options.\n")

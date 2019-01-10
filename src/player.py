@@ -41,4 +41,4 @@ class Player:
             self.hit_points -= monster.attack
         if self.hit_points <= 0:
             self.is_alive = False
-        print(f"Your health: {self.hit_points}")
+        print(f"{monster.name} attacked you! Your health: {self.hit_points}")
