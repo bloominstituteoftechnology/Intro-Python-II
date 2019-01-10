@@ -4,13 +4,24 @@ from item import Item
 
 # Declare all the rooms
 
+item = {
+    'torch': Item('torch', '''
+    There is a torch, grab it to light up your passage.'''),
+    'oil': Item('oil', '''
+    There is oil, grab it to help you glide through the narrow passage.'''),
+    'magnifying glass': Item('magnifying glass', '''
+    There is a magnifying glass, grab it look for treasure that could've been dropped in any of the rooms.'''),
+    # 'gold': Item('gold', '''
+    # Horray you found a forgotten treasure, grab the sack of gold!!!''')
+}
+
 room = {
     'outside':  Room("Outside Cave Entrance", """
     North of you, the cave mount beckons."""),
 
     'foyer':    Room("Foyer", """
     Dim light filters in from the south. 
-    Dusty passages run north and east.""", [Item('torch', 'Grab the torch to be able to shee in the dark.')]),
+    Dusty passages run north and east.""", item['torch']),
 
     'overlook': Room("Grand Overlook", """
     A steep cliff appears before you, falling into the darkness.
@@ -19,13 +30,14 @@ room = {
 
     'narrow':   Room("Narrow Passage", """
     The narrow passage bends here from west to north.
-    The smell of gold permeates the air.""", [Item('oil', "Grab the oil to help you glide through the narrow passage.")]),
+    The smell of gold permeates the air.""", item['oil']),
 
     'treasure': Room("Treasure Chamber", """
     You've found the long-lost treasure chamber! 
     Sadly, it has already been completely emptied by earlier adventurers. 
-    The only exit is to the south.""", [Item('magnifying glass', "Grab the magnifying glass, look for treasure that could've been dropped.")]),
+    The only exit is to the south.""", item['magnifying glass']),
 }
+
 
 
 # Link rooms together
@@ -109,10 +121,10 @@ while True:
             print()
             break
     elif (len(decision) == 4):
-        print(decision)
         if (not (decision in ['grab', 'drop'])):
             print(f'    {decision} is not an option, try again...')
         elif (decision == 'grab'):
             player.inventory.append(item)
+            print('here', player.inventory.append(item))
         
 
