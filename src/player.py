@@ -2,5 +2,10 @@
 # currently.
 
 class Player:
-    def __init__(self, room):
-        self.room = room
+    def __init__(self , current_room):
+        self.current_room = current_room
+        
+    def __repr__(self):
+        return f"\n{self.current_room}"
+
+   
