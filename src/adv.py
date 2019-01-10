@@ -1,10 +1,18 @@
+# Import classes from external files
 from room import Room
+from player import Player
+
+import os
+
+
+def cls():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -21,9 +29,7 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -33,14 +39,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
 # Main
-#
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
+game_state = 1
 
 # Write a loop that:
-#
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -50,4 +55,44 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-for i in room:
+while game_state is 1:
+    print(player.room)
+    x = input("Which direction would you like to go? ")
+    if x == 'n':
+        if hasattr(player.room, 'n_to'):
+            cls()
+            player.room = player.room.n_to
+        else:
+            cls()
+            print("You cannot go that way.")
+
+    elif x == 'e':
+        if hasattr(player.room, 'e_to'):
+            cls()
+            player.room = player.room.e_to
+        else:
+            cls()
+            print("You cannot go that way.")
+
+    elif x == 's':
+        if hasattr(player.room, 's_to'):
+            cls()
+            player.room = player.room.s_to
+        else:
+            cls()
+            print("You cannot go that way.")
+
+    elif x == 'w':
+        if hasattr(player.room, 'w_to'):
+            cls()
+            player.room = player.room.w_to
+        else:
+            cls()
+            print("You cannot go that way.")
+
+    elif x == 'q':
+        cls()
+        break
+
+    else:
+        print("Command not found.")
