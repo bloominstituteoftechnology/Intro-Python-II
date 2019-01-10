@@ -129,9 +129,9 @@ while True:
         else:
             print("There is nothing to the south.")
 
-    elif verb == "v" or verb == "V":
-        if isinstance(player.current_room.v_to, Room):
-            player.move_to(player.current_room.v_to)
+    elif verb == "w" or verb == "W":
+        if isinstance(player.current_room.w_to, Room):
+            player.move_to(player.current_room.w_to)
         else:
             print("There is nothing to the west.")
 
