@@ -60,13 +60,9 @@ while not done:
   elif user_input in ['w', 'n', 's', 'e']:
     if hasattr(room[player.location], f'{user_input}_to'):
       key = f'{user_input}_to'
-      print(key, player.location, room[player.location])
       mykey = getattr(room[player.location], key)
-      print('\n MY KEEEYYYY', mykey.name.lower())
       lst = ['outside', 'foyer','overlook','narrow', 'treasure']
-      print([extension for extension in lst if(extension in mykey.name.lower())])        
       new_location = [extension for extension in lst if(extension in mykey.name.lower())]
-      print(new_location[0])
       player.location = new_location[0]
   else:
     print(f'unknown command {user_input}')
