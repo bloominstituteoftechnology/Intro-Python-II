@@ -42,8 +42,10 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in
+
 name = input('Hello n00b. What is your name?')
 player = Player(name, room['outside'])
+print('Welcome' + ' ' + name + ',' + 'let\'s start the adventure!')
 
 
 def try_direction(direction, current_location):
@@ -56,6 +58,7 @@ def try_direction(direction, current_location):
 while True:
     print(player.current_location.room_name)
     print(player.current_location.room_description)
+    print('Which direction do you choose? (n,s,e or w)')
 
     s = input("\n>").lower()[0]
 
