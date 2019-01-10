@@ -52,18 +52,21 @@ player = Player('outside')
 # Print an error message if the movement isn't allowed.
 done = False
 while not done:
-  print(f'\n Current Room Name => {room[player.location].name} \n')
-  print(f' \n Location description => {room[player.location].description} \n')
-  user_input = input('\n <Command ').strip().lower()
+  print(f'\n \033[37m Current Room Name => \033[32m {room[player.location].name} \n')
+  print(f'\n \033[37m Location description => \033[32m {room[player.location].description} \n')
+  user_input = input('\n \033[37m <Command ').strip().lower()
   if user_input == 'q':
+    print('\033[37m')
     done = not done
   elif user_input in ['w', 'n', 's', 'e']:
     if hasattr(room[player.location], f'{user_input}_to'):
       key = f'{user_input}_to'
-      mykey = getattr(room[player.location], key)
+      my_key = getattr(room[player.location], key)
       lst = ['outside', 'foyer','overlook','narrow', 'treasure']
-      new_location = [extension for extension in lst if(extension in mykey.name.lower())]
-      player.location = new_location[0]
+      player.moveTo(lst, my_key)
   else:
-    print(f'unknown command {user_input}')
+    # print(f'unknown command {user_input}')
+    print('\033[31m' + f'unknown command {user_input}')
+    print('\033[37m')
+
 # If the user enters "q", quit the game.
