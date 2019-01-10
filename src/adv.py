@@ -52,29 +52,37 @@ def nav():
     Move: n, e, s, w
     Check Location: c
     Investigate Room: i
+    Quit: q
     : """)
-    if entry == 'n' or entry == 's' or entry == 'e' or entry == 'w' or entry == 'q':
-        try:
-            if entry == 'n':
-                newLocation = location.n_to
-            elif entry == 'e':
-                newLocation = location.e_to
-            elif entry == 's':
-                newLocation = location.s_to
-            elif entry == 'w':
-                newLocation = location.w_to
-        except AttributeError:
+
+    try:
+        if entry == 'n':
+            newLocation = location.n_to
+        elif entry == 'e':
+            newLocation = location.e_to
+        elif entry == 's':
+            newLocation = location.s_to
+        elif entry == 'w':
+            newLocation = location.w_to
+        elif entry == 'c':
+            print(f"""
+    You are in the {location.name}
+            """)
+        elif entry == 'q':
             print('''
+    Thank you for playing, goodbye
+    ''')
+            quit()
+    except AttributeError:
+        print('''
     You do not see a way forward in that direction
             ''')
-            nav()
+        nav()
 
     if newLocation:
         location = newLocation
 
-    else:
-        print('Incorrect input. Please use n, e, s, or w')
-        nav()
+    nav()
     print(f'''
     {location.desc}
     ''')
