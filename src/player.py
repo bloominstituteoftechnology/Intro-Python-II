@@ -5,7 +5,7 @@ class Player:
     '''
      base class for player
     '''
-    def __init__(self, name, currentRoom, inventory):
+    def __init__(self, name, currentRoom):
         self.name = name
         self.currentRoom = currentRoom
-        self.inventory = inventory
+        # self.inventory = inventory
