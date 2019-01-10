@@ -39,7 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-newPlayer = Room('outside', 'outside room')
+player = Player(room['outside'])
 
 
 
@@ -55,9 +55,9 @@ newPlayer = Room('outside', 'outside room')
 # If the user enters "q", quit the game.
 
 while True:
-    print('The current room is {}'.format(newPlayer.name))
+    print('The current room is {}'.format(player.current_room.name))
     print('Enter a new room by chosing a direction: n for up, s for down, e for right, w for left')
-    direction = input('Enter a direction ')
-    if (direction == 'n'):
-        newPlayer.name = 'foyer'
-        print('You have entered the foyer')
+    direction = input('\nEnter a direction ')
+    if direction == 'n':
+        player.current_room = player.current_room.n_to
+        print(f'You have entered the room "{player.current_room.name}"')
