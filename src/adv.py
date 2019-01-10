@@ -44,8 +44,43 @@ def random_name():
 
 # Create a function that interprets the user input
 
-def analize_input(s):
-    pass
+def analize_input(string):
+    global game_active
+    s = string.lower().split(" ")
+    # print("Debugging input string ", s)
+
+    if s[0][0] == 'q':
+        print('\nAre you sure you wish to quit the game? [Y/N]\n')
+        quit_game = input('>')
+        if quit_game.lower() == 'y':
+            game_active = False
+
+    elif s[0][0] == 'm':
+        if len(s) < 2:
+            print('You must include a direction [N/S/E/W] when trying to move')
+            return
+
+        elif s[1][0] == 'n':
+            attempt_move('n')
+            
+        elif s[1][0] == 'e':
+            attempt_move('e')
+
+        elif s[1][0] == 's':
+            attempt_move('s')
+
+        elif s[1][0] == 'w':
+            attempt_move('w')
+            
+        else:
+            print('You must include a direction [N/S/E/W] when trying to move')
+            return
+
+def attempt_move(direction):
+    global current_room
+    print('\nAttempted to move... \n')
+
+    return
 
 
 # MAIN
@@ -89,4 +124,4 @@ while game_active:
     analize_input(in_loop)
     
 
-    game_active = False
+    
