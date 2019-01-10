@@ -1,8 +1,12 @@
 # Import classes from external files
 from room import Room
 from player import Player
+from item import Item
 
+# Import os for clear screen function
 import os
+
+# Clear screen function
 
 
 def cls():
@@ -14,17 +18,17 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons."),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
+    'foyer':    Room("the Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
+    'overlook': Room("the Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
+    'narrow':   Room("the Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
+    'treasure': Room("the Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
@@ -41,9 +45,11 @@ room['treasure'].s_to = room['narrow']
 
 # Main
 
-# Make a new player object that is currently in the 'outside' room.
-player = Player(room['outside'])
+name_bypass = 1
 game_state = 1
+
+# Make a new player object that is currently in the 'outside' room.
+player = Player("Test Name", room['outside'])
 
 # Write a loop that:
 # * Prints the current room name
@@ -55,44 +61,49 @@ game_state = 1
 #
 # If the user enters "q", quit the game.
 
+"""
+direction is the direction of the user input
+current_Room is the current room the player is in
+returns the new room the player moves to if the
+move was successful, or returns current room if
+the move was unsuccessful.
+"""
+
+
+def try_direction(direction, current_room):
+    direction_attribute = direction + "_to"
+
+    # Check if direction has valid direction_attribute
+    if hasattr(current_room, direction_attribute):
+        # fetch the new room
+        return getattr(current_room, direction_attribute)
+    else:
+        print('Invalid direction.' + '\n' + "-" * 40)
+        return player.current_room
+
+
 while game_state is 1:
-    print(player.room)
-    x = input("Which direction would you like to go? ")
-    if x == 'n':
-        if hasattr(player.room, 'n_to'):
-            cls()
-            player.room = player.room.n_to
-        else:
-            cls()
-            print("You cannot go that way.")
+    if name_bypass == 0:
+        player_name = input("Insert name: ")
+        player.name = player_name.capitalize()
+        name_bypass = 1
+    print(f'You are at the {player.current_room}')
 
-    elif x == 'e':
-        if hasattr(player.room, 'e_to'):
-            cls()
-            player.room = player.room.e_to
-        else:
-            cls()
-            print("You cannot go that way.")
-
-    elif x == 's':
-        if hasattr(player.room, 's_to'):
-            cls()
-            player.room = player.room.s_to
-        else:
-            cls()
-            print("You cannot go that way.")
-
-    elif x == 'w':
-        if hasattr(player.room, 'w_to'):
-            cls()
-            player.room = player.room.w_to
-        else:
-            cls()
-            print("You cannot go that way.")
-
-    elif x == 'q':
+    # accepts input from user and converts to lowercase
+    player_input_option = input(
+        f'Which direction would you like to go? ').lower()
+    cls()
+    # check if input was q, exit, or quit, then terminates the program
+    if player_input_option == 'q' or player_input_option == 'exit' or player_input_option == 'quit':
         cls()
         break
+    if player_input_option.split(' ', 1)[0] == "pickup":
+        print('Tried to pickup')
+    #
+    elif player_input_option:
+        player.current_room = try_direction(
+            player_input_option, player.current_room)
 
     else:
+        cls()
         print("Command not found.")
