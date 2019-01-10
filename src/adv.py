@@ -60,7 +60,7 @@ def wrong_direction():
 def analize_input(string):
     global game_active
     s = string.lower().split(" ")
-    print("Debugging input string ", s, '\n')
+    print("\nDebugging input string ", s, '\n')
 
     if s[0][0] == 'q':
         print('\nAre you sure you wish to quit the game? [Y/N]\n')
@@ -99,7 +99,7 @@ def analize_input(string):
         use_item(s[1])
 
     elif s[0][0] == 'i':
-        print('Inventory', player1.inventory, '\n')
+        print('INVENTORY:', player1.inventory, '\n')
 
     elif s[0][0] == 'l':
         list_controls()
@@ -119,21 +119,41 @@ def attempt_move(direction):
 # Handle item functions
 def grab_item(item):
     global item_list
-    player1.location.inventory.remove(item)
-    player1.inventory.append(item)
-    print(item_list[item].description, '\n')
+
+    try:
+        player1.location.inventory.index(item)
+        player1.location.inventory.remove(item)
+        player1.inventory.append(item)
+        print(item_list[item].description, '\n')
+
+    except:
+        print(item, 'is not here\n')
 
 def drop_item(item):
-    player1.location.inventory.append(item)
-    player1.inventory.remove(item)
+
+    try:
+        player1.inventory.index(item)
+        player1.location.inventory.append(item)
+        player1.inventory.remove(item)
+
+    except:
+        print(item, 'is not in your inventory\n')
 
 def use_item(item):
     global item_list
-    player1.inventory.remove(item)
-    print(item_list[item].usage, '\n')
+
+    try:
+        player1.inventory.index(item)
+        player1.inventory.remove(item)
+        print(item_list[item].usage, '\n')
+
+    except:
+        print('I do not see', item, 'in your inventory')
+        
 
 # make a function to print available controls
 def list_controls():
+    print('GAME CONTROLS')
     print('[M]ove: [N]orth, [S]outh, [E]ast, [W]est')
     print('[G]rab -item-, [D]rop -item-, [U]se -item-, [I]nventory')
     print('[Q]uit\n')
@@ -150,8 +170,9 @@ game_active = True
 
 char_name = input("Please name your hero to begin your quest:\n>")
 
-if char_name == '':
-    char_name = random_name()
+# if char_name == '':
+#     char_name = random_name()
+char_name = random_name()
 
 player1 = Player(char_name, current_room, [])
 
@@ -164,7 +185,7 @@ list_controls()
 while game_active:
 
     # * Prints the current room name
-    print(f'Current location: {player1.location.name}')
+    print(f'CURRENT LOCATION: {player1.location.name}')
 
     # * Prints the current description (the textwrap module might be useful here).
     print(f'-{player1.location.description}-')
@@ -173,7 +194,7 @@ while game_active:
     print("-Items in reach: ", player1.location.inventory, '-\n')
 
     # * Waits for user input and decides what to do.
-    print('What will you do next')
+    print('What will you do next?')
     print('Type [L]ist to view available commands')
     in_loop = input("\n>").lower()
 
