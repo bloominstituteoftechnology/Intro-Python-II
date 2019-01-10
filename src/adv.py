@@ -123,6 +123,9 @@ while not userInput == 'q':
 
         print(f'{player.name} items:', player.items)
 
+    elif userInput == 'i':
+        print(f'Your items: {player.items}')
+
     elif userInput == 'q':
         print('Thanks for playing!!!')
 
