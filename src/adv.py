@@ -40,7 +40,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-newPlayer = Player("Grobak The Barbarian", room['outside'], [''])
+# (Player name, starting room, initial inventory)
+newPlayer = Player("Grobak The Barbarian", room['outside'], [])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -69,43 +70,56 @@ while True:
     print(f'You chose {choice}')
     print('-----')
     choice = choice.split(" ")
+    # checks if the length of the array is 1 or 2
+    # if one, do this set of if/elif statements
     if(len(choice) == 1):
         if(choice[0] == "n"):
             try:
                 time.sleep(1)
+                # changes the current room to what newPlayer.currentRoom.n_to is equal too
                 newPlayer.currentRoom = newPlayer.currentRoom.n_to
+            # checks for attribute error which throws if there isnt a room in that direction
             except AttributeError:
                 print("Cannot move North, try a different direction")
                 time.sleep(3)
         elif(choice[0] == "e"):
             try:
                 time.sleep(1)
+                # changes the current room to what newPlayer.currentRoom.e_to is equal too
                 newPlayer.currentRoom = newPlayer.currentRoom.e_to
+             # checks for attribute error which throws if there isnt a room in that direction
             except AttributeError:
                 print("Cannot move East, try a different direction")
                 time.sleep(3)
         elif(choice[0] == "w"):
             try:
                 time.sleep(1)
+                # changes the current room to what newPlayer.currentRoom.w_to is equal too
                 newPlayer.currentRoom = newPlayer.currentRoom.w_to
+             # checks for attribute error which throws if there isnt a room in that direction
             except AttributeError:
                 print("Cannot move West, try a different direction")
                 time.sleep(3)
         elif(choice[0] == "s"):
             try:
                 time.sleep(1)
+                # changes the current room to what newPlayer.currentRoom.s_to is equal too
                 newPlayer.currentRoom = newPlayer.currentRoom.s_to
+             # checks for attribute error which throws if there isnt a room in that direction
             except AttributeError:
                 print("Cannot move South, try a different direction")
                 time.sleep(3)
         elif(choice[0] == "q"):
             quit(1)
         elif(choice[0] == "i" or "inventory"):
+            # checks if the inventory is an empty list
             if(newPlayer.inventory == ['']):
                 print("\nYou have no items. . .")
                 time.sleep(3)
             else:
-                print(f'\nYou cuurently have {newPlayer.inventory}')
+                # lets the play know what is in his inventory
+                # note: needs to loop through, currently displays as a list
+                print(f'\nYou currently have {newPlayer.inventory}')
                 time.sleep(3)
         else:
             time.sleep(1)
@@ -113,27 +127,31 @@ while True:
             time.sleep(3)
             print('-----\n')
             print('-----\n')
+    # checks if the length is two (has two words)
     elif(len(choice) == 2):
-        keywords = ["get", "take", "drop"]
-        if any(keyword in choice for keyword in keywords):
-            if(choice[0] == 'get'):
-                for index, item in enumerate(newPlayer.currentRoom.items):
-                    if(item.name == choice[1]):
-                        newPlayer.currentRoom.items.remove(item)
-                        newPlayer.inventory.append(choice[1])
-                        print(f'You picked up a {choice[1]}')
-                        time.sleep(3)
-                        break
-                    else:
-                        print("There is no item in this room with that name")
-                        time.sleep(3)
-            elif(choice[0] == 'take'):
-                if(newPlayer.currentRoom.items["name"] == choice[1]):
-                    newPlayer.inventory.append(choice[1])
-                else:
+        print(choice)
+        if(choice[0] == 'get' or 'take'):
+                # loops through the items in the room
+            for index, item in enumerate(newPlayer.currentRoom.items):
+                    # if it finds an item with the same name user typed in
+                if(item.name == choice[1]):
+                         # adds item to the Player inventory
+                    newPlayer.inventory.append(item)
+                    # removes item from the room
+                    newPlayer.currentRoom.items.remove(item)
+                    print(f'You picked up a {choice[1]}')
+                    time.sleep(3)
+                    break
+                elif(index == len(newPlayer.currentRoom.items)-1):
+                     # if no item is in the room, print it doesnt exist
                     print("There is no item in this room with that name")
                     time.sleep(3)
-            elif(choice[0] == 'drop'):
-                if(newPlayer.inventory.name == choice[1]):
+                    break
+        elif(choice[0] == 'drop'):
+            for index, item in enumerate(newPlayer.inventory):
+                print(newPlayer.inventory)
+                if(newPlayer.inventory == choice[1]):
+                    newPlayer.inventory.remove(item)
+                    newPlayer.currentRoom.items.append(item)
                     print(f'You dropped a {choice[1]}')
                     time.sleep(3)
