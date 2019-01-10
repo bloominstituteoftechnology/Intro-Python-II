@@ -8,4 +8,4 @@ class Room:
         self.room_description = room_description
 
     def __repr__(self):
-        return self.room_name
+        return f"{self.room_name}, {self.room_description}"
