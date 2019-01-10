@@ -3,10 +3,10 @@
 
 
 class Player:
-    def __init__(self, name, current_room, next_move):
+
+    def __init__(self, name, location):
         self.name = name
-        self.current_room = name + 'is in' + current_room
-        self.next_move = name + 'is walking' + next_move
+        self.location = location
 
     # def current_room(self):
     #     print("Player is currently in the current room.")

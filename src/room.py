@@ -3,9 +3,9 @@
 
 
 class Room:
-    def __init__(self, room_name, room_description, current_room, next_move, next_room):
+    def __init__(self, room_name, room_description):
         self.room_name = room_name
         self.room_description = room_description
-        self.current_room = current_room
-        self.next_move = next_move
-        self.next_room = next_room
+
+    def __repr__(self):
+        return self.room_name
