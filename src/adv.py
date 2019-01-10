@@ -67,18 +67,24 @@ def move_area(p_inpt):
             current_room = new_room
             print(
                 f"You are now at the {current_room.name}. {current_room.description}")
+            if len(current_room.items) > 0:
+                print(f"You see a {current_room.items[0]}.")
     elif p_inpt == 'e':
         if hasattr(current_room, "e_to"):
             new_room = current_room.e_to
             current_room = new_room
             print(
                 f"You are now at the {current_room.name}. {current_room.description}")
+            if len(current_room.items) > 0:
+                print(f"You see a {current_room.items[0]}.")
     elif p_inpt == 'w':
         if hasattr(current_room, "w_to"):
             new_room = current_room.w_to
             current_room = new_room
             print(
                 f"You are now at the {current_room.name}. {current_room.description}")
+            if len(current_room.items) > 0:
+                print(f"You see a {current_room.items[0]}.")
     else:
         print('That is not a direction!')
 
@@ -111,3 +117,4 @@ while not inits[0] == 'q':
             for i in current_room.items:
                 if inits[1] == i.name:
                     player.items.append(i)
+                    print(f"You have picked up the {i.name}")
