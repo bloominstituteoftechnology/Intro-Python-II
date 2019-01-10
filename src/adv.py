@@ -38,10 +38,20 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
+print("Please enter a name for your player. . .")
+name = input(">> ")
 # Make a new player object that is currently in the 'outside' room.
 # (Player name, starting room, initial inventory)
-newPlayer = Player("Grobak The Barbarian", room['outside'], [])
+newPlayer = Player(name, room['outside'], [])
+time.sleep(1)
+print(f'Welcome to the game, {newPlayer.playerName}')
+time.sleep(2)
+print("Your adventure awaits. . .")
+time.sleep(2)
+print("You have been tasked with finding the lost gold of Erilith.")
+time.sleep(2)
+print("Fortune favors the brave. Go and find the treasure. . .")
+time.sleep(2)
 # Write a loop that:
 #
 # * Prints the current room name
@@ -53,6 +63,7 @@ newPlayer = Player("Grobak The Barbarian", room['outside'], [])
 #
 # If the user enters "q", quit the game.
 while True:
+
     print('-----')
     print(f'\nThe current room is {newPlayer.currentRoom.name}\n')
     print('--------------------------------------')
@@ -63,9 +74,9 @@ while True:
     for item in newPlayer.currentRoom.items:
         print(f'You see a {item.name}, {item.description}')
     time.sleep(2)
-    print("\nPlease enter n to go up, e to go right, w to go left, or s to go down. Or enter q to quit. ")
+    print("\nPlease enter n to go up, e to go right, w to go left, or s to go down. Or enter q to quit.\nIf you need to access your inventory, you can do so by typing 'i' or 'inventory' ")
     print("\nIf the room has an item, type 'get' and the item name to pick it up!")
-    choice = input().lower()
+    choice = input("'Enter Command'>> ").lower()
     print('-----')
     print(f'You chose {choice}')
     print('-----')
@@ -113,7 +124,7 @@ while True:
             quit(1)
         elif(choice[0] == "i" or "inventory"):
             # checks if the inventory is an empty list
-            if(newPlayer.inventory == ['']):
+            if(newPlayer.inventory == []):
                 print("\nYou have no items. . .")
                 time.sleep(3)
             else:

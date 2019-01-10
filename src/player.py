@@ -5,6 +5,9 @@
 class Player():
     def __init__(self, playerName, currentRoom, inventory):
         self.playerName = playerName
+        self.health = 100
+        self.stamina = 50
+        self.stength = 10
         self.currentRoom = currentRoom
         self.inventory = inventory
 
