@@ -61,7 +61,7 @@ def try_direction(direction, location):
 
     else:
         print(
-            "\x1b[1;37;41m\n - You can't head in that direction - \x1b[0m" + "\n")
+            "\n - You can't head in that direction - \n")
         return player.location
 
 # Write a loop that:
@@ -73,7 +73,7 @@ while True:
     # * Prints the current description (the textwrap module might be useful here).
 
     print(
-        "\n " + f"Your Location: {player.location.title} \n \n     {player.location.description} \n\n  Items in room: {player.location.items}")
+        "\n " + f"Your Location: {player.location.title} \n \n     {player.location.description} \n\n  Items in room: {player.location.items} \n  Inventory: {player.items}")
 
     # * Waits for user input and decides what to do.
     inp = input(
@@ -89,9 +89,10 @@ while True:
 
         player.location = try_direction(inp, player.location)
 
-    elif len(inp) > 1 and (inp[0] == "get" or [0] == "take"):
+    elif len(inp) > 1 and (inp[0] == "get" or inp[0] == "take"):
         itemToGet = player.location.findItemByName(inp[1])
         if itemToGet is not None:
             player.addItem(itemToGet)
+            player.location.removeItem(itemToGet)
         else:
             print(f"There is no {inp[1]} here.")
