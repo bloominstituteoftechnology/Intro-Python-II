@@ -153,9 +153,10 @@ def take_single_item():
             for item in player.current_room.room_items:
                 if item_to_take == item.name.lower():
                     player.add_item_to_inventory(item)
+                    item.on_take(player)
                     player.current_room.room_items.remove(item)
         break
-    print(f'================ An item has been added to your inventory: {player.inventory} ================')
+
 
 
 def drop_single_item():
@@ -174,8 +175,8 @@ def drop_single_item():
             for item in player.inventory:
                 if item_to_remove == item.name.lower():
                     player.remove_item_from_inventory(item)
+                    item.on_drop(player)
         break
-    print(f'============ You\'ve removed an item, here is your current inventory: {player.inventory} ============')
 
 
 def exit_game():
