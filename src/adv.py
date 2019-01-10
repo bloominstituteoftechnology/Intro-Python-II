@@ -57,9 +57,7 @@ room['treasure'].s_to = room['narrow']
 def initiate_game():
     player = Player(room['outside'])
     print("Let's play a game")
-    print_user_info(player.room)
-
-    # user = int(input("[1] Rock  [2] Paper   [3] Scissors    [9] Quit\n"))
+    print_user_info(player.room, player.items)
 
     while True:
         input = get_input()
@@ -68,38 +66,8 @@ def initiate_game():
             if input[0] == "q":
                 print("Saionara my friend")
                 break
-
-            elif input[0] == "n":
-                try:
-                    player.room = player.room.n_to
-                    print_user_info(player.room)
-                except AttributeError:
-                    print_direction_error(input)
-
-            elif input[0] == "e":
-                try:
-                    player.room = player.room.e_to
-                    print_user_info(player.room)
-                except AttributeError:
-                    print_direction_error(input)
-
-            elif input[0] == "s":
-                try:
-                    player.room = player.room.s_to
-                    print_user_info(player.room)
-                except AttributeError:
-                    print_direction_error(input)
-
-            elif input[0] == "w":
-                try:
-                    player.room = player.room.w_to
-                    print_user_info(player.room)
-                except AttributeError:
-                    print_direction_error(input)
-            elif input[0] == "i" or input[0] == "inventory":
-                show_inventory(player)
             else:
-                print("Cannot parse your input. Please try again.\n")
+                player.room = try_direction(input[0], player)
         elif len(input) == 2:
             action = input[0]
             item = input[1]
@@ -121,8 +89,8 @@ def initiate_game():
         else:
             print("Cannot parse your input. Please try again.\n")
 
-def print_user_info(room):
-    if not room.is_light:
+def print_user_info(room, items):
+    if not room.is_light and not any(isinstance(item, Lightsource) for item in items):
         print("It's pitch black in here!\n")
         return
 
@@ -139,6 +107,17 @@ def show_inventory(player):
 
 def print_direction_error(direction):
     print(f"You cannot move {direction} from here.")
+
+def try_direction(direction, player):
+    attribute = direction + "_to"
+
+    if hasattr(player.room, attribute):
+        new_room = getattr(player.room, attribute)
+        print_user_info(new_room, player.items)
+        return new_room
+    else:
+        print("You can't go that way")
+        return player.room
 
 if __name__ == '__main__':
     initiate_game()
