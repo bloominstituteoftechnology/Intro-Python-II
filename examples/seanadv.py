@@ -40,7 +40,7 @@ while True:
     """
     player.current_room = try_direction(s, player.current_room)
 
-    if s == 'q'
+    if s == 'q':
         break
         #ie break out of the loop
 

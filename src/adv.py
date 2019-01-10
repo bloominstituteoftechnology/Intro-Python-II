@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-from item import Item
+#from item import Item
 # Declare all the rooms
 
 room = {
@@ -39,9 +39,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player_name = input("Enter the name of your character: ")
-player = Player(player_name)
-player = Player(room['outside'])
+player_name = input("Enter the name of your character: ").current_room
+player = Player(player_name, room['outside'])
 
 # Write a loop that:
 #
@@ -72,15 +71,16 @@ def try_direction(direction, current_room):
         return current_room
 
 while True:
-    print(f"{player}, you are in the {player.current_room.name}\n")
-    print(f"{player.current_room.description}\n")
+    print(player.current_room.name)
+    print(player.current_room.description)
 
     c = input("\n>").lower()[0]
 
     player.current_room = try_direction(c, player.current_room)
 
-if c == 'q'
+    if c == 'q':
         break
+    
     
 
 
