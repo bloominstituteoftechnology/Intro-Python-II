@@ -126,7 +126,6 @@ def take_single_item():
     available_items = [item.name.lower() for item in player.current_room.room_items]
     if len(player.current_room.room_items) == 0:
         print("There are no items in this room!")
-        return "incorrect action"
     while True:
         item_to_take = input("Please type the name of the item to take: ").lower()
         if item_to_take not in available_items:
@@ -145,7 +144,6 @@ def drop_single_item():
     items_inventory = [item.name.lower() for item in player.inventory]
     if len(player.inventory) == 0:
         print("You have no items!")
-        return "incorrect action"
     while True:
         item_to_remove = input("Please type the name of the item to remove: ").lower()
         if item_to_remove not in items_inventory:
@@ -202,7 +200,7 @@ def start_game():
 
         try:
             user_action = Action(int(user_action))
-            user_chosen_action = process_user_action(user_action)
+            process_user_action(user_action)
         except ValueError:
             print("Incorrect action, please try again by selecting a number (1-7).")
             continue
