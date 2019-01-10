@@ -8,5 +8,14 @@ class Room():
         self.description = description
         self.items = items
 
+    def _has_items(self):
+        if len(self.items):
+            return True
+        else:
+            return False
+
     def __repr__(self):
-        return f"{self.name} \n {self.description}"
+        if self._has_items():
+            return f"{self.name} \n {self.description} \n {self.items}"
+        else:
+            return f"{self.name} \n {self.description} \n This room has no items."

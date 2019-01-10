@@ -8,4 +8,4 @@ class Player():
         self.items = []
 
     def __repr__(self):
-        return f"Player is in {self.current_room.name}"
+        return f"Player is in {self.current_room.name} \n Inventory: {self.items}"

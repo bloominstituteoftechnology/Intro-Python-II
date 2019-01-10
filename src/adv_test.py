@@ -73,13 +73,9 @@ player = Player(room['outside'])
 
 # game loop
 while True:
-    # Display current room and desc
+    # Display current room, desc, items
     print(player.current_room)
-    # Display items in room
-    if len(player.current_room.items):
-        print(f"There are some items here: {player.current_room.items}")
-    else:
-        print('There are no items in this room')
+
     # User enters a command
     user_input = input('> ').lower().split(' ')
 

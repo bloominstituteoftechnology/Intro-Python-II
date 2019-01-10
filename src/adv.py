@@ -22,6 +22,7 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Delcare Items
 items = {
     'key': Item('Key', 'It\'s a key to something'),
     'sword': Item('Sword', 'It\'s a weapon'),
@@ -44,14 +45,12 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Place items in rooms
-room['foyer'].items = [items['key'].name, items['sword'].name]
-room['overlook'].items = [items['mouse'].name, items['yo-yo'].name]
-room['narrow'].items = [items['backpack'].name]
-room['treasure'].items = [items['water'].name]
+room['foyer'].items = [items['key'], items['sword']]
+room['overlook'].items = [items['mouse'], items['yo-yo']]
+room['narrow'].items = [items['backpack']]
+room['treasure'].items = [items['water']]
 
-#
-# Main
-#
+# change room function
 
 
 def try_direction(direction, current_room):
@@ -63,8 +62,9 @@ def try_direction(direction, current_room):
     else:
         print('You can\'t go that way. Try a different direction.')
         return current_room
-
-# Make a new player object that is currently in the 'outside' room.
+#
+# Main
+#
 
 
 # Init a new player to play the game
