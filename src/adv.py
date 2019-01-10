@@ -20,7 +20,7 @@ to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", [Item("Club", "well worn wooden club"), Item("Sword", "damaged and rusted iron sword")]),
+earlier adventurers. The only exit is to the south.""", [Item("Club", "well worn wooden club",6, 'weapon'), Item("Sword", "damaged and rusted iron sword", 12, 'weapon'), Item("Bread", "a piece of moldy bread", 0, 'food')]),
 }
 
 
@@ -51,7 +51,8 @@ def checkLists(list, input):
 
 def game():  
 # Make a new player object that is currently in the 'outside' room.
-    player = Player(room['outside'], [])
+    none = Item('Nothing', 'Empty', 1, 'Nothing')
+    player = Player(room['outside'], [], 40, none)
     print(player)
 # Write a loop that:
 #
@@ -81,6 +82,7 @@ def game():
                 print('My Inventory:')
                 for item in player.inventory:
                     print(item.name)
+                print(f'Equipped Weapon: {player.onhand_weapon.name}')
             else:
                 print('Could not move in that direction')
         elif len(userInput) == 2:
@@ -96,7 +98,18 @@ def game():
                     item.on_drop()
                     player.inventory.remove(item)
                     player.room.items.append(item)
-                
+            elif userInput[0] == 'EQUIP':
+                item = checkLists(player.inventory, userInput[1])
+                if item and item.type == 'weapon':
+                    player.onhand_weapon = item
+                else:
+                    print("That is not a weapon!")
+            elif userInput[0] == 'UNEQUIP':
+                if not player.onhand_weapon.type == 'None':
+                    player.onhand_weapon = none
+
+                    
+
         
 
         print(player)
@@ -107,6 +120,7 @@ def game():
             print('Items in the room:')
             for item in player.room.items:
                 print(item.name)
+
         
         userInput = input("""\n[N] North [S] South [E] East [W] WEST [Q] Quit\n
         [(take) + (name of object)] Takes item [(drop) + (name of object)] Drops Item\n""").upper().split()
