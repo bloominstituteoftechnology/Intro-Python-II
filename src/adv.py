@@ -4,11 +4,12 @@ from item import Item
 # Declare all the rooms
 
 item = {
-    "wallet": Item("Wallet", "A simple leather wallet, unfortunately it's completely empty, was this yours?")
+    "wallet": Item("Wallet", "A simple leather wallet, unfortunately it's completely empty, was this yours?"),
+    "dirt": Item("Dirt", "It's dirt")
 }
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", [item["wallet"]]),
+                     "North of you, the cave mount beckons", [item["wallet"], item["dirt"]]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", []),
@@ -42,6 +43,27 @@ location = pc.location
 newLocation = ""
 # ========================================================================================> Functions ----<
 
+
+# Item function handles player obtaining items
+def itemHandler():
+
+    if location.items:
+        print("     You search the room and find some items of interest:")
+        count = 0
+        for item in location.items:
+            count += 1
+            print("     " + item.name + ": " + str(count))
+        print("     Take an item?  y/n")
+        entry = input(": ")
+        if entry == "y":
+            print("     Choose an item to take")
+            entry = input(": ")
+            entry = int(entry) - 1
+            pc.inv.append(location.items.pop(entry))
+
+    else:
+        print("     There is nothing very interesting here")
+
 # Navigation function handles player movement
 
 
@@ -51,7 +73,7 @@ def nav():
     print(f'''
     {location.desc}
     ''')
-    entry = input("""What will you do?
+    entry = input("""   What will you do?
     Move: n, e, s, w
     Check Location: c
     Investigate Room: i
@@ -76,6 +98,15 @@ def nav():
     Thank you for playing, goodbye
     ''')
             quit()
+        elif entry == 'i':
+            print('''
+    You look around the room...
+            ''')
+            itemHandler()
+        else:
+            print("""
+    That didnt work, try a different action
+    """)
     except AttributeError:
         print('''
     You do not see a way forward in that direction
@@ -100,8 +131,8 @@ def nav():
 
 
 print("You wake up, you only remember your name")
-pc.name = input("What is your name: ")
-print(f"Welcome, {pc.name}, your adventure begins.")
+pc.name = input("   What is your name: ")
+print(f"    Welcome, {pc.name}, your adventure begins.")
 
 
 nav()
