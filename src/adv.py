@@ -75,9 +75,15 @@ while True:
     elif player_input == 'north' or player_input == 'n':
         newPlayer.location = newPlayer.location.n_to
         print('Successfully moved north.')
+        if newPlayer.location == room['overlook'] or newPlayer.location == room['treasure']:
+            print('Cannot go this way! Try another direction.')
+            break
     elif player_input == 'south' or player_input == 's':
         newPlayer.location = newPlayer.location.s_to
         print('Successfully moved south.')
+        if newPlayer.location == room['outside'] or newPlayer.location == room['narrow']:
+            print('Cannot go this way! Try another direction.')
+            break
     else:
         print('Cannot go this way! Try another direction.')
 
