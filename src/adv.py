@@ -2,6 +2,7 @@ from room import Room
 from player import Player
 from item import Item
 from item import LightSource
+from monster import Monster
 import textwrap as tw
 
 # Declare all the rooms
@@ -47,6 +48,13 @@ items = {
 room['outside'].add_item(items['flashlight'])
 room['outside'].add_item(items['mysterious_box'])
 
+monsters = {
+    'dragon': Monster('Dragon', 20, 10),
+    'troll': Monster('Troll', 10, 5)
+}
+
+room['foyer'].monster = monsters['dragon']
+room['narrow'].monster = monsters['troll']
 
 #
 # Main
@@ -54,7 +62,7 @@ room['outside'].add_item(items['mysterious_box'])
 
 # Make a new player object that is currently in the 'outside' room.
 
-player = Player(room['outside'])
+player = Player(room['outside'], 50, 10)
 
 # Write a loop that:
 #
@@ -161,10 +169,26 @@ while True:
             if player.current_room.is_light or player.has_lightsource:
                 print(player.current_room)
                 print(player.current_room.items)
+                if hasattr(player.current_room, "monster"):
+                    print(f"Uh oh! There's a {player.current_room.monster.name} in here!")
+                    print(f"It has {player.current_room.monster.hitpoints} HP and deals {player.current_room.monster.attack} damage")
             else:
                 print("It's too dark to see anything, you need a lightsource.")
         else:
             print("You can't check that!\n")
+
+    elif verb == "attack":
+        if noun in monsters:
+            monster = monsters[noun]
+            if hasattr(player.current_room, "monster") and player.current_room.monster == monster:
+                player.attack_monster(monster)
+                if not player.is_alive:
+                    print("*Sad trambone* You died!! RIP")
+                    break
+            else:
+                print("There is no monster with that name")
+        else:
+            print("There is no monster with that name")
 
     else:
         print("\nInvalid input. Type help for options.\n")
