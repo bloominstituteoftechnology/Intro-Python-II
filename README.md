@@ -11,8 +11,8 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 
 [x] Add classes for rooms and the player
 [x] Add a simple parser that reads user input and performs actions
+[x]Add items to the game that the user can carry around
 
-- Add items to the game that the user can carry around
 - Make rooms able to hold multiple items
 - Make the player able to carry multiple items
 - Add two-word commands to the parser
