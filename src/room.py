@@ -5,14 +5,14 @@ wrapper = textwrap.TextWrapper()
 
 
 class Room:
-    def __init__(self, room, description):
+    def __init__(self, room, description, items):
         self.room = room
         self.description = description
-        self.items = []
+        self.items = items
 
     def __repr__(self):
         desc = wrapper.wrap(self.description)
-        string = ''
+        string = '\n'
         for line in desc:
             string += line + '\n'
         string += 'Items: '

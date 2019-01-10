@@ -5,21 +5,21 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", []),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", ['sword']),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", ['knife']),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", ['bat']),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", []),
 }
 
 
@@ -64,11 +64,16 @@ userInput = ''
 while not userInput == 'q':
     newRoom = ''
     print(currentRoom)
+    userInput = input('Which way do you want to do or go?\n'
+                      'Directions: [n] North [s] South [e] East [w] West\n'
+                      'Items: take (item) or drop (item)\n'
+                      'or [q] Quit: ')
 
-    userInput = input('Which way do you want to go?\n'
-                      '[n] North [s] South [e] East [w] West [q] Quit: ')
-
-    if userInput == 'n' or userInput == 's' or userInput == 'e' or userInput == 'w' or userInput == 'q':
+    if userInput == 'n'\
+            or userInput == 's'\
+            or userInput == 'e'\
+            or userInput == 'w'\
+            or userInput == 'q':
         try:
             if userInput == 'n':
                 newRoom = currentRoom.n_to
@@ -83,6 +88,9 @@ while not userInput == 'q':
 
         if newRoom:
             currentRoom = newRoom
+
+    elif 'take' in userInput or 'drop' in userInput:
+        print('yep')
 
     else:
         print('Incorrect input. Please use n, e, s, or w')
