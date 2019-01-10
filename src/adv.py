@@ -78,18 +78,25 @@ def command(p_inpt):
         print(f"You are now at the {current_room.name}. {current_room.description}")
         if len(current_room.items) > 0:
             print(f"You see a {current_room.items[0]}.")   
-    else:
-        print('That is not a direction!')
-
+    
 
     if p_inpt[0] == 'get' or p_inpt[0] == 'take':
         if len(current_room.items) > 0:
             for i in current_room.items:
                 if p_inpt[1] == i.name:
                     player.items.append(i)
+                    current_room.items.remove(i)
                     print(f"You have picked up the {i.name}")
                 else:
                     print('There is no item with that name here')
+
+    if p_inpt[0] == 'drop' or p_inpt[0] == 'd':
+        if len(player.items) > 0:
+            for i in player.items:
+                if p_inpt[1] == i.name:
+                    current_room.items.append(i)
+                    player.items.remove(i)
+                    print(f"You don't need {i.name} any longer, so you drop it")
 
 
 
