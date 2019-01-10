@@ -1,8 +1,8 @@
 from room import Room
 from player import Player
 from item import Item
-# Declare all the rooms
 
+# Declare all the rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -34,7 +34,6 @@ items = {
 
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -62,62 +61,83 @@ while True:
     room_key = player.current_room
     # * Prints the current room name
     print(room_name)
-    # * Prints the current description (the textwrap module might be useful here).
+    # * Prints the current description
+    # (the textwrap module might be useful here).
     print(room_desc)
-    print(room_items) if len(room_items) > 0 else print(
-        'There are no items in this room')
+    # print items in room
+    if len(room_items):
+        print(f"There are some items here: {room_items}")
+    else:
+        print('There are no items in this room')
     # * Waits for user input and decides what to do.
     move = input('Where are you going? n, s, e, or w? or press q to quit ')
-    # If the user enters a cardinal direction, attempt to move to the room there.
-    if room_key == 'outside' and move == 'n':
-        room_name = room[room_key].n_to.name
-        room_desc = room[room_key].n_to.description
-        room_items = room[room_key].n_to.item_list
-        player.current_room = [key for key in room.keys() if key == 'foyer'][0]
-    elif room_key == 'foyer' and move == 's':
-        room_name = room[room_key].s_to.name
-        room_desc = room[room_key].s_to.description
-        room_items = room[room_key].s_to.item_list
-        player.current_room = [
-            key for key in room.keys() if key == 'outside'][0]
-    elif room_key == 'foyer' and move == 'n':
-        room_name = room[room_key].n_to.name
-        room_desc = room[room_key].n_to.description
-        room_items = room[room_key].n_to.item_list
-        player.current_room = [
-            key for key in room.keys() if key == 'overlook'][0]
-    elif room_key == 'foyer' and move == 'e':
-        room_name = room[room_key].e_to.name
-        room_desc = room[room_key].e_to.description
-        room_items = room[room_key].e_to.item_list
-        player.current_room = [
-            key for key in room.keys() if key == 'narrow'][0]
-    elif room_key == 'overlook' and move == 's':
-        room_name = room[room_key].s_to.name
-        room_desc = room[room_key].s_to.description
-        room_items = room[room_key].s_to.item_list
-        player.current_room = [key for key in room.keys() if key == 'foyer'][0]
-    elif room_key == 'narrow' and move == 'w':
-        room_name = room[room_key].w_to.name
-        room_desc = room[room_key].w_to.description
-        room_items = room[room_key].w_to.item_list
-        player.current_room = [key for key in room.keys() if key == 'foyer'][0]
-    elif room_key == 'narrow' and move == 'n':
-        room_name = room[room_key].n_to.name
-        room_desc = room[room_key].n_to.description
-        room_items = room[room_key].n_to.item_list
-        player.current_room = [
-            key for key in room.keys() if key == 'treasure'][0]
-    elif room_key == 'treasure' and move == 's':
-        room_name = room[room_key].s_to.name
-        room_desc = room[room_key].s_to.description
-        room_items = room[room_key].s_to.item_list
-        player.current_room = [
-            key for key in room.keys() if key == 'narrow'][0]
-    elif move == 'q':
-        # If the user enters "q", quit the game.
-        print('Game over! Byeee')
-        break
-    else:
-        # Print an error message if the movement isn't allowed.
-        print('There is nothing over there. Try another direction: ')
+    words = move.split(' ')
+    if len(words) == 2:
+        if words[0] == 'get':
+            for i, item in enumerate(room_items):
+                if item == words[1]:
+                    player.items.append(room_items.pop(i))
+                    print(player.items)
+        elif words[0] == 'drop':
+            for i, item in enumerate(player.items):
+                if item == words[1]:
+                    room_items.append(player.items.pop(i))
+                    print(room_items)
+    elif len(words) == 1:
+        # If the user enters a cardinal direction,
+        # attempt to move to the room there.
+        if room_key == 'outside' and move == 'n':
+            room_name = room[room_key].n_to.name
+            room_desc = room[room_key].n_to.description
+            room_items = room[room_key].n_to.item_list
+            player.current_room = [
+                key for key in room.keys() if key == 'foyer'][0]
+        elif room_key == 'foyer' and move == 's':
+            room_name = room[room_key].s_to.name
+            room_desc = room[room_key].s_to.description
+            room_items = room[room_key].s_to.item_list
+            player.current_room = [
+                key for key in room.keys() if key == 'outside'][0]
+        elif room_key == 'foyer' and move == 'n':
+            room_name = room[room_key].n_to.name
+            room_desc = room[room_key].n_to.description
+            room_items = room[room_key].n_to.item_list
+            player.current_room = [
+                key for key in room.keys() if key == 'overlook'][0]
+        elif room_key == 'foyer' and move == 'e':
+            room_name = room[room_key].e_to.name
+            room_desc = room[room_key].e_to.description
+            room_items = room[room_key].e_to.item_list
+            player.current_room = [
+                key for key in room.keys() if key == 'narrow'][0]
+        elif room_key == 'overlook' and move == 's':
+            room_name = room[room_key].s_to.name
+            room_desc = room[room_key].s_to.description
+            room_items = room[room_key].s_to.item_list
+            player.current_room = [
+                key for key in room.keys() if key == 'foyer'][0]
+        elif room_key == 'narrow' and move == 'w':
+            room_name = room[room_key].w_to.name
+            room_desc = room[room_key].w_to.description
+            room_items = room[room_key].w_to.item_list
+            player.current_room = [
+                key for key in room.keys() if key == 'foyer'][0]
+        elif room_key == 'narrow' and move == 'n':
+            room_name = room[room_key].n_to.name
+            room_desc = room[room_key].n_to.description
+            room_items = room[room_key].n_to.item_list
+            player.current_room = [
+                key for key in room.keys() if key == 'treasure'][0]
+        elif room_key == 'treasure' and move == 's':
+            room_name = room[room_key].s_to.name
+            room_desc = room[room_key].s_to.description
+            room_items = room[room_key].s_to.item_list
+            player.current_room = [
+                key for key in room.keys() if key == 'narrow'][0]
+        elif move == 'q':
+            # If the user enters "q", quit the game.
+            print('Game over! Byeee')
+            break
+        else:
+            # Print an error message if the movement isn't allowed.
+            print('There is nothing over there. Try another direction: ')
