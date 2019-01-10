@@ -34,11 +34,10 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-'''ADD PARSER
--Add a simple parser that reads user input and 
-performs actions, as described below
--then, Add two-word commands to the parser
--then, Add the get and drop commands to the parser'''
+'''LEFT TO DO 
+- Add two-word commands to the parser
+- Add the get and drop commands to the parser
+'''
 # Main
 
 #done: Make a new player object that is currently in the 'outside' room.
