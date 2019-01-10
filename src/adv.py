@@ -47,7 +47,8 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside'])
-print(player)
+# print(player)
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -59,37 +60,31 @@ print(player)
 #
 # If the user enters "q", quit the game.
 
-done = False 
+def try_direction(direction, current_room):
+  attribute = direction + '_to'
+  
+  if hasattr(current_room, attribute):
+    return getattr(current_room, attribute)
+  else: 
+    print("You can't go that way")
+    return current_room
+
+done = False
 
 while not done:
-  # currentRoom = player.currentLocation
-  print(f'This is the current room {player.currentLocation.name}')
-  print((player.currentLocation.description))
+  # currentRoom = player.current_room
   s = input().lower().split()
-  s = s[0]
+  print(s)
+  s = s[0] #b/c of split it returns a list
   print(s, " this is s")
   # split to get rid of white space
-  
-  if s == 'q':
-    done = True
-  # elif s in ["n", "w", "s, "e"]:
-  #   key = f'{s}_to'
+  print(f'This is the current room {player.current_room.name}')
+  print((player.current_room.description))
 
-  elif s in ['n', 's', 'e', 'w']: 
-    print(room[player.currentLocation])
-    if hasattr(room[player.currentLocation], f'{s}_to'):
-      print("working", room[player.currentLocation])
-
-  # elif s == 'n':
-  #   # print(player.currentLocation.n_to)
-  #   player.currentLocation = player.currentLocation.n_to
-  # elif s == 's':
-  #   player.currentLocation = player.currentLocation.s_to
-  # elif s == 'e':
-  #   player.currentLocation = player.currentLocation.e_to
-  # elif s == 'w':
-  #   player.currentLocation = player.currentLocation.w_to
-  
+  if s in ['n', 's', 'e', 'w']:
+    player.current_room = try_direction(s, player.current_room)
+  elif s == 'q':
+    done = not done
   else: print(f'unknown command "{s}"')
   
 

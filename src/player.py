@@ -1,11 +1,12 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 class Player:
-  def __init__(self, currentLocation):
-    self.currentLocation = currentLocation
+  def __init__(self, current_room):
+    self.current_room = current_room
 
-  def __repr__(self):
-    return f'Player is in {self.currentLocation}'
+  # def __repr__(self):
+  #   return f'Player is in {self.current_room}'
 
-  def moveTo(self, newLocation):
-    self.currentLocation = newLocation
+  # def moveTo(self, newLocation, lst):
+  #   location = [char for char in lst if (char in newLocation)]
+  #   self.current_room = location[0]
