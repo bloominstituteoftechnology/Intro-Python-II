@@ -43,9 +43,11 @@ name = input('Hello n00b. What is your name?')
 player = Player(name, room['outside'])
 
 while True:
-    currentLocation = player.location
-    print(currentLocation)
-    choice = input(name + 'in which direction would you like to go')
+    print(player.current_location.name)
+    print(player.current_location.room_description)
+
+    s = input("\n>").lower()[0]
+
 
 # Write a loop that:
 #
