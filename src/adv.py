@@ -140,10 +140,26 @@ while True:
     # Define Command Action
     command_action = command[0]
 
+    # Define Command Object and Object Type and Descriptor
     if len(command) == 1:
         command_object = ""
     else:
         command_object = command[1]
+        
+        # Check if command_object is more than one word
+        command_object_item = command_object.split(" ")
+
+        # If command_object is one word, assume that word is the item type
+        if len(command_object_item) == 1:
+            item_type = command_object_item[0]
+            item_descriptor = None
+
+        # If command_object is more than one word, assume that the second 
+        # word is the item type and the first word is a descriptor
+        else:
+            item_type = command_object_item[1]
+            item_descriptor = command_object_item[0]
+    
 
     #
     # Commands --------------------------------------------------------------------------------
@@ -230,72 +246,67 @@ while True:
 
     # Get Item
     elif command_action in get_item_command:
-        # Check if command_object is more than one word
-        command_object_item = command_object.split(" ")
-
-        # If command_object is one word, assume that word is the item type
-        if len(command_object_item) == 1:
-            item_type = command_object_item[0]
-            item_descriptor = None
-
-        # If command_object is more than one word, assume that the second 
-        # word is the item type and the first word is a descriptor
-        else:
-            item_type = command_object_item[1]
-            item_descriptor = command_object_item[0]
         
         # Get a list of all items with a type that matches the provided type
         location_item_type = [item for item in player.location.items if item.type == item_type]
         
-        # If there is only one item of the provided type, Get Item
-        if len(location_item_type) == 1:
-            player.items.append(location_item_type[0])
-            # location.items = [item for item in player.location.items if item.type != location_item_type[0]]
-            player.location.items.remove(location_item_type[0])
+        if (location_item_type[0].can_get == True):
+            # If there is only one item of the provided type, Get Item
+            if len(location_item_type) == 1:
+                location_item_type[0].on_get(player)
+                # player.items.append(location_item_type[0])
+                # player.location.items.remove(location_item_type[0])
+                enter_to_continue()
+
+            else: # If there is more than one item of the provided type...
+
+                # If player did not provide a descriptor, prompt player to choose one
+                if item_descriptor == None:
+                    print(f'''What type of {item_type}?''')
+                    for item in location_item_type:
+                        print(item.descriptor)
+                    item_descriptor = input('Enter one of the above options: ')
+
+                # Get item with the provided descriptor if it exists in the location
+                if item_descriptor in [item.descriptor.lower() for item in location_item_type]:
+                    for index, item in enumerate(location_item_type):
+                        if item.descriptor.lower() == item_descriptor:
+                            location_item_type[index].on_get(player)
+                    enter_to_continue()
+                else:
+                    print(f'Unable to pick up {item_descriptor} {item_type}.')
+        else:
+            print("You can't pick that up right now!")
+
+    # Drop Item
+    elif command_action in drop_item_command:
+        
+        # Get a list of all items with a type that matches the provided type
+        player_item_type = [item for item in player.items if item.type == item_type]
+        
+        # If there is only one item of the provided type, Drop Item
+        if len(player_item_type) == 1:
+            player.location.items.append(player_item_type[0])
+            player.items.remove(player_item_type[0])
 
         else: # If there is more than one item of the provided type...
 
             # If player did not provide a descriptor, prompt player to choose one
             if item_descriptor == None:
                 print(f'''What type of {item_type}?''')
-                for item in location_item_type:
+                for item in player_item_type:
                     print(item.descriptor)
                 item_descriptor = input('Enter one of the above options: ')
 
-            # Get item with the provided descriptor if it exists in the location
-            if item_descriptor in [item.descriptor.lower() for item in location_item_type]:
-                for index, item in enumerate(location_item_type):
+            # Drop item with the provided descriptor if it exists in player inventory
+            if item_descriptor in [item.descriptor.lower() for item in player_item_type]:
+                for index, item in enumerate(player_item_type):
                     if item.descriptor.lower() == item_descriptor:
-                        player.items.append(location_item_type[index])
-                        # location.items = [item for item in player.location.items if item.type != location_item_type[index]]
-                        player.location.items.remove(location_item_type[index])
+                        player.location.items.append(player_item_type[0])
+                        player.items.remove(player_item_type[0])
             else:
-                print(f'Unable to pick up {item_descriptor} {item_type}.')
-            
-
-
-
-
-    #     # Check if item is in location
-    #     if command_object in player.location.items:
-    #         player.location.items[command_object].on_get()
-    #         player.items[command_object] = player.location.items[command_object]
-    #         player.location.items.pop(command_object, None)
-    #     else: 
-    #         print(f"You don't see a(n) {command_object} in the {player.location.name}.")
-    #     enter_to_continue()
+                print(f'Unable to drop {item_descriptor} {item_type}.')
     
-    # # Drop Item
-    # elif command_action in drop_item_command:
-
-    #     # Check if item is in player inventory
-    #     if command_object in player.items:
-    #         player.items[command_object].on_drop()
-    #         player.location.items[command_object] = player.items[command_object]
-    #         player.items.pop(command_object, None)
-    #     else: 
-    #         print(f"You don't have a(n) {command_object} in your inventory.")
-    #     enter_to_continue()
 
     #
     # Player
@@ -307,6 +318,7 @@ while True:
         enter_to_continue()
     
     else:
-        print("That isn't possible in this world.")
+        print("\nThis isn't the time for that kind of nonsense!")
+        enter_to_continue()
 
     print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
