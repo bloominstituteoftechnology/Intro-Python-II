@@ -2,6 +2,7 @@ from room import Room
 from player import Player
 from item import Item
 from item import LightSource
+from monster import Monster
 import textwrap as tw
 
 # Declare all the rooms
@@ -47,6 +48,12 @@ items = {
 room['outside'].add_item(items['flashlight'])
 room['outside'].add_item(items['mysterious_box'])
 
+
+monsters = {
+    'dragon': Monster('Dragon', 'Big scary dragon', "fire", 20)
+}
+
+room['foyer'].monster = monsters['dragon']
 
 #
 # Main
@@ -152,6 +159,8 @@ while True:
 
     elif verb == "go" or verb == "move":
         player.move_to(try_direction(noun))
+        if hasattr(player.current_room, "monster"):
+            print(f"Uh oh! There's a {player.current_room.monster} in here!")
 
     elif verb == "check":
         if noun == "inventory":
