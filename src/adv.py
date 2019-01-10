@@ -52,11 +52,7 @@ location['treasure'].items = [item['red_card_1'], item['blue_card_1']]
 # Declare Player
 player = Player('Chosen One', location['outside'])
 
-# Centers Header Text
-
-#
-# Intro
-#
+# Global Methods
 
 # Clear Screen
 clear = lambda: os.system('cls')
@@ -65,6 +61,40 @@ clear()
 # Enter to Continue
 def enter_to_continue():
     input('--\nPress Enter to Continue...')
+
+# Movement Error Message
+def invalid_direction():
+    print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
+    print('You are unable to see a way to move in that direction!')
+    enter_to_continue()
+
+
+# Command Groups:
+
+# System
+quit_command = ("q", "quit", "esc", "end") # Quit Commands
+help_command = ("h", "help")
+
+# Movement
+move_command = ("walk", "go", "move", "travel", "venture", "proceed", "n", "s", "e", "w") # Movement Commands
+move_direction = { # Movement Objects
+    'north': ("northward", "north", "n"),
+    'south': ("southward", "south", "s"),
+    'east': ("eastward", "east", "e"),
+    'west': ("westward", "west", "w")
+}
+
+# Items
+get_item_command = ("get", "take", "pickup") # Get Item Commands
+drop_item_command = ("drop", "discard") # Drop Item Commands
+check_item_command = ("check", "examine", "inspect")
+
+# Player
+inventory_command = ("i", "inventory", "bag")
+
+#
+# Intro
+#
 
 print(r'''   
              /\    
@@ -92,9 +122,19 @@ print(r'''
 Welcome to Lambda Adventure! 
 ============================
 
-Please enter your commands below. 
+Last night you struggled to fall asleep.
 
-Enter 'q' to quit the game.''')
+But at the exact moment when you did, after watching the minutes on your clock
+buzz by, an impression was left in the back of your eyes like a bright white
+light, in the shape of a Greek Lambda...
+
+When you awake, you will be in your bed no longer...
+
+Your adventure will have begun...
+
+Enter your commands below. 
+
+Enter 'q' to quit the game or 'h' for some help.''')
 enter_to_continue()
 print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
 
@@ -165,28 +205,6 @@ while True:
     # Commands --------------------------------------------------------------------------------
     #
 
-    # Command Groups:
-
-    # System
-    quit_command = ("q", "quit", "esc", "end") # Quit Commands
-
-    # Movement
-    move_command = ("walk", "go", "move", "travel", "venture", "proceed", "n", "s", "e", "w") # Movement Commands
-    move_direction = { # Movement Objects
-        'north': ("northward", "north", "n"),
-        'south': ("southward", "south", "s"),
-        'east': ("eastward", "east", "e"),
-        'west': ("westward", "west", "w")
-    }
-
-    # Items
-    get_item_command = ("get", "take", "pickup") # Get Item Commands
-    drop_item_command = ("drop", "discard") # Drop Item Commands
-    check_item_command = ("check", "examine", "inspect")
-    
-    # Player
-    inventory_command = ("i", "inventory", "bag")
-
     #
     # System Commands
     #
@@ -194,19 +212,31 @@ while True:
     # Commands to Quit Game
     if command_action in quit_command:
         break
+
+    # Commands for Help
+    elif command_action in help_command:
+        print(f'''
+Are you lost, {player.name}?
+
+Commands are made of two words: an action, and an object.
+- The action is what you want to do. 
+- The object, which is sometimes optional, is what the action should 
+be done to.
     
+i.e. search room
+- 'search' is the action, and 'room' is the object.
+
+Alternatively, this could be written as 'search' because the object 
+is sometimes optional.''')
+        enter_to_continue()
+        print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
+
     #
     # Movement Commands
     #
-    
-    # Movement Error Message
-    def invalid_direction():
-        print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
-        print('You are unable to see a way to move in that direction!')
-        enter_to_continue()
 
     # Check if Command Was a Movement Command
-    if command_action in move_command:
+    elif command_action in move_command:
         
         # Check Movement Type and Whether Movement is Valid
         
@@ -250,8 +280,12 @@ while True:
         
         # Get a list of all items with a type that matches the provided type
         location_item_type = [item for item in player.location.items if item.type == item_type]
+
+        if len(location_item_type) == 0:
+            print(f"\n{command_object.capitalize()} does not exist at your location.")
+            enter_to_continue()
         
-        if (location_item_type[0].can_get == True):
+        elif (location_item_type[0].can_get == True):
             # If there is only one item of the provided type, Get Item
             if len(location_item_type) == 1:
                 location_item_type[0].on_get(player)
@@ -261,7 +295,7 @@ while True:
 
                 # If player did not provide a descriptor, prompt player to choose one
                 if item_descriptor == None:
-                    print(f'''What type of {item_type}?''')
+                    print(f'''\nWhat type of {item_type}?''')
                     for item in location_item_type:
                         print(item.descriptor)
                     item_descriptor = input('Enter one of the above options: ')
@@ -275,7 +309,7 @@ while True:
                 else:
                     print(f'Unable to pick up {item_descriptor} {item_type}.')
         else:
-            print("You can't pick that up right now!")
+            print("\nYou can't pick that up right now!")
 
     # Drop Item
     elif command_action in drop_item_command:
@@ -283,8 +317,12 @@ while True:
         # Get a list of all items with a type that matches the provided type
         player_item_type = [item for item in player.items if item.type == item_type]
         
+        if len(player_item_type) == 0:
+            print(f"\n{command_object.capitalize()} does not exist in your inventory.")
+            enter_to_continue()
+
         # If there is only one item of the provided type, Drop Item
-        if len(player_item_type) == 1:
+        elif len(player_item_type) == 1:
             player_item_type[0].on_drop(player)
             enter_to_continue()
 
@@ -292,7 +330,7 @@ while True:
 
             # If player did not provide a descriptor, prompt player to choose one
             if item_descriptor == None:
-                print(f'''What type of {item_type}?''')
+                print(f'''\nWhat type of {item_type}?''')
                 for item in player_item_type:
                     print(item.descriptor)
                 item_descriptor = input('Enter one of the above options: ')
@@ -304,10 +342,41 @@ while True:
                         location_item_type[index].on_drop(player)
                 enter_to_continue()
             else:
-                print(f'Unable to drop {item_descriptor} {item_type}.')
+                print(f'\nUnable to drop {item_descriptor} {item_type}.')
     
     # Check Item
+    elif command_action in check_item_command:
+        
+        # Get a list of all items in player inventory and location with a type that 
+        # matches the provided type
+        player_location_item_type = [item for item in player.items if item.type == item_type] + [item for item in player.location.items if item.type == item_type]
+        
+        if len(player_location_item_type) == 0:
+            print(f"\n{command_object.capitalize()} must be nearby for you to inspect it!")
+            enter_to_continue()
 
+        # If there is only one item of the provided type, Check Item
+        elif len(player_location_item_type) == 1:
+            player_location_item_type[0].on_check(player)
+            enter_to_continue()
+
+        else: # If there is more than one item of the provided type...
+
+            # If player did not provide a descriptor, prompt player to choose one
+            if item_descriptor == None:
+                print(f'''\nWhat type of {item_type}?''')
+                for item in player_location_item_type:
+                    print(item.descriptor)
+                item_descriptor = input('Enter one of the above options: ')
+
+            # Check item with the provided descriptor if it exists in player inventory
+            if item_descriptor in [item.descriptor.lower() for item in player_location_item_type]:
+                for index, item in enumerate(player_location_item_type):
+                    if item.descriptor.lower() == item_descriptor:
+                        location_item_type[index].on_check(player)
+                enter_to_continue()
+            else:
+                print(f'\nUnable to check {item_descriptor} {item_type}.')
 
     
 
@@ -318,6 +387,10 @@ while True:
     # Inventory
     elif command_action in inventory_command:
         player.inventory()
+        enter_to_continue()
+
+    elif command_action == "search" or (command_action == "search" and command_object == "room"):
+        print("You don't see anything other than the obvious!")
         enter_to_continue()
     
     else:

@@ -23,7 +23,7 @@ class Item:
 
   # Check Item
   def on_check(self, player):
-    print(f"Examining the ${self.type}, you see...")
+    print(f"\nExamining the {self.type}, you see...")
     print(self.description)
 
 # Card Subclass
@@ -42,5 +42,5 @@ class Credits(Item):
 
 # Feature Subclass
 class Feature(Item):
-  def __init__(self, type, descriptor):
+  def __init__(self, type, descriptor, description):
     super().__init__(type, descriptor, description, False)
