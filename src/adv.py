@@ -74,15 +74,20 @@ while True:
     words = move.split(' ')
     if len(words) == 2:
         if words[0] == 'get':
+            item_count = len(room_items)
             for i, item in enumerate(room_items):
-                if item == words[1]:
+                if item.lower() == words[1].lower():
                     player.items.append(room_items.pop(i))
-                    print(player.items)
+                    print(f"Updated inventory: {player.items}")
+            if len(room_items) == item_count:
+                print(f"There is no {words[1]} in this room.")
         elif words[0] == 'drop':
+            item_count = len(player.items)
             for i, item in enumerate(player.items):
-                if item == words[1]:
+                if item.lower() == words[1].lower():
                     room_items.append(player.items.pop(i))
-                    print(room_items)
+            if len(player.items) == item_count:
+                print(f"You have no {words[1]} in your bag.")
     elif len(words) == 1:
         # If the user enters a cardinal direction,
         # attempt to move to the room there.
