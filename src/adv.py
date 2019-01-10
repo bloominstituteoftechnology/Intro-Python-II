@@ -64,13 +64,20 @@ def prompt(message):
 
 
 def location_info():
-    prompt(f"You are now in the {player.current_room.name}\n")
+    prompt(f"You are in the {player.current_room.name}\n")
     prompt(f"{player.current_room.desc}\n")
     prompt(f"Found items: {player.current_room.print_items()}\n")
 
 
-def direction_error():
-    prompt("There's no way out here")
+def direction_error(direction):
+    if direction == "n":
+        prompt("No way North!\n")
+    elif direction == "e":
+        prompt("No way East!\n")
+    elif direction == "s":
+        prompt("No way South!\n")
+    elif direction == "w":
+        prompt("No way West!\n")
 
 
 def print_commands():
@@ -82,6 +89,18 @@ def print_commands():
         W - go to West
         """
     )
+
+
+def try_direction(direction, current_room):
+    attribute = direction + "_to"
+
+    # See if the inputted direction is one we can move to
+    if hasattr(current_room, attribute):
+        # fetch the new room
+        return getattr(current_room, attribute)
+    else:
+        direction_error(direction)
+        return current_room
 
 
 # Make a new player object that is currently in the 'outside' room.
@@ -108,36 +127,16 @@ while True:
     command = input("What do you want to do? (q to quit): ").lower()
 
     # Make player move NESW
-    if command == "n":
-        if hasattr(player.current_room, "n_to"):
-            player.current_room = player.current_room.n_to
-            location_info()
-        else:
-            direction_error()
-    elif command == "e":
-        if hasattr(player.current_room, "e_to"):
-            player.current_room = player.current_room.e_to
-            location_info()
-        else:
-            direction_error()
-    elif command == "s":
-        if hasattr(player.current_room, "s_to"):
-            player.current_room = player.current_room.s_to
-            location_info()
-        else:
-            direction_error()
-    elif command == "w":
-        if hasattr(player.current_room, "w_to"):
-            player.current_room = player.current_room.w_to
-            location_info()
-        else:
-            direction_error()
-    elif command == "help":
+    if command in ["n", "s", "e", "w"]:
+        player.current_room = try_direction(command, player.current_room)
+        location_info()
+        continue
+    if command == "help":
         print_commands()
     elif command == "q":
         break
     else:
-        prompt("I don't quite understand")
+        prompt("I don't quite understand\n")
 
 
-prompt("Thank you for playing!")
+prompt("Thank you for playing!\n")
