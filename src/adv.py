@@ -60,16 +60,21 @@ while True:
     print('\n-----------\n')
     print(f'Current room: {alejandrok.currentRoom.name}')
     print(f'Room description: {alejandrok.currentRoom.description}')
+    print(f'Number of items in room: {len(alejandrok.currentRoom.items)}')
     user_action = input('What do you want to do? \n Look around the room to find objects (use: list)\n Go to another room (use: north/south/east/west)\n  >')
     actions = user_action.split(' ')
     print(actions)
 
     if len(actions) == 1:
         if user_action == 'list' or user_action == 'ls':
-
             if len(alejandrok.currentRoom.items) == 0:
                 print(f'No items found in room: {alejandrok.currentRoom.name}. Go to another room')
             for item in alejandrok.currentRoom.items:
+                print(f'{item.name}: {item.description}')
+        elif user_action == 'inventory' or user_action == 'i':
+            if len(alejandrok.items) == 0:
+                print(f'{alejandrok.name} has no items. Take an item from a room')
+            for item in alejandrok.items:
                 print(f'{item.name}: {item.description}')
         elif user_action == 'north' or user_action == 'n' or user_action == "North":
             if alejandrok.currentRoom == room['overlook'] or alejandrok.currentRoom == room['treasure']:
@@ -87,12 +92,14 @@ while True:
             if alejandrok.currentRoom == room['outside'] or alejandrok.currentRoom == room['overlook'] or alejandrok.currentRoom == room['treasure']:
                 print('\nYou cannot go east. Please go back\n')
                 break
-            alejandrok.currentRoom = alejandrok.currentRoom.e_to
+            else:
+                alejandrok.currentRoom = alejandrok.currentRoom.e_to
         elif user_action == 'west' or user_action == 'w' or user_action == 'West':
             if alejandrok.currentRoom == room['outside'] or alejandrok.currentRoom == room['overlook'] or alejandrok.currentRoom == room['foyer'] or alejandrok.currentRoom == room['treasure']:
                 print('\nYou cannot go east. Please go back\n')
                 break
-            alejandrok.currentRoom = alejandrok.currentRoom.w_to
+            else:
+                alejandrok.currentRoom = alejandrok.currentRoom.w_to
 
     elif len(actions) == 2:
         verb = actions[0]
@@ -112,9 +119,12 @@ while True:
                 if item == i.name:
                     #remove from player list
                     alejandrok.items.remove(i)
-                    print(f'{i.name} was removed from {alejandrok.name}\'s items' )
+                    print(f'{i.name} was removed from {alejandrok.name}\'s items and added to {alejandrok.currentRoom.name}' )
+                    
                    #add to room
                     alejandrok.currentRoom.items.append(i)
+                    print(len(alejandrok.currentRoom.e_to.items))
+                    
                     
 
 # Print an error message if the movement isn't allowed.
