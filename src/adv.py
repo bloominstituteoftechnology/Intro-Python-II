@@ -3,6 +3,11 @@ from player import Player
 from item import Item
 # Declare all the rooms
 
+items = {
+    'sword': Item("sword", 'Andúril, also called the Flame of the West, is the reforged sword from the shards of Narsil.'),
+    'ring': Item("ring", 'The One Ring was one of the most powerful artifacts ever created in Middle-earth.')
+}
+
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons", [items['ring']]),
@@ -22,10 +27,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south.""", []),
 }
 
-items = {
-    'sword': 'Andúril, also called the Flame of the West, is the reforged sword from the shards of Narsil.',
-    'ring': 'The One Ring was one of the most powerful artifacts ever created in Middle-earth.'
-}
 
 # Link rooms together
 #accessing room instance via bracket notation so now access class to attributes via dot notation.
@@ -77,20 +78,20 @@ while True:
         player.current_room = try_direction(c, player.current_room)
 
     elif len(c) == 2:
-        verb = s[0]
-        item = s[1]
+        action = c[0]
+        item = c[1]
         #if item is in room, remove and add it to inv
-        if verb == "take":
-                if item = item.name:
-                    player.current_room.items.remove(item)
-                    player.inventory.append(item)
-                    print(f"{item.name} was added to your inventory.")
+        if action == "take":
+            if item in player.current_room.items:
+                player.current_room.items.remove(item)
+                player.inventory.append(item)
+                print(f"{item.name} was added to your inventory.")
 
-        if verb == "drop":
-                if item == item.name:
-                    player.inventory.remove(item)
-                    player.current_room.items.append(item)
-                    print(f"You dropped the {item.name}")
+        if action == "drop":
+            if item in player.inventory:
+                player.inventory.remove(item)
+                player.current_room.items.append(item)
+                print(f"You dropped the {item.name}")
 
     elif c == 'q':
         break
