@@ -79,17 +79,18 @@ def adv_game():
         #check to see if one  or two word command
         if len(s) == 1:
             # grab the first character of the first word
-            if s[0] == 'q':
+            s = s[0][0]
+            if s == 'q':
                 print("You quit")
                 break
 
-            if s[0] == 'i' or s[0] =='inventory':
+            if s == 'i' or s[0] =='inventory':
                 if player.inventory == []:
                     print("You aren't holding aynthing")
                 else:
                     print(f"your inventory has: {player.inventory}")
 
-            player.location = try_direction(s[0], player.location)
+            player.location = try_direction(s, player.location)
         elif len(s) ==2:
             #user passed us a two-word command
             if s[0] == 'get':
@@ -97,12 +98,13 @@ def adv_game():
                 for i, item in enumerate(player.location.items):
                     if item.lower() == s[1]:
                         player.inventory.append(player.location.items.pop(i))
-                        player.inventory
+                        print(player.inventory)
             elif s[0] == 'drop':
-                for i, item in enumerate(player.location.items):
+                item_count = len(player.inventory)
+                for i, item in enumerate(player.inventory):
                     if item.lower() == s[1]:
-                        player.inventory.remove(player.location.items.pop(i))
-                        players.inventory
+                        player.location.items.append(player.inventory.pop(i))
+                        print(f"your inventory has: {player.inventory}")
 
         else:
             print("I don't understand that")
