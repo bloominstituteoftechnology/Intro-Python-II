@@ -4,12 +4,20 @@ from item import Item
 
 # Declare all the rooms
 
+items = {
+    'sword': Item("Sword", "sword description"),
+    'scissors': Item("Scissors", "scissors description"),
+    'rock': Item("Rock", "Rock description"),
+    'drill': Item("Drill", "drill description"),
+    'taser': Item("Taser", "taser description"),
+}
+
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons", [items['sword']]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""",[items['rock']]),
+passages run north and east.""", [items['rock']]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -39,13 +47,6 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-items = {
-    'sword': 'Sword, Sword, Sword, Sword',
-    'scissors': 'Scissors, Scissors, Scissors, Scissors',
-    'rock': 'Rock, Rock, Rock, Rock, Rock',
-    'drill': 'Drill, Drill, Drill, Drill, Drill',
-    'taser': 'Taser, Taser, Taser, Taser, Taser',
-}
 
 name = input("enter player's name\n>")
 player = Player(name, room["outside"])
@@ -70,8 +71,8 @@ while True:
         player.room = try_direction(user_input, player.room)
 
     elif len(user_input) == 2:
-        word = user_input[0][0]
-        item = user_input[1][1]
+        word = user_input[0]
+        item = user_input[1]
 
         if word == "grab":
             if item == item.name:
