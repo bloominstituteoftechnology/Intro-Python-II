@@ -64,10 +64,10 @@ def itemHandler():
     else:
         print("     There is nothing very interesting here")
 
-# Navigation function handles player movement
+# mainActions function handles the primary actions of the game loop
 
 
-def nav():
+def mainActions():
     global location
     global newLocation
     print(f'''
@@ -76,6 +76,7 @@ def nav():
     entry = input("""   What will you do?
     Move: n, e, s, w
     Check Location: c
+    Check Inventory: b
     Investigate Room: i
     Quit: q
     : """)
@@ -103,6 +104,12 @@ def nav():
     You look around the room...
             ''')
             itemHandler()
+        elif entry == 'b':
+            print("""
+    You look into your bag...
+    """)
+            for item in pc.inv:
+                print(item.name)
         else:
             print("""
     That didnt work, try a different action
@@ -111,16 +118,16 @@ def nav():
         print('''
     You do not see a way forward in that direction
             ''')
-        nav()
+        mainActions()
 
     if newLocation:
         location = newLocation
 
-    nav()
+    mainActions()
     print(f'''
     {location.desc}
     ''')
-    nav()
+    mainActions()
 
 
 #
@@ -135,7 +142,7 @@ pc.name = input("   What is your name: ")
 print(f"    Welcome, {pc.name}, your adventure begins.")
 
 
-nav()
+mainActions()
 
 # make this a function
 
