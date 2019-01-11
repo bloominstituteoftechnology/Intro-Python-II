@@ -2,5 +2,9 @@
 # currently.
 
 class Player:
-    def __init__(self, room):
+    def __init__(self, room, inventory):
         self.room = room
+        self.inventory = inventory
+
+    def __repr__(self):
+        return print(f"Current location: {self.room}")
