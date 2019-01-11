@@ -1,6 +1,8 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
+import textwrap
 
+# print(textwrap.fill(intro, width=50))
 class Player():
   def __init__(self, name, curr_room, inventory=[]):
     self.name = name
@@ -8,11 +10,11 @@ class Player():
     self.inventory = inventory
 
   def __repr__(self):
-    return "\n{}, are you lost? {}.\nInside your pockets there {} {} a crumb from the blueberry muffin you had this morning\n".format(
+    return "\n{}, are you lost? \n\n{}.\n\nInside your pockets there {} {} \na crumb from the blueberry muffin you had this morning.\n".format(
       self.name, 
       self.curr_room, 
       'are' if len(self.inventory) > 1 else 'is', 
-      'nothing but' if not self.inventory else f'{self.inventory} and')
+      'nothing but ...' if not self.inventory else f'{self.inventory} and')
 
   def get_name(self):
     return self.name
@@ -23,14 +25,14 @@ class Player():
   def get_inv(self):
     return self.inventory
 
-  def add_item(self, added):
-    self.added = added
-    self.inventory.extend(added)
+  def take_item(self, item_taken):
+    self.item_taken = item_taken
+    self.inventory.append(self.item_taken)
     return self.inventory
 
   def drop_item(self, dropped):
     self.dropped = dropped
-    self.inventory.remove(dropped)
+    self.inventory.remove(self.dropped)
     return self.inventory
 
   def set_room(self, new_room):

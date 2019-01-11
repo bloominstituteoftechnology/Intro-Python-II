@@ -8,10 +8,10 @@ class Room:
     self.inventory = inventory
 
   def __repr__(self):
-    return "You are approaching the {}.\n{}\nYou see {} the shadow of the White Rabbit".format(
+    return "You are approaching the {}.\n{}\n\nYou see {}\nthe shadow of the White Rabbit".format(
       self.name, 
       self.description, 
-      'nothing but' if not self.inventory else f'{self.inventory[0]} and')
+      'nothing but ...' if not self.inventory else f'{self.inventory[0]} and')
 
 
   def get_room_name(self):
@@ -23,14 +23,14 @@ class Room:
   def get_inventory(self):
     return self.inventory
 
-  def pick_up(self, added):
-    self.added = added
-    self.inventory.extend(added)
+  def item_taken(self, taken):
+    self.taken = taken
+    self.inventory.remove(self.taken)
     return self.inventory
 
-  def leave_behind(self, dropped):
+  def item_dropped(self, dropped):
     self.dropped = dropped
-    self.inventory.remove(dropped)
+    self.inventory.append(self.dropped)
     return self.inventory
   
 
