@@ -44,7 +44,7 @@ ov.inventory = [Item("cape", """because it's cold out here"""),Item("snack", """
 #narrow passage
 n.w_to = f
 n.n_to = t
-n.inventory =[Item("beer", """who doesn't want beer in narrow passages??"""),Item("diamond", """because shiney"""),]
+n.inventory =[Item("beer", """who doesn't want beer in narrow passages??"""),Item("diamond", """because shiny"""),]
 
 #treasury 
 t.s_to = n

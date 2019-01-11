@@ -3,7 +3,9 @@ from player import Player
 from item import Item
 # Declare all the rooms
 
+#dictionary
 room = {
+    #key     :  value
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
@@ -34,6 +36,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+#inventory linking
+room['outside'].inventory = [Item("key", """key to treasure box"""), Item("lantern", """a light to guide you""")]
+room['foyer'].inventory =  [Item("wand", """just in case you need magic"""),Item("shield", """to protect you"""),]
+room['overlook'].inventory = [Item("cape", """because it's cold out here"""),Item("snack", """because low blood sugar"""),]
+room['narrow'].inventory = [Item("beer", """who doesn't want beer in narrow passages??"""),Item("diamond", """because shiny"""),]
+room['treasure'].inventory = [Item("gold", """it's about time this pays off"""),Item("job offer", """ongoing income is always nice"""),]
+
 '''LEFT TO DO 
 - Add two-word commands to the parser
 - Add the get and drop commands to the parser
@@ -50,6 +59,7 @@ player =  Player(room['outside'])
 # * done: Waits for user input and decides what to do.
 
 while True:
+    print(player.current_room)
     print(player.current_room.name)
     print(player.current_room.description)
     print(f"Inventory: {player.current_room.inventory}")
@@ -58,7 +68,8 @@ while True:
     if s == 'q':
         print('see you later')
     elif s == 't':
-        player.current_room.inventory.on_take()
+        for i in player.current_room.inventory:
+            i.on_take()
     elif s == 'n'or's'or'e'or'q':
         player.current_room = player.try_move(s)
     else:

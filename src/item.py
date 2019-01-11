@@ -6,11 +6,11 @@ class Item:
     def __repr__ (self):
         return f"Name: {self.name}, description: {self.description}"
 
-    def on_take():
+    def on_take(self):
         #add to player inventory
         print("taken")
 
-    def on_drop(): 
+    def on_drop(self): 
         #subtract from to room inventory
         print("dropped")
 
