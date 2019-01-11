@@ -15,13 +15,15 @@ class Room():
             return False
 
     def _print_items(self):
-        items = ''
-        for item in self.items:
-            items += f"{item.name} \n {item.description} \n"
-        return items
+        itms = [item.name for item in self.items]
+        return f'items: {itms}'
 
     def __repr__(self):
+        line = '\n'+30*'-'+'\n'
+        s_items = f"{self.name}\n{self.description}\n{self._print_items()}"
+        s_no = f"{self.name}\n{self.description}\nThis room has no items."
+
         if self._has_items():
-            return f"{self.name} \n {self.description} \n {self._print_items()}"
+            return f"{line}{s_items}{line}"
         else:
-            return f"{self.name} \n {self.description} \n This room has no items."
+            return f"{line}{s_no}{line}"

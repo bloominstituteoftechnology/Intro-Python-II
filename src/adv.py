@@ -82,19 +82,10 @@ while True:
     # If Item command
     if len(user_input) == 2:
         if user_input[0] == 'get' or user_input[0] == 'take':
-            item_count = len(player.current_room.items)
-            for i, item in enumerate(player.current_room.items):
-                if item.name.lower() == user_input[1]:
-                    player.items.append(player.current_room.items.pop(i))
-                    item.on_get(player)
-                    print(f"Updated inventory: {player.print_item_names()}")
+            player.get_item(user_input[1])
+
         elif user_input[0] == 'drop':
-            item_count = len(player.items)
-            for i, item in enumerate(player.items):
-                if item.name.lower() == user_input[1]:
-                    player.current_room.items.append(player.items.pop(i))
-                    item.on_drop(player)
-                    print(f"Updated inventory: {player.print_item_names()}")
+            player.drop_item(user_input[1])
     elif len(user_input) == 1:
         if user_input[0] == 'q':
             print('You left the game, game over!')
