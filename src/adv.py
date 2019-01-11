@@ -363,7 +363,7 @@ is sometimes optional.''')
             if item_descriptor in [item.descriptor.lower() for item in player_item_type]:
                 for index, item in enumerate(player_item_type):
                     if item.descriptor.lower() == item_descriptor:
-                        location_item_type[index].on_drop(player)
+                        player_item_type[index].on_drop(player)
                 enter_to_continue()
             else:
                 print(f'\nUnable to drop {item_descriptor} {item_type}.')
@@ -397,7 +397,7 @@ is sometimes optional.''')
             if item_descriptor in [item.descriptor.lower() for item in player_location_item_type]:
                 for index, item in enumerate(player_location_item_type):
                     if item.descriptor.lower() == item_descriptor:
-                        location_item_type[index].on_check(player)
+                        player_location_item_type[index].on_check(player)
                 enter_to_continue()
             else:
                 print(f'\nUnable to check {item_descriptor} {item_type}.')
