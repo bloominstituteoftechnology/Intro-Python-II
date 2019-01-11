@@ -7,6 +7,3 @@ class Player:
   # def __repr__(self):
   #   return f'Player is in {self.current_room}'
 
-  # def moveTo(self, newLocation, lst):
-  #   location = [char for char in lst if (char in newLocation)]
-  #   self.current_room = location[0]

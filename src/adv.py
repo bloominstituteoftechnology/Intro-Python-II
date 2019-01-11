@@ -4,10 +4,6 @@ from item import Item
 
 # Declare all the rooms
 
-# item = {
-
-# }
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -26,6 +22,10 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
+
+room["foyer"].add_item(Item("Lampy", "This is a Lamp"))
+room["treasure"].add_item(Item("Wand", "Harry's Wand"))
+room["treasure"].add_item(Item("Sword", "Jim's Lake's Sword"))
 
 # name of the room to the instance of each room 
 # Link rooms together
@@ -80,6 +80,7 @@ while not done:
   # split to get rid of white space
   print(f'This is the current room {player.current_room.name}')
   print((player.current_room.description))
+  print("Here are the items", player.current_room.printItem())
 
   if s in ['n', 's', 'e', 'w']:
     player.current_room = try_direction(s, player.current_room)

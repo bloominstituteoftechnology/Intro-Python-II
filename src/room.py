@@ -10,5 +10,9 @@ class Room:
   def __repr__(self):
     return f'{self.name}'
 
-  # def addItem(self, item):
-  #   self.items.append(item)
+  def add_item(self, item):
+    self.items.append(item)
+
+  def printItem(self):
+    for item in self.items: 
+      return item.name
