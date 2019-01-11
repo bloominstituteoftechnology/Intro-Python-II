@@ -57,10 +57,30 @@ def try_direction(direction, current_location):
 
 
 while True:
-    print(Player(player.name, player.current_location))
-    print(player.current_location.room_name + '\v')
-    print(player.current_location.room_description)
-    print('Which direction do you choose? (n,s,e or w)')
+
+    location = player.current_location.room_name
+
+    if location == 'Outside Cave Entrance':
+        print(name + ' ' + 'is' + ' ' +
+              player.current_location.room_name + '\v')
+    elif location == 'The Cliff':
+        print(player.name + ' ' + 'just fell off' +
+              player.current_location.room_name + '\v')
+    elif location == 'Foyer':
+        print(player.name + ' ' + 'is in the' +
+              player.current_location.room_name + '\v')
+    elif location == 'Grand Overlook':
+        print(player.name + ' ' + 'walks to the edge of the' +
+              player.current_location.room_name + '\v')
+    elif location == 'Narrow Passage':
+        print(player.name + ' ' + 'squeezes through the' +
+              player.current_location.room_name + '\v')
+    else:
+        print(player.name + ' ' + 'just hit the jackpot! Here it is the' +
+              player.current_location.room_name + ' ' + 'room!' + '\v')
+
+    print(player.current_location.room_description + '\v')
+    print('Which direction do you choose to move next? (n,s,e or w)')
 
     s = input("\n>").lower()[0]
 
