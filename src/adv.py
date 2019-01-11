@@ -47,8 +47,8 @@ phone = Item('phone', 'this is the best phone')
 coins = Item('coins', 'these coins can buy you more items')
 
 # Make a new player object that is currently in the 'outside' room.
-alejandrok = Player('Alejandro', room['outside'])
-alejandrok.currentRoom.items = [sword, phone, coins]
+player = Player('Alejandro', room['outside'])
+player.currentRoom.items = [sword, phone, coins]
 # Write a loop that:
 #
 # * Prints the current room name
@@ -58,72 +58,68 @@ alejandrok.currentRoom.items = [sword, phone, coins]
 
 while True:
     print('\n-----------\n')
-    print(f'Current room: {alejandrok.currentRoom.name}')
-    print(f'Room description: {alejandrok.currentRoom.description}')
-    print(f'Number of items in room: {len(alejandrok.currentRoom.items)}')
+    print(f'Current room: {player.currentRoom.name}')
+    print(f'Room description: {player.currentRoom.description}')
+    print(f'Number of items in room: {len(player.currentRoom.items)}')
     user_action = input('What do you want to do? \n Look around the room to find objects (use: list)\n Go to another room (use: north/south/east/west)\n  >')
     actions = user_action.split(' ')
     print(actions)
 
     if len(actions) == 1:
         if user_action == 'list' or user_action == 'ls':
-            if len(alejandrok.currentRoom.items) == 0:
-                print(f'No items found in room: {alejandrok.currentRoom.name}. Go to another room')
-            for item in alejandrok.currentRoom.items:
+            if len(player.currentRoom.items) == 0:
+                print(f'No items found in room: {player.currentRoom.name}. Go to another room')
+            for item in player.currentRoom.items:
                 print(f'{item.name}: {item.description}')
         elif user_action == 'inventory' or user_action == 'i':
-            if len(alejandrok.items) == 0:
-                print(f'{alejandrok.name} has no items. Take an item from a room')
-            for item in alejandrok.items:
+            if len(player.items) == 0:
+                print(f'{player.name} has no items. Take an item from a room')
+            for item in player.items:
                 print(f'{item.name}: {item.description}')
         elif user_action == 'north' or user_action == 'n' or user_action == "North":
-            if alejandrok.currentRoom == room['overlook'] or alejandrok.currentRoom == room['treasure']:
+            if player.currentRoom == room['overlook'] or player.currentRoom == room['treasure']:
                 print('\nYou cannot go north. Please go back\n')
-                break
             else:
-                alejandrok.currentRoom = alejandrok.currentRoom.n_to
+                player.currentRoom = player.currentRoom.n_to
         elif user_action == 'south' or user_action ==  's' or  user_action == "South":
-            if alejandrok.currentRoom == room['outside'] or alejandrok.currentRoom == room['narrow']:
+            if player.currentRoom == room['outside'] or player.currentRoom == room['narrow']:
                 print('\nYou cannot go south. Please go back\n')
-                break
             else:
-                alejandrok.currentRoom = alejandrok.currentRoom.s_to
+                player.currentRoom = player.currentRoom.s_to
         elif user_action == 'east' or user_action == 'e' or user_action == 'East':
-            if alejandrok.currentRoom == room['outside'] or alejandrok.currentRoom == room['overlook'] or alejandrok.currentRoom == room['treasure']:
+            if player.currentRoom == room['outside'] or player.currentRoom == room['overlook'] or player.currentRoom == room['treasure'] or player.currentRoom == room['narrow']:
                 print('\nYou cannot go east. Please go back\n')
-                break
             else:
-                alejandrok.currentRoom = alejandrok.currentRoom.e_to
+                player.currentRoom = player.currentRoom.e_to
         elif user_action == 'west' or user_action == 'w' or user_action == 'West':
-            if alejandrok.currentRoom == room['outside'] or alejandrok.currentRoom == room['overlook'] or alejandrok.currentRoom == room['foyer'] or alejandrok.currentRoom == room['treasure']:
+            if player.currentRoom == room['outside'] or player.currentRoom == room['overlook'] or player.currentRoom == room['foyer'] or player.currentRoom == room['treasure']:
                 print('\nYou cannot go east. Please go back\n')
-                break
             else:
-                alejandrok.currentRoom = alejandrok.currentRoom.w_to
+                player.currentRoom = player.currentRoom.w_to
 
     elif len(actions) == 2:
         verb = actions[0]
         item = actions[1]
         if verb == 'get' or verb == 'take':
             #check to see if items exist in room
-           for i in alejandrok.currentRoom.items:
+           for i in player.currentRoom.items:
                 if item == i.name:
                     #remove from Room
-                    alejandrok.currentRoom.items.remove(i)
+                    player.currentRoom.items.remove(i)
                    #add to Player list
-                    alejandrok.items.append(i)
-                    print(f'{i.name} was added to {alejandrok.name}\'s items' )
+                    player.items.append(i)
+                    print(f'{i.name} was added to {player.name}\'s items' )
         if verb == 'drop' or verb == 'leave':
-            for i in alejandrok.items:
+            for i in player.items:
                 print(i.name)
                 if item == i.name:
                     #remove from player list
-                    alejandrok.items.remove(i)
-                    print(f'{i.name} was removed from {alejandrok.name}\'s items and added to {alejandrok.currentRoom.name}' )
+                    player.items.remove(i)
+                    print(f'{i.name} was removed from {player.name}\'s items and added to {player.currentRoom.name}' )
                     
                    #add to room
-                    alejandrok.currentRoom.items.append(i)
-                    print(len(alejandrok.currentRoom.e_to.items))
+                    player.currentRoom.items.append(i)
+                   
                     
                     
 
