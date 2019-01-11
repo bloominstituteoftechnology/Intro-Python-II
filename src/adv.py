@@ -1,27 +1,31 @@
 from room import Room
 from player import Player
-#from item import Item
+from item import Item
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [items['ring']]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [items['sword']]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", []),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", []),
 }
 
+items = {
+    'sword': 'Andúril, also called the Flame of the West, is the reforged sword from the shards of Narsil.',
+    'ring': 'The One Ring was one of the most powerful artifacts ever created in Middle-earth.'
+}
 
 # Link rooms together
 #accessing room instance via bracket notation so now access class to attributes via dot notation.
@@ -39,7 +43,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player_name = input("Enter the name of your character: ").current_room
+player_name = input("Enter the name of your character: ")
 player = Player(player_name, room['outside'])
 
 # Write a loop that:
@@ -53,14 +57,6 @@ player = Player(player_name, room['outside'])
 #
 # If the user enters "q", quit the game.
 
-print(
-    f"""Commands:
-    Press N to go north.
-    Press E to go east.
-    Press S to go south.
-    Press W to go west.
-    press q to quit."""
-)
 
 def try_direction(direction, current_room):
     attribute = direction + '_to'
@@ -74,12 +70,34 @@ while True:
     print(player.current_room.name)
     print(player.current_room.description)
 
-    c = input("\n>").lower()[0]
+    c = input("\n>").lower().split()
 
-    player.current_room = try_direction(c, player.current_room)
+    if len(c) == 1:
+        c = c[0][0]
+        player.current_room = try_direction(c, player.current_room)
 
-    if c == 'q':
+    elif len(c) == 2:
+        verb = s[0]
+        item = s[1]
+        #if item is in room, remove and add it to inv
+        if verb == "take":
+                if item = item.name:
+                    player.current_room.items.remove(item)
+                    player.inventory.append(item)
+                    print(f"{item.name} was added to your inventory.")
+
+        if verb == "drop":
+                if item == item.name:
+                    player.inventory.remove(item)
+                    player.current_room.items.append(item)
+                    print(f"You dropped the {item.name}")
+
+    elif c == 'q':
         break
+
+    else:
+        print("I do not understand that.  Please try again")
+        continue
     
     
 
