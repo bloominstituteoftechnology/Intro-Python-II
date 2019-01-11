@@ -23,7 +23,7 @@ class Item:
 
   # Check Item
   def on_check(self, player):
-    print(f"\nExamining the {self.type}, you see...")
+    print(f"\nExamining the {self.type}, you see...\n")
     print(self.description)
 
 # Card Subclass
@@ -44,3 +44,4 @@ class Credits(Item):
 class Feature(Item):
   def __init__(self, type, descriptor, description):
     super().__init__(type, descriptor, description, False)
+    self.name = f'{descriptor.capitalize()} {type.capitalize()}'

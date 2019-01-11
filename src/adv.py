@@ -5,23 +5,29 @@ import textwrap
 # Local Imports
 from location import Location
 from player import Player
-from item import Item, Card
+from item import Item, Card, Feature
 
 # Declare all the locations
 
 location = {
-    'outside':  Location("Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'atrium':  Location("Central Atrium",
+                     """Four identical archways sit equidistant along the walls of this immense circular
+ room. Bright rays of light beam down from the soaring glass dome roof above. 
+ Emblazoned on the smokey white marble floor is a giant, red, greek LAMBDA...
+ Above each archway is a cardinal direction (N, S, E, W).
+ """),
 
-    'foyer':    Location("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'beauty':    Location("Hall of Beauty", """Dim light filters in from the south. Dusty
+passages run north."""),
 
-    'overlook': Location("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'nerve': Location("Corridor of Nerve", """This hallway has no walls, just open air and a drop off with 
+no visible bottom. There is a doorway to the south."""),
 
-    'narrow':   Location("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'grit':   Location("Chamber of Grit", """The smell of sweat fills the air and the ground is covered in sand. 
+Footprints dot the sand in a frantic mess. There is a doorway to the east."""),
+
+   'gate':   Location("Gate", """There is a flat white wall to the north with colored slots, big enough for a card, cut into into.
+There is a doorway to the west."""),
 
     'treasure': Location("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
@@ -30,27 +36,44 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link locations together
 
-location['outside'].n_to = location['foyer']
-location['foyer'].s_to = location['outside']
-location['foyer'].n_to = location['overlook']
-location['foyer'].e_to = location['narrow']
-location['overlook'].s_to = location['foyer']
-location['narrow'].w_to = location['foyer']
-location['narrow'].n_to = location['treasure']
-location['treasure'].s_to = location['narrow']
+# atrium
+location['atrium'].n_to = location['beauty']
+location['atrium'].s_to = location['nerve']
+location['atrium'].w_to = location['grit']
+location['atrium'].e_to = location['gate']
+
+# nerve
+location['beauty'].s_to = location['atrium']
+
+# nerve
+location['nerve'].n_to = location['atrium']
+
+# grit
+location['grit'].e_to = location['atrium']
+
+# gate
+location['gate'].w_to = location['atrium']
+
+location['treasure'].n_to = location['gate']
 
 # Declare all items
 item = {
-    'red_card_1': Card("Red", '''A thin red card with a scrap of beige tape peeling off on one side. Labeled "1".'''),
+    'red_card_1':  Card("Red", '''A thin red card with a scrap of beige tape peeling off on one side. Labeled "1".'''),
     'blue_card_1': Card("Blue", '''A bulky blue card with a blackened corner that suggests a recent encounter with 
-fire.''')
+fire.'''),
+    'atrium_statues': Feature("statues", "Marble", '''Each statue in the room depicts a famous spartan. There are four. You read
+the following names and epithets, one on each statue: 
+
+Queen Gorgo (wits), Leonidas I (nerve), Helen of Troy (beauty), Xanthippus(grit)''')
 }
 
 # Link items to locations
-location['treasure'].items = [item['red_card_1'], item['blue_card_1']]
+location['atrium'].items = [item['atrium_statues']]
+location['beauty'].items = [item['red_card_1']]
+location['nerve'].items = [item['blue_card_1']]
 
 # Declare Player
-player = Player('Chosen One', location['outside'])
+player = Player('Chosen One', location['atrium'])
 
 # Global Methods
 
@@ -132,10 +155,10 @@ When you awake, you will be in your bed no longer...
 
 Your adventure will have begun...
 
-Enter your commands below. 
+You will be able to enter commands below. 
 
-Enter 'q' to quit the game or 'h' for some help.''')
-enter_to_continue()
+Tip: After you awake, enter 'q' to sleep forever (quit) or 'h' for some help.''')
+input('--\nPress Enter to Wake Up...')
 print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
 
 #
@@ -168,7 +191,7 @@ while True:
     
     # Location Items
     if (len(player.location.items) > 0):
-        print("\nYou see the following items: ")
+        print("\nYou see the following: ")
         for item in player.location.items:
             print(item.name)
 
@@ -309,7 +332,8 @@ is sometimes optional.''')
                 else:
                     print(f'Unable to pick up {item_descriptor} {item_type}.')
         else:
-            print("\nYou can't pick that up right now!")
+            print(f"You can't pick up {item_type}!")
+            enter_to_continue()
 
     # Drop Item
     elif command_action in drop_item_command:
@@ -377,8 +401,6 @@ is sometimes optional.''')
                 enter_to_continue()
             else:
                 print(f'\nUnable to check {item_descriptor} {item_type}.')
-
-    
 
     #
     # Player
