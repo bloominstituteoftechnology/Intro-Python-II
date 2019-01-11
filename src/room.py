@@ -8,7 +8,11 @@ class Room:
     self.inventory = inventory
 
   def __repr__(self):
-    return "You are approaching the {}. {} You see {} the shadow of the White Rabbit".format(self.name, self.description, 'nothing but' if not self.inventory else f'{self.inventory} and')
+    return "You are approaching the {}.\n{}\nYou see {} the shadow of the White Rabbit".format(
+      self.name, 
+      self.description, 
+      'nothing but' if not self.inventory else f'{self.inventory[0]} and')
+
 
   def get_room_name(self):
     return self.name

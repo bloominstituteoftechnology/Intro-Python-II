@@ -2,15 +2,15 @@
 # currently.
 
 class Player():
-  def __init__(self, name='Alice', rm_nickname='outside', inventory=[]):
+  def __init__(self, name, curr_room, inventory=[]):
     self.name = name
-    self.rm_nickname = rm_nickname
+    self.curr_room = curr_room
     self.inventory = inventory
 
   def __repr__(self):
-    return "\n{}, are you lost? You are nearing the {}. Inside your pockets there {} {} a crumb from the blueberry muffin you had this morning\n".format(
+    return "\n{}, are you lost? {}.\nInside your pockets there {} {} a crumb from the blueberry muffin you had this morning\n".format(
       self.name, 
-      self.rm_nickname, 
+      self.curr_room, 
       'are' if len(self.inventory) > 1 else 'is', 
       'nothing but' if not self.inventory else f'{self.inventory} and')
 
@@ -18,7 +18,7 @@ class Player():
     return self.name
 
   def get_room(self):
-    return self.rm_nickname
+    return self.curr_room
 
   def get_inv(self):
     return self.inventory
@@ -35,10 +35,10 @@ class Player():
 
   def set_room(self, new_room):
     self.new_room = new_room
-    self.rm_nickname = new_room
-    return self.rm_nickname
+    self.curr_room = new_room
+    return self.curr_room
 
   def return_outside(self):
-    self.rm_nickname = 'outside'
-    return  self.rm_nickname
+    self.curr_room = 'outside'
+    return  self.curr_room
 

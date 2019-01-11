@@ -22,6 +22,19 @@
 
    You can exit the virtual environment by typing `exit()`.
 
+# Learning Python
+
+Encapsulation: Every object needs some sort of external-facing API to manipulate its internal state
+
+Inheritance: leverages pre-existing code that exists on a base class 
+  Explicitly forms an object hierarchy
+
+Polymorphism: able to swap components because of encapsulation. 
+
+JS is function based. Initially, JS didn't have classes so they packed methods onto objects (but no hierarchy). Later JS added classes for hierarchy.
+
+Python is class based. Classes have methods. Regular objects do not.
+
 # rooms
 
 rooms are 2 ways
