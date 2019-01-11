@@ -6,23 +6,22 @@ from item import Item
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [items['sword']]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""",[items['rock']]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", [items['drill']]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", [items['scissors']]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", [items['taser']]),
 }
-
 
 # Link rooms together
 
@@ -40,69 +39,54 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+items = {
+    'sword': 'Sword, Sword, Sword, Sword',
+    'scissors': 'Scissors, Scissors, Scissors, Scissors',
+    'rock': 'Rock, Rock, Rock, Rock, Rock',
+    'drill': 'Drill, Drill, Drill, Drill, Drill',
+    'taser': 'Taser, Taser, Taser, Taser, Taser',
+}
 
 name = input("enter player's name\n>")
 player = Player(name, room["outside"])
 print(player)
 
-# def try_direction(direction, room):
-#     attr = direction + "_to"
-#     if hasattr(room, attr):
-#         return getattr(room, attr)
-#     else:
-#         print("you cant go that way")
-#         return room 
+def try_direction(direction, room):
+    attr = direction + "_to"
+    if hasattr(room, attr):
+        return getattr(room, attr)
+    else:
+        print("you cant go that way")
+        return room 
 
 while True:
-    # print(player.room.name)
-    # print(player.room.description)
-    user_input = input("\n> ").lower()
+    print(player.room.name)
+    print(player.room.description)
+
+    user_input = input("\n> ").lower().split()
 
     if len(user_input) == 1:
-        if not user_input in ["n", "s", "e", "w", "q"]:
-            print(f"that's not valid")
-        elif user_input == "n":
-            if True:
-                player.room = player.room.n_to
-                print(player.room)
-            else:
-                print("you can't move north")
+        user_input = user_input[0][0]
+        player.room = try_direction(user_input, player.room)
 
-        elif user_input == "s":
-            if True:
-                player.room = player.room.s_to
-                print(player.room)
-            else:
-                print("you can't move south")
+    elif len(user_input) == 2:
+        word = user_input[0][0]
+        item = user_input[1][1]
 
-        elif user_input == "e":
-            if True:
-                player.room = player.room.e_to
-                print(player.room)
-            else:
-                print("you can't move east")
+        if word == "grab":
+            if item == item.name:
+                player.room.items.remove(item)
+                player.inventory.append(item)
+                print(f"{item.name} was added to the inventory")
         
-        elif user_input == "w":
-            if True:
-                player.room = player.room.w_to
-                print(player.room)
-            else:
-                print("you can't move west")
-        # user_input = user_input[0][0]
-
-        elif user_input == "q":
-            break
-
-    # elif len(user_input) == 4 or len(user_input) == 3:
-    #     if not first_word in ["get", "drop"]:
-    #         print(f"{user_input} is not an option")
-    #     elif user_input == "get":
-    #         player.inventory.append(item)
-    #         print("grabbed item")
-    #     elif user_input == "drop":
-    #         player.inventory.remove(item)
-    #         print("dropped item")
-
-    # else:
-    #     print("I don't understand that")
-    #     continue
+        if word == "drop":
+            if item == item.name:
+                player.inventory.remove(item)
+                player.room.items.append(item)
+                print(f"{item.name} wass removed from the inventory")
+    elif user_input == "q":
+        break
+    
+    else:
+        print("I don't understand that")
+        
