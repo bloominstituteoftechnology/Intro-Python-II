@@ -50,7 +50,7 @@ room['treasure'].s_to = room['narrow']
 
 name = input("enter player's name\n>")
 player = Player(name, room["outside"])
-print(player)
+print(f"{player.name} is in {player.room.name}")
 
 def try_direction(direction, room):
     attr = direction + "_to"
@@ -66,7 +66,10 @@ while True:
 
     user_input = input("\n> ").lower().split()
 
-    if len(user_input) == 1:
+    if user_input == "q":
+        break
+        
+    elif len(user_input) == 1:
         user_input = user_input[0][0]
         player.room = try_direction(user_input, player.room)
 
@@ -75,19 +78,16 @@ while True:
         item = user_input[1]
 
         if word == "grab":
-            if item == item.name:
+            if item in player.room.items:
                 player.room.items.remove(item)
                 player.inventory.append(item)
                 print(f"{item.name} was added to the inventory")
         
-        if word == "drop":
-            if item == item.name:
+        elif word == "drop":
+            if item in player.inventory:
                 player.inventory.remove(item)
                 player.room.items.append(item)
-                print(f"{item.name} wass removed from the inventory")
-    elif user_input == "q":
-        break
+                print(f"{item.name} was removed from the inventory")
     
     else:
         print("I don't understand that")
-        
