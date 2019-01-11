@@ -100,7 +100,8 @@ while True:
             print('You left the game, game over!')
             break
         if user_input[0] == 'i' or user_input[0] == 'inventory':
-            print(f"inventory: {player.items}")
+            print(f"inventory: {player.print_item_names()}")
+            continue
 
         player.current_room = try_direction(user_input[0], player.current_room)
 

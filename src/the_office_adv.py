@@ -5,10 +5,9 @@ from item import Item
 # Declare all the rooms
 room = {
     'outside':  Room("Outside Scranton Business Park",
-                     """Welcome to Scranton Business Park. \n
-    1725 Slouh Ave. \n
-    Scranton, PA 45342 \n
-    North of you, is the main enterance"""),
+                     '''Welcome to Scranton Business Park.\n1725
+                     Slouh Ave.\nScranton, PA 45342\nNorth of you, is
+                     the main enterance'''),
     'fun_run':  Room("""Michael Scott's Dunder Mifflin Scranton Meredith Palmer
     Memorial Celebrity Rabies Awareness Pro-Am Fun Run Race For The Cure""",
                      "A race to cure rabbies."),
@@ -69,13 +68,14 @@ room = {
 }
 
 items = {
-    'key': Item('Key', 'It\'s a key to something'),
+    'shirt': Item('Shirt', 'It\'s souveneer.'),
     'sword': Item('Sword', 'It\'s a weapon'),
     'mouse': Item('Mouse', 'It could be a pet'),
     'map': Item('Map', 'Helps you get around'),
     'backpack': Item('Backpack', 'Holds more items'),
     'yo-yo': Item('Yo-Yo', 'A fun toy'),
     'water': Item('Water', 'Stay hydrated'),
+    'treasure': Item('Treasure', 'You made it to your job'),
 }
 
 
@@ -117,10 +117,11 @@ room['344'].w_to = room['hallway_three_cont']
 
 
 # Place items in rooms
-room['fun-run'].items = [items['shirt']]
-room['overlook'].items = [items['mouse'].name, items['yo-yo'].name]
-room['narrow'].items = [items['backpack'].name]
-room['treasure'].items = [items['water'].name]
+room['fun_run'].items = [items['shirt']]
+room['lobby'].items = [items['mouse']]
+room['cafe'].items = [items['map']]
+room['200'].items = [items['treasure']]
+
 
 #
 # Main
@@ -157,15 +158,17 @@ while True:
         if user_input[0] == 'get' or user_input[0] == 'take':
             item_count = len(player.current_room.items)
             for i, item in enumerate(player.current_room.items):
-                if item.lower() == user_input[1]:
+                if item.name.lower() == user_input[1]:
                     player.items.append(player.current_room.items.pop(i))
-                    print(f"Updated inventory: {player.items}")
+                    item.on_get(player)
+                    print(f"Updated inventory: {player.print_item_names()}")
         elif user_input[0] == 'drop':
             item_count = len(player.items)
             for i, item in enumerate(player.items):
-                if item.lower() == user_input[1]:
+                if item.name.lower() == user_input[1]:
                     player.current_room.items.append(player.items.pop(i))
-                    print(f"Updated inventory: {player.items}")
+                    item.on_drop(player)
+                    print(f"Updated inventory: {player.print_item_names()}")
     elif len(user_input) == 1:
         if user_input[0] == 'q':
             print('You left the game, game over!')
@@ -174,3 +177,8 @@ while True:
             print(f"inventory: {player.items}")
 
         player.current_room = try_direction(user_input[0], player.current_room)
+
+    if player.happiness <= 0:
+        print(
+            'Happiness is too low you lost the will to go on. You lose')
+        break
