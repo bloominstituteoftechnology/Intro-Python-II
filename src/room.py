@@ -17,3 +17,15 @@ class Room:
         for index, item in enumerate(self.item_list):
             print(f'  {index+1}. {item}')
         print('\n')
+
+    def check_room(self, item):
+        if item in [i.lower() for i in self.item_list]:
+            return True
+        else:
+            return False
+
+    def remove_item(self, item):
+        self.item_list.remove(item)
+
+    def add_item(self, item):
+        self.item_list.append(item)

@@ -14,14 +14,27 @@ def input_command(player):
     os.system('cls' if os.name == 'nt' else 'clear')
     if command in ('quit', 'q'):
         raise Quit
+
     elif command in ('n', 'e', 's', 'w', 'north', 'east', 'south', 'west'):
         player.move_player(command[0] + '_to')
         print(player.room)
+
     elif command in ('search', 'look'):
         print(player.room)
         player.room.search_room()
-    elif command.split()[0] in ('take', 'get', 'drop'):
+
+    elif command in ('take', 'get', 'drop'):
+        try:
+            player.handle_item(command, noun)
+            print(player.room)
+            print(f'You {command} the {noun}\n')
+        except:
+            print(player.room)
+            print('That item isn\'t here.\n')
+
+    elif command in ('i', 'inventory'):
         print(player.room)
-        print('take/drop test')
+        player.search_inventory()
+
     else:
         return command
