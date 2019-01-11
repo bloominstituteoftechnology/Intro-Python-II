@@ -7,7 +7,7 @@ from item import Item
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons", 
-                     [Item("Note", "A tattered note with hastily scrawled, illegible text."),]),
+                     [Item("Note", "A tattered note with hastily scrawled, unrecognizable text."),]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", []),
@@ -56,14 +56,14 @@ player = Player(room['outside'], [])
 # If the user enters "q", quit the game.
 
 def check_move(direction, room):
-    attribute = direction + '._to'
+    attribute = direction + '_to'
     if hasattr(room, attribute):
         return getattr(room, attribute)
     else:
         print("You can't find a way to move in that direction.")
         return room
 
-print("Welcome. You are standing in the " + player.room.name + ".")
+print("You are standing in the " + player.room.name + ".")
 
 print(player.room.description)
 print(player.room.items[0].name)
@@ -72,7 +72,16 @@ print("What would you like to do?")
 action = input("[N] Move North [E] Move East [S] Move South [W] Move West [Q] Quit\n").lower()
 
 while not action == 'q':
+    
+    print("What would you like to do?")
+    
+    print(player.room.description)
+    
+    action = input("[N] Move North [E] Move East [S] Move South [W] Move West [Q] Quit\n").lower()
+
     if action == 'n' or action == 'e' or action == 's' or action == 'w':
         player.room = check_move(action, player.room)
     else: 
         print("Unrecognized input, please try again.")
+
+    
