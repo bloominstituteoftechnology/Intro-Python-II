@@ -52,6 +52,20 @@ player = Player("farhan", room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-# while True:
-print(f'{player.room.name}')
-print(player.room.description)
+
+def try_direction(direction, current_room):
+    
+    attribute = direction + '_to'
+    
+    if (hasattr(current_room, attribute)):
+        return getattr(current_room, attribute)
+    else:
+        print("Sorry, can't go that way.")
+        return current_room
+
+while True:
+    print(f'{player.current_room.name}')
+    print(f'{player.current_room.description}')
+    input_string = input("\n>").lower()[0]
+    player.current_room = try_direction(input_string, player.current_room)
+    # print(player.current_room)
