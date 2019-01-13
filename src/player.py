@@ -7,10 +7,21 @@ class Player:
 
     def __repr__(self):
         if self.__items == []:
-            return f"Name: {self.name}"
+            return f'Name: {self.name}'
         else:
-            return f"Name: {self.name}\nItems: {self.__items}"
+            return f'Name: {self.name}\nItems: {self.__items}'
     # Method to look in the player's current room for items
 
     def look(self):
-        return f"{self.current_room.description}\nItems: {self.current_room.list_items_in_room()}"
+        if self.current_room.list_items_in_room() == []:
+            return 'You find nothing of interest.'
+        else:
+            return f'{self.current_room.description}\nItems: {self.current_room.list_items_in_room()}'
+
+    # Method to pick up an item in a room if any exists
+
+    def pick_up_item(self, item_to_pickup):
+        if any:
+            return self.current_room.list_items_in_room()
+        else:
+            return 'Nothing to pickup'
