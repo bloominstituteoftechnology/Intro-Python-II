@@ -47,9 +47,12 @@ name_bypass = 1
 game_state = 1
 player = ""
 
-dingus = Item("Dingus", "This really dings.")
+# Declaring items and assigning them rooms
 
+dingus = Item("Dingus", "This really dings.")
 room["outside"].add_item(dingus)
+flippers = Item("Flippers", "Webbed my nature.")
+room["outside"].add_item(flippers)
 # Method to attempt to changes rooms
 
 
@@ -78,9 +81,10 @@ while game_state is 1:
             name_bypass = 1
 
     # TEST PRINTS
-    print(f"{player.current_room}")
-    print(player)
+    print(player.current_room)
+    # print(player)
     print("-" * 40)
+    # print(Room.__dict__[2].values()
     # accepts input from user and converts to lowercase
     player_input = input(f'Enter a direction > ').lower()
     cls()
