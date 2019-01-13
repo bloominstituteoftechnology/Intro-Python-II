@@ -9,6 +9,3 @@ class Item:
 
     def __str__(self):
         return f'{self.name} - {self.description}' + '\n' + "-" * 40
-
-    # def pick_up(self):
-    #     if item_in_room:
