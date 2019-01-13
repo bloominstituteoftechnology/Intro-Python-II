@@ -86,7 +86,7 @@ while game_state is 1:
     print("-" * 40)
     # print(Room.__dict__[2].values()
     # accepts input from user and converts to lowercase
-    player_input = input(f'Enter a direction > ')
+    player_input = input(f'Enter a direction > ').lower()
     cls()
     # Split player_input into two arguments
     if len(player_input.split(' ', 1)) >= 2:
