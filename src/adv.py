@@ -86,15 +86,14 @@ while game_state is 1:
     print("-" * 40)
     # print(Room.__dict__[2].values()
     # accepts input from user and converts to lowercase
-    player_input = input(f'Enter a direction > ').lower()
+    player_input = input(f'Enter a direction > ')
     cls()
     # Split player_input into two arguments
-    if len(player_input.split(' ', 1)) > 2:
+    if len(player_input.split(' ', 1)) >= 2:
         player_input_option1 = player_input.split(' ', 1)[0]
         player_input_option2 = player_input.split(' ', 1)[1]
     else:
         player_input_option1 = player_input.split(' ', 1)[0]
-
     # Check if input was q, exit, or quit, then terminates the program
     if player_input_option1 == 'q' or player_input_option1 == 'exit' or player_input_option1 == 'quit':
         cls()
@@ -109,6 +108,12 @@ while game_state is 1:
     elif player_input == "l":
         cls()
         print(player.look())
+
+    elif player_input_option1 in ("p", "pickup"):
+        print(player.pick_up_item(player_input_option2))
+
     else:
         cls()
         print("Command not found.")
+        print(f'{player_input_option1}, {player_input_option2}')
+        player_input_option1 = player_input_option2 = None
