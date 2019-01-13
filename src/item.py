@@ -5,4 +5,4 @@ class Item:
         self.description = description
 
     def __repr__(self):
-        return f'{self.name} - {self.description}' + '\n' + "-" * 40
+        return f'{self.name}'
