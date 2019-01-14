@@ -55,6 +55,7 @@ room = {
                      "False",
                      "False",
                      "False",
+                     [Item("Red Stone", "Illuminates a red hue when held to light."), Item("Demon Skull", "It makes a faint humming sound.")]
                      ),
 
     'foyer':    Room("Foyer",
@@ -65,7 +66,8 @@ room = {
                      'overlook',
                      'outside',
                      "False",
-                     'narrow'
+                     'narrow',
+                     []
                      ),
 
     'overlook': Room("Grand Overlook",
@@ -78,6 +80,7 @@ the distance, but there is no way across the chasm.""",
                       'foyer',
                       "False",
                       "False",
+                      []
 ),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
@@ -87,7 +90,8 @@ to north. The smell of gold permeates the air.""",
                      'treasure',
                      "False",
                      'foyer',
-                     "False"
+                     "False",
+                     []
 ),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
@@ -97,7 +101,8 @@ chamber. Leroy Jenkins stands before you,\nand he looks hungry and ready to rap.
                      "False",
                      'narrow',
                      "False",
-                     "False"
+                     "False",
+                     []
 ),
 }
 
@@ -113,20 +118,20 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-starting_knight = {
-    'weapon': Item("Steel Sword", "Something To Slice With."), 
-    'herb': Item("Lions Mane", "Increases Health Slightly")
-    }
+starting_knight = [
+    Item("Steel Sword", "Something To Slice With."), 
+    Item("Lions Mane", "Increases Health Slightly")
+]
 
-starting_magi = {
-    'weapon': Item("Magic Spell Book", "Provides Knowledge Of Ancient Spells"), 
-    'herb': Item("Lions Mane", "Increases Health Slightly")
-    }
+starting_magi = [
+    Item("Magic Spell Book", "Provides Knowledge Of Ancient Spells"), 
+    Item("Lions Mane", "Increases Health Slightly")
+]
 
-starting_assassin = {
-    'weapon': Item("Steel Dagger", "Something To Stab With."), 
-    'herb': Item("Lions Mane", "Increases Health Slightly")
-    }
+starting_assassin = [
+    Item("Steel Dagger", "Something To Stab With."), 
+    Item("Lions Mane", "Increases Health Slightly")
+]
 
 
 #
@@ -164,7 +169,7 @@ def help_menu():
     print("#########################################\n")
     print("# type 1, 2, 3, 4 for menu navigation\n         ")
     print("# - Use `up`, `down`, `left`, `right` to move\n ")
-    print("# - Type The Following Commands For Actions:\n  ")
+    print("# - Type The Following Commands For Actions:\n['quit', 'q']\n['move', 'go', 'travel', 'walk']\n['examine', 'inspect', 'interact', 'look']\n['inventory', 'items']  ")
     print("# - Use 'examine' to examine something\n        ")
     print("# - Good Luck Adventurer.                     ")
     print("#########################################\n")
@@ -268,7 +273,7 @@ def movement_handler(destination):
         print("\n" + "======================================")
         print("What would you like to do?")
         action = input("--->" + "\n")
-        acceptable_actions = ['move', 'go', 'travel', 'walk', 'quit', 'q', 'examine', 'inspect', 'interact', 'look', 'inventory', 'items']
+        acceptable_actions = ['move', 'go', 'travel', 'walk', 'quit', 'q', 'examine', 'inspect', 'interact', 'look', 'inventory', 'items', 'drop', 'get', 'search']
         while action.lower() not in acceptable_actions:
             print("Unknown Action, Try Again.\n try 'move', 'go', 'travel', 'walk'")
             action = input("-->")
@@ -285,6 +290,12 @@ def movement_handler(destination):
             player_examine(action.lower())
         elif action.lower() in ['inventory', 'items']:
             player_items(action.lower())
+        elif action.lower() in ['drop']:
+            player_drop()
+        elif action.lower() in ['get']:
+            player_get()
+        elif action.lower() in ['search']:
+            player_search()
 
     except: 
         if action.lower() in ['move', 'go', 'travel', 'walk']:
@@ -314,11 +325,49 @@ def start1(x):
     # elif action.lower() in ['examine', 'inspect', 'interact', 'look']:
     #     player_examine(action.lower())
 
+def player_search():
+    destination = PlayerIG.current_room
+    print("You search the room.")
+    print("These items are spotted: ")
+    print(PlayerIG.current_room.items)
+    movement_handler(destination)
+
+def player_get():
+    destination = PlayerIG.current_room
+    item = input('input item you would like to pick up -->')
+    room_items = PlayerIG.current_room.items
+    print(room_items[0].name)
+    print([i.name for i in room_items])
+    if any([i.name == item for i in room_items]):
+        match = next((l for l in room_items if l.name == item), None)
+        print(match)
+        PlayerIG.inventory.append(match)
+        print(PlayerIG.inventory)
+        movement_handler(destination)
+    else:
+        print(f"There is no item with the name of {item}")
+        movement_handler(destination)
+
+def player_drop():
+    destination = PlayerIG.current_room
+    item = input('input item you would like to drop -->')
+    items = PlayerIG.inventory
+    if any([i.name == item for i in items]):
+        match = next((l for l in items if l.name == item), None)
+        print(match)
+        PlayerIG.inventory.remove(match)
+        PlayerIG.current_room.items.append(match)
+        print("Your Inventory: ", PlayerIG.inventory)
+        print("Items In Room: ", PlayerIG.current_room.items)
+        movement_handler(destination)
+    else: 
+        print(f"There is no item with the name of {item} in your inventory")
+        movement_handler(destination)
+
 def player_items(item):
     destination = PlayerIG.current_room
     print("These are your items...\n")
-    print(PlayerIG.inventory['weapon'].name + ': ' + PlayerIG.inventory['weapon'].description)
-    print(PlayerIG.inventory['herb'].name + ': ' + PlayerIG.inventory['herb'].description)
+    print(PlayerIG.inventory)
     movement_handler(destination)
 
 def player_examine(action):
