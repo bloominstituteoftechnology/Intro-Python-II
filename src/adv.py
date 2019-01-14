@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from item import Item
+from item import Herb
 import sys
 import os
 import cmd
@@ -55,7 +56,10 @@ room = {
                      "False",
                      "False",
                      "False",
-                     [Item("Red Stone", "Illuminates a red hue when held to light."), Item("Demon Skull", "It makes a faint humming sound.")]
+                     [Item("Red Stone", "Illuminates a red hue when held to light."), 
+                     Item("Demon Skull", "It makes a faint humming sound."),
+                     Herb("Healing Leaf", "A minty tasting leaf", 25, "Herb")
+                     ]
                      ),
 
     'foyer':    Room("Foyer",
@@ -273,7 +277,7 @@ def movement_handler(destination):
         print("\n" + "======================================")
         print("What would you like to do?")
         action = input("--->" + "\n")
-        acceptable_actions = ['move', 'go', 'travel', 'walk', 'quit', 'q', 'examine', 'inspect', 'interact', 'look', 'inventory', 'items', 'drop', 'get', 'search']
+        acceptable_actions = ['move', 'go', 'travel', 'walk', 'quit', 'q', 'examine', 'inspect', 'interact', 'look', 'inventory', 'items', 'drop', 'get', 'search', 'heal']
         while action.lower() not in acceptable_actions:
             print("Unknown Action, Try Again.\n try 'move', 'go', 'travel', 'walk'")
             action = input("-->")
@@ -296,6 +300,9 @@ def movement_handler(destination):
             player_get()
         elif action.lower() in ['search']:
             player_search()
+        elif action.lower() in ['heal']:
+            Herb.recover(PlayerIG)
+            movement_handler(destination)
 
     except: 
         if action.lower() in ['move', 'go', 'travel', 'walk']:
