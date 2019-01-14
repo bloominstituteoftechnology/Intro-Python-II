@@ -1,19 +1,15 @@
-# Class to manage the rooms' title, descriptions, and items
 class Room:
 
-    def __init__(self, title, description):
+    def __init__(self, title, details):
         self.title = title
-        self.description = description
-        self.__items = []
+        self.details = details
+        self.inventory = []
 
     def __repr__(self):
-        print(f"-" * 40)
-        return (f"You are at the {self.title}.")
-    # Method to add an item to a room
+        return f'{self.title}, {self.details}, {self.inventory}'
 
     def add_item(self, item):
-        return self.__items.append(item)
-    # Method to list items in a room.
+        self.inventory.append(item)
 
-    def list_items_in_room(self):
-        return self.__items
+    def remove_item(self, item):
+        self.inventory.remove(item)
