@@ -1,27 +1,24 @@
 # Class to manage a players name, current room, and items
 class Player:
-    def __init__(self, name, current_room):
+    def __init__(self, name, location):
         self.name = name
-        self.current_room = current_room
-        self.__items = []
+        self.location = location
+        self.inventory = []
 
     def __repr__(self):
-        if self.__items == []:
-            return f'Name: {self.name}'
-        else:
-            return f'Name: {self.name}\nItems: {self.__items}'
+        return self.name, self.location, self.inventory
     # Method to look in the player's current room for items
 
     def look(self):
-        if self.current_room.list_items_in_room() == []:
-            return 'You find nothing of interest.'
-        else:
-            return f'{self.current_room.description}\nItems: {self.current_room.list_items_in_room()}'
-
-    # Method to pick up an item in a room if any exists
+        return self.location.inventory
+        # Method to pick up an item in a room if any exists
 
     def pick_up_item(self, item_to_pickup):
-        if any:
-            return self.current_room.list_items_in_room()
+        print(f'item_to_pickup: {item_to_pickup}')
+        print(
+            f'searching through self.location.inventory: {str(self.location.inventory)}')
+        if item_to_pickup in str(self.location.inventory):
+            self.inventory.append(item_to_pickup)
+            return f'{item_to_pickup} picked up'
         else:
-            return 'Nothing to pickup'
+            return f'{item_to_pickup} does not exist.'
