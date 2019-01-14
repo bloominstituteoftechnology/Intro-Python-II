@@ -4,6 +4,7 @@ from player import Player
 from item import Item
 # Import os for clear screen function
 import os
+
 # Clear screen function
 
 
@@ -42,31 +43,33 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Main
-
+# Bypasses name input for development ease
 name_bypass = 1
+# Game is running when 1
 game_state = 1
+# Player variable
 player = ""
 
 # Declaring items and assigning them rooms
 
-dingus = Item("Dingus", "This really dings.")
+dingus = Item({"dingus": "This really dings."})
+flippers = Item({"flippers": "Webbed my nature."})
 room["outside"].add_item(dingus)
-flippers = Item("Flippers", "Webbed my nature.")
 room["outside"].add_item(flippers)
+
 # Method to attempt to changes rooms
 
 
-def try_direction(direction, current_room):
-        # appends direction attr to direction to be readable by the map
+def try_direction(direction, location):
+    # appends direction attr to direction to be readable by the map
     direction_attribute = direction + "_to"
     # Check if direction has valid direction_attribute
-    if hasattr(current_room, direction_attribute):
+    if hasattr(location, direction_attribute):
         # fetch the new room
-        return getattr(current_room, direction_attribute)
+        return getattr(location, direction_attribute)
     else:
         cls()
-        print("-" * 40 + f'\n{direction} is an invalid direction.')
-        return current_room
+        return location
 
 
 # When game_state is 1, game will begin, 0 to stop the game
@@ -81,9 +84,20 @@ while game_state is 1:
             name_bypass = 1
 
     # TEST PRINTS
-    print(player.current_room)
+    print(f'player.name: {player.name}')
+    print(f'player.location: {player.location}')
+    print(f'player.inventory: {player.inventory}')
+    print(f'player.location.inventory: {player.location.inventory}')
+    print(
+        f'type(player.location.inventory): {type(player.location.inventory[0].name)}')
+    print(f'dingus.name: {dingus.name}')
+    print(f'dingus.description: {dingus.description}')
+    print(f'room["outside"].title: {room["outside"].title}')
+    print(f'room["outside"].desciption: {room["outside"].details}')
+    print(f'room["outside"].inventory: {room["outside"].inventory}')
+
+    # print(f'{}')
     # print(player)
-    print("-" * 40)
     # print(Room.__dict__[2].values()
     # accepts input from user and converts to lowercase
     player_input = input(f'Enter a direction > ').lower()
@@ -102,15 +116,19 @@ while game_state is 1:
     # Travel check
     elif player_input_option1 in ("n", "s", "e", "w"):
         cls()
-        player.current_room = try_direction(
-            player_input_option1, player.current_room)
+        player.location = try_direction(
+            player_input_option1, player.location)
+        player_input_option1 = player_input_option2 = None
 
     elif player_input == "l":
         cls()
         print(player.look())
+        player_input_option1 = player_input_option2 = None
 
     elif player_input_option1 in ("p", "pickup"):
+        cls()
         print(player.pick_up_item(player_input_option2))
+        player_input_option1 = player_input_option2 = None
 
     else:
         cls()
