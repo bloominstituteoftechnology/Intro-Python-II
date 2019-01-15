@@ -1,10 +1,11 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mouth beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -38,6 +39,43 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+currentRoom = room["outside"]
+
+name = input("What's your name, adventurer?\n")
+player = Player(name, None)
+
+describe = print(f"{player.name}, {currentRoom}")
+
+playerAction = ""
+nextRoom = ""
+
+playerAction = input("Will you answer the cave's call?\n"
+                "[N] North [S] South [E] East [W] West [q] Quit\n")
+
+if playerAction == "N" or playerAction == "S" or playerAction == "E" or playerAction == "W" or playerAction == 'q':
+        try:
+            if playerAction == "N":
+                nextRoom = currentRoom.n_to
+            elif playerAction == "E":
+                nextRoom = currentRoom.e_to
+            elif playerAction == "S":
+                nextRoom = currentRoom.s_to
+            elif playerAction == "W":
+                nextRoom = currentRoom.w_to
+        except AttributeError:
+            print('Can not go this way.')
+            currentRoom = room["outside"]
+            playerAction = input("Will you answer the cave's call?\n"
+                "[N] North [S] South [E] East [W] West [q] Quit\n")
+
+        if nextRoom:
+            currentRoom = nextRoom
+
+        else:
+            print('Incorrect input. Please use N, S, E, or W')
+            playerAction = input("Will you answer the cave's call?\n"
+                "[N] North [S] South [E] East [W] West [q] Quit\n")
 
 # Write a loop that:
 #
