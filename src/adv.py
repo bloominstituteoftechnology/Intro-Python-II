@@ -43,39 +43,34 @@ room['treasure'].s_to = room['narrow']
 currentRoom = room["outside"]
 
 name = input("What's your name, adventurer?\n")
-player = Player(name, None)
+player = Player(name, currentRoom, None)
 
-describe = print(f"{player.name}, {currentRoom}")
+def describe(char):
+    print(f"\n{char.name}, {char.room}\n")
 
 playerAction = ""
-nextRoom = ""
 
-playerAction = input("Will you answer the cave's call?\n"
-                "[N] North [S] South [E] East [W] West [q] Quit\n")
+while playerAction != "Q":
+    describe(player)
 
-if playerAction == "N" or playerAction == "S" or playerAction == "E" or playerAction == "W" or playerAction == 'q':
-        try:
-            if playerAction == "N":
-                nextRoom = currentRoom.n_to
-            elif playerAction == "E":
-                nextRoom = currentRoom.e_to
-            elif playerAction == "S":
-                nextRoom = currentRoom.s_to
-            elif playerAction == "W":
-                nextRoom = currentRoom.w_to
-        except AttributeError:
-            print('Can not go this way.')
-            currentRoom = room["outside"]
-            playerAction = input("Will you answer the cave's call?\n"
-                "[N] North [S] South [E] East [W] West [q] Quit\n")
+    playerAction = input("[N] North [S] South [E] East [W] West [Q] Quit\n")
 
-        if nextRoom:
-            currentRoom = nextRoom
-
+    if playerAction == "N" or playerAction == "S" or playerAction == "E" or playerAction == "W":
+        if playerAction == "N" and currentRoom.n_to != None:
+            player.room = player.room.n_to
+        elif playerAction == "E" and currentRoom.e_to != None:
+            player.room = player.room.e_to
+        elif playerAction == "S" and currentRoom.s_to != None:
+            player.room = player.room.s_to
+        elif playerAction == "W" and currentRoom.w_to != None:
+            player.room = player.room.w_to
         else:
-            print('Incorrect input. Please use N, S, E, or W')
-            playerAction = input("Will you answer the cave's call?\n"
-                "[N] North [S] South [E] East [W] West [q] Quit\n")
+            print("You can't go in that direction, it's far too dangerous!")
+    elif playerAction == "Q":
+        print("Come back soon!")
+        break
+    else:
+        print("That's not a direction! Please use N, S, E, or W")
 
 # Write a loop that:
 #
