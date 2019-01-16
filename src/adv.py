@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -22,6 +23,13 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+item = {
+    "sword": Item("Rusty Sword", "Old and rusted, but it'll get the job done if you have to use it."),
+
+    "shield": Item("Wooden Shield", """Makeshift shield someone made from flimsy wood. Might withstand a 
+couple strikes before breaking apart"""),
+}
+
 
 # Link rooms together
 
@@ -34,13 +42,21 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+room["outside"].items.append(item["sword"])
+room["outside"].items.append(item["shield"])
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-def describe(char):
+def describe_room(char):
     print(f"\n{char.name}, {char.room}\n")
+    if char.room.items == []:
+        print("Unfortunately, this room holds no items.")
+    elif len(char.room.items) == 2:
+        print(f"This room holds a {char.room.items[0].name} and a {char.room.items[1].name}.")
+    else:
+        print(f"This room holds a {char.room.items[0].name}.")
 
 name = input("What's your name, adventurer?\n")
 player = Player(name, room["outside"], None)
@@ -48,7 +64,7 @@ player = Player(name, room["outside"], None)
 playerAction = ""
 
 while playerAction != "Q":
-    describe(player)
+    describe_room(player)
 
     playerAction = input("[N] North [S] South [E] East [W] West [Q] Quit\n")
 
