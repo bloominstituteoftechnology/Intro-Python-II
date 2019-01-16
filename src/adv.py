@@ -39,14 +39,11 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
-currentRoom = room["outside"]
-
-name = input("What's your name, adventurer?\n")
-player = Player(name, currentRoom, None)
-
 def describe(char):
     print(f"\n{char.name}, {char.room}\n")
+
+name = input("What's your name, adventurer?\n")
+player = Player(name, room["outside"], None)
 
 playerAction = ""
 
@@ -56,21 +53,21 @@ while playerAction != "Q":
     playerAction = input("[N] North [S] South [E] East [W] West [Q] Quit\n")
 
     if playerAction == "N" or playerAction == "S" or playerAction == "E" or playerAction == "W":
-        if playerAction == "N" and currentRoom.n_to != None:
+        if playerAction == "N" and player.room.n_to != None:
             player.room = player.room.n_to
-        elif playerAction == "E" and currentRoom.e_to != None:
+        elif playerAction == "E" and player.room.e_to != None:
             player.room = player.room.e_to
-        elif playerAction == "S" and currentRoom.s_to != None:
+        elif playerAction == "S" and player.room.s_to != None:
             player.room = player.room.s_to
-        elif playerAction == "W" and currentRoom.w_to != None:
+        elif playerAction == "W" and player.room.w_to != None:
             player.room = player.room.w_to
         else:
-            print("You can't go in that direction, it's far too dangerous!")
+            print("\nYou can't go in that direction, it's far too dangerous!")
     elif playerAction == "Q":
-        print("Come back soon!")
+        print("\nCome back soon!")
         break
     else:
-        print("That's not a direction! Please use N, S, E, or W")
+        print("\nThat's not a direction! Please use N, S, E, or W")
 
 # Write a loop that:
 #
