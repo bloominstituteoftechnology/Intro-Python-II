@@ -16,7 +16,7 @@ class Room:
 
     def revealItems(self):
         items = []
-        for item in items:
+        for item in self.items:
             items.append(item.name)
         # return f"{self.name} holds {items}"
         return items
