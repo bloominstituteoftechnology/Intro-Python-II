@@ -2,6 +2,13 @@ from room import Room
 from player import Player
 from item import Item
 
+item = {
+    "SWORD": Item("SWORD", "Old and rusted, but it'll get the job done if you have to use it."),
+
+    "SHIELD": Item("SHIELD", """Makeshift shield someone made from flimsy wood. Might withstand a 
+couple strikes before breaking apart"""),
+}
+print(item)
 # Declare all the rooms
 
 room = {
@@ -23,12 +30,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-item = {
-    "sword": Item("Rusty Sword", "Old and rusted, but it'll get the job done if you have to use it."),
-
-    "shield": Item("Wooden Shield", """Makeshift shield someone made from flimsy wood. Might withstand a 
-couple strikes before breaking apart"""),
-}
 
 
 # Link rooms together
@@ -42,8 +43,8 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-room["outside"].items.append(item["sword"])
-room["outside"].items.append(item["shield"])
+room["outside"].items = [item["SWORD"], item["SHIELD"]]
+
 #
 # Main
 #
@@ -52,21 +53,28 @@ room["outside"].items.append(item["shield"])
 def describe_room(char):
     print(f"\n{char.name}, {char.room}\n")
     if char.room.items == []:
-        print("Unfortunately, this room holds no items.")
+        print("Unfortunately, this room holds no items.\n")
     elif len(char.room.items) == 2:
-        print(f"This room holds a {char.room.items[0].name} and a {char.room.items[1].name}.")
+        print(f"This room holds a {char.room.items[0].name} and a {char.room.items[1].name}.\n")
     else:
-        print(f"This room holds a {char.room.items[0].name}.")
+        print(f"This room holds a {char.room.items[0].name}.\n")
 
 name = input("What's your name, adventurer?\n")
-player = Player(name, room["outside"], None)
+player = Player(name, room["outside"])
 
 playerAction = ""
 
 while playerAction != "Q":
-    describe_room(player)
+    # describe_room(player)
+    print(player.room.revealItems())
 
-    playerAction = input("[N] North [S] South [E] East [W] West [Q] Quit\n")
+    playerAction = input("[N] North [S] South [E] East [W] West [Q] Quit\n").upper()
+
+    # testing result of code
+    # print("s/b get", playerAction.split()[0])
+    # print("s/b sword", playerAction.split()[1])
+    # print("s/b sword", player.room.items[0])
+    # print(str(playerAction.split()[1]) in player.room.items)
 
     if playerAction == "N" or playerAction == "S" or playerAction == "E" or playerAction == "W":
         if playerAction == "N" and player.room.n_to != None:
@@ -82,6 +90,13 @@ while playerAction != "Q":
     elif playerAction == "Q":
         print("\nCome back soon!")
         break
+    
+    # elif playerAction.split()[1] == "SWORD":
+    #     print("sword works")
+    elif playerAction.split()[1] in player.room.items:
+        player.inventory.append(playerAction.split()[1])
+        player.room.items.remove(playerAction.split()[1])
+        print(room.items)
     else:
         print("\nThat's not a direction! Please use N, S, E, or W")
 
