@@ -1,6 +1,9 @@
 from room import Room
 from player import Player
+from items import Items
 # Declare all the rooms
+
+items = {}
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -33,6 +36,7 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+room['outside'].items = [item["Torch"]]
 #
 # Main
 
