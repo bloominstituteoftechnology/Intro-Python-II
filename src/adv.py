@@ -13,7 +13,7 @@ location = {
     'atrium':  Location("Central Atrium",
                      """Four identical archways sit equidistant along the walls of this immense circular
  room. Bright rays of light beam down from the soaring glass dome roof above. 
- Emblazoned on the smokey white marble floor is a giant, red, greek LAMBDA...
+ Emblazoned on the smokey white marble floor is a giant, red, Greek LAMBDA...
  Above each archway is a cardinal direction (N, S, E, W).
  """),
 
@@ -42,7 +42,7 @@ location['atrium'].s_to = location['nerve']
 location['atrium'].w_to = location['grit']
 location['atrium'].e_to = location['gate']
 
-# nerve
+# beauty
 location['beauty'].s_to = location['atrium']
 
 # nerve
@@ -58,9 +58,19 @@ location['treasure'].n_to = location['gate']
 
 # Declare all items
 item = {
-    'red_card_1':  Card("Red", '''A thin red card with a scrap of beige tape peeling off on one side. Labeled "1".'''),
-    'blue_card_1': Card("Blue", '''A bulky blue card with a blackened corner that suggests a recent encounter with 
+    'red_card_1':   Card("Red", '''A thin red card with a scrap of beige tape peeling off on one side. Labeled "1".'''),
+
+    'blue_card_3':  Card("Blue", '''A bulky blue card with a blackened corner that suggests a recent encounter with 
 fire.'''),
+
+    'green_card_2': Card("Green", '''Green and bumpy, this card has a partially bisecting cut down its middle
+dividing it into two prongs. It almost looks like a 'U'. '''),
+
+    'gold_card_0':  Card("Gold", '''An iridescent yellow card made of a cold, hard, metal. Stamped on one side are
+the letters:
+
+Z-E-R-O'''),
+
     'atrium_statues': Feature("statues", "Marble", '''Each statue in the room depicts a famous spartan. There are four. You read
 the following names and epithets, one on each statue: 
 
@@ -70,7 +80,8 @@ Queen Gorgo (wits), Leonidas I (nerve), Helen of Troy (beauty), Xanthippus(grit)
 # Link items to locations
 location['atrium'].items = [item['atrium_statues']]
 location['beauty'].items = [item['red_card_1']]
-location['nerve'].items = [item['blue_card_1']]
+location['nerve'].items = [item['blue_card_3']]
+location['grit'].items = [item['green_card_2']]
 
 # Declare Player
 player = Player('Chosen One', location['atrium'])
@@ -100,7 +111,7 @@ help_command = ("h", "help")
 
 # Movement
 move_command = ("walk", "go", "move", "travel", "venture", "proceed", "n", "s", "e", "w") # Movement Commands
-move_direction = { # Movement Objects
+move_direction = { # Movement targets
     'north': ("northward", "north", "n"),
     'south': ("southward", "south", "s"),
     'east': ("eastward", "east", "e"),
@@ -165,7 +176,7 @@ print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the 
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' location.
+# Make a new player target that is currently in the 'outside' location.
 
 # Write a loop that:
 #
@@ -201,27 +212,27 @@ while True:
     command = command.lower().split(" ", 1)
 
     # Define Command Action
-    command_action = command[0]
+    action = command[0]
 
-    # Define Command Object and Object Type and Descriptor
+    # Define Command target and target Type and Descriptor
     if len(command) == 1:
-        command_object = ""
+        target = ""
     else:
-        command_object = command[1]
+        target = command[1]
         
-        # Check if command_object is more than one word
-        command_object_item = command_object.split(" ")
+        # Check if target is more than one word
+        target_item = target.split(" ")
 
-        # If command_object is one word, assume that word is the item type
-        if len(command_object_item) == 1:
-            item_type = command_object_item[0]
+        # If target is one word, assume that word is the item type
+        if len(target_item) == 1:
+            item_type = target_item[0]
             item_descriptor = None
 
-        # If command_object is more than one word, assume that the second 
+        # If target is more than one word, assume that the second 
         # word is the item type and the first word is a descriptor
         else:
-            item_type = command_object_item[1]
-            item_descriptor = command_object_item[0]
+            item_type = target_item[1]
+            item_descriptor = target_item[0]
     
 
     #
@@ -233,23 +244,23 @@ while True:
     #
 
     # Commands to Quit Game
-    if command_action in quit_command:
+    if action in quit_command:
         break
 
     # Commands for Help
-    elif command_action in help_command:
+    elif action in help_command:
         print(f'''
 Are you lost, {player.name}?
 
-Commands are made of two words: an action, and an object.
+Commands are made of two words: an action, and a target.
 - The action is what you want to do. 
-- The object, which is sometimes optional, is what the action should 
+- The target, which is sometimes optional, is what the action should 
 be done to.
     
 i.e. search room
-- 'search' is the action, and 'room' is the object.
+- 'search' is the action, and 'room' is the target.
 
-Alternatively, this could be written as 'search' because the object 
+Alternatively, this could be written as 'search' because the target 
 is sometimes optional.''')
         enter_to_continue()
         print(chr(27) + "[2J") # Scroll screen down so that the next loop begins at the top of the screen.
@@ -259,34 +270,47 @@ is sometimes optional.''')
     #
 
     # Check if Command Was a Movement Command
-    elif command_action in move_command:
+    if action == 'back':
+        if player.last_location != None:
+            last_location = player.last_location
+            player.last_location = player.location
+            player.location = last_location
+        else:
+            print("you have't moved yet...")
+            enter_to_continue()
+
+    elif action in move_command:
         
         # Check Movement Type and Whether Movement is Valid
         
         # North
-        if command_action == "n" or command_object in move_direction['north']:
+        if action == "n" or target in move_direction['north']:
             if hasattr(player.location, 'n_to'):
+                player.last_location = player.location
                 player.location = player.location.n_to
             else:
                 invalid_direction()
 
         # South 
-        elif command_action == "s" or command_object in move_direction['south']:
+        elif action == "s" or target in move_direction['south']:
             if hasattr(player.location, 's_to'):
+                player.last_location = player.location
                 player.location = player.location.s_to
             else:
                 invalid_direction()
 
         # East
-        elif command_action == "e" or command_object in move_direction['east']:
+        elif action == "e" or target in move_direction['east']:
             if hasattr(player.location, 'e_to'):
+                player.last_location = player.location
                 player.location = player.location.e_to
             else:
                 invalid_direction()
 
         # West
-        elif command_action == "w" or command_object in move_direction['west']:
+        elif action == "w" or target in move_direction['west']:
             if hasattr(player.location, 'w_to'):
+                player.last_location = player.location
                 player.location = player.location.w_to
             else:
                 invalid_direction()
@@ -299,13 +323,13 @@ is sometimes optional.''')
     #
 
     # Get Item
-    elif command_action in get_item_command:
+    elif action in get_item_command:
         
         # Get a list of all items with a type that matches the provided type
         location_item_type = [item for item in player.location.items if item.type == item_type]
 
         if len(location_item_type) == 0:
-            print(f"\n{command_object.capitalize()} does not exist at your location.")
+            print(f"\n{target.capitalize()} does not exist at your location.")
             enter_to_continue()
         
         elif (location_item_type[0].can_get == True):
@@ -336,13 +360,13 @@ is sometimes optional.''')
             enter_to_continue()
 
     # Drop Item
-    elif command_action in drop_item_command:
+    elif action in drop_item_command:
         
         # Get a list of all items with a type that matches the provided type
         player_item_type = [item for item in player.items if item.type == item_type]
         
         if len(player_item_type) == 0:
-            print(f"\n{command_object.capitalize()} does not exist in your inventory.")
+            print(f"\n{target.capitalize()} does not exist in your inventory.")
             enter_to_continue()
 
         # If there is only one item of the provided type, Drop Item
@@ -369,14 +393,16 @@ is sometimes optional.''')
                 print(f'\nUnable to drop {item_descriptor} {item_type}.')
     
     # Check Item
-    elif command_action in check_item_command:
+    elif action in check_item_command:
         
         # Get a list of all items in player inventory and location with a type that 
         # matches the provided type
-        player_location_item_type = [item for item in player.items if item.type == item_type] + [item for item in player.location.items if item.type == item_type]
+        player_item_type = [item for item in player.items if item.type == item_type]
+        location_item_type = [item for item in player.location.items if item.type == item_type]
+        player_location_item_type = player_item_type + location_item_type
         
         if len(player_location_item_type) == 0:
-            print(f"\n{command_object.capitalize()} must be nearby for you to inspect it!")
+            print(f"\n{target.capitalize()} must be nearby for you to inspect it!")
             enter_to_continue()
 
         # If there is only one item of the provided type, Check Item
@@ -407,11 +433,11 @@ is sometimes optional.''')
     #
 
     # Inventory
-    elif command_action in inventory_command:
+    elif action in inventory_command:
         player.inventory()
         enter_to_continue()
 
-    elif command_action == "search" or (command_action == "search" and command_object == "room"):
+    elif action == "search" or (action == "search" and target == "room"):
         print("You don't see anything other than the obvious!")
         enter_to_continue()
     

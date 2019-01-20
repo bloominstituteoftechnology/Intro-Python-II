@@ -2,9 +2,10 @@
 # currently.
 
 class Player:
-  def __init__(self, name, location, items = []):
+  def __init__(self, name, location, last_location = None, items = []):
     self.name = name
     self.location = location
+    self.last_location = last_location
     self.items = items
   
   def inventory(self):
