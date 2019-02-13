@@ -13,17 +13,6 @@ class Room:
         self.name = name
         self.desc = desc
         # self.items = items
-        # self.n_to = None
-        # self.s_to = None
-        # self.e_to = None
-        # self.w_to = None
 
         def __str__(self):
             return f"{self.name}, {self.desc}"
-
-        # def display_items(self):
-        #     if (self.items):
-        #         for i in self.items:
-        #             print(i.name)
-        #     else:
-        #         print('No items in the room')

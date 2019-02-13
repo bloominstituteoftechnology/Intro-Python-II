@@ -65,15 +65,36 @@ def try_direction(direction, current):
 
 # Write a loop that:
 #
-while False:
+while True:
     # * Prints the current room name
     print(player.curr_room.name)
     # * Prints the current description (the textwrap module might be useful here).
     print(player.curr_room.desc)
     # * Waits for user input and decides what to do.
-    s = input("\n>").lower()[0]
+    s = input("\n>").lower().split()
 
-    player.curr_room = try_direction(s, player.curr_room)
+    # check to see if the user input a one or two word command
+    if len(s) == 1:
+        # the user passed us a direction
+
+        # grab the first character of the first word
+        s = s[0][0]
+        pass
+        if s == 'q':
+            print('Thank you for playing')
+            break
+
+        player.curr_room = try_direction(s, player.curr_room)
+    elif len(s) == 2:
+        # the user passed us a two-word command
+        first_word = s[0]  # verb
+        second_word = s[1]  # noun
+
+        if first_word in ['get', 'drop']:
+            break
+    else:
+        print("I don't understand that command")
+        continue
 
     # none dynamic way
     # if s == 'n':
