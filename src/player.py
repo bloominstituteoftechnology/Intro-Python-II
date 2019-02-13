@@ -6,5 +6,5 @@ class Player:
     def __init__(self, curr_room):
         self.curr_room = curr_room
 
-        def __str__(self):
-            return f"{self.name} is in {self.curr_room}"
+        def __repr__(self):
+            return f"Player is in {self.curr_room}"
