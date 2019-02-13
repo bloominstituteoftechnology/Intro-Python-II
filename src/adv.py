@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Weapon
 
 # Declare all the rooms
 
@@ -20,6 +21,12 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+}
+
+weapon = {
+    'pistol': Weapon("Desert Eagle", """Looks useful in a tight situation, you might need this"""),
+
+
 }
 
 
@@ -63,6 +70,10 @@ def try_direction(direction, current):
         return current
 
 
+def grab_item(location, item):
+    pass
+
+
 # Write a loop that:
 #
 while True:
@@ -70,6 +81,8 @@ while True:
     print(player.curr_room.name)
     # * Prints the current description (the textwrap module might be useful here).
     print(player.curr_room.desc)
+    print(
+        'possible commands: q=Quit n=North e=East w=West s=South grab [item-name]=pick_up_item drop [item-name]=drop_item')
     # * Waits for user input and decides what to do.
     s = input("\n>").lower().split()
 
@@ -79,7 +92,6 @@ while True:
 
         # grab the first character of the first word
         s = s[0][0]
-        pass
         if s == 'q':
             print('Thank you for playing')
             break
@@ -89,7 +101,7 @@ while True:
         # the user passed us a two-word command
         first_word = s[0]  # verb
         second_word = s[1]  # noun
-
+        print(first_word, second_word)
         if first_word in ['get', 'drop']:
             break
     else:
