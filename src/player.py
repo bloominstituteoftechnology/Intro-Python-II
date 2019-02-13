@@ -2,6 +2,9 @@
 # currently.
 
 class Player:
-    def __init__(self, currentRoom, playerItem):
+    def __init__(self, currentRoom, name):
         self.currentRoom = currentRoom
-        self.playerItem = playerItem
+        self.name = name
+
+    def __str__(self):
+        return f"{self.name} is currently in room: {self.currentRoom}"
