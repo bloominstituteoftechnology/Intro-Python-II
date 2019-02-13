@@ -5,4 +5,4 @@
 class Player:
     def __init__(self, room, inventory):
         self.room = room
-        self.inventory = inventory
+        self.inventory = []

@@ -14,16 +14,20 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
-
 # add items to rooms:
+
 room["narrow"].items.append(item["sword"])
 room["narrow"].items.append(item["shield"])
 room["foyer"].items.append(item["armor"])
 room["foyer"].items.append(item["helmet"])
 room["overlook"].items.append(item["boots"])
+
+
+#
+# Main
+#
+
+
 # print(item["sword"])
 # print(room["narrow"].items)
 # print(room["outside"])
@@ -35,6 +39,37 @@ room["overlook"].items.append(item["boots"])
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
+userInput = ''
+while userInput != 'q':
+    print("Press q to quit")
+    userInput = input(">> ")
+    print(player.room)
+
+    if userInput == 'n':
+        if hasattr(player.room, 'n_to'):
+            player.room = player.room.n_to
+            print(player.room)
+        else:
+            print("Dead End, can't go North")
+    elif userInput == 'e':
+        if hasattr(player.room, "e_to"):
+            player.room = player.room.e_to
+            print(player.room)
+        else:
+            print("Dead End, can't go East")
+    elif userInput == 's':
+        if hasattr(player.room, 's_to'):
+            player.room = player.room.s_to
+            print(player.room)
+        else:
+            print("Dead End, can't go South")
+    elif userInput == 'w':
+        if hasattr(player.room, 'w_to'):
+            player.room = player.room.w_to
+            print(player.room)
+        else:
+            print("Dead End, can't go West")
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
