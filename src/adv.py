@@ -44,7 +44,8 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 
 p = Player('outside', 'Conner')
-print(p)
+# Checks the player info
+# print(p)
 
 # Write a loop that:
 #
@@ -56,3 +57,12 @@ print(p)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+# Parser for user input
+while True:
+    dir = input(">> ")
+
+    if dir == 'q':
+        print("Good bye!")
+        exit()
