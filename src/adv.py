@@ -55,20 +55,32 @@ player = Player(room['outside'], 'Conner')
 #
 # If the user enters "q", quit the game.
 
-player_move = input("[n] North, [e] East, [s] South, [w] West, [q] Quit >> ")
 
 game_over = False
 
 while game_over == False:
 
-    if player_move == 'n' or player_move == 'e' or player_move == 's' or player_move == 'w':
+    player_move = input("[n] North, [e] East, [s] South, [w] West, [q] Quit >> ")
+
+    if player_move == 'n' or player_move == 'e' or player_move == 's' or player_move == 'w' or player_move == 'q':
 
         if player_move == 'n' and player.currentRoom.n_to != None:
             player.currentRoom = player.currentRoom.n_to
             print(player.currentRoom)
-            game_over = False
 
-        if player_move == 'q':
+        elif player_move == 'e' and player.currentRoom.e_to != None:
+            player.currentRoom = player.currentRoom.e_to
+            print(player.currentRoom)
+        
+        elif player_move == 's' and player.currentRoom.s_to != None:
+            player.currentRoom = player.currentRoom.s_to
+            print(player.currentRoom)
+
+        elif player_move == 'w' and player.currentRoom.w_to != None:
+            player.currentRoom = player.currentRoom.w_to
+            print(player.currentRoom)
+
+        elif player_move == 'q':
             print("Good bye!")
             game_over = True
 
