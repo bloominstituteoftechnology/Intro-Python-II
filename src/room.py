@@ -6,10 +6,18 @@ class Room:
     def __init__(self, name, description, items):
         self.name = name
         self.description = description
-        self.items = items
+        self.items = []
 
     def __str__(self):
-        return f"room name: {self.name}, room description: {self.description}. \n"
+        return f"""room name: {self.name},
+room description: {self.description} 
+items: {self.items}\n"""
+
+    # def add_item(self, item):
+    #     print(self.items)
+    #     print(f"item: {item}")
+    #     print(self.items.append(item))
+    #     self.items = self.items.append(item)
 
     # def print_room(self, name, description):
     #     self.name = name

@@ -1,42 +1,7 @@
 from room import Room
 from item import Item
 from player import Player
-
-# Declare all the rooms
-
-room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", ""),
-
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", ""),
-
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", ""),
-
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", ""),
-
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", ""),
-}
-
-# Declare all items
-
-item = {
-    'sword': Item("excalibur", "pretty cool sword"),
-
-    "shield": Item("hylian shield", "pretty sturdy shield"),
-
-    "boots": Item("leather boots", "a pair of pretty fashionable boots"),
-
-    "armor": Item("tunic", "a pretty weird looking suit"),
-
-    "helmet": Item("crown", "pretty regal looking headpiece")
-}
-
+from data import room as room, item as item, player as player
 
 # Link rooms together
 
@@ -53,9 +18,16 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
-
-player = Player(room["outside"])
+# add items to rooms:
+room["narrow"].items.append(item["sword"])
+room["narrow"].items.append(item["shield"])
+room["foyer"].items.append(item["armor"])
+room["foyer"].items.append(item["helmet"])
+room["overlook"].items.append(item["boots"])
+# print(item["sword"])
+# print(room["narrow"].items)
+# print(room["outside"])
+# print(room["narrow"].items[0])
 
 # Write a loop that:
 #
@@ -69,14 +41,17 @@ player = Player(room["outside"])
 # If the user enters "q", quit the game.
 
 
-for r in room:
-    # print(f'room name: {room[r].name}, description: {room[r].description} \n')
-    print(room[r])
+# for r in room:
+#     print(room[r])
+
+# for i in item:
+#     print(item[i])
 
 # print(f'{room["outside"].name}')
-print(player)
-print(player.room.name)
-print(player.room.description)
+##
+# print(player)
+# print(player.room.name)
+# print(player.room.description)
 
 # print(room)
 # print(room["outside"].print_room)
