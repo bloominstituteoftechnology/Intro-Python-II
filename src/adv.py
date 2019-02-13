@@ -24,7 +24,7 @@ earlier adventurers. The only exit is to the south."""),
 
 # Check Room class is being called correctly
 # for x, i in room.items():
-#     print(x, i)
+#     print(x)
 
 # Link rooms together
 
@@ -42,10 +42,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
-p = Player('outside', 'Conner')
-# Checks the player info
-# print(p)
+player = Player(room['outside'], 'Conner')
 
 # Write a loop that:
 #
@@ -58,11 +55,17 @@ p = Player('outside', 'Conner')
 #
 # If the user enters "q", quit the game.
 
+player_move = input("[n] North, [e] East, [s] South, [w] West, [q] Quit")
 
-# Parser for user input
-while True:
-    dir = input(">> ")
+while player_move != 'q':
 
-    if dir == 'q':
-        print("Good bye!")
-        exit()
+    if player_move == 'n' or player_move == 'e' or player_move == 's' or player_move == 'w':
+
+        if player_move == 'n':
+            player.currentRoom = player.currentRoom.n_to
+            print(player.currentRoom)
+            break
+        if player_move == 'q':
+            print("Good bye!")
+            quit()
+
