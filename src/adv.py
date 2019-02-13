@@ -81,6 +81,18 @@ while game_over == False:
             player.currentRoom = player.currentRoom.w_to
             print(player.currentRoom)
 
+        elif player_move == 'n' and player.currentRoom.n_to == None:
+            print('This seems to be the wrong way, please choose a different direction')
+
+        elif player_move == 'e' and player.currentRoom.e_to == None:
+            print('This seems to be the wrong way, please choose a different direction')
+        
+        elif player_move == 's' and player.currentRoom.s_to == None:
+            print('This seems to be the wrong way, please choose a different direction')
+
+        elif player_move == 'w' and player.currentRoom.w_to == None:
+            print('This seems to be the wrong way, please choose a different direction')
+
         elif player_move == 'q':
             print("Good bye!")
             game_over = True
