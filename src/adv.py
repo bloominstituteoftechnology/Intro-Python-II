@@ -41,9 +41,31 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside'])
 
+'''
+direction is the direction the user input
+current is the current room the player is in
+
+returns the new room that the player moves to if the
+move was successful, or returns the current room if the move was
+not successful
+'''
+
+
+def try_direction(direction, current):
+    attribute = direction + '_to'
+
+    # See if the inputted direction is one that we can move to
+    if hasattr(current, attribute):
+        # fetch the new room
+        return getattr(current, attribute)
+    else:
+        print("There is nothing in that direction")
+        return current
+
+
 # Write a loop that:
 #
-while True:
+while False:
     # * Prints the current room name
     print(player.curr_room.name)
     # * Prints the current description (the textwrap module might be useful here).
@@ -51,16 +73,19 @@ while True:
     # * Waits for user input and decides what to do.
     s = input("\n>").lower()[0]
 
-    if s == 'n':
-        player.curr_room = player.curr_room.n_to
-    elif s == 's':
-        player.curr_room = player.curr_room.s_to
-    elif s == 'e':
-        player.curr_room = player.curr_room.e_to
-    elif s == 'w':
-        player.curr_room = player.curr_room.w_to
-    else:
-        print("not a valid direction")
+    player.curr_room = try_direction(s, player.curr_room)
+
+    # none dynamic way
+    # if s == 'n':
+    #     player.curr_room = player.curr_room.n_to
+    # elif s == 's':
+    #     player.curr_room = player.curr_room.s_to
+    # elif s == 'e':
+    #     player.curr_room = player.curr_room.e_to
+    # elif s == 'w':
+    #     player.curr_room = player.curr_room.w_to
+    # else:
+    #     print("not a valid direction")
 
     #
     # If the user enters a cardinal direction, attempt to move to the room there.
