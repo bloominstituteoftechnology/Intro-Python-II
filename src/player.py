@@ -15,5 +15,5 @@ class Player():
         if direction =='w':
             self.current_room= self.current_room.w_to
     def __str__ (self):
-        return (f"Player Name: {self.name}")
+        return (f"Player {self.name} is currently in {self.current_room.name}")
 
