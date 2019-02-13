@@ -1,10 +1,13 @@
 from room import Room
+from item import Item
+from player import Player
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", 
+                     [Item("lamp", "Victorian")]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -38,7 +41,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+newplayer = Player('outside')
 # Write a loop that:
 #
 # * Prints the current room name

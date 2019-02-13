@@ -4,3 +4,5 @@
 class Player:
     def __init__(self, p_room):
         self.p_room = p_room
+
+print(Player('outside'))
