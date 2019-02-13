@@ -11,5 +11,5 @@ class Room:
         self.w_to = w_to
     
     def __str__(self):
-        return f"You are currently in {self.name}.\n{self.description}"
+        return f"\nYou are currently in {self.name}.\n{self.description}"
         

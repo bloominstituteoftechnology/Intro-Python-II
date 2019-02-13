@@ -61,7 +61,7 @@ game_over = False
 
 while game_over == False:
 
-    player_move = input("[n] North, [e] East, [s] South, [w] West, [q] Quit >> ")
+    player_move = input("\n[n] North, [e] East, [s] South, [w] West, [q] Quit >> ")
 
     if player_move == 'n' or player_move == 'e' or player_move == 's' or player_move == 'w' or player_move == 'q':
 
