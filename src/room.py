@@ -8,7 +8,10 @@
 # and a short message.
 
 class Room:
-    def __init__(self, r_name, r_description):
+    def __init__(self, r_name, r_description, items=[]): # Room was extended with a list
         self.r_name = r_name
         self.r_name = r_description
-        
+        self.items = items
+
+
+
