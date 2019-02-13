@@ -21,6 +21,9 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Check Room class is being called correctly
+# for x, i in room.items():
+#     print(x, i)
 
 # Link rooms together
 
