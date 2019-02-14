@@ -56,44 +56,46 @@ player = Player(room['outside'], name)
 #
 # If the user enters "q", quit the game.
 
+print(f"\nGreetings {player.playerName}, you can control your adventure using the keys: N, E, S, W to move around the dungeon and Q to end your time here")
+
 
 game_over = False
 
 while game_over == False:
 
-    player_move = input("\n[n] North, [e] East, [s] South, [w] West, [q] Quit >> ")
+    player_move = input("\n[N] North, [E] East, [S] South, [W] West, [Q] Quit >> ").upper()
 
-    if player_move == 'n' or player_move == 'e' or player_move == 's' or player_move == 'w' or player_move == 'q':
+    if player_move == 'N' or player_move == 'E' or player_move == 'S' or player_move == 'W' or player_move == 'Q':
 
-        if player_move == 'n' and player.currentRoom.n_to != None:
+        if player_move == 'N' and player.currentRoom.n_to != None:
             player.currentRoom = player.currentRoom.n_to
             print(player.currentRoom)
 
-        elif player_move == 'e' and player.currentRoom.e_to != None:
+        elif player_move == 'E' and player.currentRoom.e_to != None:
             player.currentRoom = player.currentRoom.e_to
             print(player.currentRoom)
         
-        elif player_move == 's' and player.currentRoom.s_to != None:
+        elif player_move == 'S' and player.currentRoom.s_to != None:
             player.currentRoom = player.currentRoom.s_to
             print(player.currentRoom)
 
-        elif player_move == 'w' and player.currentRoom.w_to != None:
+        elif player_move == 'W' and player.currentRoom.w_to != None:
             player.currentRoom = player.currentRoom.w_to
             print(player.currentRoom)
 
-        elif player_move == 'n' and player.currentRoom.n_to == None:
+        elif player_move == 'N' and player.currentRoom.n_to == None:
             print('This seems to be the wrong way, please choose a different direction')
 
-        elif player_move == 'e' and player.currentRoom.e_to == None:
+        elif player_move == 'E' and player.currentRoom.e_to == None:
             print('This seems to be the wrong way, please choose a different direction')
         
-        elif player_move == 's' and player.currentRoom.s_to == None:
+        elif player_move == 'S' and player.currentRoom.s_to == None:
             print('This seems to be the wrong way, please choose a different direction')
 
-        elif player_move == 'w' and player.currentRoom.w_to == None:
+        elif player_move == 'W' and player.currentRoom.w_to == None:
             print('This seems to be the wrong way, please choose a different direction')
 
-        elif player_move == 'q':
+        elif player_move == 'Q':
             print("Good bye!")
             game_over = True
 
