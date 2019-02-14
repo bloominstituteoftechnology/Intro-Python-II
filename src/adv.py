@@ -69,6 +69,8 @@ while game_over == False:
 
     player_move = input("\n[N] North, [E] East, [S] South, [W] West, [Q] Quit, [I] Items >> ").upper()
 
+    # Inventory inputs
+    
     if player_move == 'I':
 
         print(*player.playerItem, sep = "\n")
@@ -91,6 +93,8 @@ while game_over == False:
             player.playerItem.append(shield)
             print(f"{shield.itemName} has been picked up")
             
+
+    # Player movement
 
     if player_move == 'N' or player_move == 'E' or player_move == 'S' or player_move == 'W' or player_move == 'Q':
 
