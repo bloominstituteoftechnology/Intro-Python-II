@@ -5,3 +5,4 @@ class Item:
         self.iname = iname
         self.idescription = idescription
 
+print("inside class Item",)
