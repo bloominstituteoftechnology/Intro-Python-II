@@ -99,3 +99,5 @@ while game_over == False:
             print("Good bye!")
             game_over = True
 
+    else:
+        print('Invalid command, please choose from the given options')
