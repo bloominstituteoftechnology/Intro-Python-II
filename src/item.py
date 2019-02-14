@@ -1,10 +1,6 @@
-from room import Room
 
 
 class Item:
-    def __init__(self, name, description):
+    def __init__(self, name, desc):
         self.name = name
-        self.description = description
-
-    def __str__(self):
-        return f"{name} {description}"
+        self.desc = desc

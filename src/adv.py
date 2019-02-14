@@ -20,15 +20,14 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 item = {
-    'outside': Item('pistol', 'a black shiny pistol'),
-    'foyer': Item('beef jerky', 'wonder how long its been here'),
-    'overlook': Item('Nervana CD', 'strange that this is here'),
+    'outside': Item('pistol', """a black shiny pistol"""),
+    'foyer': Item('beef jerky', """wonder how long its been here"""),
+    'overlook': Item('Nervana CD', """strange that this is here"""),
     'narrow': Item('Soda', 'Good thing its not a "pop"'),
     'treasure': Item('Monopoly Money', 'This is a terrible joke 😭')
 }
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -44,6 +43,7 @@ room['foyer'].add_item(Item(item['foyer']))
 room['overlook'].add_item(Item(item['overlook']))
 room['narrow'].add_item(Item([item['narrow']]))
 room['treasure'].add_item(Item([item['treasure']]))
+
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside'])
