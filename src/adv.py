@@ -3,7 +3,6 @@ from player import Player
 from item import Item
 
 # Declare all the rooms
-
 room = {
     'outside': Room("Outside Cave Entrance",
                     "North of you, the cave mount beckons"),
@@ -18,9 +17,9 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
+# declare all items
 item = {
-    'outside': Item('pistol', """a black shiny pistol"""),
+    'outside': Item('pistol', "a black shiny pistol"),
     'foyer': Item('beef jerky', """wonder how long its been here"""),
     'overlook': Item('Nervana CD', """strange that this is here"""),
     'narrow': Item('Soda', 'Good thing its not a "pop"'),
@@ -38,11 +37,11 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Link item to room??
-room['outside'].add_item(Item(item['outside']))
-room['foyer'].add_item(Item(item['foyer']))
-room['overlook'].add_item(Item(item['overlook']))
-room['narrow'].add_item(Item([item['narrow']]))
-room['treasure'].add_item(Item([item['treasure']]))
+room['outside'].add_item(item['outside'])
+room['foyer'].add_item(item['foyer'])
+room['overlook'].add_item(item['overlook'])
+room['narrow'].add_item(item['narrow'])
+room['treasure'].add_item(item['treasure'])
 
 
 # Make a new player object that is currently in the 'outside' room.
@@ -72,7 +71,7 @@ def try_direction(direction, current):
 # checks if item is in the room
 
 
-def item_in_room(item):
+def display_item(item):
     room_items = player.curr_room.item_list
     return any(i.name == item for i in room_items)
 
@@ -102,10 +101,12 @@ def interact_item(action, item):
 # Write a loop that:
 #
 while True:
+    room_items = player.curr_room.display_item()
     # * Prints the current room name
     print(player.curr_room.name)
     # * Prints the current description (the textwrap module might be useful here).
     print(player.curr_room.desc)
+    print(room_items)
     print(
         'possible commands: q=Quit n=North e=East w=West s=South grab [item-name]=pick_up_item drop [item-name]=drop_item')
     # * Waits for user input and decides what to do.

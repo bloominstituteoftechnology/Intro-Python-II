@@ -9,6 +9,7 @@ items
 
 class Room:
     def __init__(self, name, desc):
+        # these are basically just the binds that everyone hates
         self.name = name
         self.desc = desc
         # list of items in state
