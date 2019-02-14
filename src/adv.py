@@ -63,7 +63,14 @@ game_over = False
 
 while game_over == False:
 
-    player_move = input("\n[N] North, [E] East, [S] South, [W] West, [Q] Quit >> ").upper()
+    player_move = input("\n[N] North, [E] East, [S] South, [W] West, [Q] Quit, [I] Items >> ").upper()
+
+    if player_move == 'I':
+        item_input = input("[Drop] or [Take] [Item] >> ").upper()
+        
+        if item_input == 'DROP SWORD':
+            print('Sword has been dropped')
+            
 
     if player_move == 'N' or player_move == 'E' or player_move == 'S' or player_move == 'W' or player_move == 'Q':
 
@@ -83,16 +90,7 @@ while game_over == False:
             player.currentRoom = player.currentRoom.w_to
             print(player.currentRoom)
 
-        elif player_move == 'N' and player.currentRoom.n_to == None:
-            print('This seems to be the wrong way, please choose a different direction')
-
-        elif player_move == 'E' and player.currentRoom.e_to == None:
-            print('This seems to be the wrong way, please choose a different direction')
-        
-        elif player_move == 'S' and player.currentRoom.s_to == None:
-            print('This seems to be the wrong way, please choose a different direction')
-
-        elif player_move == 'W' and player.currentRoom.w_to == None:
+        elif player_move == 'N' and player.currentRoom.n_to == None or player_move == 'E' and player.currentRoom.e_to == None or player_move == 'S' and player.currentRoom.s_to == None or player_move == 'W' and player.currentRoom.w_to == None:
             print('This seems to be the wrong way, please choose a different direction')
 
         elif player_move == 'Q':
