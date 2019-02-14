@@ -3,9 +3,9 @@
 # Hint: the name should be one word for ease in parsing later.
 
 class Item:
-    def __init__(self, item, itemDes):
-        self.item = item
+    def __init__(self, itemName, itemDes):
+        self.itemName = itemName
         self.itemDes = itemDes
 
     def __str__(self):
-        return f"{self.item}: {self.itemDes}"
+        return f"{self.itemName}: {self.itemDes}"
