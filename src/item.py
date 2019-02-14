@@ -19,7 +19,7 @@ class Herb(Item):
         self.recover_hp = recover_hp
         self.type_ = type_
     def __repr__(self):
-        return f"\nName: {self.name} Description: {self.description} Recovery: {self.recover_hp}HP Type: {self.type_}"
+        return f"\nName: {self.name} | Description: {self.description} | Recovery: {self.recover_hp}HP | Type: {self.type_}"
     def recover(Player_In_Game):
         print([i for i in Player_In_Game.inventory])
         if any([i.type_ == "Herb" for i in Player_In_Game.inventory]):

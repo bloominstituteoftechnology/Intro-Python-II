@@ -173,7 +173,7 @@ def help_menu():
     print("#########################################\n")
     print("# type 1, 2, 3, 4 for menu navigation\n         ")
     print("# - Use `up`, `down`, `left`, `right` to move\n ")
-    print("# - Type The Following Commands For Actions:\n['quit', 'q']\n['move', 'go', 'travel', 'walk']\n['examine', 'inspect', 'interact', 'look']\n['inventory', 'items']  ")
+    print("# - Type The Following Commands For Actions:\n['quit', 'q']\n['move', 'go', 'travel', 'walk']\n['examine', 'inspect', 'interact', 'look']\n['inventory', 'items']\n[drop, get]\n[search, heal]  ")
     print("# - Use 'examine' to examine something\n        ")
     print("# - Good Luck Adventurer.                     ")
     print("#########################################\n")
@@ -341,15 +341,19 @@ def player_search():
 
 def player_get():
     destination = PlayerIG.current_room
+    print("You search the room.")
+    print("These items are spotted: ")
+    print(PlayerIG.current_room.items)
     item = input('input item you would like to pick up -->')
     room_items = PlayerIG.current_room.items
     print(room_items[0].name)
     print([i.name for i in room_items])
     if any([i.name == item for i in room_items]):
         match = next((l for l in room_items if l.name == item), None)
-        print(match)
+        # print(match)
         PlayerIG.inventory.append(match)
         print(PlayerIG.inventory)
+        # PlayerIG.currentRoom.items.remove(match)
         movement_handler(destination)
     else:
         print(f"There is no item with the name of {item}")
