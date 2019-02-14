@@ -22,10 +22,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-# Check Room class is being called correctly
-# for x, i in room.items():
-#     print(x)
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -37,28 +33,20 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+# ##################################################################### #
+#                                 Main                                  #
+# ##################################################################### #
 
-# Make a new player object that is currently in the 'outside' room.
+# Name input
 name = input("What is your adventurer's name? ")
+
+# Player object starts 'outside'
 player = Player(room['outside'], name)
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
-
+# Greeting for when you enter the game
 print(f"\nGreetings {player.playerName}, you can control your adventure using the keys: N, E, S, W to move around the dungeon and Q to end your time here")
 
-
+# game loop
 game_over = False
 
 while game_over == False:
