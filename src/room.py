@@ -13,5 +13,5 @@ class Room:
         self.r_name = r_description
         self.items = items
 
-
+print("inside class Room",)
 
