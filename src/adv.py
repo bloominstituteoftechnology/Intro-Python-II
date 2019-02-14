@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-from item import Weapon
+from item import Item
 
 # Declare all the rooms
 
@@ -23,13 +23,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-weapon = {
-    'pistol': Weapon("Desert Eagle", """Looks useful in a tight situation, you might need this"""),
-
-
-}
-
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -41,9 +34,15 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+# Link item to room??
+room['outside'].add_item(
+    Item('pistol', 'a black shiny pistol.. this could be useful'))
+room['foyer'].add_item(Item(
+    'beef jerky', 'no telling how long this has been here, better take it with you'))
+room['overlook'].add_item(
+    Item('Nervana CD', 'strange that this is here, but its a good cd'))
+room['narrow'].add_item(Item('Soda', 'Good thing its not a "pop"'))
+room['treasure'].add_item(Item('Monopoly Money', 'This is a terrible joke 😭'))
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside'])
@@ -69,9 +68,34 @@ def try_direction(direction, current):
         print("There is nothing in that direction")
         return current
 
+# checks if item is in the room
 
-def grab_item(location, item):
-    pass
+
+def item_in_room(item):
+    room_items = player.curr_room.item_list
+    return any(i.name == item for i in room_items)
+
+# checks if item is in iventory, any func returns bool
+
+
+def item_in_inv(item):
+    player_item = player.item_list
+    return any(i == item for i in player_item)
+
+# decides what to do when player interacts with an item
+
+
+def interact_item(action, item):
+    room_items = player.curr_room.item_list
+    player_items = player.curr_room
+
+# if the player chooses to get the item, add it to their inventory
+    if action == "get":
+        player.grab_item(item)
+# remove it from the rooms inventory
+        for i in room_items:
+            if i.name == item:
+                player.curr_room.remove_item(i)
 
 
 # Write a loop that:
