@@ -19,7 +19,7 @@ earlier adventurers. The only exit is to the south."""),
 }
 # declare all items
 item = {
-    'outside': Item('pistol', "a black shiny pistol"),
+    'outside': Item('pistol', "burried slightly in some freshly disturbed dirt"),
     'foyer': Item('beef jerky', """wonder how long its been here"""),
     'overlook': Item('Nervana CD', """strange that this is here"""),
     'narrow': Item('Soda', 'Good thing its not a "pop"'),
@@ -106,9 +106,10 @@ while True:
     print(player.curr_room.name)
     # * Prints the current description (the textwrap module might be useful here).
     print(player.curr_room.desc)
-    print(room_items)
+    if len(room_items) > 0:
+        print(f"There is a {room_items}\n")
     print(
-        'possible commands: q=Quit n=North e=East w=West s=South grab [item-name]=pick_up_item drop [item-name]=drop_item')
+        'commands: \nq=Quit\nn=North\ne=Eastn\nw=West\ns=South\ngrab [item-name]=pick_up_item\ndrop [item-name]=drop_item')
     # * Waits for user input and decides what to do.
     s = input("\n>").lower().split()
 
@@ -128,8 +129,14 @@ while True:
         first_word = s[0]  # verb
         second_word = s[1]  # noun
         print(first_word, second_word)
-        if first_word in ['get', 'drop']:
-            break
+        if first_word in ['grab', 'drop']:
+            for i in room_items:
+                player.grab_item(i)
+                print(f"you just grabbed {i}")
+                continue
+        else:
+            print("There is no item in the room by that name")
+            continue
     else:
         print("I don't understand that command")
         continue

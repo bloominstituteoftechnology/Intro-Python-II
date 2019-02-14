@@ -32,5 +32,5 @@ class Room:
         else:
             # display all items in the room for the user
             for item in self.item_list:
-                output += f"{item.name}"
+                output += f"{item.name}, {item.desc}"
         return output
