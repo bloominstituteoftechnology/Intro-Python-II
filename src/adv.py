@@ -70,11 +70,8 @@ while game_over == False:
     player_move = input("\n[N] North, [E] East, [S] South, [W] West, [Q] Quit, [I] Items >> ").upper()
 
     if player_move == 'I':
-        if len(player.playerItem) > 0:
-            print(player.playerItem[0])
-        if len(player.playerItem) > 1:
-            print(player.playerItem[0])
-            print(player.playerItem[1])
+
+        print(*player.playerItem, sep = "\n")
 
         item_input = input("[Drop] or [Take] [Item] >> ").upper()
         
