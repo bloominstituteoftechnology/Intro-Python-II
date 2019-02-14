@@ -7,7 +7,7 @@ from player import Player
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons", 
-                     [Item("lamp", "Victorian")]),
+                     [Item("kerosene lamp", "old and rusty")]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -41,7 +41,14 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-newplayer = Player('outside')
+
+# this line creates a Player object that required a name and room.
+# the room is from the dictionary above, referencing the 'outside' room
+# whose value is a room created the Room class which includes the name,
+# description and empty item list.
+player = Player('Wanda', room['outside'])
+
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -52,3 +59,19 @@ newplayer = Player('outside')
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while True: # will run until it hits the return or break statement
+    print(f"{player.p_room.r_name}")
+    print(f"{player.p_room.r_description}")
+
+
+    if player.p_room.items:
+        for item in player.p_room.items:
+            print(item.iname)
+    else:
+        print("There are no items in this room!")
+
+    playerinput = input("Direction: ")
+
+
+print(f"{player.p_room.r_name} holds list:{player.p_room.items}")
+print(player)
