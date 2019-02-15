@@ -353,6 +353,7 @@ def player_get():
         # print(match)
         PlayerIG.inventory.append(match)
         print(PlayerIG.inventory)
+        PlayerIG.current_room.items.remove(match)
         # PlayerIG.currentRoom.items.remove(match)
         movement_handler(destination)
     else:
