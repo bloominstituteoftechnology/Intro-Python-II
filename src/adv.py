@@ -78,7 +78,7 @@ while True:
     action = input('What do you want to do?').lower()
     actionList = action.split()
     if len(actionList) > 1:
-        if actionList[0]=='get':
+        if actionList[0]=='get' or actionList[0] =='take':
             print('room items',
             current_location.list)
             if any(obj.name==actionList[1] for obj in current_location.list):
