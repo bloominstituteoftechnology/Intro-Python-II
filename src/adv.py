@@ -34,9 +34,9 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-room['foyer'].addItem('rusty sword', 'a rusty sword - don\'t trust it in a fight!')
-room['foyer'].addItem('chest', 'a small chest - what does it contain?')
-room['foyer'].addItem('sign', 'a sign on the wall - might be worth a read')
+room['foyer'].makeItem('rusty sword', 'a rusty sword - don\'t trust it in a fight!')
+room['foyer'].makeItem('chest', 'a small chest - what does it contain?')
+room['foyer'].makeItem('sign', 'a sign on the wall - might be worth a read')
 #
 # Main
 #
@@ -81,6 +81,7 @@ while True:
         if actionList[0]=='get' or actionList[0] =='take':
             print('room items',
             current_location.list)
+
             if any(obj.name==actionList[1] for obj in current_location.list):
                 print('found it!')
 
@@ -91,8 +92,26 @@ while True:
                 print('in the middle')
                 player1.listItems()
                 current_location.listItems()
+
             else:
                 print('no such item')
+        elif actionList[0]=='drop':
+            if any(obj.name==actionList[1] for obj in player1.items):
+                print('dropping item')
+
+                thisItem = next((item for item in player1.items if item.name == actionList[1]), None)
+                player1.drop(thisItem)
+                print('this item', thisItem)
+                current_location.addItem(thisItem)
+                print(type(thisItem))
+                print('in the middle')
+                player1.listItems()
+                current_location.listItems()
+
+            else:
+                print('no such item')
+
+
     elif action == 'q':
         break
     else:

@@ -11,9 +11,11 @@ class Room:
         self.list=[]
     def __str__(self):
         return f'name of room: {self.name} description: {self.description}'
-    def addItem(self,name, description):
+    def makeItem(self,name, description):
         new_item = Item(name,description)
         self.list.append(new_item)
+    def addItem(self,item):
+        self.list.append(item)
     def listItems(self):
 
         for item in self.list:

@@ -6,3 +6,5 @@ class Item:
         return f'Item name: {self.name}; description: {self.description}'
     def on_take(self):
         print('taking item')
+    def on_drop(self):
+        print('dropping item')

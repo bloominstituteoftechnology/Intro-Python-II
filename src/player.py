@@ -16,3 +16,9 @@ class Player:
     def listItems(self):
         for item in self.items:
             print(item)
+    def drop(self,item):
+        print('in drop')
+        print(item)
+        item.on_drop()
+        self.items.remove(item)
+        self.listItems()
