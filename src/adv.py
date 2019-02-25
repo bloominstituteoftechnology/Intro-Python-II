@@ -40,7 +40,7 @@ room['foyer'].list=["chest", "sign", "rusty sword"]
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player1 = Player("Waldo", "outside")
+player1 = Player("Waldo", "outside",[])
 
 # Write a loop that:
 #
@@ -74,7 +74,11 @@ while True:
     print(current_location.description)
     print('(To move to another room, enter a cardinal direction in form \'n\', \'s\', \'w\', \'e\')')
     action = input('What do you want to do?').lower()
-    if action == 'q':
+    actionList = action.split()
+    if len(actionList) > 1:
+        print(actionList[0])
+        print(actionList[1])
+    elif action == 'q':
         break
     else:
         change_rooms(current_location, action)
