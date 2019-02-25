@@ -34,7 +34,9 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-room['foyer'].list=["chest", "sign", "rusty sword"]
+room['foyer'].addItem('rusty sword', 'a rusty sword - don\'t trust it in a fight!')
+room['foyer'].addItem('chest', 'a small chest - what does it contain?')
+room['foyer'].addItem('sign', 'a sign on the wall - might be worth a read')
 #
 # Main
 #
@@ -76,8 +78,21 @@ while True:
     action = input('What do you want to do?').lower()
     actionList = action.split()
     if len(actionList) > 1:
-        print(actionList[0])
-        print(actionList[1])
+        if actionList[0]=='get':
+            print('room items',
+            current_location.list)
+            if any(obj.name==actionList[1] for obj in current_location.list):
+                print('found it!')
+
+                thisItem = next((item for item in current_location.list if item.name == actionList[1]), None)
+                player1.addItem(thisItem)
+                current_location.removeItem(thisItem)
+                print(type(thisItem))
+                print('in the middle')
+                player1.listItems()
+                current_location.listItems()
+            else:
+                print('no such item')
     elif action == 'q':
         break
     else:

@@ -8,8 +8,8 @@ class Player:
         self.items = items
     def __str__(self):
         return f'player name: {self.name} current room: {self.currentRoom}'
-    def addItem(item):
+    def addItem(self,item):
         self.items.append(item)
-    def listItems():
+    def listItems(self):
         for item in self.items:
             print(item)
