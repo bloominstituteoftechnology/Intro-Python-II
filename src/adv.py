@@ -34,12 +34,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+room['foyer'].list=["chest", "sign", "rusty sword"]
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
 player1 = Player("Waldo", "outside")
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -50,3 +52,29 @@ player1 = Player("Waldo", "outside")
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+current_location = room['outside']
+
+def change_rooms(current_room,direction):
+    global current_location
+    room_attrs = {
+        "n":"n_to",
+        "s":"s_to",
+        "w":"w_to",
+        "e":"e_to"
+    }
+    try:
+        #current_room = current_room[room_attrs[direction]]
+        print(room_attrs[direction])
+        current_location = getattr(current_room, room_attrs[direction])
+
+    except AttributeError:
+        print('You can\'t go in that direction!')
+while True:
+    print(f'You are in {current_location.name}')
+    print(current_location.description)
+    print('(To move to another room, enter a cardinal direction in form \'n\', \'s\', \'w\', \'e\')')
+    action = input('What do you want to do?').lower()
+    if action == 'q':
+        break
+    else:
+        change_rooms(current_location, action)
