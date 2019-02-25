@@ -13,7 +13,7 @@ class Player:
         self.items.append(item)
         item.on_take();
 
-    def listItems(self):
+    def inventory(self):
         for item in self.items:
             print(item)
     def drop(self,item):

@@ -90,8 +90,7 @@ while True:
                 current_location.removeItem(thisItem)
                 print(type(thisItem))
                 print('in the middle')
-                player1.listItems()
-                current_location.listItems()
+                player1.inventory()
 
             else:
                 print('no such item')
@@ -105,7 +104,7 @@ while True:
                 current_location.addItem(thisItem)
                 print(type(thisItem))
                 print('in the middle')
-                player1.listItems()
+                player1.inventory()
                 current_location.listItems()
 
             else:
