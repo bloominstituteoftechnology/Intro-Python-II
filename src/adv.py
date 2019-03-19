@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import os
 
 # Declare all the rooms
 
@@ -38,7 +40,11 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+# 
+# New game:
+os.system("clear")
+name = input("Welcome, what is your name new player: ")
+player = Player(name, "fighter", "elf", {"agi": 5, "str": 5, "int": 5, "vit": 5, "dex": 5, "pie": 5},[{1: {"name": "rusty sword"}}])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +55,28 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+help = False
+while True:
+  os.system("clear")
+  if help == False:
+    print('(enter "h" for help)')
+  else:
+    print('Help:\nn: move north\ne: move east\ns: move south\nw: move west\nq: quit\nh: toggle help')
+  print(player.currentRoom())
+  cmd = input("Type your command: ")
+  print(cmd)
+  if cmd == "q":
+    print("Goodbye!")
+    break
+  if cmd == "h":
+    help = not help
+  if cmd == "n":
+    if room[player.rname].n_to is None:
+      print("<can't move north>")
+    else:
+    #if 'n_to' in room[player.rname].keys():
+      player.rdescription = room[player.rname].n_to.rdescription
+      player.rname = room[player.rname].n_to.rname
+  else:
+    print("<not a command>")
