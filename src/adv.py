@@ -1,10 +1,11 @@
 from room import Room
+import textwrap
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -49,3 +50,18 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+textwrapper = textwrap.TextWrapper(width=80)
+current_room = room["outside"]
+current_description = textwrapper.wrap(text=current_room.description)
+
+
+def return_description(wrapped_description):
+    for line in wrapped_description:
+        return line
+
+
+while True:
+    print(
+        f"Current Location:\n{current_room.name}\n\n{return_description(current_description)}")
+    break
