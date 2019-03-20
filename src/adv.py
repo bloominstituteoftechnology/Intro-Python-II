@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -36,12 +37,36 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
+# def items():
+#     print 
+name = 'name'
 # Make a new player object that is currently in the 'outside' room.
+player = Player(name, room['outside'])
 
 # Write a loop that:
 #
 # * Prints the current room name
+# print ()
+while True:
+    print (player.room.name)
+    print (player.room.description)
+    direction = input ('Which way do you wanna go:')
+    print (direction)
+    if direction == "n":
+        player.room = player.room.n_to
+    elif direction == "s":
+        player.room = player.room.s_to
+    elif direction == "e":
+        player.room = player.room.e_to
+    elif direction == "w":
+        player.room = player.room.w_to
+    elif direction == "q":
+        break  
+    else:
+        print ("not a valid direction")  
+        
+
+
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
