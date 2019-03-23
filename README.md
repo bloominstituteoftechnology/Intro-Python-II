@@ -2,6 +2,10 @@
 
 Up to this point, you've gotten your feet wet by working on a bunch of small Python programs. In this module, we're going to continue to solidify your Python chops by implementing a full-featured project according to a provided specification. 
 
+## What We're Building
+[What's an Adventure Game? ![vid](https://tk-assets.lambdaschool.com/7928cdb4-b8a3-45a6-b231-5b9d1fc1e002_ScreenShot2019-03-22at5.47.28PM.png)](https://youtu.be/WaZccFqJUT8)
+
+
 ## Goals
 
 * Solidify the Python basics by implementing a text adventure game
