@@ -31,12 +31,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-player = Player("Brady", room['outside'])
+player = Player("Player1", room['outside'])
 
+#Items Outside
 rock = Item("Rock", "This is a rock.")
-
+branch = Item("Branch", "Sharp branch")
 
 room['outside'].items.append(rock)
+room['outside'].items.append(branch)
 
 #
 # Main
