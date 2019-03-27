@@ -11,12 +11,12 @@
 
      // DONE Hint: the name should be one word for ease in parsing later.
 
-// TODO Add the ability to add items to rooms.
+// DONE Add the ability to add items to rooms.
 
-  // TODO The `Room` class should be extended with a `list` that holds the `Item`s
+  // DONE The `Room` class should be extended with a `list` that holds the `Item`s
     that are currently in that room.
 
-  // TODO Add functionality to the main loop that prints out all the items that are
+  // DONE Add functionality to the main loop that prints out all the items that are
     visible to the player when they are in that room.
 
 // TODO Add capability to add `Item`s to the player's inventory. The inventory can

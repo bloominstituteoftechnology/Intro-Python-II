@@ -78,10 +78,15 @@ def parse_command(command):
             return
 
 
+def list_items():
+    if len(player.room.items) != 0:
+        stringified_list = '\n'.join(player.room.items)
+        print(f"In the room you see the following items: \n{stringified_list}")
+
+
 def process_input():
     player_input = input('What do you wish to do?: ')
     parse_command(player_input)
-    return
 
 
 def update():
@@ -91,7 +96,7 @@ def update():
 def draw():
     print(player.room.name)
     print(player.room.description)
-    return
+    list_items()
 
 
 running = True

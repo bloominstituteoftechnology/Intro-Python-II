@@ -12,4 +12,5 @@ class Room:
         self.w_to = None
         self.items = []
 
-    def addItem(self, location, item):
+    def addItem(self, item):
+        self.items.append(item)
