@@ -44,6 +44,12 @@ player = Player(room=room['outside'])
 # Make a new player object that is currently in the 'outside' room.
 
 
+def get_verb(command):
+    if 'go' in split_list or 'walk' in split_list:
+        return 'move'
+    if 'pickup' in split_list or 'grab' in split_list or 'take' in split_list:
+
+
 def parse_command(command):
     split_list = command.lower().split()
     print(split_list)
