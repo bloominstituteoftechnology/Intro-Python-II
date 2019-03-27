@@ -1,15 +1,15 @@
 // DONE Put the Room class in `room.py` based on what you see in `adv.py`.
 
-// TODO Put the Player class in `player.py`.
+// DONE Put the Player class in `player.py`.
 
-// TODO Create a file called `item.py` and add an `Item` class in there.
+// DONE Create a file called `item.py` and add an `Item` class in there.
 
-  // TODO This will be the _base class_ for specialized item types to be declared
+  // DONE This will be the _base class_ for specialized item types to be declared
     later.
 
-  // TODO The item should have `name` and `description` attributes.
+  // DONE The item should have `name` and `description` attributes.
 
-     // TODO Hint: the name should be one word for ease in parsing later.
+     // DONE Hint: the name should be one word for ease in parsing later.
 
 // TODO Add the ability to add items to rooms.
 

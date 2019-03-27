@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import types
 
 # Declare all the rooms
 
@@ -37,7 +39,77 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+player = Player(room=room['outside'])
+
 # Make a new player object that is currently in the 'outside' room.
+
+
+def parse_command(command):
+    split_list = command.lower().split()
+    print(split_list)
+    # split_list = list(map(lambda x: x.lower(), split_list))
+
+    if 'north' in split_list:
+        if player.room.n_to is None:
+            print("That's not possible try again.")
+        else:
+            player.setRoom(player.room.n_to)
+    if 'east' in split_list:
+        if player.room.n_to is None:
+            print("That's not possible try again.")
+        else:
+            player.setRoom(player.room.e_to)
+    if 'south' in split_list:
+        if player.room.n_to is None:
+            print("That's not possible try again.")
+        else:
+            player.setRoom(player.room.s_to)
+    if 'west' in split_list:
+        if player.room.n_to is None:
+            print("That's not possible try again.")
+        else:
+            player.setRoom(player.room.w_to)
+    if 'quit' in split_list:
+        confirmation = input('Are you sure you want to quit: ').lower()
+        if confirmation == 'yes':
+            global running
+            running = False
+        else:
+            return
+
+
+def process_input():
+    player_input = input('What do you wish to do?: ')
+    parse_command(player_input)
+    return
+
+
+def update():
+    return
+
+
+def draw():
+    print(player.room.name)
+    print(player.room.description)
+    return
+
+
+running = True
+
+
+def main_loop():
+    while running:
+        process_input()
+        update()
+        draw()
+
+
+def start():
+    draw()
+    main_loop()
+
+
+start()
 
 # Write a loop that:
 #

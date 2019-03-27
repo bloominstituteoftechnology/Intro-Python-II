@@ -3,7 +3,7 @@
 
 
 class Player:
-    def __init__(self, name="Player", room="outside", race="human", gender="male"):
+    def __init__(self, room, name="Player", race="human", gender="male"):
         self.name = name
         self.room = room
         self.race = race
