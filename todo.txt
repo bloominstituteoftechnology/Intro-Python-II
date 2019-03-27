@@ -1,0 +1,66 @@
+// DONE Put the Room class in `room.py` based on what you see in `adv.py`.
+
+// TODO Put the Player class in `player.py`.
+
+// TODO Create a file called `item.py` and add an `Item` class in there.
+
+  // TODO This will be the _base class_ for specialized item types to be declared
+    later.
+
+  // TODO The item should have `name` and `description` attributes.
+
+     // TODO Hint: the name should be one word for ease in parsing later.
+
+// TODO Add the ability to add items to rooms.
+
+  // TODO The `Room` class should be extended with a `list` that holds the `Item`s
+    that are currently in that room.
+
+  // TODO Add functionality to the main loop that prints out all the items that are
+    visible to the player when they are in that room.
+
+// TODO Add capability to add `Item`s to the player's inventory. The inventory can
+  also be a `list` of items "in" the player, similar to how `Item`s can be in a
+  `Room`.
+
+// TODO Add a new type of sentence the parser can understand: two words.
+
+  // TODO Until now, the parser could just understand one sentence form:
+
+     `verb`
+
+    such as "n" or "q".
+
+  // TODO But now we want to add the form:
+
+    `verb` `object`
+
+    such as "take coins" or "drop sword".
+
+  // TODO Split the entered command and see if it has 1 or 2 words in it to determine
+    if it's the first or second form.
+
+// TODO Implement support for the verb `get` followed by an `Item` name. This will be
+  used to pick up `Item`s.
+
+  // TODO If the user enters `get` or `take` followed by an `Item` name, look at the
+    contents of the current `Room` to see if the item is there.
+
+     // TODO If it is there, remove it from the `Room` contents, and add it to the
+       `Player` contents.
+
+     // TODO If it's not there, print an error message telling the user so.
+
+     // TODO Add an `on_take` method to `Item`. 
+
+        // TODO Call this method when the `Item` is picked up by the player.
+
+        // TODO The `Item` can use this to run additional code when it is picked up.
+
+     // TODO Add an `on_drop` method to `Item`. Implement it similar to `on_take`.
+
+// TODO Implement support for the verb `drop` followed by an `Item` name. This is the
+  opposite of `get`/`take`.
+
+// TODO Add the `i` and `inventory` commands that both show a list of items currently
+  carried by the player.
