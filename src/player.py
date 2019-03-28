@@ -2,12 +2,9 @@
 # currently.
 
 class Player:
-    def __init__(self, room, name ):
-        self.name = name
-        self.room = room
+    def __init__(self, current_room):
+        self.current_room = current_room
         self.inventory = []
-    # def move(self, current_room):
-    #     self.current_room = current_room
-    #     direction = ['n', 's', 'e', 'w']
-    #     if current_room = direction[0]
-    #     return 
+    def __repr__(self):
+        return f"Player is in {self.current_room}"
+ 
