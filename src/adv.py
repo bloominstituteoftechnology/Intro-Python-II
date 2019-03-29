@@ -40,6 +40,32 @@ branch = Item("Branch", "Sharp branch")
 room['outside'].items.append(rock)
 room['outside'].items.append(branch)
 
+# Items Foyer
+wrench = Item("Rusty Wrench", "A Wrench that hasn't been used in a long time")
+screwdriver = Item("Screwdriver", "Can be used on screws")
+
+room['foyer'].items.append(wrench)
+room['foyer'].items.append(screwdriver)
+
+# Items Overlook
+key = Item("Key", "Can be used to unlock a door")
+
+room['overlook'].items.append(key)
+
+# Items Narrow
+bag = Item("Large bag", "Someone must've dropped this")
+
+room['narrow'].items.append(bag)
+
+# Items Treasure
+coins = Item("gold coins", "Is that Jon Snow on the face?")
+gauntlet = Item("gauntlet", "Similar to that of Thanos")
+mirror = Item("mirror", "Is it saying I'm a treasure?")
+
+room['treasure'].items.append(coins)
+room['treasure'].items.append(gauntlet)
+room['treasure'].items.append(mirror)
+
 #
 # Main
 #
@@ -69,4 +95,4 @@ while True:
         print("Goodbye!")
         break
     else:
-        print("I did not understand that command.")
+        print("command invalid.")
