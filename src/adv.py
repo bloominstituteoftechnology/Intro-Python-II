@@ -80,14 +80,18 @@ while True:
         first_word = s[0]
         second_word = s[1]
         loot_pile = player.current_room.loot
+        name_list = [item.name for item in loot_pile]
 
         if first_word in ["get", "take", "drop"]:
             if first_word == "get" or "take":
-                for item in loot_pile:
-                    if item.name == second_word:
-                        player.get_item(item)
-                        loot_pile.remove(item)
-                        print(player.inventory, loot_pile)
+                if second_word in name_list:
+                    for item in loot_pile:
+                        if item.name == second_word:
+                            player.get_item(item)
+                            loot_pile.remove(item)
+                            print(player.inventory, loot_pile)
+                else:
+                    print(f"You don't see a {second_word} here")
 
             elif first_word == "drop":
                 print("droppin it")
