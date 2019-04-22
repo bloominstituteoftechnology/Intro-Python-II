@@ -1,10 +1,11 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", ["Rope", "Mirror", "Buttfor"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -38,14 +39,54 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
 
+
+def try_direction(direction, current_room):
+    attribute = direction + "_to"
+
+    if hasattr(current_room, attribute):
+        return getattr(current_room, attribute)
+    else:
+        print("You can't go that way!")
+        return current_room
 # Write a loop that:
 #
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+
+
+while True:
+
+    # * Prints the current room name
+    print(player.current_room.name)
+    # * Prints the current description (the textwrap module might be useful here).
+    print(player.current_room.description)
+    print(player.current_room.loot)
+    # * Waits for user input and decides what to do.
+    s = input("\n").lower().split()
+
+    print(s)
+
+    if len(s) == 1:
+        s = s[0][0]
+        if s == 'q':
+            break
+        player.set_current_room(try_direction(s, player.current_room))
+        # player.current_room = try_direction(s, player.current_room)
+    elif len(s) == 2:
+        # * command
+        first_word = s[0]
+        second_word = s[1]
+
+        if first_word in ["get, drop"]:
+            print("you can do stuff")
+        else:
+            print("that's not a verb i allow goggs")
+    else:
+        print("invalid command")
+
+    #
+    # If the user enters a cardinal direction, attempt to move to the room there.
+
+    # Print an error message if the movement isn't allowed.
+    #
+    # If the user enters "q", quit the game.
