@@ -1,11 +1,12 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", ["Rope", "Mirror", "Buttfor"]),
+                     "North of you, the cave mount beckons", [Item("rope", "A rope lies here, ropily"), Item("mirror", "A dusty old mirror.  Who the crap leaves a mirror outside a cave"), Item("buttfor", "A buttfor dangles on a nearby flagpole.  What's a buttfor?")]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -58,13 +59,15 @@ while True:
 
     # * Prints the current room name
     print(player.current_room.name)
-    # * Prints the current description (the textwrap module might be useful here).
+    # * Prints the current description (the textwrap module might be useful here)
     print(player.current_room.description)
-    print(player.current_room.loot)
+
+    if len(player.current_room.loot) > 0:
+        for item in player.current_room.loot:
+            print(item.description)
+
     # * Waits for user input and decides what to do.
     s = input("\n").lower().split()
-
-    print(s)
 
     if len(s) == 1:
         s = s[0][0]
@@ -76,9 +79,20 @@ while True:
         # * command
         first_word = s[0]
         second_word = s[1]
+        loot_pile = player.current_room.loot
 
-        if first_word in ["get, drop"]:
-            print("you can do stuff")
+        if first_word in ["get", "take", "drop"]:
+            if first_word == "get" or "take":
+                for item in loot_pile:
+                    if item.name == second_word:
+                        player.get_item(item)
+                        loot_pile.remove(item)
+                        print(player.inventory, loot_pile)
+
+            elif first_word == "drop":
+                print("droppin it")
+            else:
+                print("something went wrong")
         else:
             print("that's not a verb i allow goggs")
     else:
