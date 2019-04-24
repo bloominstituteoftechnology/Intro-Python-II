@@ -5,7 +5,7 @@ from item import Item
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
+    'outside':  Room("Cave Entrance",
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
@@ -25,63 +25,39 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['outside'].add_addjacent_room(room['foyer'], "north")
+room['foyer'].add_addjacent_room(room['overlook'], "north")
+room['foyer'].add_addjacent_room(room['narrow'], "east")
+room['narrow'].add_addjacent_room(room['treasure'], "north")
 
 #
 # Main
 #
-
-# Make a new player object that is currently in the 'outside' room.
-
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
-
 player = Player(room['outside'])
+previous_room = None
 
 while True:
-    print(f'\nCurrently: {player.current_room.name}')
-    print(player.current_room.description)
-    command = input("What would you like to do? ")
+    if player.current_room is not previous_room:
+        print(f'\nYou are now in the {player.current_room.name}')
+        print(player.current_room.description)
+    
+    previous_room = player.current_room
+    command = input("\nWhat would you like to do? ")
 
     if command == "north" or command == "n":
-        try:
-            player.current_room = player.current_room.n_to
-        except:
-            print("\nYou can't move north from.")
+        player.move("north")
     elif command == "south" or command == "s":
-        try: 
-            player.current_room = player.current_room.s_to
-        except:
-            print("\nYou can't move south from here.")
+        player.move("south")
     elif command == "east" or command == "e":
-        try:
-            player.current_room = player.current_room.e_to
-        except:
-            print("\nYou can't move east from here.")
+        player.move("east")
     elif command == "west" or command == "w":
-        try:
-            player.current_room = player.current_room.w_to
-        except:
-            print("\nYou can't move west from here.")
+        player.move("west")
     elif command == "look":
-        print(f'\nLooking around you see: {items}')
+        player.look()
+
     elif command == "q":
         break
     else:
         print("\nThat isn't a valid command, try again.")
+
+print("\nSee you later!\n")
