@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -7,7 +9,7 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [Item("torch", "Lights your way.")]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -49,3 +51,37 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player = Player(room['outside'])
+
+while True:
+    print(f'\nCurrently: {player.current_room.name}')
+    print(player.current_room.description)
+    command = input("What would you like to do? ")
+
+    if command == "north" or command == "n":
+        try:
+            player.current_room = player.current_room.n_to
+        except:
+            print("\nYou can't move north from.")
+    elif command == "south" or command == "s":
+        try: 
+            player.current_room = player.current_room.s_to
+        except:
+            print("\nYou can't move south from here.")
+    elif command == "east" or command == "e":
+        try:
+            player.current_room = player.current_room.e_to
+        except:
+            print("\nYou can't move east from here.")
+    elif command == "west" or command == "w":
+        try:
+            player.current_room = player.current_room.w_to
+        except:
+            print("\nYou can't move west from here.")
+    elif command == "look":
+        print(f'\nLooking around you see: {items}')
+    elif command == "q":
+        break
+    else:
+        print("\nThat isn't a valid command, try again.")
