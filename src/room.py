@@ -8,17 +8,25 @@ class Room:
         self.items = items
         self.adjacent_rooms = {}
 
-    def add_addjacent_room(self, room, direction):
+    def get_opposite(self, direction):
         if direction == "north":
-            opposite_direction = "south"
+            return "south"
         elif direction == "south":
-            opposite_direction = "north"
+            return "north"
         elif direction == "east":
-            opposite_direction = "west"
+            return "west"
         elif direction == "west":
-            opposite_direction = "east"
+            return "east"
+        else:
+            return None
+
+    def add_addjacent_room(self, room, direction, reciprocal = True):
+
         self.adjacent_rooms[direction] = room
-        room.adjacent_rooms[opposite_direction] = self
+        if reciprocal:
+            opposite_direction = self.get_opposite(direction)
+
+            room.adjacent_rooms[opposite_direction] = self
 
     def adjacent_room_for(self, direction):
         if direction in self.adjacent_rooms:
@@ -29,8 +37,8 @@ class Room:
 
     def list_visible_items(self):
         print("\nLooking around you see:")
-        if len(self.items) < 0:
-            print("nothing...")
+        if len(self.items) < 1:
+            print("Nothing interesting...")
         else:
             for item in self.items:
                 print(f'- a {item}')
