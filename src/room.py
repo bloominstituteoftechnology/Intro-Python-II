@@ -2,10 +2,10 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description, items = []):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.items = items
+        self.items = []
         self.adjacent_rooms = {}
 
     def get_opposite(self, direction):
@@ -41,4 +41,14 @@ class Room:
             print("Nothing interesting...")
         else:
             for item in self.items:
-                print(f'- a {item}')
+                print(f'- {item}')
+
+    def get_item_named(self, item_name):
+        return next((item for item in self.items if item.name == item_name), None)
+
+    def add_items(self, *items):
+        for item in items:
+            self.items.append(item)
+
+    def remove_item(self, item):
+        self.items.remove(item)

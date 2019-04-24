@@ -1,4 +1,5 @@
 from player import Player
+import textwrap
 
 def move_north(player):
     player.move("north")
@@ -16,8 +17,11 @@ def move_west(player):
     player.move("west")
     return True
 
-def look_around(player):
-    player.look_around()
+def look(player, item_name = None):
+    if item_name is None:
+        player.look_around()
+    else:
+        player.view_item_named(item_name)
     return True
 
 def inventory(player):
@@ -28,8 +32,17 @@ def quit_game(player):
     return False
 
 def print_commands(player):
-    command_string = "\n".join('"{0}"'.format(w) for w in sorted(commands.keys()))
-    print(f'\nThings you can type:\n{command_string}')
+    command_string = " | ".join('"{0}"'.format(w) for w in sorted(commands.keys()))
+    paragraph = textwrap.fill(f'Things you can type:\n{command_string}')
+    print(f'\n{paragraph}')
+    return True
+
+def take_item(player, item_name):
+    player.take_item_named(item_name)
+    return True
+
+def drop_item(player, item_name):
+    player.drop_item_named(item_name)
     return True
 
 commands = {
@@ -41,15 +54,20 @@ commands = {
     'e': move_east,
     'west': move_west,
     'w': move_west,
-    'look': look_around,
-    'l': look_around,
+    'look': look,
+    'l': look,
+    'view': look,
     'inventory': inventory,
     'i': inventory,
+    'take': take_item,
+    't': take_item,
+    'get': take_item,
+    'drop': drop_item,
+    'd': drop_item,
     'quit': quit_game,
     'q': quit_game,
     'help': print_commands,
     '?': print_commands
-
 }
 
 class Parser:
@@ -64,26 +82,13 @@ class Parser:
                 return function(self.player)
             else:
                 print("\nThat isn't a valid command, try again.")
+        else:
+            verb = split_commands[0]
+            if verb in commands:
+                item_name = split_commands[1]
+                function = commands[verb]
+                function(self.player, item_name)
+            else:
+                print("\nThat isn't a valid command, try again.")
         
         return True
-
-    
-
-            # if command == "north" or command == "n":
-            #     move_north(self.player)
-            # elif command == "south" or command == "s":
-            #     self.player.move("south")
-            # elif command == "east" or command == "e":
-            #     self.player.move("east")
-            # elif command == "west" or command == "w":
-            #     self.player.move("west")
-            # elif command == "1" or command == "first":
-            #     self.player.move("first")
-            # elif command == "look":
-            #     self.player.look_around()
-            # elif command == "inventory" or command == "i":
-            #     self.player.view_inventory()
-            # elif command == "quit" or command == "q":
-            #     return False
-            # elif command == "?":
-            #     self.print_commands()
