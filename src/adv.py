@@ -89,7 +89,6 @@ while True:
                         if item.name == second_word:
                             player.get_item(item)
                             loot_pile.remove(item)
-                            print(player.inventory, loot_pile)
                 else:
                     print(f"You don't see a {second_word} here")
 
