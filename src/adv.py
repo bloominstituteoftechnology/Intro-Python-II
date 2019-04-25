@@ -78,10 +78,38 @@ valid_directions = ["n", "e", "s", "w"]
 # Current Room
 print(player.current_room)
 
+def second_loop():
+    item = ""
+    while item is not "q":
+        args = player.current_room.get_items_selector()
+        print(args)
+        item = input(f"Aquire Item: [ {args} ] [ grab or drop ] or [q] to quit => ")
+        if item.find(" ") >= 0:
+            item_value = item[:4]
+            item_command = item[5:]
+            if item_command == "grab":
+                if item_value in args:
+                    print("grab item")
+                else:
+                    print("Unacceptable Item Value! Try again.")
+            elif item_command == "drop":
+                if item_value in args:
+                    print("drop item")
+                else:
+                    print("Unacceptable Item Value! Try again.")
+            else:
+                print("Unacceptable Item Command! Try again.")
+        elif item == "q":
+            print("You choose not to pick up an item!")
+        else:
+            print("Unacceptable Item Command! Try again.")
+
 while True:
-    cmd = input("Travel to: [n] [e] [s] [w] or [q] to quit => ")
+    cmd = input("Travel to: [n] [e] [s] [w], Grab/Drop an item: [gd] or [q] to quit => ")
     if cmd in valid_directions:
         player.travel(cmd)
+    elif cmd == "gd":
+        second_loop()
     elif cmd == "q":
         print("Goodbye!")
         break
@@ -114,3 +142,20 @@ while True:
 
 # print(f'{player_name} is currently in {current_room_name}')
 # print(f'Narrator: {current_room_entry_message}')
+
+
+        
+    # elif cmd == "d":
+    #     player_args = player.inventory
+    #     print(args)
+    #     if len(player_args) == 0:
+
+    #     else:
+    #         drop_item = input(f"Drop Item: [ {player_args} ] [ grab or drop ] or [q] to quit => ")
+    #     if item in args:
+    #         print("get item") 
+    #     elif item == "q":
+    #         print("You choose not to pick up an item!")
+    #         continue
+    #     else:
+    #         print("Unacceptable Command! Try again.")
