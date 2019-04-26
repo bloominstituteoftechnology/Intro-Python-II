@@ -63,10 +63,7 @@ sheild = Item("Sheild", "This is a Sheild")
 # Add Items to Rooms
 room['outside'].inventory.extend([rock, sword, sheild])
 room['foyer'].inventory.extend([rock, sword, sheild])
-room['foyer'].inventory.extend([rock, sword, sheild])
-room['foyer'].inventory.extend([rock, sword, sheild])
 room['overlook'].inventory.extend([rock, sword, sheild])
-room['narrow'].inventory.extend([rock, sword, sheild])
 room['narrow'].inventory.extend([rock, sword, sheild])
 room['treasure'].inventory.extend([rock, sword, sheild])
 
@@ -76,31 +73,37 @@ room['treasure'].inventory.extend([rock, sword, sheild])
 valid_directions = ["n", "e", "s", "w"]
 
 # Current Room
-print(player.current_room)
+print(f'Current Room:\n{player.current_room}\n')
 
 def second_loop():
     item = ""
-    while item is not "q":
+    while item is not "r":
         args = player.current_room.get_items_selector()
+        player_inventory = player.get_items_selector()
+        # print(f'player inventory:{player_inventory}')
         print(args)
-        item = input(f"Aquire Item: [ {args} ] [ grab or drop ] or [q] to quit => ")
+        item = input(f"Aquire Item: [ {args} ] [ grab or drop ] or [r] to return => ")
         if item.find(" ") >= 0:
-            item_value = item[:4]
-            item_command = item[5:]
-            if item_command == "grab":
+            cv = item.find(" ")
+            # print(cv)
+            item_value = item[:cv]
+            item_command = item[cv+1:]
+            # print(item_value)
+            # print(item_command)
+            if item_command == "grab" or item_command == "drop":
                 if item_value in args:
-                    print("grab item")
+                    # print(f"{item_command}ed item {item_value}")
+                    player.handle_action(item_command, item_value)
+                elif item_value in player_inventory:
+                    # print(f"{item_command}ed item {item_value}")
+                    player.handle_action(item_command, item_value)
                 else:
-                    print("Unacceptable Item Value! Try again.")
-            elif item_command == "drop":
-                if item_value in args:
-                    print("drop item")
-                else:
-                    print("Unacceptable Item Value! Try again.")
+                    print("Unacceptable Item Value! Try again.\n")
             else:
-                print("Unacceptable Item Command! Try again.")
-        elif item == "q":
+                print("Unacceptable Item Command! Try again.\n")
+        elif item == "r":
             print("You choose not to pick up an item!")
+            print(f'Current Room:\n{player.current_room}\n')
         else:
             print("Unacceptable Item Command! Try again.")
 
@@ -114,48 +117,5 @@ while True:
         print("Goodbye!")
         break
     else:
-        print("Unacceptable Command! Try again.")
+        print("Unacceptable Command! Try again.\n")
 
-
-
-
-
-
-# cmd = input("Travel to: [n] [e] [s] [w] or [quit] => ")
-# if cmd == "n" or cmd == "e" or cmd == "s" or cmd == "w":
-#     print(cmd)
-#     test = f"{cmd}_to"
-#     print(test)
-
-#     if current_room[test] is not None:
-#         print("true")
-#     else: 
-#         print("false")
-
-
-
-# If the user enters "q", quit the game.
-# player_name = player_object.name
-# current_room = player_object.current_room
-# current_room_name = player_object.current_room.name[0]
-# current_room_entry_message = player_object.current_room.entry_message
-
-# print(f'{player_name} is currently in {current_room_name}')
-# print(f'Narrator: {current_room_entry_message}')
-
-
-        
-    # elif cmd == "d":
-    #     player_args = player.inventory
-    #     print(args)
-    #     if len(player_args) == 0:
-
-    #     else:
-    #         drop_item = input(f"Drop Item: [ {player_args} ] [ grab or drop ] or [q] to quit => ")
-    #     if item in args:
-    #         print("get item") 
-    #     elif item == "q":
-    #         print("You choose not to pick up an item!")
-    #         continue
-    #     else:
-    #         print("Unacceptable Command! Try again.")

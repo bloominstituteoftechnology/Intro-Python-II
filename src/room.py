@@ -1,6 +1,7 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
 
+
 class Room:
     def __init__(self, name, entry_message, items=None):
         self.name = name,
@@ -45,6 +46,30 @@ class Room:
             return self.w_to
     def get_items_selector(self):
         return ", ".join([str(f"{i}") for i in self.inventory])
+    def find_item_by_string(self, item_name):
+        print(item_name)
+        for index, value in enumerate(self.inventory):
+            # print(value)
+            if value.name == item_name:
+                # print(f"{item_name} is valid, index: {index}")
+                item_by_string = self.inventory[index]
+                del self.inventory[index]
+                # print(f"item_by_string: {item_by_string}")
+                print(f"Room inventory after delete: {self.inventory}\n")
+                return item_by_string
+    def add_item(self, item):
+        self.inventory.append(item)
+        print(f"Room inventory after drop: {self.inventory}\n")
+
+
+
+
+
+
+
+
+
+
     # def room_inventory_reveal(self):
     #     return self.inventory 
     # def add_item(self, item):
