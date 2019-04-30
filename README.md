@@ -1,6 +1,7 @@
 # Intro to Python II
 
-Up to this point, you've gotten your feet wet by working on a bunch of small Python programs. In this module, we're going to continue to solidify your Python chops by implementing a full-featured project according to a provided specification. 
+Up to this point, you've gotten your feet wet by working on a bunch of small Python programs. In this module, we're going to continue to solidify your Python chops by implementing a full-featured project according to a provided specification.
+
 
 ## What We're Building
 [What's an Adventure Game? ![vid](https://tk-assets.lambdaschool.com/7928cdb4-b8a3-45a6-b231-5b9d1fc1e002_ScreenShot2019-03-22at5.47.28PM.png)](https://youtu.be/WaZccFqJUT8)
@@ -8,35 +9,39 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 
 ## Goals
 
-* Solidify the Python basics by implementing a text adventure game
-* Get more comfortable writing code that conforms to a specification
+* Put your Python basics into practice by implementing a text adventure game
 
-## Tasks
-
-* Add classes for rooms and the player
-* Add a simple parser that reads user input and performs actions
-* Add items to the game that the user can carry around
-* Make rooms able to hold multiple items
-* Make the player able to carry multiple items
-* Add two-word commands to the parser
-* Add the `get` and `drop` commands to the parser
+* Practice writing code that conforms to a specification
 
 ## Specification
 
-The `/src` directory contains the files `adv.py`, which is where the main logic for the entire game should live, `room.py`, which will contain the definition of the Room class, and `player.py`, which will contain the definition of the Player class. 
+The `/src` directory contains the files `adv.py`, which is where the main logic for the game should live, `room.py`, which will contain the definition of the Room class, and `player.py`, which will contain the definition of the Player class.
+
+
+* Add a REPL parser to `adv.py` that accepts directional commands to move the player
+  * After each move, the REPL should print the name and description of the player's current room
+  * Valid commands are `n`, `s`, `e` and `w` which move the player North, South, East or West
+  * The parser should print an error if the player tries to move where there is no room.
 
 * Put the Room class in `room.py` based on what you see in `adv.py`.
 
+  * The room should have `name` and `description` attributes.
+
+  * The room should also have `n_to`, `s_to`, `e_to`, and `w_to` attributes
+    which point to the room in that respective direction.
+
 * Put the Player class in `player.py`.
+  * Players should have a `name` and `current_room` attributes
+
 
 * Create a file called `item.py` and add an `Item` class in there.
-
-  * This will be the _base class_ for specialized item types to be declared
-    later.
 
   * The item should have `name` and `description` attributes.
 
      * Hint: the name should be one word for ease in parsing later.
+
+  * This will be the _base class_ for specialized item types to be declared
+    later.
 
 * Add the ability to add items to rooms.
 
@@ -78,7 +83,7 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
 
      * If it's not there, print an error message telling the user so.
 
-     * Add an `on_take` method to `Item`. 
+     * Add an `on_take` method to `Item`.
 
         * Call this method when the `Item` is picked up by the player.
 
@@ -93,6 +98,22 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
 
 * Add the `i` and `inventory` commands that both show a list of items currently
   carried by the player.
+
+
+## MVP
+
+### Day 1 MVP
+
+* Create the REPL command parser in `adv.py` which allows the player to move to rooms
+  in the four cardinal directions.
+* Fill out Player and Room classes in `player.py` and `room.py`
+
+### Day 2 MVP
+
+* Make rooms able to hold multiple items
+* Make the player able to carry multiple items
+* Add items to the game that the user can carry around
+* Add `get [ITEM_NAME]` and `drop [ITEM_NAME]` commands to the parser
 
 
 ## Stretch Goals
