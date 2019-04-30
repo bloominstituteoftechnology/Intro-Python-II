@@ -13,6 +13,22 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 
 * Practice writing code that conforms to a specification
 
+
+## MVP
+
+### Day 1 MVP
+
+* Create the REPL command parser in `adv.py` which allows the player to move to rooms
+  in the four cardinal directions.
+* Fill out Player and Room classes in `player.py` and `room.py`
+
+### Day 2 MVP
+
+* Make rooms able to hold multiple items
+* Make the player able to carry multiple items
+* Add items to the game that the user can carry around
+* Add `get [ITEM_NAME]` and `drop [ITEM_NAME]` commands to the parser
+
 ## Specification
 
 The `/src` directory contains the files `adv.py`, which is where the main logic for the game should live, `room.py`, which will contain the definition of the Room class, and `player.py`, which will contain the definition of the Player class.
@@ -98,22 +114,6 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
 
 * Add the `i` and `inventory` commands that both show a list of items currently
   carried by the player.
-
-
-## MVP
-
-### Day 1 MVP
-
-* Create the REPL command parser in `adv.py` which allows the player to move to rooms
-  in the four cardinal directions.
-* Fill out Player and Room classes in `player.py` and `room.py`
-
-### Day 2 MVP
-
-* Make rooms able to hold multiple items
-* Make the player able to carry multiple items
-* Add items to the game that the user can carry around
-* Add `get [ITEM_NAME]` and `drop [ITEM_NAME]` commands to the parser
 
 
 ## Stretch Goals
