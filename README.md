@@ -9,7 +9,7 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 ## Goals
 
 * Solidify the Python basics by implementing a text adventure game
-* Get more comfortable writing code that conforms to an (imperfect) specification
+* Get more comfortable writing code that conforms to a specification
 
 ## Tasks
 
