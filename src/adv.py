@@ -1,4 +1,5 @@
 from room import Room
+from player import *
 
 # Declare all the rooms
 
@@ -23,7 +24,6 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -36,16 +36,33 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+def main():
+    # Make a new player object that is currently in the 'outside' room.
+    mario = Player("Mario", 'outside')
 
-# Make a new player object that is currently in the 'outside' room.
+    # Write a loop that:
+    #
+    # * Prints the current room name
+    # * Prints the current description (the textwrap module might be useful here).
+    # * Waits for user input and decides what to do.
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    # Print an error message if the movement isn't allowed.
+    #
+    # If the user enters "q", quit the game.
+    print("** THE ULTIMATE ADVENTURE GAME **")
+    action_input = input("Enter in a cardinal direction\n[N] for North, [E] for East, [S] for South, [W] for West and [Q] to Quit")
+    while action_input.lower() != 'q':
+        if action_input.lower() == 'n':
+            print("Going North")
+        elif action_input.lower() == 'e':
+            print("Going East")
+        elif action_input.lower() == 's':
+            print("Going South")
+        elif action_input.lower() == 'w':
+            print("Going West")
+        else:
+            print("Action is not valid.")
+
+
