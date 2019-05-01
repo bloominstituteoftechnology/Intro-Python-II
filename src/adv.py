@@ -34,7 +34,7 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 #
-# Main
+# Main - Developed by Ben Hakes
 #
 
 # Make a new player object that is currently in the 'outside' room.
