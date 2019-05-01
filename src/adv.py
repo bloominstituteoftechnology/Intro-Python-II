@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -21,6 +23,9 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# print(room)
+
+# print(room)
 
 # Link rooms together
 
@@ -40,12 +45,77 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
-#
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
-#
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+
+# Players
+player = Player("Thomas", room['outside'])
+
+# Items
+rock = Item("Rock", "This is a Rock")
+sword = Item("Sword", "This is a Sword")
+sheild = Item("Sheild", "This is a Sheild")
+
+# Add Items to Rooms
+room['outside'].inventory.extend([rock, sword, sheild])
+room['foyer'].inventory.extend([rock, sword, sheild])
+room['overlook'].inventory.extend([rock, sword, sheild])
+room['narrow'].inventory.extend([rock, sword, sheild])
+room['treasure'].inventory.extend([rock, sword, sheild])
+
+# while loop
+
+# Valid Directions
+valid_directions = ["n", "e", "s", "w"]
+
+# Current Room
+print(f'Current Room:\n{player.current_room}\n')
+
+def second_loop():
+    item = ""
+    while item is not "r":
+        args = player.current_room.get_items_selector()
+        player_inventory = player.get_items_selector()
+        # print(f'player inventory:{player_inventory}')
+        print(args)
+        item = input(f"Aquire Item: [ {args} ] [ grab or drop ] or [r] to return => ")
+        if item.find(" ") >= 0:
+            cv = item.find(" ")
+            # print(cv)
+            item_value = item[:cv]
+            item_command = item[cv+1:]
+            # print(item_value)
+            # print(item_command)
+            if item_command == "grab" or item_command == "drop":
+                if item_value in args:
+                    # print(f"{item_command}ed item {item_value}")
+                    player.handle_action(item_command, item_value)
+                elif item_value in player_inventory:
+                    # print(f"{item_command}ed item {item_value}")
+                    player.handle_action(item_command, item_value)
+                else:
+                    print("Unacceptable Item Value! Try again.\n")
+            else:
+                print("Unacceptable Item Command! Try again.\n")
+        elif item == "r":
+            print("You choose not to pick up an item!")
+            print(f'Current Room:\n{player.current_room}\n')
+        else:
+            print("Unacceptable Item Command! Try again.")
+
+while True:
+    cmd = input("Travel to: [n] [e] [s] [w], Grab/Drop an item: [gd] or [q] to quit => ")
+    if cmd in valid_directions:
+        player.travel(cmd)
+    elif cmd == "gd":
+        second_loop()
+    elif cmd == "q":
+        print("Goodbye!")
+        break
+    else:
+        print("Unacceptable Command! Try again.\n")
+
