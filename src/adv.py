@@ -51,21 +51,7 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-
-cmd = input("Hi! type your name to start the game:")
-player = Player(cmd.lower(), room['outside'])
-print(player)
-print(f"You are in the: {player.current_room.name}")
-print(player.current_room.description)
-# player = Player(cmd, "outside")
-cmd = input("Where do you want to go? -> ")
-while  cmd.lower() != 'q':
-    
-    bracket = '\n**********************************\n'
-    print(bracket)
-    print(player.current_room)
-    print(bracket)
-    cmd = input("Where do you want to go? -> ")
+def get_room_with_ifs(cmd, current_room):
     if cmd.lower() == 'n':
         if player.current_room.n_to is not None:
             player.current_room = player.current_room.n_to
@@ -110,11 +96,45 @@ while  cmd.lower() != 'q':
             print(bracket)
         else:
             print("invalid direction")
+    
+
+def get_room(cmd, current_room):
+    moving = cmd + '_to'
+    return getattr(current_room, moving, None)
+
+cmd = input("Hi! type your name to start the game:")
+player = Player(cmd.lower(), room['outside'])
+print(player)
+print(f"You are in the: {player.current_room.name}")
+print(player.current_room.description)
+# player = Player(cmd, "outside")
+print(
+    "Enter a key to continue ... \n [n]orth \n [s]outh \n [e]ast \n [w]est \n or [q]uit")
+
+directions = ['n', 's', 'w', 'e']
+
+while  True:
+    
+    bracket = '\n**********************************\n'
+  
+    print(player.current_room)
+    print(bracket)
+    cmd = input("Where do you want to go? -> ")
+    
+
+    if cmd in directions:
+        new_room = get_room(cmd, player.current_room)
+        if new_room is not None:
+            player.move_player(new_room)
+        else:
+            print("You can't move any farther in that diraction.")
+
     elif cmd.lower() == 'q':
         print('Exit the game')
         break
     else:
         print("invalid direction")
+
 
 def find_item(name, current_room):
     for i in current_room.inventory:
