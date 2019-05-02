@@ -55,21 +55,38 @@ print(player)
 cmd = input("Hi! type your name to start the game:")
 # player = Player(cmd, "outside")
 
-while not cmd == "q":
-    cmd = cmd.lower()
-    print(player.currentRoom)
+print(player.currentRoom)
 
+
+
+while  cmd.lower() != 'q':
+    
     bracket = '\n**********************************\n'
     print(bracket)
     print(player.currentRoom)
     location = room[player.currentRoom]
     print(location.description)
     print(bracket)
-    if cmd == 'n':
-        print(location.n_to)
-        player.currentRoom = location.n_to
+    
+    if cmd.lower() == 'n':
+        try:
+            print(location.n_to)
+            player.currentRoom = location.n_to
+        except:
+            print(player.currentRoom)
+    elif cmd.lower() == 's':
+        print(location.s_to)
+        player.currentRoom = location.s_to
         print(player.currentRoom)
-    elif cmd == 'q':
+    elif cmd.lower() == 'e':
+        print(location.e_to)
+        player.currentRoom = location.e_to
+        print(player.currentRoom)
+    elif cmd.lower() == 'w':
+        print(location.w_to)
+        player.currentRoom = location.w_to
+        print(player.currentRoom)
+    elif cmd.lower() == 'q':
         print('Exit the game')
         break
 
