@@ -38,31 +38,61 @@ room['treasure'].s_to = room['narrow']
 #
 def main():
     # Make a new player object that is currently in the 'outside' room.
-    mario = Player("Mario", 'outside')
+    
 
     # Write a loop that:
     #
     # * Prints the current room name
     # * Prints the current description (the textwrap module might be useful here).
     # * Waits for user input and decides what to do.
-
-
     # If the user enters a cardinal direction, attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
     #
     # If the user enters "q", quit the game.
-    print("** THE ULTIMATE ADVENTURE GAME **")
-    action_input = input("Enter in a cardinal direction\n[N] for North, [E] for East, [S] for South, [W] for West and [Q] to Quit")
+    print()
+    print("******** WELCOME TO THE *********")
+    print("**** ULTIMATE ADVENTURE GAME ****")
+    mario = Player("Mario", room['outside'])
+    currentRoom = mario.currentRoom
+    print("\nCurrent Room: " + currentRoom.name)
+    print(f"Room Description: {currentRoom.description}")
+
+    action_input = input("\nEnter in a cardinal direction\n[N] for North, [E] for East, [S] for South, [W] for West and [Q] to Quit\n ")
+    #print(mario)
+
     while action_input.lower() != 'q':
+        
         if action_input.lower() == 'n':
-            print("Going North")
+            try:
+                mario.currentRoom = currentRoom.n_to
+                print("Going North")
+            except:
+                print("Nope. Can't go that way.")
         elif action_input.lower() == 'e':
-            print("Going East")
+            try:
+                mario.currentRoom = currentRoom.e_to
+                print("Going East")
+            except:
+                print("Uh-oh edge of the Earth. Choose another direction.")
         elif action_input.lower() == 's':
-            print("Going South")
+            try:
+                mario.currentRoom = currentRoom.s_to
+                print("Going South")
+            except:
+                print("An immovable wall blocks you pass.")
         elif action_input.lower() == 'w':
-            print("Going West")
+            try:
+                mario.currentRoom = currentRoom.w_to
+                print("Going West")
+            except:
+                print("Nah brah.")        
         else:
             print("Action is not valid.")
+        currentRoom = mario.currentRoom
+        #print(f"Current room: {currentRoom.name}")
+        print("\nCurrent Room: " + currentRoom.name)
+        print(f"Room Description: {currentRoom.description}")
+        action_input = input("\nEnter in a cardinal direction\n[N] for North, [E] for East, [S] for South, [W] for West and [Q] to Quit\n ")
+    print("Thanks for playing. Have a nice life...")
 
-
+main()

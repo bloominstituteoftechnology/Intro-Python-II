@@ -5,8 +5,8 @@ class Room:
     def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.storage = []
+        self.items = []
     def add_item(self, item):
-        self.storage.append(item)
-
-        
+        self.items.append(item)
+    def __str__(self):
+        return f'{self.name}'

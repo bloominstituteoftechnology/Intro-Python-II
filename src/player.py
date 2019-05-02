@@ -2,11 +2,9 @@
 # currently.
 
 class Player:
-    def __init__(self, name, room):
-        self.room = room
+    def __init__(self, name, currentRoom):
+        self.currentRoom = currentRoom
         self.name = name
+        self.inventory = []
     def __str__(self):
-        return f'{self.name} is in {self.room}.'
-    def move(room):
-
-    
+        return f'{self.name} is in {self.currentRoom}.'
