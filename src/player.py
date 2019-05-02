@@ -2,11 +2,11 @@
 # currently.
 
 class Player:
-    def __init__(self, name, current_room):
-        self.name = name
-        self.current_room = current_room
-        
-    def __str__(self):
-        return str(self.__dict__)
+	    def __init__(self, username, currentRoom, inventory = []):
+	        self.username = username
+	        self.currentRoom = currentRoom
+	        self.inventory = inventory
+	    def __str__(self):
+	        return str(self.__dict__) 
         
 
