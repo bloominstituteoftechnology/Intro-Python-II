@@ -1,8 +1,21 @@
 from room import Room
 from player import Player
-
+from item import Item
 
 # Declare all the rooms
+
+words = [
+    ['sword', 'pointy sword'],
+    ['lantern', 'light source'],
+    ['rock', 'i dunno'],
+    ['chest', 'might have something in it'],
+    ['bucket', 'what this?'],
+    ['rope', 'this might be useful']
+]
+
+items = [Item(item[0], item[1]) for item in words]
+
+print(items)
 
 room = {
     'outside':  Room("Outside Cave Entrance",
