@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,14 +39,62 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player_name = str(input("Please enter the name of player\n"))
+
+print("\n")
+player = Player(player_name, room['outside'])
+possibleMoves = {"n", "s", "e", "w"}
+directionPrompt = "Press [n,s,e,w] to move in a direction"
+print(f'Press a cardinal direction key [n,s,e,w] to move or press "q" to quit.')
 
 # Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
+enteredValue = "c"
+
+# gameplay loop
 # If the user enters "q", quit the game.
+while not enteredValue == "q":
+
+    # Prints the current room name
+    # Prints the current description (the textwrap module might be useful here).
+    print("\n<****--------****>")
+    print(f'You are {player.room.name}, Sir {player.name}.')
+    print(f'{player.room.description}.')
+    print("<****--------****>\n")
+
+    # Waits for user input and decides what to do.
+    enteredValue = str(input(f'{directionPrompt}\n'))
+
+    if enteredValue == "q":
+        break
+    elif enteredValue in possibleMoves:
+
+        # If the user enters a cardinal direction, attempt to move to the room there.
+        if enteredValue == "n":
+            if player.room.n_to == None:
+                print("\n*****Error*****\nThere is no room in that direction. Try again.\n*****Error*****")
+            else:
+                player.room = player.room.n_to
+        elif enteredValue == "s":
+            if player.room.s_to == None:
+                print("\n*****Error*****\nThere is no room in that direction. Try again.\n*****Error*****")
+            else:
+                player.room = player.room.s_to
+        elif enteredValue == "e":
+            if player.room.e_to == None:
+                print("\n*****Error*****\nThere is no room in that direction. Try again.\n*****Error*****")
+            else:
+                player.room = player.room.e_to
+        else:
+            if player.room.w_to == None:
+                print("\n*****Error*****\nThere is no room in that direction. Try again.\n*****Error*****")
+            else:
+                player.room = player.room.w_to
+    else:
+        # Print an error message if the movement isn't allowed.
+        print("\n***** ERROR *****")
+        print("The key you entered is not an allowed move.")
+        print("Please try again with an allowed move [n,s,e,w].")
+        print("***** ERROR *****\n")
+        
+        enteredValue = str(input(f'{directionPrompt}\n'))
+  
