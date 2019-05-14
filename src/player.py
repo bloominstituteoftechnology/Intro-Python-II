@@ -9,4 +9,10 @@ class Player:
         self.inventory = []
 
     def __repr__(self):
-        return f"{self.name} is currently in the {self.current_room} and holds the following items: {self.inventory}. "
+        return f'{self.name} is currently in the {self.current_room} and holds the following items: {self.inventory}. '
+
+    def move(self, attribute):
+        if hasattr(self.current_room, attribute):
+            self.current_room = getattr(self.current_room, attribute)
+        else:
+            print("That way is inaccessible, please go a different direction.\n")

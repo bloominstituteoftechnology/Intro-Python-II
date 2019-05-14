@@ -39,21 +39,54 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player_one = Player("outside")
-
 # Write a loop that:
 #
 # * Prints the current room name
-# --> looks up room in dictionary
-
 # * Prints the current description (the textwrap module might be useful here).
-
-
 # * Waits for user input and decides what to do.
-
-
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# Allow the player to quit
+
+
+class Quit(Exception):
+    pass
+
+# Accept inputs from the player
+
+
+def player_input(player):
+    player_input = input("Enter a command: ").lower()
+    command = player_input.split()[0]
+
+    if command in ("quit", "q"):
+        raise Quit
+    elif command in ("n", "s", "e", "w", "north", "south", "east", "west"):
+        player.move(command[0] + "_to")
+        print(player.current_room)
+    else:
+        return command
+
+# Main method for the game
+
+
+def game():
+    print("👋🏼 Welcome to The Jungle 🌳 ")
+
+    player_name = input("What would you like your name to be? ")
+    player = Player(player_name, room["outside"])
+    print(player.current_room)
+
+    try:
+        while True:
+            player_input(player)
+    except Quit:
+        pass
+
+
+# Start game
+game()
