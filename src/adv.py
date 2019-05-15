@@ -70,7 +70,7 @@ def player_input(player):
         player.move(command[0] + "_to")
         print(player.current_room)
     else:
-        print("💀 Please enter a valid direction (n, s, e, w).")
+        print("💀 Please enter a valid direction (N, S, E, W).")
         return command
 
 # Main method for the game
