@@ -48,7 +48,7 @@ print(player)
 print(player.current_room.name)
 
 # * Prints the current description (the textwrap module might be useful here).
-
+print(player.current_room.description)
 # * Waits for user input and decides what to do.
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
