@@ -39,11 +39,13 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 my_player = Player("outside")
 print(my_player)
-selection = input("Select the direction to go: N S E W")
+selection = input("Select the direction to go: n s e w")
 try:
-  if selection == "N":
+  if selection == "n":
     # do something
-  elif selection == "S":
+elif selection == "s":
+    # do something
+  elif selection == "w":
       
         
 # Write a loop that:
