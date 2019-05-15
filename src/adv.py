@@ -48,14 +48,17 @@ possDirections = {
 
 player = Player("Kilroy", room['outside'])
 direction = ''
+printedLoc = ""
 
-print("Welcome, " + player.name + "! You are have found yourself near a spooky mansion.")
+print("Welcome, {}! You are have found yourself near a spooky mansion.".format(player.name))
 
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
+
+
 while direction != 'x':
     inputOpts = ""
     print(player.currentLoc)
@@ -96,8 +99,6 @@ while direction != 'x':
         except AttributeError:
             print("\nRead the description carefully and choose again.\n")
             print(player.currentLoc)
-
-print("No, really! Thanks for playing.")
 
 
 # If the user enters "q", quit the game.
