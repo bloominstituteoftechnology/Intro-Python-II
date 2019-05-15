@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -32,7 +33,7 @@ room = {
 room['beyondthewall'].s_to = room['castleblack']
 
 room['castleblack'].n_to = room['beyondthewall']
-room['castleblack'].s_to = roomw['winterfell']
+room['castleblack'].s_to = room['winterfell']
 room['castleblack'].e_to = room['eastwatch']
 room['castleblack'].w_to = room['shadowtower']
 
@@ -67,15 +68,15 @@ while True:
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
     if direction == 'n':
-        player.room = player.room.n_to
-    elif direction = 's':
-        player.room = player.room.s_to
-    elif direction = 'e':
-        player.room = player.room.e_to
-    elif direction = 'w':
-        player.room = player.room.w_to
+        player.room == player.room.n_to
+    elif direction == 's':
+        player.room == player.room.s_to
+    elif direction == 'e':
+        player.room == player.room.e_to
+    elif direction == 'w':
+        player.room == player.room.w_to
 # If the user enters "q", quit the game.
-    elif direction = 'q':
+    elif direction == 'q':
         break
 # Print an error message if the movement isn't allowed.
 #
