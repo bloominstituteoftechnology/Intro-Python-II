@@ -40,16 +40,18 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside']) #give entire outside instance
- 
+     
+# If the user enters a cardinal direction, attempt to move to the room there.
 def try_direction(direction, current_room):
     #if/else logic could go here instead, but is less DRY
-    attribute = direction + '_to'
+    attribute = direction + '_to' #allows moving to n_to, s_to, e_to, w_to
 
     #see if the inputted direction is one we can move to w/ built in method
     if hasattr(current_room, attribute):
         return getattr(current_room, attribute) #fetch room w/ built in python methods
     else:
-        print("This direction is unavailable!")
+        # Print an error message if the movement isn't allowed. SEE try_direction
+        print("That direction is unavailable!")
         return current_room
 # Write a loop that:
 while True:
@@ -61,21 +63,32 @@ while True:
     print(player.current_room.description)
     # * Waits for user input and decides what to do.
     #d for direction
-    d = input("\n>").lower()[0]
+    d = input("\n>").lower().split() #ALLOW : North, South, East, West, north, south, east, west, N, S, E, W, n, s , e, w
+
+
+    if len(d) == 1: #direction
+        d = d[0][0] #grab 1st char of 1st word cmd
+          
+        if d =='q': # If the user enters "q", quit the game.
+            print("Thanks for playing!")
+            break
+
+        player.current_room = try_direction(d, player.current_room)
+
+    elif len(d) ==2: #2 word command
+        first_word = d[0]
+
+    else:
+        print("Not a valid command")
+        continue
 
     
 
             
-    # If the user enters a cardinal direction, attempt to move to the room there.
-    # Print an error message if the movement isn't allowed. SEE try_direction
-    #ALLOW : North, South, East, West, north, south, east, west, N, S, E, W, n, s , e, w
+    
 
-    # If the user enters "q", quit the game.
-    if d =='q':
-        print("Thanks for playing!")
-        break
-
-    player.current_room = try_direction(d, player.current_room)
+  
+    
 
     #NOTES FROM INSTRUCTOR HOUR/ELISSA
         #did user enter valid direction?
