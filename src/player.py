@@ -3,9 +3,9 @@
 
 
 class Player:
-    def __init__(self, name, current_room):
-        self.name = name
+    def __init__(self, current_room): #name,
+        #self.name = name
         self.current_room = current_room
 
     def __repr__(self):
-        return f"{self.name} is in the {self.current_room}"
+        return f"Player is in  {self.current_room}"
