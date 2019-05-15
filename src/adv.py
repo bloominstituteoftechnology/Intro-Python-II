@@ -45,7 +45,7 @@ print(player)
 
 # * Prints the current room name
 #-->look up room in dictionary...
-
+print(player.current_room.name)
 
 # * Prints the current description (the textwrap module might be useful here).
 
