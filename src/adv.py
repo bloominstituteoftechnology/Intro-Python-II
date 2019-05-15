@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+import random
 
 # Declare all the rooms
 
@@ -43,8 +44,10 @@ possDirections = {
     "s": "South",
     "e": "East",
     "w": "West",
-    "x": "Exit"
+    "q": "Quit"
 }
+
+listItems = ["hammer", "rake", "sword", "candle"]
 
 player = Player("Kilroy", room['outside'])
 direction = ''
@@ -62,6 +65,12 @@ print("Welcome, {}! You are have found yourself near a spooky mansion.".format(p
 while direction != 'x':
     inputOpts = ""
     print(player.currentLoc)
+
+    # the following three lines are for testing adding items to a room. A random number is used to select an item from the `listItems` above and then adds a new random item to every room the player enters
+    randomNum = random.randint(0, 3)
+    player.currentLoc.addItems(listItems[randomNum])
+    print('\nItem list: {}'.format(player.currentLoc.showItems()))
+
     for opt in possDirections:
         inputOpts += '\n- %s (%s)' % (possDirections[opt], opt)
 
