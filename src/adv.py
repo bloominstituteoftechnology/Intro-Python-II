@@ -3,35 +3,49 @@ from room import Room
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'beyondthewall': Room("Beyond the wall", """North of you, the crashing mountains and endless snow overwehlm you. You know there are wildlings out there. The thought frightens you. Out of the corner of your eye you catch a glimpse of something moving. When you look back you see them! So many men... no... not men. They are all dead with ice blue eyes. You must go back to castle black, and warn the others! """),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'castleblack': Room("Castle Black", "The men of the nights watch are all around you in their black cloaks, their swords dangling at their hip. You've told the night watch abut the force coming for them, but nobody believes you. You must head south to find someone who will."),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'eastwatch': Room("Eastwatch", """The Wall drops into an inlet of the Shivering Sea called the Bay of Seals. It is deserted here. But you get clouded with a vision, a dragon, breathing blue fire will destroy this castle if it isn't stopped. There is nowhere to go but the way you came."""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'shadowtower': Room("The Shadow Tower", """Something feels eerie here. There is nowhere to go but the way you came.."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+    'winterfell': Room("Winterfell", """You walk through the gates to a giant stone castle. Soldiers and children going this way, and that. Everything seems... right here. But you know with every fiber of your being, that if you don't do something, all these people will die."""),
+
+    'thetwins': Room("The Twins", """You walk through the gates to a giant stone castle. Soldiers and children going this way, and that. Everything seems... right here. But you know with every fiber of your being, that if you don't do something, all these people will die."""),
+
+    'blazewaterbay': Room("Blazewater Bay", """You walk through the gates to a giant stone castle. Soldiers and children going this way, and that. Everything seems... right here. But you know with every fiber of your being, that if you don't do something, all these people will die."""),
+
+    'hornwood': Room("Hornwood", """You walk through the gates to a giant stone castle. Soldiers and children going this way, and that. Everything seems... right here. But you know with every fiber of your being, that if you don't do something, all these people will die."""),
+
+    'theriverlands': Room("The Riverlands", """You walk through the gates to a giant stone castle. Soldiers and children going this way, and that. Everything seems... right here. But you know with every fiber of your being, that if you don't do something, all these people will die."""),
+
+    'theeyrie': Room("The Eyrie", """You walk through the gates to a giant stone castle. Soldiers and children going this way, and that. Everything seems... right here. But you know with every fiber of your being, that if you don't do something, all these people will die."""),
+
+    'ironislands': Room("The Iron Islands", """You walk through the gates to a giant stone castle. Soldiers and children going this way, and that. Everything seems... right here. But you know with every fiber of your being, that if you don't do something, all these people will die."""),
 }
 
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['beyondthewall'].s_to = room['castleblack']
+
+room['castleblack'].n_to = room['beyondthewall']
+room['castleblack'].s_to = roomw['winterfell']
+room['castleblack'].e_to = room['eastwatch']
+room['castleblack'].w_to = room['shadowtower']
+
+room['winterfell'].n_to = room['castleblack']
+room['winterfell'].s_to = room['thetwins']
+room['winterfell'].e_to = room['blazewaterbay']
+room['winterfell'].w_to = room['hornwood']
+
+room['thetwins'].n_to = room['winterfell']
+room['thetwins'].s_to = room['theriverlands']
+room['thetwins'].e_to = room['theeyrie']
+room['thetwins'].w_to = room['ironislands']
+
 
 #
 # Main
@@ -39,7 +53,7 @@ room['treasure'].s_to = room['narrow']
 
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(name, room['outside'])
+player = Player(name, room['beyondthewall'])
 # Write a loop that:
 while True:
 #
