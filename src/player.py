@@ -6,6 +6,6 @@ class Player:
     self.name = name
     self.room = room
 
-player1 = Player('John Snow', 'beyondthewall')
+player1 = Player("John Snow", "beyondthewall")
 
 print(player1.name)

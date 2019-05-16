@@ -54,7 +54,7 @@ room['thetwins'].w_to = room['ironislands']
 
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(name, room['beyondthewall'])
+player = Player("John Snow", room["beyondthewall"])
 # Write a loop that:
 while True:
 #
@@ -63,24 +63,25 @@ while True:
 # * Prints the current description (the textwrap module might be useful here).
     print(player.room.description)
 # * Waits for user input and decides what to do.
-    direction = input ('Which way do you want to go? :')
-    print (direction)
+
+    direction = input("Which way do you want to go? NSEW or Q to quit:")
+    print(direction)
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
-    if direction == 'n':
-        player.room == player.room.n_to
-    elif direction == 's':
-        player.room == player.room.s_to
-    elif direction == 'e':
-        player.room == player.room.e_to
-    elif direction == 'w':
-        player.room == player.room.w_to
+    if direction == "n":
+        player.room = player.room.n_to
+    elif direction == "s":
+        player.room = player.room.s_to
+    elif direction == "e":
+        player.room = player.room.e_to
+    elif direction == "w":
+        player.room = player.room.w_to
 # If the user enters "q", quit the game.
-    elif direction == 'q':
+    elif direction == "q":
         break
 # Print an error message if the movement isn't allowed.
 #
     else:
-        print ('not a valid direction')
+        print('not a valid direction, please use n, s, e, or w.')
 
 
