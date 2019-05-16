@@ -4,25 +4,28 @@
 
 class Room:
 
-    def __init__(self, name, description):
+    def __init__(self, name, description, *items):
         self.name = name
         self.description = description
-        self.items = []
+        self.items = [*items]
 
-    def __repr__(self):
-        return 'You are at the %s. \n%s' % (self.name, self.description)
+    def __str__(self):
+        return 'You are at the %s. \n-----------\n%s' % (self.name, self.description)
 
-    def addItems(self, *items):
-        self.items.append(*items)
+    def addItems(self, item):
+        self.items.append(item)
+
+    def deleteItems(self, item):
+        self.items.remove(item)
 
     def showItems(self):
         statement = ''
         if len(self.items) == 0:
-            statement = "You can find no items here"
+            statement = "You can find no items of value here"
         elif len(self.items) == 1:
-            statement = self.items[0]
+            statement = str(self.items[0])
         else:
-            statement += self.items[0]
+            statement += str(self.items[0])
             for i in range(len(self.items) - 1):
-                statement += ", {}".format(self.items[i + 1])
+                statement += ", {}".format(str(self.items[i + 1]))
         return statement

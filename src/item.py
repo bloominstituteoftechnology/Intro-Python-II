@@ -2,9 +2,9 @@
 
 class Item:
 
-    def __init__(self, name, description):
+    def __init__(self, name, value):
         self.name = name
-        self.description = description
+        self.value = value
 
-    def __repr__(self):
+    def __str__(self):
         return self.name
