@@ -4,10 +4,10 @@
 
 class Room:
 
-    def __init__(self, name, description, items):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.items = []
+        # self.items = []
 
     def __repr__(self):
         return f"{self.name}\n#########################\n{self.description}\n"

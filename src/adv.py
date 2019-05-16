@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -20,6 +21,14 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """💰 You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+}
+
+# Declare the items
+
+items = {
+    "broom": Item("Magic Broomstick", "🧹 The Magic Broomstick can fly quickly in any direction and hover."),
+    "candlestick": Item("Golden Candlestick", "🕯️ The Casanova of all candelabras. He is suave and a gracious host."),
+    "sword": Item("Andúril", "⚔️ The reforged sword from the shards of Narsil.")
 }
 
 
@@ -65,12 +74,13 @@ def player_input(player):
     command = player_input.split()[0]
 
     if command in ("quit", "q"):
+        print("Thanks for playing 🙌🏼")
         raise Quit
     elif command in ("n", "s", "e", "w", "north", "south", "east", "west"):
         player.move(command[0] + "_to")
         print(player.current_room)
     else:
-        print("💀 Please enter a valid direction (N, S, E, W).")
+        print("💀 Please enter a valid direction (N, S, E, W).\n")
         return command
 
 # Main method for the game

@@ -4,4 +4,4 @@ class Item:
         self.description = description
 
     def __repr__(self):
-        return f'{self.name}'
+        return f"{self.name}\n#########################\n{self.description}\n"
