@@ -52,21 +52,34 @@ room['treasure'].s_to = room['narrow']
 # If the user enters "q", quit the game.
 
 
-q = ""
-while q != "q":
-    if q != "You may not advance in this direction!":
-        print(Player.room)
-    q=input("Which direction would you like to move?")
-    print("\n")
-    try:
-        if q == "N" or q == "n":
-            Player.room = Player.room.n_to
-        if qP== "S" or q = P"s":
-            Player.room =  Player.room.s_to
-        if qP== "E" or q = P"e":
-            Player.room =  Player.room.e_to
-        if qP== "W" or q = P"w":
-            Player.room = Player.room.w_to
-    except:
-        q = "You may not advance in this direction!"
-        print(q)
+currentRoom = room["outside"]
+
+name = input("Please enter your name")
+player = Player(name, currentRoom, None)
+
+def describe(sub):
+    print(f"\n{sub.name}, {sub.room}")
+
+action = ""
+
+while action != "Q":
+    describe(player)
+
+    action = input("[N] North [S] South [E] East [W] West [Q] Quit\n")
+
+    if action == "N" or action == "S" or action == "E" or action == "W":
+        if action == "N" and currentRoom.n_to != None:
+            player.room = player.room.n_to
+        elif action == "E" and currentRoom.e_to != None:
+            player.room = player.room.e_to
+        elif action == "S" and currentRoom.s_to != None:
+            player.room = player.room.s_to
+        elif action == "W" and currentRoom.w_to != None:
+            player.room = player.room.w_to
+        else:
+            print("Your not allowed to take that path, friend :(")
+    elif action == "Q":
+        print("Farewell dear wanderer")
+        break
+    else:
+        print("Ummm no! Please choose one of the four directions: N, S, E, or W")
