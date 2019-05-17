@@ -1,5 +1,6 @@
 # from room import Room
 import re
+import Room from room.py
 
 selection = input("Select N for North, S for South, E for East, or W for West: ")
 
@@ -10,36 +11,61 @@ else:
 
 # Declare all the rooms
 
-# room = {
-#     'outside':  Room("Outside Cave Entrance",
-#                      "North of you, the cave mount beckons"),
+room = {
+    'eastport': Room("East Portico", """Welcome to The Manor."""),
 
-#     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-# passages run north and east."""),
+    'enterancehall' = Room("Enterance Hall", """Please come in."""),
 
-#     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-# into the darkness. Ahead to the north, a light flickers in
-# the distance, but there is no way across the chasm."""),
+    'parlor' = Room("Parlor", """Gossip and tea served daily."""),
 
-#     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-# to north. The smell of gold permeates the air."""),
+    'westport' = Room("West Portico", """Take in a view of the gardens."""),
 
-#     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-# chamber! Sadly, it has already been completely emptied by
-# earlier adventurers. The only exit is to the south."""),
-# }
+    'library' = Room("Library", """All manners of Manor's business are conducted in the library."""),
+
+    'dininghall' = Room("Dining Hall", """Join us for a feast or just a bite to eat.""",
+
+    'guestroom' = Room("Guest Room", """Stay awhile."""),
+
+    'northterrace' = Room("North Terrace", """Lovely views of the nearby village."""),
+
+    'drawingroom' = Room("Drawing Room", """Looking for a quiet spot to read or embroider? You've found the spot."""),
+
+    'masterbedroom' = Room("Master Bedroom", """Where the Lord and Lady of The Manor take their rest."""),
+
+    'greenhouse' = Room("Greenhouse", """The finest tomatoes in the parish."""),
+
+    'southterrace '= Room("South Portico", """Vistas overlooking the pond."""),
+}
 
 
-# # Link rooms together
+# Link rooms together
 
-# room['outside'].n_to = room['foyer']
-# room['foyer'].s_to = room['outside']
-# room['foyer'].n_to = room['overlook']
-# room['foyer'].e_to = room['narrow']
-# room['overlook'].s_to = room['foyer']
-# room['narrow'].w_to = room['foyer']
-# room['narrow'].n_to = room['treasure']
-# room['treasure'].s_to = room['narrow']
+room['eastport'].n_to = room['enterancehall']
+room['enterancehall'].s_to = room['eastport']
+room['enterancehall'].n_to = room['parlor']
+romm['enterancehall'].w_to = room['drawingroom']
+romm['enterancehall'].e_to = room['library']
+romm['parlor'].n_to = room['westport']
+romm['parlor'].s_to = room['enterancehall']
+romm['parlor'].e_to = room['dininghall']
+romm['parlor'].w_to = room['masterbedroom']
+romm['westport']s._to = room['parlor']
+romm['library'].n_to = room['dininghall']
+romm['library']w._to = room['enterancehall']
+romm['dininghall'].s_to = room['library']
+romm['dininghall'].e_to = room['guestroom']
+romm['dininghall'].w_to = room['parlor']
+romm['guestroom'].e_to = room['northterrace']
+romm['guestroom'].w_to = room['dininghall']
+romm['northterrace'].w_to = room['guestroom']
+romm['drawingroom'].n_to = room['masterbedroom']
+romm['drawingroom'].e_to = room['enterancehall']
+romm['masterbedroom'].s_to = room['drawingroom']
+romm['masterbedroom'].e_to = room['parlor']
+romm['masterbedroom'].w_to = room['greenhouse']
+romm['greenhouse'].e_to = room['masterbedroom']
+romm['greenhouse'].w_to = room['southterrace']
+romm['southterrace']e._to = room['greenhouse']
 
 # #
 # # Main
