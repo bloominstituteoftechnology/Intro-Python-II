@@ -55,18 +55,18 @@ room['treasure'].s_to = room['narrow']
 q = ""
 while q != "q":
     if q != "You may not advance in this direction!":
-        print(player.room)
+        print(Player.room)
     q=input("Which direction would you like to move?")
     print("\n")
     try:
         if q == "N" or q == "n":
-            player.room = player.room.n_to
-        if q == "S" or q == "s":
-            player.room = player.room.s_to
-        if q == "E" or q == "e":
-            player.room = player.room.e_to
-        if q == "W" or q == "w":
-            player.room = player.room.w_to
+            Player.room = Player.room.n_to
+        if qP== "S" or q = P"s":
+            Player.room =  Player.room.s_to
+        if qP== "E" or q = P"e":
+            Player.room =  Player.room.e_to
+        if qP== "W" or q = P"w":
+            Player.room = Player.room.w_to
     except:
         q = "You may not advance in this direction!"
         print(q)

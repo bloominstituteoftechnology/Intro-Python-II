@@ -2,12 +2,10 @@
 # currently.
 
 class Player:
-    def __init__(self, name, room):
+    def __init__(self, name, inv):
         self.name = name
         self.room = room
+        self.inv = inv
 
     def __repr__(self):
-        output = ""
-        output += "Name: " + self.name + "\n"
-        output += "Room: " + self.room
-        return output
+        return f"Hello! I'm {self.name} and I'm holding {self.inv}."
