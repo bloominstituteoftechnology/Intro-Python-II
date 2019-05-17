@@ -2,13 +2,21 @@
 import re
 from room import Room
 from player import Player
+from subprocess import call
 
-# selection = input("Select N for North, S for South, E for East, or W for West: ")
 
-# if len(re.findall("[nNsSeEwW]", selection)) != 1:
-#     print("Please select a valid direction.")
-# else:
-#     print("The user has selected " + selection.upper())
+from os import system, name 
+
+from time import sleep 
+  
+# define our clear function 
+def clear(): 
+    if name == 'nt': 
+        _ = system('cls') 
+    else: 
+        _ = system('clear') 
+  
+
 
 # Declare all the rooms
 
@@ -73,57 +81,79 @@ room['southterrace'].e_to = room['greenhouse']
 #
 
 lady = Player("Lady Abigayle", room['eastport'])
+clear()
+title = "\n    ______)          __     __)              \n   (, /  /)         (, /|  /|                \n     /  (/    _       / | / |  _  __   _____ \n  ) /   / )__(/_   ) /  |/  |_(_(_/ (_(_)/ (_\n (_/              (_/   '                    \n\n"
 
-print("\n")
-print("    ______)          __     __)              ")
-print("   (, /  /)         (, /|  /|                ")
-print("     /  (/    _       / | / |  _  __   _____ ")
-print("  ) /   / )__(/_   ) /  |/  |_(_(_/ (_(_)/ (_")
-print(" (_/              (_/   '                    ")
-print("\n")
+print(title)
 
-print("\nWelcome to The Manor, " + lady.name + "! \n We are so looking forward to hosting you this Season. \n")
+
+print("\nWelcome to The Manor, " + lady.name + "! \n We are so looking forward to hosting you this Season. \n\n")
 # Write a loop that:
 
-print("You are currently in the " + lady.curr_room.name + ".")
-print(lady.curr_room.description + "\n")
+print("You are currently in the " + lady.curr_room.name + ".\n" + lady.curr_room.description + "\n\n")
 
 
 
-selection = input("Would you like to travel N-North, S-South, E-East, or W-West about The Manor \n or you may R-Check your possesions in your reticule or Q-Quit: ")
-selection = selection.upper()
 
-if len(re.findall("[NSEWRQ]", selection)) == 1:
-    while selection != 'Q':
+selection = ""
+
+while selection != 'Q':
+    selection = input("Would you like to travel N-North, S-South, E-East, or W-West about The Manor \n or you may R-Check your possesions in your reticule or Q-Quit: ")
+    selection = selection.upper()
+    if len(re.findall("[NSEWRQ]", selection)) == 1:
         if selection == 'N':
             if hasattr(lady.curr_room, 'n_to'):
+                clear()
+                print(title)
                 lady.curr_room = lady.curr_room.n_to
-                print('Welcome to  the ' + str(lady.curr_room.name))
-                break
+                print('Welcome to the ' + lady.curr_room.name + '\n' + lady.curr_room.description + "\n\n")
             else:
-                print("Sorry, there is nothing in that direction.")
+                clear()
+                print(title)
+                print("Sorry, there is nothing in that direction.\n\n")
         elif selection == 'S':
             if hasattr(lady.curr_room, 's_to'):
+                clear()
+                print(title)
                 lady.curr_room = lady.curr_room.s_to
-                print('Welcome to the ' + lady.curr_room.name)
-                break
+                print('Welcome to the ' + lady.curr_room.name + '\n' + lady.curr_room.description + "\n\n")
             else:
-                print("Sorry, there is nothing in that direction.")
+                clear()
+                print(title)
+                print("Sorry, there is nothing in that direction.\n\n")
         elif selection == 'E':
             if hasattr(lady.curr_room, 'e_to'):
+                clear()
+                print(title)
                 lady.curr_room = lady.curr_room.e_to
-                print('Welcome to the ' + lady.curr_room.name)
-                break
+                print('Welcome to the ' + lady.curr_room.name + '\n' + lady.curr_room.description + "\n\n")
             else:
-                print("Sorry, there is nothing in that direction.")
+                clear()
+                print(title)
+                print("Sorry, there is nothing in that direction.\n\n")
         elif selection == 'W':
             if hasattr(lady.curr_room, 'w_to'):
+                clear()
+                print(title)
                 lady.curr_room = lady.curr_room.w_to
-                print('Welcome to the ' + lady.curr_room.name)
-                break
+                print('Welcome to the ' + lady.curr_room.name + '\n' + lady.curr_room.description + "\n\n")
             else:
-                print("Sorry, there is nothing in that direction.")
+                clear()
+                print(title)
+                print("Sorry, there is nothing in that direction.\n\n")
         elif selection == 'R':
-            print("Collection")
-        else:
-            print("Please select a valid command.")
+            clear()
+            print(title)
+            print("Collection\n\n")
+        elif selection !='Q':
+            clear()
+            print(title)
+            print("Please select a valid command.\n\n")
+
+if selection == 'Q' :
+    clear()
+    print(title)
+    print("It has been a pleasure, please visit again soon.")
+    sleep(2)
+    clear()
+    quit()
