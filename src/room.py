@@ -9,5 +9,13 @@ class Room:
         self.s_to = s_to
         self.w_to = w_to
         self.e_to = e_to
-    def __repr__(self):
+        self.items = items
+
+    def __str__(self):
         return(f" The current room: {self.name}, Description: {self.description}")
+
+    def displayItems(self):
+        items = []
+        for item in self.items:
+            items.append(item.name)
+        return items
