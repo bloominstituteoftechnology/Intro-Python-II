@@ -4,18 +4,19 @@
 
 class Room:
 
-    def __init__(self, name, description, *items):
+    def __init__(self, name, description, item):
         self.name = name
         self.description = description
-        self.items = [*items]
+        self.items = [item]
 
     def __str__(self):
         return 'You are at the %s. \n-----------\n%s' % (self.name, self.description)
 
-    def addItems(self, item):
+    def addItem(self, itemName):
+        item = (i.name == itemName for i in self.items)
         self.items.append(item)
 
-    def deleteItems(self, item):
+    def deleteItem(self, item):
         self.items.remove(item)
 
     def showItems(self):

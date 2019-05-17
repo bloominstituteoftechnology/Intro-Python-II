@@ -118,15 +118,6 @@ print("----------------------\n\n")
 print(input("-----Press enter to begin-----"))
 clearScr()
 
-test = input("two words: ")
-testList = test.split()
-if len(testList) == 1:
-    print("direction")
-elif len(testList) == 2:
-    print("instruction")
-else:
-    print("WTF")
-
 while direction != 'q':
     inputOpts = ""
     inputList = " - "
@@ -136,8 +127,10 @@ while direction != 'q':
         inputList += opt + ' - '
 
     while direction != 'q':
+        actionItem = ''
         print(str(player.currentLoc))
         print('\nItem list: {}'.format(player.currentLoc.showItems()))
+        print('Player inventory: ')
 
         # This code takes the input and decides if it's a direction or action instruction
         # The else block is an error handler that forces the correction message
@@ -152,32 +145,50 @@ while direction != 'q':
             direction = ''
 
         clearScr()
-        try:
-            youWent = "\nYou chose to move " + possDirections[direction]
-            if direction == "n":
-                player.currentLoc = player.currentLoc.n_to
-                print(youWent)
-                break
-            elif direction == "w":
-                player.currentLoc = player.currentLoc.w_to
-                print(youWent)
-                break
-            elif direction == "e":
-                player.currentLoc = player.currentLoc.e_to
-                print(youWent)
-                break
-            elif direction == "s":
-                player.currentLoc = player.currentLoc.s_to
-                print(youWent)
-                break
-            elif direction == "q":
-                print("\n\nThanks for playing!!")
-            else:
-                print("\n\n\nPlease enter a valid direction.")
-        except KeyError:
-            print('\nPlease choose a valid option:\n{}\n'.format(inputList))
-        except AttributeError:
-            print("\nRead the description carefully and choose again.\n")
+        if not(actionItem):
+            try:
+                youWent = "\nYou chose to move " + possDirections[direction]
+                if direction == "n":
+                    player.currentLoc = player.currentLoc.n_to
+                    print(youWent)
+                    break
+                elif direction == "w":
+                    player.currentLoc = player.currentLoc.w_to
+                    print(youWent)
+                    break
+                elif direction == "e":
+                    player.currentLoc = player.currentLoc.e_to
+                    print(youWent)
+                    break
+                elif direction == "s":
+                    player.currentLoc = player.currentLoc.s_to
+                    print(youWent)
+                    break
+                elif direction == "q":
+                    print("\n\nThanks for playing!!")
+            except KeyError:
+                print('\nPlease choose a valid option:\n{}\n'.format(inputList))
+            except AttributeError:
+                print("\nRead the description carefully and choose again.\n")
+
+        if actionItem:
+            room = player.currentLoc
+            itemCount = sum(r.name == actionItem for r in room.items)
+            for i in room.items:
+                if i.name == actionItem:
+                    itemName = i
+            # try:
+            youWent = 'You said to {} the {}.'.format(direction, actionItem)
+            if direction == 'get' and itemCount:
+                room.deleteItem(itemName)
+                player.addItem(itemName)
+            elif direction == 'drop' and player.items.count(actionItem):
+                player.deleteItem(actionItem)
+                room.addItem(actionItem)
+            # except:
+            #     print("""Please use an appropriate command \n
+            #     (\"get\" or \"drop\") then (item name) """)
+
 
 
 # If the user enters "q", quit the game.
