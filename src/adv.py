@@ -21,29 +21,29 @@ def clear():
 # Declare all the rooms
 
 room = {
-    'eastport': Room("East Portico", """This is where we greet our guests."""),
+    'eastport': Room("East Portico", """This is where we greet our guests.""",[]),
 
-    'enterancehall': Room("Enterance Hall", """Please come in."""),
+    'enterancehall': Room("Enterance Hall", """Please come in.""",[]),
 
-    'parlor': Room("Parlor", """Gossip and tea served daily."""),
+    'parlor': Room("Parlor", """Gossip and tea served daily.""", ['Playing Cards', 'Tea Cup', 'Note']),
 
-    'westport': Room("West Portico", """Take in a view of the gardens."""),
+    'westport': Room("West Portico", """Take in a view of the gardens.""", ['Rose', 'Bird Figurine', 'Sketchbook']),
 
-    'library': Room("Library", """All manners of Manor's business are conducted in the library."""),
+    'library': Room("Library", """All manners of Manor's business are conducted in the library.""", ['Ledger', 'Book', 'Globe']),
 
-    'dininghall': Room("Dining Hall", """Join us for a feast or just a bite to eat."""),
+    'dininghall': Room("Dining Hall", """Join us for a feast or just a bite to eat.""", ['Fork', 'Candle', 'Napkin']),
 
-    'guestroom': Room("Guest Room", """Stay awhile."""),
+    'guestroom': Room("Guest Room", """Stay awhile.""", ['Water Pitcher', 'Pillow', 'Frame']),
 
-    'northterrace': Room("North Terrace", """Lovely views of the nearby village."""),
+    'northterrace': Room("North Terrace", """Lovely views of the nearby village.""", ['Lily', 'Binoculars', 'Cricket Bat']),
 
-    'drawingroom': Room("Drawing Room", """Looking for a quiet spot to read or embroider? You've found the spot."""),
+    'drawingroom': Room("Drawing Room", """Looking for a quiet spot to read or embroider? You've found the spot.""", ['Embroidery Hoop', 'Paintbrush', 'Knitting Needle']),
 
-    'masterbedroom': Room("Master Bedroom", """Where the Lord and Lady of The Manor take their rest."""),
+    'masterbedroom': Room("Master Bedroom", """Where the Lord and Lady of The Manor take their rest.""", ['Looking Glass', 'Glove', 'Keys']),
 
-    'greenhouse': Room("Greenhouse", """The finest tomatoes in the parish."""),
+    'greenhouse': Room("Greenhouse", """The finest tomatoes in the parish.""", ['Tomato', 'Shears', 'Pear']),
 
-    'southterrace': Room("South Portico", """Vistas overlooking the pond."""),
+    'southterrace': Room("South Portico", """Vistas overlooking the pond.""", ['Forget-Me-Not', 'Toy Boat', 'Necklace']),
 }
 
 
@@ -80,7 +80,7 @@ room['southterrace'].e_to = room['greenhouse']
 # Main
 #
 
-lady = Player("Lady Abigayle", room['eastport'])
+lady = Player("Lady Abigayle", room['eastport'], ['sewing kit', 'parasol', 'bodice'])
 clear()
 title = "\n    ______)          __     __)              \n   (, /  /)         (, /|  /|                \n     /  (/    _       / | / |  _  __   _____ \n  ) /   / )__(/_   ) /  |/  |_(_(_/ (_(_)/ (_\n (_/              (_/   '                    \n\n"
 
@@ -92,6 +92,11 @@ print("\nWelcome to The Manor, " + lady.name + "! \n We are so looking forward t
 
 print("You are currently in the " + lady.curr_room.name + ".\n" + lady.curr_room.description + "\n\n")
 
+def contents():
+    output = ''
+    for i in lady.curr_room.contents:
+        output += (" " + i + "\n--<>--<>--<>--\n")
+    return output
 
 
 
@@ -107,6 +112,12 @@ while selection != 'Q':
                 print(title)
                 lady.curr_room = lady.curr_room.n_to
                 print('Welcome to the ' + lady.curr_room.name + '\n' + lady.curr_room.description + "\n\n")
+                if len(lady.curr_room.contents) != 0:
+                    print ('Before you, you see the following items:\n')
+                    print(contents())
+                    print("\n\n")  
+                else:
+                    print("There is nothing in this room to add to your reticule.\n\n")
             else:
                 clear()
                 print(title)
@@ -117,6 +128,12 @@ while selection != 'Q':
                 print(title)
                 lady.curr_room = lady.curr_room.s_to
                 print('Welcome to the ' + lady.curr_room.name + '\n' + lady.curr_room.description + "\n\n")
+                if len(lady.curr_room.contents) != 0:
+                    print ('Before you, you see the following items:\n')
+                    print(contents())
+                    print("\n\n")  
+                else:
+                    print("There is nothing in this room to add to your reticule.\n\n")
             else:
                 clear()
                 print(title)
@@ -127,6 +144,12 @@ while selection != 'Q':
                 print(title)
                 lady.curr_room = lady.curr_room.e_to
                 print('Welcome to the ' + lady.curr_room.name + '\n' + lady.curr_room.description + "\n\n")
+                if len(lady.curr_room.contents) != 0:
+                    print ('Before you, you see the following items:\n')
+                    print(contents())
+                    print("\n\n")  
+                else:
+                    print("There is nothing in this room to add to your reticule.\n\n")
             else:
                 clear()
                 print(title)
@@ -137,6 +160,12 @@ while selection != 'Q':
                 print(title)
                 lady.curr_room = lady.curr_room.w_to
                 print('Welcome to the ' + lady.curr_room.name + '\n' + lady.curr_room.description + "\n\n")
+                if len(lady.curr_room.contents) != 0:
+                    print ('Before you, you see the following items:\n')
+                    print(contents())
+                    print("\n\n")  
+                else:
+                    print("There is nothing in this room to add to your reticule.\n\n")
             else:
                 clear()
                 print(title)
@@ -144,7 +173,11 @@ while selection != 'Q':
         elif selection == 'R':
             clear()
             print(title)
-            print("Collection\n\n")
+            print("Reticule Contents:\n")
+            for i in lady.inventory:
+                print("  " + i)
+                print("--<>--<>--<>--")
+            print('\n\n')
         elif selection !='Q':
             clear()
             print(title)
