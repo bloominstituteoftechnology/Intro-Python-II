@@ -2,10 +2,11 @@
 # currently.
 
 class Player:
-  def __init__ (self, name, room) :
+  def __init__ (self, name, room, bag) :
     self.name = name
     self.room = room
+    self.bag = bag
 
-player1 = Player("John Snow", "beyondthewall")
+player1 = Player("John Snow", "beyondthewall", [])
 
 print(player1.name)

@@ -60,6 +60,10 @@ while True:
 #
 # * Prints the current room name
     print(player.room.name)
+    print('current items:')
+    print(player.bag)
+    print('avalible items:')
+    print(player.room.items)
 # * Prints the current description (the textwrap module might be useful here).
     print(player.room.description)
 # * Waits for user input and decides what to do.
@@ -68,20 +72,23 @@ while True:
     print(direction)
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
-    if direction == "n":
-        player.room = player.room.n_to
-    elif direction == "s":
-        player.room = player.room.s_to
-    elif direction == "e":
-        player.room = player.room.e_to
-    elif direction == "w":
-        player.room = player.room.w_to
+    if direction == 'n' or direction == 's' or direction == 'e' or direction == 'w' or direction == 'q':
+        if direction == "n":
+            player.room = player.room.n_to
+        elif direction == "s":
+            player.room = player.room.s_to
+        elif direction == "e":
+            player.room = player.room.e_to
+        elif direction == "w":
+            player.room = player.room.w_to
 # If the user enters "q", quit the game.
-    elif direction == "q":
-        break
+        elif direction == "q":
+            print("you've ended the game")
+            break
+        elif direction == 'get':
+            player.bag.append(direction)
+            print('You just picked up an item')
 # Print an error message if the movement isn't allowed.
 #
-    else:
-        print('not a valid direction, please use n, s, e, or w.')
-
-
+        else:
+            print('not a valid direction, please use n, s, e, or w.')
