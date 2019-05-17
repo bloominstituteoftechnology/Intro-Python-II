@@ -4,4 +4,13 @@ class Item:
         self.description = description
 
     def __repr__(self):
-        return f"{self.name}\n#########################\n{self.description}\n"
+        return self.name
+
+    def pick_up(self):
+        return f'You picked up {self.name}!'
+
+    def drop_it(self):
+        return f'You dropped {self.name}!'
+
+    def look(self):
+        return f'Item: {self.name}\nDescription: {self.description}'

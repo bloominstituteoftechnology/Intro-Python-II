@@ -16,3 +16,9 @@ class Player:
             self.current_room = getattr(self.current_room, attribute)
         else:
             print("That way is inaccessible, please go a different direction.\n")
+
+    def take_item(self, item):
+        self.inventory.append(item)
+
+    def drop_item(self, item):
+        self.inventory.remove(item)
