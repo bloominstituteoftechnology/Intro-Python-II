@@ -1,2 +1,8 @@
 Project:
-    - create pull request
+    - create pull request @done
+    - Create REPL command parser allows movement
+    - Fill Out Player and Room Classes
+    - Make rooms able to hold Items
+    - Player can carry multiple items
+    - Add items for player to carry around
+    - add get [Item-Name] and drop [Itme-name] commands to parser
