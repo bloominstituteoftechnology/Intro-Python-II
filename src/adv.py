@@ -50,14 +50,16 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-Player1 = Player(name=input("Please choose player name: "), desc="Coder Peasant ", satchel=" no items", location=room['outside'].desc)
+Player1 = Player(name=input("Please choose player name: "), desc=input("Enter Player Class: "), satchel=" no items", location=room['outside'])
 
 playerDesc = []
 
 for player in range(1):
+    playerDesc.append(Player1.name.strip())
     playerDesc.append(Player1.desc)
     playerDesc.append(Player1.satchel)
-    playerDesc.append(textwrap.wrap(Player1.location))
+    playerDesc.append('Location: ' + Player1.location.name)
+    playerDesc.append(Player1.location.desc)
 
 print(playerDesc)
 

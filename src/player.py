@@ -3,7 +3,7 @@
 class Player:
     def __init__(self, name, desc, satchel, location):
         self.name = name
-        self.desc = name
+        self.desc = desc
         self.satchel = satchel
         self.location = location
 
