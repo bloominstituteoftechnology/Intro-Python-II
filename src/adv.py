@@ -31,7 +31,7 @@ room = {
 
     'guestroom': Room("Guest Room", """Stay awhile.""", ['PITCHER', 'PILLOW', 'FRAME']),
 
-    'northterrace': Room("North Terrace", """Lovely views of the nearby village.""", ['LILY', 'BINOCULARS', 'CRICKET BAT']),
+    'northterrace': Room("North Terrace", """Lovely views of the nearby village.""", ['LILY', 'BINOCULARS', 'RAQUET']),
 
     'drawingroom': Room("Drawing Room", """Looking for a quiet spot to read or embroider? You've found the spot.""", ['NOVEL', 'PAINTBRUSH', 'NEEDLE']),
 
