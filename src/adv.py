@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+import textwrap
 
 # Declare all the rooms
 room = {
@@ -44,9 +45,20 @@ room['treasure'].s_to = room['narrow']
 # * Waits for user input and decides what to do.
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
-
+#
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-Javier = Player(name="javier", desc="Coder Peasant", satchel="no items", location=room['outside'])
+
+Player1 = Player(name=input("Please choose player name: "), desc="Coder Peasant ", satchel=" no items", location=room['outside'].desc)
+
+playerDesc = []
+
+for player in range(1):
+    playerDesc.append(Player1.desc)
+    playerDesc.append(Player1.satchel)
+    playerDesc.append(textwrap.wrap(Player1.location))
+
+print(playerDesc)
+
 
