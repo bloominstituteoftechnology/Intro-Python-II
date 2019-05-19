@@ -117,23 +117,21 @@ while direction != 'q':
             winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)
             player_one.room = player_one.room.s_to 
             print("\033[1;36;40m")  
-            print(player_one.room)
-      
+            print(player_one.room)    
         elif direction == 'e':
             player_one.room = player_one.room.e_to 
             print("\033[1;36;40m")  
             print(player_one.room)
-
         elif direction == 'w':
             player_one.room = player_one.room.w_to      
             print("\033[1;36;40m")  
             print(player_one.room)
-
         elif direction == 'i':
             player_one.print_inventory()   
+            winsound.SND_FILENAME = "01_opentreasure.wav"
+            winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)
         else:
             print("\033[1;35;40m Not a valid entry, please select n,s,e,w, i for inventory or q to quit:\n ")
-
     elif len(commands) == 2:
         #parse out words
         if commands[0] == "get":
@@ -145,7 +143,8 @@ while direction != 'q':
                     print("You picked up " + i)
                     print("Inventory is:")
                     player_one.print_inventory() 
-                    
+                    winsound.SND_FILENAME = "01_Coin.wav"
+                    winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)               
                 else:
                     print("Please select a valid item")
             
@@ -157,7 +156,8 @@ while direction != 'q':
                     player_one.inventory.pop()
                     print("Inventory is now: ")
                     player_one.print_inventory() 
-                    #player_one.room.inventory.append(i)
+                    winsound.SND_FILENAME = "02_Coin.wav"
+                    winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)
                 else:
                     print("item not found")    
         else:
@@ -167,7 +167,9 @@ while direction != 'q':
 
       
   except:
-      print("\033[1;35;40m Cant go in that direction\n")  
+    winsound.SND_FILENAME = "mismatch.wav"
+    winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)
+    print("\033[1;35;40m Cant go in that direction\n")  
   
   print("\033[1;33;40m")
   direction = input("Select the direction to go: n,s,e,w i for inventory or q to quit: ")
