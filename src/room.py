@@ -10,16 +10,16 @@ class Room:
    
 
   def __str__(self):
-        output = "You have entered..." + str(self.name)
-        output += "\n" + self.description
-        output += "\nItems:"
-        for i in self.inventory:
-              output += i 
-        return output
+    output = "You have entered..." + str(self.name)
+    output += "\n" + self.description
+    output += "\nItems:"
+    for i in self.inventory:
+      output += i + ', ' 
+    return output
     
   def take_item(self, item):
-        for i in self.inventory:
-          output += "n " + i
-        return output
+    for i in self.inventory:
+      output += "n " + i
+    return output
     
               

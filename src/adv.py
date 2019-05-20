@@ -12,19 +12,22 @@ North of you, the cave mount beckons
 
     'foyer':    Room("Foyer", """==============================================
 Dim light filters in from the south. Dusty
-passages run north, east and west.
-==============================================""", ['Gold']),
+passages run north, east and west. You are
+greeted by a pile of gold on the ground.
+==============================================""", ['gold']),
 
     'overlook': Room("Grand Overlook", """==============================================
 A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm.
-==============================================""", ['Axe']),
+On the edge lies a forgotten axe
+==============================================""", ['axe']),
 
     'narrow':   Room("Narrow Passage", """==============================================
 The narrow passage bends here from west
-to north. The smell of gold permeates the air.
-==============================================""", ['Sword']),
+to north. The smell of mold permeates the air.
+In all the decay you discover a sword.
+==============================================""", ['sword']),
 
     'treasure': Room("Treasure Chamber", """==============================================
 You've found the long-lost treasure
@@ -33,19 +36,21 @@ earlier adventurers. The only exit is to the south.
 =============================================="""),
 
 'corridor':  Room("The Corridor", """==============================================
-Ancient Passage to the Unknown
+Ancient Passage to the Unknown. It is up to you
+to decide to venture on.
 =============================================="""),
 
     'pass':    Room("The Deserted Pass", """==============================================
 A barely visible trail runs from the north and south.
 You can see what appears to be a forest to the south.
-==============================================""", ['Diamond']),
+You also spot a diamond on the ground.
+==============================================""", ['diamond']),
 
     'trail': Room("Forest Trail", """==============================================
 You are surrounded by trees and creatures of the night.
 You spot something shiny and identify it as a dagger.
 Trail runs north, south and east.
-==============================================""", ['Dagger']),
+==============================================""", ['dagger']),
 
     'cave':   Room("Dead Mans Cave", """==============================================
 You just passed throught the mouth of a large cave.
@@ -126,6 +131,7 @@ while direction != 'q':
             print("\033[1;36;40m")  
             print(player_one.room)
         elif direction == 'i':
+            print("\033[1;31;40m")
             player_one.print_inventory()   
             player_one.play_audio("01_opentreasure.wav")
         else:
@@ -138,6 +144,7 @@ while direction != 'q':
                 if i == commands[1]:
                     player_one.inventory.append(i)   
                     player_one.room.inventory.pop()
+                    print("\033[1;31;40m")
                     print("You picked up " + i)
                     print("Inventory is:")
                     player_one.print_inventory() 
@@ -149,6 +156,7 @@ while direction != 'q':
             for i in player_one.inventory:
                 if i == commands[1]:
                     player_one.room.inventory.append(i)   
+                    print("\033[1;31;40m")
                     print("You dropped " + i)
                     player_one.inventory.pop()
                     print("Inventory is now: ")
