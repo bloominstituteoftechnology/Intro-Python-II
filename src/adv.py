@@ -96,8 +96,7 @@ print(player_one.room.name)
 print(player_one.room.description)
 # * Waits for user input and decides what to do.
 print("\033[1;33;40m")
-winsound.SND_FILENAME = "music5.wav"
-winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)
+player_one.play_audio("music5.wav")
 print("Enter: get item_name or: drop item_name...")
 direction = input("Select the direction to go: n,s,e,w or q to quit: ").strip()
 
@@ -107,29 +106,28 @@ while direction != 'q':
     commands = direction.split()
     if len(commands) == 1: 
         if direction == 'n':
-            winsound.SND_FILENAME = "scorpwalk1.wav"
-            winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)
+            player_one.play_audio("scorpwalk1.wav") 
             player_one.room = player_one.room.n_to 
             print("\033[1;36;40m")  
             print(player_one.room)
         elif direction == 's':
-            winsound.SND_FILENAME = "scorpwalk2.wav"
-            winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)
+            player_one.play_audio("scorpwalk2.wav") 
             player_one.room = player_one.room.s_to 
             print("\033[1;36;40m")  
             print(player_one.room)    
         elif direction == 'e':
+            player_one.play_audio("scorpwalk1.wav")
             player_one.room = player_one.room.e_to 
             print("\033[1;36;40m")  
             print(player_one.room)
         elif direction == 'w':
+            player_one.play_audio("scorpwalk2.wav")
             player_one.room = player_one.room.w_to      
             print("\033[1;36;40m")  
             print(player_one.room)
         elif direction == 'i':
             player_one.print_inventory()   
-            winsound.SND_FILENAME = "01_opentreasure.wav"
-            winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)
+            player_one.play_audio("01_opentreasure.wav")
         else:
             print("\033[1;35;40m Not a valid entry, please select n,s,e,w, i for inventory or q to quit:\n ")
     elif len(commands) == 2:
@@ -143,8 +141,7 @@ while direction != 'q':
                     print("You picked up " + i)
                     print("Inventory is:")
                     player_one.print_inventory() 
-                    winsound.SND_FILENAME = "01_Coin.wav"
-                    winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)               
+                    player_one.play_audio("01_Coin.wav")
                 else:
                     print("Please select a valid item")
             
@@ -156,8 +153,7 @@ while direction != 'q':
                     player_one.inventory.pop()
                     print("Inventory is now: ")
                     player_one.print_inventory() 
-                    winsound.SND_FILENAME = "02_Coin.wav"
-                    winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)
+                    player_one.play_audio("02_Coin.wav")
                 else:
                     print("item not found")    
         else:
@@ -167,8 +163,7 @@ while direction != 'q':
 
       
   except:
-    winsound.SND_FILENAME = "mismatch.wav"
-    winsound.PlaySound(winsound.SND_FILENAME, winsound.SND_ASYNC)
+    player_one.play_audio("mismatch.wav")
     print("\033[1;35;40m Cant go in that direction\n")  
   
   print("\033[1;33;40m")
