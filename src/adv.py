@@ -143,7 +143,7 @@ while direction != 'q':
                     if not player_one.am_alive():
                         break
                 else:
-                    print("Nothing  to attack...")
+                    print("Nothing to attack...")
         elif direction == 'r':
             print("run")
         else:
