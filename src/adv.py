@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -33,11 +34,20 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Items in rooms
+
+room['foyer'].items = 'dust'
+room['overlook'].items = 'sword'
+
 #
 # Main
 #
+name = input("Welcome! Please enter your name: ")
 
 # Make a new player object that is currently in the 'outside' room.
+
+player = Player(name, room['outside'], [])
+
 
 # Write a loop that:
 #
@@ -49,3 +59,51 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+def move_player(direction):
+    error = "\nThere is no room here, please try again\n"
+    if direction == 'n':
+        if player.current_room.n_to is not None:
+            player.current_room = player.current_room.n_to
+        else:
+            print(error)
+    elif direction == 's':
+        if player.current_room.s_to is not None:
+            player.current_room = player.current_room.s_to
+        else:
+            print(error)
+    elif direction == 'e':
+        if player.current_room.e_to is not None:
+            player.current_room = player.current_room.e_to
+        else:
+            print(error)
+    elif direction == 'w':
+        if player.current_room.w_to is not None:
+            player.current_room = player.current_room.w_to
+        else:
+            print(error)
+
+def pick_up_item(decision):
+    if decision == 'y':
+        player.inventory.append(player.current_room.items)
+        player.current_room.items = None
+    
+    
+
+while True:
+    print(f'Current Room: {player.current_room.name}\n \n{player.current_room.description}\n\n')
+    print(f"Inventory: {player.inventory}")
+    move = input("Move North(n), South(s), East(e), or West(w) (q to quit game)")
+    move_player(move)
+    if move == 'q':
+        break
+    elif player.current_room is not None:
+        if player.current_room.items:
+            pick_up = input("There's an item here, would you like to pick it up? (y/n)")
+            current_item = player.current_room.items
+            pick_up_item(pick_up)
+            print(f"~~~~~{player.name}, you've picked up {current_item}~~~~~")
+        continue
+    else:
+        print("This room does not exist. Please try again.")
+
+
