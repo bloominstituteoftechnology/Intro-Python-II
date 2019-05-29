@@ -1,5 +1,8 @@
 from room import Room
 from player import Player
+from Item import Item
+from Item import Weapon
+from Item import Treasure
 
 # Declare all the rooms
 
@@ -23,16 +26,31 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 
+# Put rooms into properties for easier coding
+
+outside_room = room['outside']
+foyer_room = room['foyer']
+overlook_room = room['overlook']
+narrow_room = room['narrow']
+treausure_room = room['treasure']
+
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+outside_room.n_to = room['foyer']
+foyer_room.s_to = room['outside']
+foyer_room.n_to = room['overlook']
+foyer_room.e_to = room['narrow']
+overlook_room.s_to = room['foyer']
+narrow_room.w_to = room['foyer']
+narrow_room.n_to = room['treasure']
+treausure_room.s_to = room['narrow']
+
+# Add items to rooms
+
+outside_room.items = [Item("Torch", "The torch is well-fashioned and will shine brightly for a long time.")]
+overlook_room.items = [Weapon("Hatchet", "A small hatchet that can easily fit inside your belt loop. It can be used as a tool or a weapon.", 1)]
+treausure_room.items = [Treasure("Gold Coin", "It shines in the light.", 1), Treasure("Emerald", "It looks real.", 5)]
+
 
 #
 # Main
@@ -53,7 +71,7 @@ new_player = Player(room['outside'])
 #
 # If the user enters "q", quit the game.
 
-cmds = ["n", "s", "e", "w", "q"]
+single_letter_cmds = ["n", "s", "e", "w", "q"]
 
 
 def change_room(direction):
@@ -78,14 +96,7 @@ def change_room(direction):
         else:
             new_player.current_room = new_player.current_room.w_to
 
-
-
-while True:
-    print(new_player.current_room.name)
-    print(new_player.current_room.description)
-    cmd = input("--> ")
-    if cmd not in cmds:
-        cmd = input("Invalid command. Please input \"n\", \"s\", \"e\", \"w\" or \"q\".\n--> ")
+def single_letter_cmd(single_letter_cmd):
     if cmd == "q":
         exit()
     if cmd == "n":
@@ -96,3 +107,16 @@ while True:
         change_room("e")
     if cmd == "w":
         change_room("w")
+
+
+
+while True:
+    print(new_player.current_room.name)
+    print(new_player.current_room.description)
+    if new_player.current_room.items != None:
+        for item in new_player.current_room.items:
+            print(f"You see a {item.name}.")
+    cmd = input("--> ")
+    if cmd in single_letter_cmds:
+        single_letter_cmd(cmd)
+
