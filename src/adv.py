@@ -140,30 +140,38 @@ def split_cmd(cmd):
         if "torch" in cmd and items_dict["torch"] in new_player.current_room.items:
             new_player.take_item(items_dict["torch"])
             new_player.current_room.lose_item(items_dict["torch"])
-        if "hatchet" in cmd and items_dict["hatchet"] in new_player.current_room.items:
+            items_dict["torch"].on_take()
+        elif "hatchet" in cmd and items_dict["hatchet"] in new_player.current_room.items:
             new_player.take_item(items_dict["hatchet"])
             new_player.current_room.lose_item(items_dict["hatchet"])
-        if "coins" in cmd and items_dict["coins"] in new_player.current_room.items:
+            items_dict["hatchet"].on_take()
+        elif "coins" in cmd and items_dict["coins"] in new_player.current_room.items:
             new_player.take_item(items_dict["coins"])
             new_player.current_room.lose_item(items_dict["coins"])
-        if "emerald" in cmd and items_dict["emerald"] in new_player.current_room.items:
+            items_dict["coins"].on_take()
+        elif "emerald" in cmd and items_dict["emerald"] in new_player.current_room.items:
             new_player.take_item(items_dict["emerald"])
             new_player.current_room.lose_item(items_dict["emerald"])
+            items_dict["emerald"].on_take()
         else:
             print("You can't take that.")
     elif "drop" in cmd:
         if "torch" in cmd and items_dict["torch"] in new_player.items:
             new_player.drop_item(items_dict["torch"])
             new_player.current_room.get_item(items_dict["torch"])
-        if "hatchet" in cmd and items_dict["hatchet"] in new_player.items:
+            items_dict["torch"].on_drop()
+        elif "hatchet" in cmd and items_dict["hatchet"] in new_player.items:
             new_player.drop_item(items_dict["hatchet"])
             new_player.current_room.get_item(items_dict["hatchet"])
-        if "coins" in cmd and items_dict["coins"] in new_player.items:
+            items_dict["hatchet"].on_drop()
+        elif "coins" in cmd and items_dict["coins"] in new_player.items:
             new_player.drop_item(items_dict["coins"])
             new_player.current_room.get_item(items_dict["coins"])
-        if "emerald" in cmd and items_dict["emerald"] in new_player.items:
+            items_dict["coins"].on_drop()
+        elif "emerald" in cmd and items_dict["emerald"] in new_player.items:
             new_player.drop_item(items_dict["emerald"])
             new_player.current_room.get_item(items_dict["emerald"])
+            items_dict["emerald"].on_drop()
         else:
             print("You can't drop that.")
 

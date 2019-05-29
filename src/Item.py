@@ -8,6 +8,9 @@ class Item:
     def on_take(self):
         print(f"You have picked up the {self.name}.")
 
+    def on_drop(self):
+        print(f"You have dropped the {self.name}.")
+
 class Weapon(Item):
     def __init__(self, name, description, damage):
         super().__init__(name, description)
