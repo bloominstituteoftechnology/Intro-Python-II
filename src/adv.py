@@ -1,8 +1,11 @@
 from textwrap3 import wrap
+from colorama import Fore, Back, Style 
+import re
+
 from room import Room
 from player import Player
 from item import Item, LightSource
-import re
+
 
 # Declare all the rooms
 
@@ -49,8 +52,10 @@ room['treasure'].s_to = room['narrow']
 def is_light(player, room):
     return (len([i for i in player.items if isinstance(i, LightSource)]) > 0) or \
            (len([i for i in room.items if isinstance(i, LightSource)]) > 0)    
-
-#
+def prCyan(skk): print(f"\033[96m{skk}\033[00m") 
+def prBold(skk): print(f"\033[01m{skk}\033[00m")
+def fmLightGray(skk): return f"\033[44m\033[33m{skk}\033[00m"
+#\e[0;37m
 # Main
 #
 
@@ -67,15 +72,17 @@ def is_light(player, room):
 #
 # If the user enters "q", quit the game.
 croom = room['outside']
-player = Player('Mark', croom, [Item('walking stick', 'for walking')])
-directions = 'enter "n", "s", "e", or "w" , or "get/take" or "drop" item, or i[nventory] or q to exit '
+player = Player('Mark', croom, [Item('walking stick', 'for walking'),LightSource('flashlight', 'for searching')])
+directions = fmLightGray('enter "n", "s", "e", or "w" , or "get/take" or "drop" item, or i[nventory] or q to exit ')
 black = "It's pitch black!"
 dlist = list("ewns")
 while True:
-    print(croom.name)
+    prBold(croom.name)
     lines = wrap(croom.description, 110)
+    print("\033[33m")
     for line in lines:
         print(line)
+    print("\033[00m")
     text = input(directions)
     texts = text.split(' ')
     if len(texts) > 2:
@@ -94,7 +101,7 @@ while True:
                         player.items.append(item)
                         item.on_take()
                     else:
-                        print("Good luck finding that in the dark!")
+                        print(fmLightGray("Good luck finding that in the dark!"))
                 else:
                     print(f"room doesn't have item {texts[1]}")
             elif texts[0] == 'drop':
@@ -115,14 +122,15 @@ while True:
 
     if text in ['i','inventory']:
         if is_light(player, croom):
-            print(f'player {player.name} items')
+            print(f'{fmLightGray("player")} {Fore.BLACK}{Back.GREEN}{player.name}{Style.RESET_ALL} {fmLightGray("items")}')
             for item in player.items:
-                print(f'name: {item.name}  description:')
+                print(f'{fmLightGray("name:")} {Fore.GREEN}{item.name}{Fore.WHITE}  {fmLightGray("description:")}')
                 lines = wrap(item.description, 110)
                 for line in lines:
-                    print(line)
+                    prCyan(line)
+
         else:
-            print(black)  
+            print("\033[04m\033[31m" + black + "\033[00m")  
         continue          
 
 
