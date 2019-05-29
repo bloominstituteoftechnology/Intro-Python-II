@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -30,9 +31,11 @@ room['braavos'].w_to = room['riverrun']
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
+# Make a new player object that is currently in the 'winterfell' room.
+player1 = Player("John", "winterfell")
 
 # Write a loop that:
+
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
@@ -42,3 +45,13 @@ room['braavos'].w_to = room['riverrun']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+directions = ''
+
+while directions != 'q':
+    print(
+        f"You, {player1.name} are currently in {room[player1.current_room].name} ")
+
+    directions = input(
+        "Where would you like to go? Use north/south/west/east for navigation")
+
+    print(f"You have decided to go {directions} ")
