@@ -79,7 +79,7 @@ new_player = Player(room['outside'])
 # If the user enters "q", quit the game.
 
 single_letter_cmds = ["n", "s", "e", "w", "q"]
-split_cmds = ["take", "drop"]
+split_cmds = ["take", "get", "drop"]
 item_cmds = ["torch", "hatchet", "coins", "emerald"]
 
 def change_room(direction):
@@ -132,6 +132,21 @@ def split_cmd(cmd):
             new_player.current_room.lose_item(items_dict["emerald"])
         else:
             print("You can't take that.")
+    elif "get" in cmd:
+        if "torch" in cmd and items_dict["torch"] in new_player.current_room.items:
+            new_player.take_item(items_dict["torch"])
+            new_player.current_room.lose_item(items_dict["torch"])
+        if "hatchet" in cmd and items_dict["hatchet"] in new_player.current_room.items:
+            new_player.take_item(items_dict["hatchet"])
+            new_player.current_room.lose_item(items_dict["hatchet"])
+        if "coins" in cmd and items_dict["coins"] in new_player.current_room.items:
+            new_player.take_item(items_dict["coins"])
+            new_player.current_room.lose_item(items_dict["coins"])
+        if "emerald" in cmd and items_dict["emerald"] in new_player.current_room.items:
+            new_player.take_item(items_dict["emerald"])
+            new_player.current_room.lose_item(items_dict["emerald"])
+        else:
+            print("You can't take that.")
     elif "drop" in cmd:
         if "torch" in cmd and items_dict["torch"] in new_player.items:
             new_player.drop_item(items_dict["torch"])
@@ -163,7 +178,7 @@ while True:
     if len(cmd.split()) > 1:
         split_cmd(cmd)
 
-    if cmd in single_letter_cmds:
+    elif cmd in single_letter_cmds:
         single_letter_cmd(cmd)
 
 
