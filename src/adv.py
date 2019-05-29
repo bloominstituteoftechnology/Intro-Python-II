@@ -47,9 +47,16 @@ treausure_room.s_to = room['narrow']
 
 # Add items to rooms
 
-outside_room.items = [Item("Torch", "The torch is well-fashioned and will shine brightly for a long time.")]
-overlook_room.items = [Weapon("Hatchet", "A small hatchet that can easily fit inside your belt loop. It can be used as a tool or a weapon.", 1)]
-treausure_room.items = [Treasure("Gold Coin", "It shines in the light.", 1), Treasure("Emerald", "It looks real.", 5)]
+items_dict = {
+    "torch": Item("torch", "The torch is well-fashioned and will shine brightly for a long time."),
+    "hatchet": Weapon("hatchet", "A small hatchet that can easily fit inside your belt loop. It can be used as a tool or a weapon.", 1),
+    "coins": Treasure("coins", "They shines in the light.", 10),
+    "emerald": Treasure("emerald", "It looks real.", 5)
+}
+
+outside_room.items = [items_dict["torch"]]
+overlook_room.items = [items_dict["hatchet"]]
+treausure_room.items = [items_dict["coins"], items_dict["emerald"]]
 
 
 #
@@ -72,7 +79,8 @@ new_player = Player(room['outside'])
 # If the user enters "q", quit the game.
 
 single_letter_cmds = ["n", "s", "e", "w", "q"]
-
+split_cmds = ["take", "drop"]
+item_cmds = ["torch", "hatchet", "coins", "emerald"]
 
 def change_room(direction):
     if direction == "n":
@@ -99,15 +107,46 @@ def change_room(direction):
 def single_letter_cmd(single_letter_cmd):
     if cmd == "q":
         exit()
-    if cmd == "n":
+    elif cmd == "n":
         change_room("n")
-    if cmd == "s":
+    elif cmd == "s":
         change_room("s")
-    if cmd == "e":
+    elif cmd == "e":
         change_room("e")
-    if cmd == "w":
+    elif cmd == "w":
         change_room("w")
 
+def split_cmd(cmd):
+    if "take" in cmd:
+        if "torch" in cmd and items_dict["torch"] in new_player.current_room.items:
+            new_player.take_item(items_dict["torch"])
+            new_player.current_room.lose_item(items_dict["torch"])
+        if "hatchet" in cmd and items_dict["hatchet"] in new_player.current_room.items:
+            new_player.take_item(items_dict["hatchet"])
+            new_player.current_room.lose_item(items_dict["hatchet"])
+        if "coins" in cmd and items_dict["coins"] in new_player.current_room.items:
+            new_player.take_item(items_dict["coins"])
+            new_player.current_room.lose_item(items_dict["coins"])
+        if "emerald" in cmd and items_dict["emerald"] in new_player.current_room.items:
+            new_player.take_item(items_dict["emerald"])
+            new_player.current_room.lose_item(items_dict["emerald"])
+        else:
+            print("You can't take that.")
+    elif "drop" in cmd:
+        if "torch" in cmd and items_dict["torch"] in new_player.items:
+            new_player.drop_item(items_dict["torch"])
+            new_player.current_room.get_item(items_dict["torch"])
+        if "hatchet" in cmd and items_dict["hatchet"] in new_player.items:
+            new_player.drop_item(items_dict["hatchet"])
+            new_player.current_room.get_item(items_dict["hatchet"])
+        if "coins" in cmd and items_dict["coins"] in new_player.items:
+            new_player.drop_item(items_dict["coins"])
+            new_player.current_room.get_item(items_dict["coins"])
+        if "emerald" in cmd and items_dict["emerald"] in new_player.items:
+            new_player.drop_item(items_dict["emerald"])
+            new_player.current_room.get_item(items_dict["emerald"])
+        else:
+            print("You can't drop that.")
 
 
 while True:
@@ -116,7 +155,15 @@ while True:
     if new_player.current_room.items != None:
         for item in new_player.current_room.items:
             print(f"You see a {item.name}.")
+    if new_player.items != None:
+        for item in new_player.items:
+            print(f"You have a {item.name}")
     cmd = input("--> ")
+
+    if len(cmd.split()) > 1:
+        split_cmd(cmd)
+
     if cmd in single_letter_cmds:
         single_letter_cmd(cmd)
+
 
