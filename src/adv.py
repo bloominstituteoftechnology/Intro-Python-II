@@ -1,31 +1,32 @@
 from textwrap3 import wrap
 from room import Room
 from player import Player
-from item import Item
+from item import Item, LightSource
+import re
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", [Item('rope', 'for climbing'),
-                                                              Item('breadcrumbs', 'to find way back')]),
+                     "North of you, the cave mount beckons", True, [Item('rope', 'for climbing'),
+                                                                    Item('breadcrumbs', 'to find way back')] ),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", [Item('compass', 'for direction'),
-                                  Item('binoculars', 'to see farther'),
-                                  Item('drone', 'to scout')]),
+passages run north and east.""", False, [Item('compass', 'for direction'),
+                                         Item('binoculars', 'to see farther'),
+                                         Item('drone', 'to scout'),
+                                         LightSource('candle', "to see")]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", [Item('lattern', 'for light'),
-                                                         Item('bucket', 'for carrying things')]),
+the distance, but there is no way across the chasm.""", True, [LightSource('lattern', 'for light'),
+                                                               Item('bucket', 'for carrying things')]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", [Item('mre', 'to eat'),
-                                                    Item('water', 'to drink'),
-                                                    Item('shovel', 'to dig'),
-                                                    Item('ax', 'to chop')
-                                                    ]),
+to north. The smell of gold permeates the air.""", False, [Item('mre', 'to eat'),
+                                                           Item('water', 'to drink'),
+                                                           Item('shovel', 'to dig'),
+                                                           Item('ax', 'to chop')]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
@@ -44,6 +45,11 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+def is_light(player, room):
+    return (len([i for i in player.items if isinstance(i, LightSource)]) > 0) or \
+           (len([i for i in room.items if isinstance(i, LightSource)]) > 0)    
+
 #
 # Main
 #
@@ -61,8 +67,9 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 croom = room['outside']
-player = Player('Mark', croom, [Item('walking_stick', 'for walking')])
+player = Player('Mark', croom, [Item('walking stick', 'for walking')])
 directions = 'enter "n", "s", "e", or "w" , or "get/take" or "drop" item, or i[nventory] or q to exit '
+black = "It's pitch black!"
 dlist = list("ewns")
 while True:
     print(croom.name)
@@ -71,16 +78,23 @@ while True:
         print(line)
     text = input(directions)
     texts = text.split(' ')
+    if len(texts) > 2:
+        m = re.match(r"(\w+)\s\"([\w\s]+)\"", text)
+        if len(m.groups()) == 2:
+            texts = [m.group(1),m.group(2)]
     if len(texts) > 1:
         if len(texts) == 2:
             if texts[0] in ['get', 'take']:
                 names = [i.name for i in croom.items]
                 if texts[1] in names:
-                    index = names.index(texts[1])
-                    item = croom.items[index]
-                    croom.items.remove(item)
-                    player.items.append(item)
-                    item.on_take()
+                    if is_light(player, croom):
+                        index = names.index(texts[1])
+                        item = croom.items[index]
+                        croom.items.remove(item)
+                        player.items.append(item)
+                        item.on_take()
+                    else:
+                        print("Good luck finding that in the dark!")
                 else:
                     print(f"room doesn't have item {texts[1]}")
             elif texts[0] == 'drop':
@@ -100,12 +114,15 @@ while True:
         continue
 
     if text in ['i','inventory']:
-        print(f'player {player.name} items')
-        for item in player.items:
-            print(f'name: {item.name}  description:')
-            lines = wrap(item.description, 110)
-            for line in lines:
-                print(line)  
+        if is_light(player, croom):
+            print(f'player {player.name} items')
+            for item in player.items:
+                print(f'name: {item.name}  description:')
+                lines = wrap(item.description, 110)
+                for line in lines:
+                    print(line)
+        else:
+            print(black)  
         continue          
 
 
