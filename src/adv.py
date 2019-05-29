@@ -41,12 +41,10 @@ room['overlook'].items = 'sword'
 
 #
 # Main
-#
-name = input("Welcome! Please enter your name: ")
 
 # Make a new player object that is currently in the 'outside' room.
 
-player = Player(name, room['outside'], [])
+player = Player(input("Welcome! Please enter your name: "), room['outside'], [])
 
 
 # Write a loop that:
@@ -59,6 +57,17 @@ player = Player(name, room['outside'], [])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def pick_up_item(decision):
+    if decision == 'y':
+        player.inventory.append(player.current_room.items)
+        player.current_room.items = None
+
+def drop_item():
+    drop = input("Would you like to drop any items from your inventory?(input item name to drop)")
+    player.inventory.remove(drop)
+
+
 def move_player(direction):
     error = "\nThere is no room here, please try again\n"
     if direction == 'n':
@@ -81,18 +90,16 @@ def move_player(direction):
             player.current_room = player.current_room.w_to
         else:
             print(error)
+    elif direction == 'i':
+       if player.inventory is not None:
+           drop_item()
 
-def pick_up_item(decision):
-    if decision == 'y':
-        player.inventory.append(player.current_room.items)
-        player.current_room.items = None
-    
     
 
 while True:
     print(f'Current Room: {player.current_room.name}\n \n{player.current_room.description}\n\n')
     print(f"Inventory: {player.inventory}")
-    move = input("Move North(n), South(s), East(e), or West(w) (q to quit game)")
+    move = input("Move North(n), South(s), East(e), or West(w) \nItem Action(i) \nQuit Game(q)")
     move_player(move)
     if move == 'q':
         break
