@@ -3,6 +3,7 @@ from player import Player
 from Item import Item
 from Item import Weapon
 from Item import Treasure
+from Item import LightSource
 
 # Declare all the rooms
 
@@ -119,7 +120,9 @@ def single_letter_cmd(single_letter_cmd):
 
 def split_cmd(cmd):
     if "take" in cmd:
-        if "lamp" in cmd and items_dict["lamp"] in new_player.current_room.items:
+        if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
+            print("Good luck finding that in the dark!")
+        elif "lamp" in cmd and items_dict["lamp"] in new_player.current_room.items:
             new_player.take_item(items_dict["lamp"])
             new_player.current_room.lose_item(items_dict["lamp"])
             items_dict["lamp"].on_take()
@@ -139,7 +142,9 @@ def split_cmd(cmd):
         else:
             print(f"You can't take that. There is no {cmd.split()[1]} here.")
     elif "get" in cmd:
-        if "lamp" in cmd and items_dict["lamp"] in new_player.current_room.items:
+        if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
+            print("Good luck finding that in the dark!")
+        elif "lamp" in cmd and items_dict["lamp"] in new_player.current_room.items:
             new_player.take_item(items_dict["lamp"])
             new_player.current_room.lose_item(items_dict["lamp"])
             items_dict["lamp"].on_take()
@@ -181,7 +186,6 @@ def split_cmd(cmd):
 
 
 while True:
-    
     if items_dict["lamp"] in new_player.items or new_player.current_room.is_light == True:
         print(new_player.current_room.name)
         print(new_player.current_room.description)
