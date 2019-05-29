@@ -174,9 +174,6 @@ while True:
     if new_player.current_room.items != None:
         for item in new_player.current_room.items:
             print(f"You see a {item.name}.")
-    if new_player.items != None:
-        for item in new_player.items:
-            print(f"You have a {item.name}")
     cmd = input("--> ")
 
     if len(cmd.split()) > 1:
