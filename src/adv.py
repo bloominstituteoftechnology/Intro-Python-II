@@ -106,6 +106,7 @@ def change_room(direction):
 
 def single_letter_cmd(single_letter_cmd):
     if cmd == "q":
+        print("Thanks for playing!")
         exit()
     elif cmd == "n":
         change_room("n")
