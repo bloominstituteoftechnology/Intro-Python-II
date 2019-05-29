@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+import textwrap as textwrap
 # Declare all the rooms
 
 room = {
@@ -38,14 +39,51 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
+print(player)
+while True:
+    print(textwrap.dedent(
+        f"""\
+        You are in room {player.room.name}
+        {player.room.description}!\
+        """))
+    print(textwrap.dedent('''
+            What would you like to do?
+            [n] Go North [s] Go South [e] Go East [w] Go West
+        '''))
+    command = input("\n>").lower().split()
+    if len(command) == 1:
+        # user has passed a direction
+        if command[0] == 'n':
+            print("you chose n")
+            player.room = player.room.n_to
+        elif command[0] == 's':
+            print("you chose s")
+            player.room = player.room.s_to
+        elif command[0] == 'e':
+            print("you chose e")
+            player.room = player.room.e_to
+        elif command[0] == 'w':
+            print("you chose w")
+            player.room = player.room.w_to
+        elif command[0] == 'q':
+            print("Thanks for Playing!")
+            break
+        else:
+            print("Not a valid direction!")
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+    elif len(command) == 2:
+        # user has passed two word command to interact with items
+        print("you're trying to interact with items, I can't do that yet")
+    else:
+        print("Sorry, I don't know that command")
+        continue
+# # Write a loop that:
+# # * Prints the current room name
+# # * Prints the current description (the textwrap module might be useful here).
+# # * Waits for user input and decides what to do.
+# #
+# # If the user enters a cardinal direction, attempt to move to the room there.
+# # Print an error message if the movement isn't allowed.
+# #
+# # If the user enters "q", quit the game.
