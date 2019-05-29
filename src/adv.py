@@ -1,7 +1,7 @@
 from room import Room
 from player import Player
 
-# Declare all the rooms
+# All the rooms
 
 room = {
     'winterfell':   Room("Winterfell", "Winterfell is the seat and the ancestral home of the royal House Stark. It is a very large castle located at the center of the North, from where the head of House Stark rules over his or her people.", "🐺"),
@@ -20,12 +20,11 @@ room = {
 
     'stormsend': Room("Storm's End", "Storm's End is the ancestral seat of House Baratheon. Lord Gendry Baratheon is the Lord of Storm's End. Storm's End is a formidable fortress, located on the southeastern coast of Westeros overlooking Shipbreaker Bay.", " 🌊"),
 
-    'sunspear': Room("Sunspear", "Sunspear is the capital of Dorne Dorne, southernmost of the Seven Kingdoms, located in the far southeast of the continent on the Summer Sea.", "☀️"),
-
-
-
+    'sunspear': Room("Sunspear", "Sunspear is the capital of Dorne Dorne, southernmost of the Seven Kingdoms, located in the far southeast of the continent on the Summer Sea.", "☀️")
 }
 
+# Player
+player = Player("Ivana", room["winterfell"])
 
 # Link rooms together
 room['winterfell'].n_to = room['riverrun']
@@ -60,25 +59,27 @@ room['sunspear'].e_to = room['stormsend']
 room['stormsend'].w_to = room['sunspear']
 room['stormsend'].s_to = room['kings_landing']
 
+# Messages
+hello = f"\n==========================================================\n 🌏   Hello and welcome to TRAVEL AROUND WESTEROS\n==========================================================\n"
+goodbye = f"\n==========================================================\n                   THANK YU FOR PLAYING!\n==========================================================\n"
+where_to_go = f"❔   Would you like to stay or go somewhere else? Use n/s/w/e for navigation: "
+walking = "walking ..."
 
-player = Player("Ivana", room["winterfell"])
+
+# Game logic
 directions = ''
 
-print("\n==========================================================")
-print(f" 🌏   Hello {player.name} and welcome to TRAVEL AROUND WESTEROS")
-print("==========================================================\n")
-
+print(f"{hello}")
 print(
-    f"You are currently in {player.current_room.name.upper()} {player.current_room.emoji} ")
+    f"{player.name} You are currently in {player.current_room.name.upper()} {player.current_room.emoji} ")
 
 while directions != 'q':
-    directions = input(
-        "❔   Would you like to stay or go somewhere else? Use n/s/w/e for navigation: ")
+    directions = input(f"{where_to_go}")
     try:
         if directions == "n":
             if player.current_room.s_to:
                 player.current_room = player.current_room.s_to
-                print("...walking...")
+                print(f"{walking}")
                 print(
                     f"You have decided to go north and you moved to {player.current_room.name.upper()} {player.current_room.emoji}")
                 print(f"{player.current_room.describtion}")
@@ -88,7 +89,7 @@ while directions != 'q':
         elif directions == "s":
             if player.current_room.n_to:
                 player.current_room = player.current_room.n_to
-                print("...walking...")
+                print(f"{walking}")
                 print(
                     f"You have decided to go south and you moved to {player.current_room.name.upper()} {player.current_room.emoji}")
                 print(f"{player.current_room.describtion}")
@@ -98,7 +99,7 @@ while directions != 'q':
         elif directions == "e":
             if player.current_room.w_to:
                 player.current_room = player.current_room.w_to
-                print("...walking...")
+                print(f"{walking}")
                 print(
                     f"You have decided to go east and you moved to {player.current_room.name.upper()} {player.current_room.emoji}")
                 print(f"{player.current_room.describtion}")
@@ -108,7 +109,7 @@ while directions != 'q':
         elif directions == "w":
             if player.current_room.e_to:
                 player.current_room = player.current_room.e_to
-                print("...walking...")
+                print(f"{walking}")
                 print(
                     f"You have decided to go east and you moved to {player.current_room.name.upper()}")
                 print(f"{player.current_room.describtion}")
@@ -116,12 +117,7 @@ while directions != 'q':
                 print(
                     f"⬅️  There is nothing west of {player.current_room.name.upper()}")
         elif directions == "q":
-            print("\n==========================================================")
-            print(
-                f"     SEEMS LIKE YOU ENJOY YOUR LIFE IN {player.current_room.name.upper()} {player.current_room.emoji}")
-            print(
-                f"         GOOD CHOICE AND THANK YU FOR PLAYING!")
-            print("==========================================================\n")
+            print(f"{goodbye}")
             break
         else:
             print("Please select a valid direction")
