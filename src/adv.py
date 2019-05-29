@@ -8,21 +8,21 @@ from Item import Treasure
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", True),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", True),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", False),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", True),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", False),
 }
 
 
@@ -48,13 +48,13 @@ treausure_room.s_to = room['narrow']
 # Add items to rooms
 
 items_dict = {
-    "torch": Item("torch", "The torch is well-fashioned and will shine brightly for a long time."),
+    "lamp": Item("lamp", "The lamp is well-fueled and will shine brightly for a long time."),
     "hatchet": Weapon("hatchet", "A small hatchet that can easily fit inside your belt loop. It can be used as a tool or a weapon.", 1),
     "coins": Treasure("coins", "They shines in the light.", 10),
     "emerald": Treasure("emerald", "It looks real.", 5)
 }
 
-outside_room.items = [items_dict["torch"]]
+narrow_room.items = [items_dict["lamp"]]
 overlook_room.items = [items_dict["hatchet"]]
 treausure_room.items = [items_dict["coins"], items_dict["emerald"]]
 
@@ -80,7 +80,7 @@ new_player = Player(room['outside'])
 
 single_letter_cmds = ["n", "s", "e", "w", "q", "i", "inventory"]
 split_cmds = ["take", "get", "drop"]
-item_cmds = ["torch", "hatchet", "coins", "emerald"]
+item_cmds = ["lamp", "hatchet", "coins", "emerald"]
 
 def change_room(direction):
     if direction == "n":
@@ -118,10 +118,11 @@ def single_letter_cmd(single_letter_cmd):
 
 def split_cmd(cmd):
     if "take" in cmd:
-        if "torch" in cmd and items_dict["torch"] in new_player.current_room.items:
-            new_player.take_item(items_dict["torch"])
-            new_player.current_room.lose_item(items_dict["torch"])
-            items_dict["torch"].on_take()
+        if "lamp" in cmd and items_dict["lamp"] in new_player.current_room.items:
+            new_player.take_item(items_dict["lamp"])
+            new_player.current_room.lose_item(items_dict["lamp"])
+            items_dict["lamp"].on_take()
+            new_player.current_room.is_light = False
         elif "hatchet" in cmd and items_dict["hatchet"] in new_player.current_room.items:
             new_player.take_item(items_dict["hatchet"])
             new_player.current_room.lose_item(items_dict["hatchet"])
@@ -137,10 +138,11 @@ def split_cmd(cmd):
         else:
             print(f"You can't take that. There is no {cmd.split()[1]} here.")
     elif "get" in cmd:
-        if "torch" in cmd and items_dict["torch"] in new_player.current_room.items:
-            new_player.take_item(items_dict["torch"])
-            new_player.current_room.lose_item(items_dict["torch"])
-            items_dict["torch"].on_take()
+        if "lamp" in cmd and items_dict["lamp"] in new_player.current_room.items:
+            new_player.take_item(items_dict["lamp"])
+            new_player.current_room.lose_item(items_dict["lamp"])
+            items_dict["lamp"].on_take()
+            new_player.current_room.is_light = False
         elif "hatchet" in cmd and items_dict["hatchet"] in new_player.current_room.items:
             new_player.take_item(items_dict["hatchet"])
             new_player.current_room.lose_item(items_dict["hatchet"])
@@ -156,10 +158,11 @@ def split_cmd(cmd):
         else:
             print("You can't take that.")
     elif "drop" in cmd:
-        if "torch" in cmd and items_dict["torch"] in new_player.items:
-            new_player.drop_item(items_dict["torch"])
-            new_player.current_room.get_item(items_dict["torch"])
-            items_dict["torch"].on_drop()
+        if "lamp" in cmd and items_dict["lamp"] in new_player.items:
+            new_player.drop_item(items_dict["lamp"])
+            new_player.current_room.get_item(items_dict["lamp"])
+            items_dict["lamp"].on_drop()
+            new_player.current_room.is_light = True
         elif "hatchet" in cmd and items_dict["hatchet"] in new_player.items:
             new_player.drop_item(items_dict["hatchet"])
             new_player.current_room.get_item(items_dict["hatchet"])
@@ -177,11 +180,15 @@ def split_cmd(cmd):
 
 
 while True:
-    print(new_player.current_room.name)
-    print(new_player.current_room.description)
-    if new_player.current_room.items != None:
-        for item in new_player.current_room.items:
-            print(f"You see a {item.name}.")
+    
+    if items_dict["lamp"] in new_player.items or new_player.current_room.is_light == True:
+        print(new_player.current_room.name)
+        print(new_player.current_room.description)
+        if new_player.current_room.items != None:
+            for item in new_player.current_room.items:
+                print(f"You see a {item.name}.")
+    if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
+        print("All you see is darkness.")
     cmd = input("--> ")
     if cmd not in single_letter_cmds and cmd not in item_cmds and cmd not in split_cmds:
         print(f"That command is not valid. Valid commands are: n, s, e, w, q, get, take, drop, i, inventory")
