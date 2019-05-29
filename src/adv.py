@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -49,3 +50,39 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player = Player("Fool","outside")
+
+while True:
+    curRoom = player.current_room
+    print(room[player.current_room],'\n')
+
+    cmd = input('What to do? ')
+
+    if (cmd == 'q'):
+        exit()
+    elif (curRoom == 'outside'):
+        if (cmd == 'n'):
+            player.current_room = 'foyer'
+    elif (curRoom == 'foyer'):
+        if (cmd == 's'):
+            player.current_room = 'outside'
+        elif (cmd == 'n'):
+            player.current_room = 'overlook'
+        elif (cmd == 'e'):
+            player.current_room = 'narrow'
+    elif (curRoom == 'overlook'):
+        if (cmd == 's'):
+            player.current_room = 'foyer'
+    elif (curRoom == 'narrow'):
+        if (cmd == 'w'):
+            player.current_room = 'foyer'
+        elif (cmd == 'n'):
+            player.current_room = 'treasure'
+    elif (curRoom == 'treasure'):
+        if (cmd == 's'):
+            player.current_room = 'narrow'
+    else:
+        print('Valid commands are as follow: q-to quit, n-move north, s-south, e-east, w-west\n')
+
+
