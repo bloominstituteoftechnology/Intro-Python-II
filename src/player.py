@@ -15,3 +15,7 @@ class Player:
     def __str__(self):
         output = '\n{self.name}\nCurrent Location:{self.current_room}\n'.format(self=self)
         return output
+    
+    #function to change location
+    #def changeLocation():
+        

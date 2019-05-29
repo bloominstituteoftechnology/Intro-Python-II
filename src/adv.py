@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -33,11 +34,25 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+#-------------------------------|
+#  Format for printing dialog   |
+#   print(room['treasure'])     |
+#-------------------------------|
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+#--------------------------------------------------------------------------|
+#     NEED TO BE ABLE TO CHANGE LOCATION WITH ON THE ACTUAL CLASS INSTANCE |
+#--------------------------------------------------------------------------|
+
+player1 = Player('Megan', room['outside'].location )
+player1.location = room['narrow'].location
+
+print(player1)
 
 # Write a loop that:
 #
