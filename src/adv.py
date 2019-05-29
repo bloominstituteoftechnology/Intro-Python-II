@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -37,7 +38,17 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+def grab_direction():
+    direction = input("\nPlease enter a direction of travel: ")
+    return direction
+
+print("Welcome to the game!\n")
+username = input("Please enter your players name: ")
+print(f"\nHello {username}, within this game you can navigate rooms using n, s, w, or e")
+
 # Make a new player object that is currently in the 'outside' room.
+player = Player(username, room["outside"])
+print(player)
 
 # Write a loop that:
 #
