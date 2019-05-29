@@ -38,9 +38,16 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+# list of acceptable inputs for the game
+valid_inputs = ["n", "s", "e", "w", "q"]
+
 def grab_direction():
-    direction = input("\nPlease enter a direction of travel: ")
-    return direction
+    direction = input("\nPlease enter a direction of travel: ").lower()
+    if direction in valid_inputs:
+        return direction
+    else:
+        print("Invalid entry! Please use 'n', 's', 'e' or 'w' to navigate\n Enter 'q' to exit the game")
+        grab_direction()
 
 print("Welcome to the game!\n")
 username = input("Please enter your players name: ")
@@ -60,3 +67,7 @@ print(player)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+direction = grab_direction()
+while (direction != "q"):
+    print(player.current_room)
+    direction = grab_direction()
