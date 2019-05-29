@@ -39,17 +39,25 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(room['outside'])
+player = Player(room['outside'], 'Michael')
+
+
+def print_items(items):
+    for item in items:
+        print(item)
+
+
 print(player)
 while True:
     print(textwrap.dedent(
         f"""\
         You are in room {player.room.name}
-        {player.room.description}!\
+        {player.room.description}!
+        The items in this room are: {print_items(player.room.items)}\
         """))
     print(textwrap.dedent('''
             What would you like to do?
-            [n] Go North [s] Go South [e] Go East [w] Go West
+            [n] Go North [s] Go South [e] Go East [w] Go West [q] Quit
         '''))
     command = input("\n>").lower().split()
     if len(command) == 1:
@@ -74,7 +82,8 @@ while True:
 
     elif len(command) == 2:
         # user has passed two word command to interact with items
-        print("you're trying to interact with items, I can't do that yet")
+        if command[0] == "get" or "take":
+            print(player.room.name)
     else:
         print("Sorry, I don't know that command")
         continue
