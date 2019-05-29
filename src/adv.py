@@ -78,7 +78,7 @@ new_player = Player(room['outside'])
 #
 # If the user enters "q", quit the game.
 
-single_letter_cmds = ["n", "s", "e", "w", "q"]
+single_letter_cmds = ["n", "s", "e", "w", "q", "i", "inventory"]
 split_cmds = ["take", "get", "drop"]
 item_cmds = ["torch", "hatchet", "coins", "emerald"]
 
@@ -183,10 +183,16 @@ while True:
         for item in new_player.current_room.items:
             print(f"You see a {item.name}.")
     cmd = input("--> ")
-
+    if cmd not in single_letter_cmds and cmd not in item_cmds and cmd not in split_cmds:
+        print(f"That command is not valid. Valid commands are: n, s, e, w, q, get, take, drop, i, inventory")
     if len(cmd.split()) > 1:
         split_cmd(cmd)
-
+    elif cmd == "i" or cmd == "inventory":
+        if len(new_player.items) > 0:
+            for item in new_player.items:
+                print(f"You have a {item.name}.")
+        else:
+            print("You currently have no items.")
     elif cmd in single_letter_cmds:
         single_letter_cmd(cmd)
 
