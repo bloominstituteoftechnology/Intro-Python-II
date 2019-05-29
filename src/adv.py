@@ -189,7 +189,7 @@ while True:
             for item in new_player.current_room.items:
                 print(f"You see a {item.name}.")
     if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
-        print("All you see is darkness.")
+        print("It's pitch black!")
     cmd = input("--> ")
     if cmd not in single_letter_cmds and cmd not in item_cmds and cmd not in split_cmds:
         print(f"That command is not valid. Valid commands are: n, s, e, w, q, get, take, drop, i, inventory")
