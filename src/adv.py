@@ -54,6 +54,28 @@ new_player = Player(room['outside'])
 # If the user enters "q", quit the game.
 
 while True:
-    print(new_player.current_room)
+    print(new_player.current_room.name)
     print(new_player.current_room.description)
-
+    cmd = input("--> ")
+    if cmd == "q":
+        exit()
+    if cmd == "n":
+        if new_player.current_room.n_to == None:
+            cmd = input("Invalid command. Please reread the room description and choose a different direction.\n--> ")
+        else:
+            new_player.current_room = new_player.current_room.n_to
+    if cmd == "s":
+        if new_player.current_room.s_to == None:
+            cmd = input("Invalid command. Please reread the room description and choose a different direction.\n--> ")
+        else:
+            new_player.current_room = new_player.current_room.s_to
+    if cmd == "e":
+        if new_player.current_room.e_to == None:
+            cmd = input("Invalid command. Please reread the room description and choose a different direction.\n--> ")
+        else:
+            new_player.current_room = new_player.current_room.e_to
+    if cmd == "w":
+        if new_player.current_room.w_to == None:
+            cmd = input("Invalid command. Please reread the room description and choose a different direction.\n--> ")
+        else:
+            new_player.current_room = new_player.current_room.w_to
