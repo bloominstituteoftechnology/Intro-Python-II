@@ -2,6 +2,7 @@ import random
 from room import Room
 from player import Player
 from adv_save import load_results, save_results
+import os
 
 
 
@@ -44,16 +45,16 @@ room['treasure'].s_to = room['narrow']
 curr_player = Player("Player1", room['outside'])
 
 # _______ welcome message _______
-# results = load_results()
-# wins = int(results[0])
-# ties = int( results[1])
-# losses = int(results[2])
-# initialize CLI
-print("Welcome to Astrillia !")
+curr_player.name = ''
+while curr_player.name == '':
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("Welcome to Astrillia !")
+    curr_player.name = input("What shall I call you m'Lord?   ",)
+
+print("\nGreetings, Sir "+curr_player.name+"!\n")
 print("You are currently "+curr_player.curr_room.name)
 print(curr_player.curr_room.description)
-
-print("Where would you like to go?..")
+print("\nWhere would you like to go?..")
 com_mand = input("choose: [n]North [s]South [e]East [w]West   [q]Quit\n",)
 
 # gamplay loop: Waits for user input and decides what to do.
@@ -63,24 +64,41 @@ com_mand = input("choose: [n]North [s]South [e]East [w]West   [q]Quit\n",)
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 
+
 while not com_mand == "q":  # If the user enters "q", quit the game.
+    os.system('cls' if os.name == 'nt' else 'clear')
     if com_mand == "n":
         print('you head north...')
+        try:
+            curr_player.curr_room = curr_player.curr_room.n_to
+        except:
+            print("\nYou cannot go that way m'lord...\n")
     elif com_mand == "s":
         print('you head south...')
+        try:
+            curr_player.curr_room = curr_player.curr_room.s_to
+        except:
+            print("\nYou cannot go that way m'lord...\n")
     elif com_mand == "e":
         print('you head east...')
+        try:
+            curr_player.curr_room = curr_player.curr_room.e_to
+        except:
+            print("\nYou cannot go that way m'lord...\n")
     elif com_mand == "w":
         print('you head west...')
+        try:
+            curr_player.curr_room = curr_player.curr_room.w_to
+        except:
+            print("\nYou cannot go that way m'lord...\n")
     else:
-        print("Invalid selection. Please try again.")
+        print("\nInvalid selection. Please try again.\n")
     
     # print updated location
-    # print("Wins: %s, Ties: %s, Losses: %s" % (wins, ties, losses))
-
-    # prompt user to make another selection
+    print("You are currently "+curr_player.curr_room.name)
+    print(curr_player.curr_room.description)
     com_mand = input("choose: [n]North [s]South [e]East [w]West   [q]Quit\n")
 
 # game over 
 # save_results(wins, ties, losses)
-print('thanks for playing!!....')
+print('Goodbye, Sir '+curr_player.name+'! Safe travels and return soon!!....')
