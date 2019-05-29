@@ -3,35 +3,28 @@ from room import Room
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'winterfell':   Room("Winterfell", "Winterfell is the seat and the ancestral home of the royal House Stark. It is a very large castle located at the center of the North, from where the head of House Stark rules over his or her people."),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'riverrun':    Room("Riverrun", "Riverrun is the seat of House Tully, which was once occupied by House Frey. It is a large castle located in the central-western part of the Riverlands."),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'kings_landing': Room("Kings Landing", "King's Landing is the capital, and largest city, of the Seven Kingdoms. It enjoys a warm climate and life there is luxurious for those that can afford it."),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'braavos':   Room("Braavos", "Braavos is one of the Free Cities located to the east of Westeros."),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+    'casterly_rock': Room("Casterly Rock", "Casterly Rock is the ancestral stronghold of House Lannister. It is located on the Western coast of Westeros on a rocky promontory overlooking the Sunset Sea."),
 }
 
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['winterfell'].n_to = room['riverrun']
+room['riverrun'].s_to = room['winterfell']
+room['riverrun'].n_to = room['kings_landing']
+room['riverrun'].e_to = room['braavos']
+room['kings_landing'].s_to = room['riverrun']
+room['braavos'].w_to = room['riverrun']
+# room['braavos'].n_to = room['casterly_rock']
+# room['casterly_rock'].s_to = room['braavos']
 
 #
 # Main
