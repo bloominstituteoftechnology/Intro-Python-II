@@ -4,8 +4,7 @@ from player import Player
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("Outside Cave Entrance", "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -50,10 +49,6 @@ player = Player("Rory", room['outside'])
 # * Waits for user input and decides what to do.
 
 cmds = ["n", "s", "e", "w"]
-
-
-
-
 
 
 while True:
