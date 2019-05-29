@@ -1,4 +1,7 @@
 from room import Room
+from player import Player
+from textwrap import wrap
+import sys
 
 # Declare all the rooms
 
@@ -36,9 +39,46 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+def room_is(current_room):
+    print("\nCurrent room is", current_room.name)
+
+def room_description(current_room):
+    print(wrap(current_room.description, width=70))
 
 # Make a new player object that is currently in the 'outside' room.
+player_one = Player('player_one', 'outside', 0)
 
+
+def create_game():
+    moves = 0
+    while True:
+        if moves == 0:
+            current_room = room[player_one.current_room]
+            room_is(current_room)
+        elif moves > 0:
+            current_room = player_one.current_room
+        room_description(current_room)
+        
+        instruction_text = """\nEnter 'n' to go north, 's' to go south, 'e' to go east, 'w' to go west, or 'q' to quit- """
+        user_choice = input(instruction_text)
+        if user_choice != 'q':
+            # current_room = current_room.move_further(user_choice)
+            next_move = current_room.move_further(user_choice)
+            # if user_choice is in the directions instruction text, and if from the current room there is a room
+            # in that direction, this returns that room and increments the moves counter
+            if isinstance(next_move, Room):
+                player_one.current_room = next_move
+                moves += 1
+                room_is(player_one.current_room)
+            # if either of those conditions fail, then instead of a room returning from the Room class method move_further,
+            # an error message returns saying no way forward by user_choice from current room
+            else:
+                print(next_move)
+                # current_room = room[player_one.current_room]
+            # room_is(current_room)
+        
+        elif user_choice == 'q':
+            break
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +89,6 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+if __name__ == '__main__':
+    create_game()
