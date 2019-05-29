@@ -5,6 +5,9 @@ class Item:
         self.name = name
         self.description = description
 
+    def on_take(self):
+        print(f"You have picked up the {self.name}.")
+
 class Weapon(Item):
     def __init__(self, name, description, damage):
         super().__init__(name, description)
