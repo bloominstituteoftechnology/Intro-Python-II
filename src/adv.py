@@ -1,19 +1,34 @@
 import random
 from room import Room
+from item import Item
 from player import Player
 from adv_save import load_results, save_results
 import os
 
 
+def parse_command(com_mand):
+    # To Do:code to parse/execute noun+verb commands
 
-# global vars
-save_file = "adv_save.txt"
+    # print("\nInvalid selection. Please try again.\n")
+    
+    print(com_mand)
+    return
+
+# Declare list of items
+it_em = {
+    'flask': Item('flask', 'a flask'),
+    'torch': Item('torch', 'a torch'),
+    'matches': Item('matches', 'some matches'),
+    'sword': Item('sword', 'an old sword'),
+    'rum': Item('rum', 'a bottle of rum'),
+    'bones': Item('bones', 'a pile of bones'),
+    'skull': Item('skull', 'a skull')
+}
 
 # Declare all the rooms
 room = {
     'outside':  Room("outside the Cave Entrance",
                      "North of you, the cave mount beckons"),
-
     'foyer':    Room("in the Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
@@ -25,11 +40,19 @@ the distance, but there is no way across the chasm."""),
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("in the Treasure Chamber!", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+chamber! Sadly, it has already been completely emptied by earlier adventurers.
+The only exit is to the south.""")
 }
 
 # Link rooms together
+room['outside'].add_item(it_em['matches'])
+room['foyer'].add_item(it_em['flask'])
+room['overlook'].add_item(it_em['torch'])
+room['treasure'].add_item(it_em['sword'])
+room['narrow'].add_item(it_em['bones'])
+room['narrow'].add_item(it_em['skull'])
+
+# Place items in rooms
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -47,24 +70,20 @@ curr_player = Player("Player1", room['outside'])
 # _______ welcome message _______
 curr_player.name = ''
 while curr_player.name == '':
-    os.system('cls' if os.name == 'nt' else 'clear')
+    #os.system('cls' if os.name == 'nt' else 'clear')
     print("Welcome to Astrillia !")
     curr_player.name = input("What shall I call you m'Lord?   ",)
+os.system('cls' if os.name == 'nt' else 'clear')
+save_file = curr_player.name+".txt"
 
 print("\nGreetings, Sir "+curr_player.name+"!\n")
-print("You are currently "+curr_player.curr_room.name)
-print(curr_player.curr_room.description)
-print("\nWhere would you like to go?..")
+print("You are currently "+curr_player.curr_room.name, "\n")
+print(curr_player.curr_room.description, "\n")
+curr_player.curr_room.inventory()
+print("Where would you like to go?..")
 com_mand = input("choose: [n]North [s]South [e]East [w]West   [q]Quit\n",)
 
 # gamplay loop: Waits for user input and decides what to do.
-# Prints the curr_room
-#        and description (the textwrap module might be useful here).
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-
-
 while not com_mand == "q":  # If the user enters "q", quit the game.
     os.system('cls' if os.name == 'nt' else 'clear')
     if com_mand == "n":
@@ -92,13 +111,17 @@ while not com_mand == "q":  # If the user enters "q", quit the game.
         except:
             print("\nYou cannot go that way m'lord...\n")
     else:
-        print("\nInvalid selection. Please try again.\n")
-    
+        # not a directional move. parse for verb / noun
+        parse_command(com_mand)
+
     # print updated location
-    print("You are currently "+curr_player.curr_room.name)
-    print(curr_player.curr_room.description)
+    print("\nYou are currently "+curr_player.curr_room.name, "\n")
+    print(curr_player.curr_room.description, "\n")
+    # curr_player.curr_room.inventory()
     com_mand = input("choose: [n]North [s]South [e]East [w]West   [q]Quit\n")
 
-# game over 
-# save_results(wins, ties, losses)
-print('Goodbye, Sir '+curr_player.name+'! Safe travels and return soon!!....')
+# ________ game over _________
+# save_results()
+os.system('cls' if os.name == 'nt' else 'clear')
+room['narrow'].inventory()
+print('Goodbye, Sir '+curr_player.name+'! Safe travels & return soon!\n \n \n')
