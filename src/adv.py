@@ -32,6 +32,8 @@ room['control'].s_to = room['crawl']
 
 # Make a new player object that is currently in the 'outside' room.
 
+p1 = Player(You, outside )
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -42,3 +44,15 @@ room['control'].s_to = room['crawl']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True: 
+    #print current room
+    #print room description
+
+    direction = input("What direction would you like to go? (n,e,s,w")
+
+    if direction == "q":
+        #function to finish game
+        #finishGame()
+    elif direction == "n":
+        #currentRoom.n_to?
