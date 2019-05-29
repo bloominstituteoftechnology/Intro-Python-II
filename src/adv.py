@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -23,7 +25,6 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -37,7 +38,30 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+
+def move_in_dir(direction):
+    current_room = player.get_current_room()
+
+    # Check if player can move in direction given
+    if direction == 'n' and current_room.n_to:
+        player.set_current_room(current_room.n_to)
+        return True
+    elif direction == 's' and current_room.s_to:
+        player.set_current_room(current_room.s_to)
+        return True
+    elif direction == 'e' and current_room.e_to:
+        player.set_current_room(current_room.e_to)
+        return True
+    elif direction == 'w' and current_room.w_to:
+        player.set_current_room(current_room.w_to)
+        return True
+
+    return False
+
+
 # Make a new player object that is currently in the 'outside' room.
+player = Player('Shreyas')
+player.set_current_room(room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +73,28 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+direction_cmd = ['n', 's', 'e', 'w']
+
+while True:
+
+    print(f'{player.current_room.name}\n')
+    for text in textwrap.wrap(player.current_room.desc):
+        print(text)
+
+    cmd = input("Please provide your input: ")
+
+    if cmd == 'q':
+        print('Nice game. Visit again.')
+        break
+    elif cmd.lower() in direction_cmd:
+        if not move_in_dir(cmd.lower()):
+            print('Moving in this direction is not allowed.')
+            continue
+    else:
+        print('Input invalid.')
+        print('n - To move North')
+        print('s - To move South')
+        print('e - To move East')
+        print('w - To move West')
+        print('q - To quit')
