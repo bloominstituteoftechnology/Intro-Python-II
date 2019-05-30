@@ -1,27 +1,27 @@
 from room import Room
 from player import Player
 from item import Item
-
+from item import LightSource
 #
 # Main
 #
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", True),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", False),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", False),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", True),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", True),
 }
 
 
@@ -40,6 +40,12 @@ water = Item("water", "this is a water")
 onion = Item("onion", "this is a onion")
 unicycle = Item("unicycle", "this is a unicycle")
 player = Player("Michael", room['outside'])
+fire = LightSource("FIRE", "🔥")
+sun = LightSource("sun", "☀️")
+lamp = LightSource("lamp", "🛋️")
+
+room['foyer'].light_source = fire
+
 room['outside'].items.append(rock)
 room['foyer'].items.append(rock)
 room['overlook'].items.append(rock)
@@ -77,7 +83,9 @@ room['treasure'].items.append(unicycle)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-
+# If there is light in the room, display name, description, and contents as normal.
+# If there isn't, print out "It's pitch black!" instead.
+# Hint: isinstance might help you figure out if there's a LightSource among all the nearby Items.
 while True:
     entered_commands = 0
     cmd = input("enter help to see available commands: 👉 ").split(

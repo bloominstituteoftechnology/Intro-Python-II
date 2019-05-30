@@ -29,8 +29,12 @@ class Player:
         nextRoom = self.currentRoom.getRoomInDirection(direction)
         if nextRoom is not None:
             self.currentRoom = nextRoom
-            print(
-                f"{self.currentRoom.name} has {self.currentRoom.all_room_items()} available")
+            # Hint: isinstance might help you figure out if there's a LightSource among all the nearby Items.
+            if self.currentRoom.is_light == True or self.currentRoom.light_source is not None:
+                print(
+                    f"{self.currentRoom.name} has {self.currentRoom.all_room_items()} available")
+            else:
+                print("It's pitch black!")
         else:
             print("You cannot move in that direction.")
 
