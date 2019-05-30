@@ -10,11 +10,18 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.items = []
 
     def __repr__(self):
         returnString = f"---------------\n\n{self.name}\n\n  {self.description}\n\n---------------"
         returnString += f"\n\n[{self.getRoomExitString()}]\n\n"
         return returnString
+
+    def all_room_items(self):
+        my_items = []
+        for item in self.items:
+            my_items.append(item.name)
+        return my_items
 
     def getRoomInDirection(self, direction):
         if direction == "n":
@@ -39,3 +46,7 @@ class Room:
         if self.w_to is not None:
             exits.append("w")
         return ", ".join(exits)
+
+    def remove_item(self, item):
+        self.items.remove(item)
+        print(f"{self.name} now has: {self.all_room_items()}")
