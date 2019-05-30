@@ -105,7 +105,10 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['library'].e_to = room['foyer']
 room['library'].s_to = room['hidden']
+room['hidden'].n_to = room['library']
+
 
 # _________ init  _______________
 # Instantiate new player in the 'outside' room.
