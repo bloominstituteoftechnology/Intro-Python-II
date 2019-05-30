@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-import textwrap
+from item import Item
 
 # Declare all the rooms
 
@@ -34,6 +34,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Adding items to room
+room['foyer'].add_item(Item('torch', 'Helps you find the way in dark'))
+room['foyer'].add_item(Item('mask', 'Saves you from dust'))
+room['overlook'].add_item(Item('binocular', 'See far away objects'))
+room['narrow'].add_item(Item('shoes', 'For better grip on narrow ledges'))
+room['treasure'].add_item(Item('box', 'Empty gold box'))
+room['treasure'].add_item(Item('map', 'Map to next gold hunt adventure'))
+
 #
 # Main
 #
@@ -59,6 +67,81 @@ def move_in_dir(direction):
     return False
 
 
+def validate_cmd(cmd):
+    valid_cmds = ['n', 's', 'e', 'w', 'q']
+
+    split_cmd = cmd.split()
+    cmd_len = len(split_cmd)
+
+    # Input command should be 2 words at most
+    if cmd_len != 1 and cmd_len != 2:
+        return False
+
+    if cmd_len == 1:
+        if split_cmd[0] not in valid_cmds:
+            return False
+
+    if cmd_len == 2:
+        # Input command should be take or drop
+        if split_cmd[0] != 'take' and split_cmd[0] != 'drop':
+            return False
+
+    return True
+
+
+def process_cmd(cmd, player):
+    split_cmd = cmd.split()
+    cmd_len = len(split_cmd)
+
+    if cmd_len == 1:
+
+        if split_cmd[0] == 'q':
+            print('\nNice game. Visit again.')
+            exit()
+        else:
+            if not move_in_dir(cmd.lower()):
+                print('\nMoving in this direction is not allowed.')
+    else:
+        if split_cmd[0] == 'take':
+            room = player.get_current_room()
+
+            item_picked = False
+
+            for index, item in enumerate(room.get_items()):
+                if item.name == split_cmd[1]:
+                    item_picked = True
+                    player.add_item(item)
+                    room.remove_item(index)
+            if not item_picked:
+                print('\nItem mentioned not available in room.')
+        else:
+            room = player.get_current_room()
+
+            item_dropped = False
+
+            for index, item in enumerate(player.get_items()):
+                if item.name == split_cmd[1]:
+                    item_dropped = True
+                    room.add_item(item)
+                    player.remove_item(index)
+
+            if not item_dropped:
+                print('\nItem mentioned not available with you.')
+
+
+def print_error():
+    print('Input invalid.\n')
+    print('n - Move in North direction')
+    print('s - Move in South direction')
+    print('e - Move in East direction')
+    print('w - Move in West direction')
+    print('\nq - For exiting the game')
+    print('\nTake item from a room')
+    print('take <item_name>')
+    print('\nDrop item in room')
+    print('drop <item_name>')
+
+
 # Make a new player object that is currently in the 'outside' room.
 player = Player('Shreyas')
 player.set_current_room(room['outside'])
@@ -74,27 +157,25 @@ player.set_current_room(room['outside'])
 #
 # If the user enters "q", quit the game.
 
-direction_cmd = ['n', 's', 'e', 'w']
 
 while True:
 
-    print(f'{player.current_room.name}\n')
-    for text in textwrap.wrap(player.current_room.desc):
-        print(text)
+    print(player.current_room)
 
-    cmd = input("Please provide your input: ")
+    item_count_room = len(player.get_current_room().get_items())
+    print(f'\n{item_count_room} available items in room.')
+    for item in player.current_room.get_items():
+        print(item)
 
-    if cmd == 'q':
-        print('Nice game. Visit again.')
-        break
-    elif cmd.lower() in direction_cmd:
-        if not move_in_dir(cmd.lower()):
-            print('Moving in this direction is not allowed.')
-            continue
-    else:
-        print('Input invalid.')
-        print('n - To move North')
-        print('s - To move South')
-        print('e - To move East')
-        print('w - To move West')
-        print('q - To quit')
+    item_count_player = len(player.get_items())
+    print(f'\n{item_count_player} available items with you.')
+    for item in player.get_items():
+        print(item)
+
+    cmd = input("\nPlease provide your input: ")
+
+    if not validate_cmd(cmd):
+        print_error()
+        continue
+
+    process_cmd(cmd, player)
