@@ -49,13 +49,19 @@ class Player:
             print("You can't see a thing in this darkness!")
 
     def get_item(self, item_name):
-        probable_item = self.current_room.has_item(item_name)
-        if probable_item is not None:
-            self.items.append(probable_item)
-            self.current_room.items.remove(probable_item)
-            probable_item.on_take()
+        
+        player_light_source = [item for item in self.items if type(item) == LightSource]
+        room_light_source = [item for item in self.current_room.items if type(item) == LightSource]
+        if self.current_room.is_light or len(player_light_source) > 0 or len(room_light_source) > 0:
+            probable_item = self.current_room.has_item(item_name)
+            if probable_item is not None:
+                self.items.append(probable_item)
+                self.current_room.items.remove(probable_item)
+                probable_item.on_take()
+            else:
+                print("\nWhy are you trying to pick up something that isn't there? Are you okay?\n")
         else:
-            print("\nWhy are you trying to pick up something that isn't there? Are you okay?\n")
+            print("You can't see a thing in this darkness!")
 
     def drop_item(self, item_name):
         probable_item = self.has_item(item_name)
@@ -81,3 +87,10 @@ class Player:
                 print("\nYou don't need to look at that.\n")
         else:
             print("You can't see a thing in this darkness!")
+
+    def display_inventory(self):
+        if len(self.items) > 0:
+            for item in self.items:
+                print(f"\nYou have a {item.name}.\n")
+        else:
+            print("\nYou currently have no items.\n")

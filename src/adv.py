@@ -84,17 +84,21 @@ new_player = Player(input("What is your name?\n--> "), room['outside'])
 #
 # If the user enters "q", quit the game.
 
-single_letter_cmds = ["n", "s", "e", "w", "q", "i", "inventory"]
-split_cmds = ["take", "get", "drop"]
-item_cmds = ["lamp", "hatchet", "coins", "emerald"]
-puzzle_cmds = ["use", "with"]
+single_cmds = ["n", "s", "e", "w", "q", "quit", "i", "inventory", "help", "look"]
+all_cmds = ["n", "s", "e", "w", "q", "i", "inventory", "take", "get", "drop", "look"]
 
-def single_letter_cmd(single_letter_cmd):
-    if cmd == "q":
+def single_cmd(single_cmd):
+    if cmd == "q" or cmd == "quit":
         print("Thanks for playing!")
         exit()
     elif cmd in ("n", "s", "e", "w"):
         new_player.travel(cmd)
+    elif cmd == "i" or cmd == "inventory":
+        new_player.display_inventory()
+    elif cmd == "h" or cmd == "help":
+        display_available_cmds()
+    elif cmd == "look":
+        new_player.look()
 
 def split_cmd(cmd):
     if "take" in cmd or "get" in cmd:
@@ -104,21 +108,16 @@ def split_cmd(cmd):
     elif "look" in cmd:
         new_player.look_item(cmd.split(" ")[1])
 
+def display_available_cmds():
+    print(f"""Available commands are {all_cmds}.\nYou may interact with different items in the world using the commands take, get, drop and look. For example, you can say \"get lamp\" and your character will pick up a lamp.""")
+
 new_player.current_room.__str__()
 
 while True:
     cmd = input("--> ")
     if len(cmd.split()) > 1:
         split_cmd(cmd)
-    elif cmd == "look":
-        new_player.look()
-    elif cmd == "i" or cmd == "inventory":
-        if len(new_player.items) > 0:
-            for item in new_player.items:
-                print(f"\nYou have a {item.name}.\n")
-        else:
-            print("\nYou currently have no items.\n")
-    elif cmd in single_letter_cmds:
-        single_letter_cmd(cmd)
+    elif cmd in single_cmds:
+        single_cmd(cmd)
 
 
