@@ -66,8 +66,16 @@ def travel (player, room, attr):
 
 
 while True:
-    print(f"{player.at_room}")
-    cmd = input("Please pick a direction or quit game n as north/e as east/s as south/w as west/q as quit: ")
+    print(f"{player.at_room}\n")
+    print("You can: \n")
+    print("Enter in direction letter to move north(n), east(e), south(s), west(w)\n")
+    print ("'items' to check your items in your inventory\n")
+    print("'search' to seach room or area\n")
+    print("'take' to take item\n")
+    print("'drop' to drop item\n") 
+    print("'q' to quit game\n")  
+
+    cmd = input("Pick an action:")
 
 # If the user enters "q", quit the game.
     if cmd == "q":
