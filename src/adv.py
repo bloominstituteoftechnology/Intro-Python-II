@@ -19,7 +19,7 @@ into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm.""", False),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", True),
+to north. The smell of gold permeates the air.""", False),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
