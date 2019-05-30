@@ -1,3 +1,6 @@
+from item import LightSource
+
+
 class Room():
     def __init__(self,
                  name,
@@ -10,6 +13,7 @@ class Room():
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.is_light = True
         return
 
     def __str__(self):
@@ -48,3 +52,13 @@ class Room():
                 if i.name == item_name:
                     return i
         return None
+
+    def visible(self):
+        return self.is_light
+
+    def has_light(self):
+        ex_ists = False
+        for i in self.list_items:
+            if isinstance(i, LightSource):
+                ex_ists = True
+        return ex_ists

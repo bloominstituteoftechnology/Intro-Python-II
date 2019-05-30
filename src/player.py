@@ -1,3 +1,6 @@
+from item import LightSource
+
+
 class Player():
     def __init__(self, name, curr_room, inv_list=[]):
         self.name = name
@@ -40,3 +43,10 @@ class Player():
                 if i.name == item_name:
                     return i
         return None
+
+    def has_light(self):
+        ex_ists = False
+        for i in self.inv_list:
+            if isinstance(i, LightSource):
+                ex_ists = True
+        return ex_ists

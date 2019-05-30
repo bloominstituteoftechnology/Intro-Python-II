@@ -1,6 +1,6 @@
 import random
 from room import Room
-from item import Item, Treasure
+from item import Item, Treasure, LightSource
 from player import Player
 from adv_save import load_results, save_results
 import os
@@ -12,21 +12,26 @@ def parse_command(com_mand):
     cmd_words = com_mand.split()  # split into word list
     if str(cmd_words[0]).lower() == 'inventory':  # __ player inventory _
         curr_player.list_inventory()
-    if str(cmd_words[0]).lower() == 'get':        # __ get item __
-        if len(cmd_words) > 1:
-            item_name = str(cmd_words[1]).lower()
-            if curr_player.curr_room.in_room(item_name):
-                curr_player.add_item(curr_player.curr_room.get_item(item_name))
-                curr_player.curr_room.remove_item(item_name)
-                return
-            else:
-                print(item_name, 'not here')
-                return
-        else:
-            print('Get what?.......')
-            return
-    if str(cmd_words[0]).lower() == 'drop':       # ___ drop item ___
 
+    if (curr_player.curr_room.is_light) or (curr_player.has_light()) or (curr_player.curr_room.has_light()):
+        if (str(cmd_words[0]).lower() == 'get') or (str(cmd_words[0]).lower() == 'take'):        # __ get/take item __
+            if len(cmd_words) > 1:
+                item_name = str(cmd_words[1]).lower()
+                if curr_player.curr_room.in_room(item_name):
+                    curr_player.add_item(curr_player.curr_room.get_item(item_name))
+                    curr_player.curr_room.remove_item(item_name)
+                    return
+                else:
+                    print('There is no', item_name, 'here')
+                    return
+            else:
+                print('Get what?.......')
+                return
+    else:
+        print('Good luck finding that in the dark!')
+        return
+
+    if str(cmd_words[0]).lower() == 'drop':       # ___ drop item ___
         if len(cmd_words) > 1:
             item_name = str(cmd_words[1]).lower()
             if curr_player.in_inv(item_name):
@@ -53,6 +58,7 @@ room = {
     'foyer':    Room("in the Foyer",
                      """Dim light filters in from the south. Dusty passages run north and east.""",
                      [Item('flask', 'a flask'),
+                      LightSource('lamp', 'a lamp'),
                       Item('bones', 'some old bones'),
                       ],
                      ),
@@ -60,7 +66,7 @@ room = {
                      """A steep cliff appears before you, falling into the darkness.
 Ahead to the north, a light flickers in the distance,
 but there is no way across the chasm.""",
-                     [Item('sword', 'a small sword'),
+                     [Item('flask', 'a flask of water'),
                       Item('coins', 'some old coins'),
                       ],
                      ),
@@ -69,14 +75,14 @@ but there is no way across the chasm.""",
                      """The narrow passage bends here from west to north.
 The smell of gold permeates the air.""",
                      [Item('skull', 'a skull'),
-                      Item('torch', 'a torch'),
+                      LightSource('torch', 'a torch'),
                       ],
                      ),
     'treasure': Room("in the Treasure Chamber!",
                      """You've found the long-lost treasure chamber!
 Sadly, it has already been completely emptied by earlier adventurers
 The only exit is to the south.""",
-                     [Item('amulet', 'an amulet'),
+                     [Treasure('amulet', 'an amulet'),
                       Item('rum', 'a bottle of rum'),
                       ],
                      ),
@@ -87,12 +93,12 @@ The only exit is to the south.""",
                     ],
                    ),
     'library': Room("in a room with old books",
-                   """It seems to be an old library and smells musty""",
-                   [Treasure('bible', 'a bible'),
-                    Item('koran', 'a koran'),
-                    ],
-                   )
-
+                    """It seems to be an old library and smells musty""",
+                    [Item('scroll', 'an old scroll'),
+                     Item('book', 'an old book'),
+                     Item('claytablet', 'a claytablet'),
+                     ],
+                    )
 }
 
 # Link rooms together
@@ -108,6 +114,12 @@ room['treasure'].s_to = room['narrow']
 room['library'].e_to = room['foyer']
 room['library'].s_to = room['hidden']
 room['hidden'].n_to = room['library']
+
+# ___room defaults to lit... darken select rooms ____
+room['library'].is_light = False
+room['hidden'].is_light = False
+room['treasure'].is_light = False
+room['narrow'].is_light = False
 
 
 # _________ init  _______________
@@ -167,8 +179,11 @@ while not com_mand == "q":  # "q" quits the game.
 
     # print updated location
     print("You are "+curr_player.curr_room.name)
-    print(curr_player.curr_room.description)
-    curr_player.curr_room.inventory()
+    if (curr_player.curr_room.is_light) or (curr_player.has_light()) or (curr_player.curr_room.has_light()):
+        print(curr_player.curr_room.description)
+        curr_player.curr_room.inventory()
+    else:
+        print("It is pitch black!")
     print('')
     com_mand = input("choose: [n]North [s]South [e]East [w]West   [q]Quit\n>")
 
