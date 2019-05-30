@@ -21,7 +21,23 @@ class Player:
             self.current_room = next_room
             player_light_source = [item for item in self.items if type(item) == LightSource]
             room_light_source = [item for item in self.current_room.items if type(item) == LightSource]
-            if self.current_room.is_light or len(player_light_source) or len(room_light_source) > 0:
+            if self.current_room.is_light or len(player_light_source) > 0 or len(room_light_source) > 0:
                 self.current_room.__str__()
+                if len(self.current_room.items) > 0:
+                    for item in self.current_room.items:
+                        print(f"You see a {item.name}.\n")
+            else:
+                print("It's pitch black!")
         else:
             print("\nYou cannot move in that direction.\n")
+
+    def look(self):
+        player_light_source = [item for item in self.items if type(item) == LightSource]
+        room_light_source = [item for item in self.current_room.items if type(item) == LightSource]
+        if self.current_room.is_light or len(player_light_source) > 0 or len(room_light_source) > 0:
+            self.current_room.__str__()
+            if len(self.current_room.items) > 0:
+                for item in self.current_room.items:
+                    print(f"You see a {item.name}.\n")
+        else:
+            print("You can't see a thing in this darkness!")

@@ -158,19 +158,26 @@ def split_cmd(cmd):
             items_dict["emerald"].on_drop()
         else:
             print("You can't drop that.")
+    elif "look" in cmd:
+        if "lamp" in cmd and (items_dict["lamp"] in new_player.items or items_dict["lamp"] in new_player.current_room.items):
+            print(items_dict["lamp"].description)
+        elif "hatchet" in cmd and (items_dict["hatchet"] in new_player.items or items_dict["hatchet"] in new_player.current_room.items):
+            print(items_dict["hatchet"].description)
+        elif "coins" in cmd and (items_dict["coins"] in new_player.items or items_dict["coins"] in new_player.current_room.items):
+            print(items_dict["coins"].description)
+        elif "emerald" in cmd and (items_dict["emerald"] in new_player.items or items_dict["emerald"] in new_player.current_room.items):
+            print(items_dict["emerald"].description)
+        else:
+            print("You don't need to look at that.")
 
 new_player.current_room.__str__()
 
 while True:
-    if items_dict["lamp"] in new_player.items or new_player.current_room.is_light == True or items_dict["lamp"] in new_player.current_room.items:
-        if new_player.current_room.items != None:
-            for item in new_player.current_room.items:
-                print(f"You see a {item.name}.\n")
-    elif items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
-        print("It's pitch black!\n")
     cmd = input("--> ")
     if len(cmd.split()) > 1:
         split_cmd(cmd)
+    elif cmd == "look":
+        new_player.look()
     elif cmd == "i" or cmd == "inventory":
         if len(new_player.items) > 0:
             for item in new_player.items:
