@@ -31,6 +31,12 @@ class Player:
         else:
             print("\nYou cannot move in that direction.\n")
 
+    def has_item(self, item_name):
+        possible_item = [item for item in self.items if item.name == item_name]
+        if len(possible_item) > 0:
+            return possible_item[0]
+        return None
+                
     def look(self):
         player_light_source = [item for item in self.items if type(item) == LightSource]
         room_light_source = [item for item in self.current_room.items if type(item) == LightSource]
@@ -52,7 +58,7 @@ class Player:
             print("\nWhy are you trying to pick up something that isn't there? Are you okay?\n")
 
     def drop_item(self, item_name):
-        probable_item = self.current_room.has_item(item_name)
+        probable_item = self.has_item(item_name)
         if probable_item is not None:
             self.items.remove(probable_item)
             self.current_room.items.append(probable_item)
@@ -61,9 +67,17 @@ class Player:
             print("\nWhy are you trying to drop up something that you don't have? Are you okay?\n")
 
     def look_item(self, item_name):
-        probable_item = self.current_room.has_item(item_name)
-        if probable_item is not None:
-            print(probable_item.description)
+        
+        player_light_source = [item for item in self.items if type(item) == LightSource]
+        room_light_source = [item for item in self.current_room.items if type(item) == LightSource]
+        if self.current_room.is_light or len(player_light_source) > 0 or len(room_light_source) > 0:
+            probable_player_item = self.has_item(item_name)
+            probable_room_item = self.current_room.has_item(item_name)
+            if probable_room_item is not None:
+                print(probable_room_item.description)
+            elif probable_player_item is not None:
+                print(probable_player_item.description)
+            else:
+                print("\nYou don't need to look at that.\n")
         else:
-            print("\nYou don't need to look at that.\n")
-
+            print("You can't see a thing in this darkness!")

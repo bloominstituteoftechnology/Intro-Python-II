@@ -25,4 +25,5 @@ class LightSource(Item):
         super().__init__(name, description, point_value)
 
     def on_drop(self):
-        print("It is not wise to drop your source of light!")
+        print("\nIt is not wise to drop your source of light!\n")
+        print(f"You have dropped the {self.name}.\n")
