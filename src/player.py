@@ -40,3 +40,10 @@ class Player:
                 self.items.append(room_item)
                 self.currentRoom.remove_item(room_item)
                 print(f"{self.name}, you added 👉  {item}")
+
+    def drop_item(self, item_to_drop):
+        for item in self.items:
+            if item.name == item_to_drop:
+                self.items.remove(item)
+                item.on_drop(item)
+        print(f"can not drop {item_to_drop}")

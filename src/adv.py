@@ -79,7 +79,10 @@ room['treasure'].items.append(unicycle)
 # If the user enters "q", quit the game.
 
 while True:
-    cmd = input("-> ").split()
+    entered_commands = 0
+    cmd = input("enter help to see available commands: 👉 ").split(
+    ) if entered_commands == 0 else input("👉")
+
     if cmd[0] in ["n", "s", "e", "w"]:
         player.travel(cmd[0])
     elif cmd[0] == "q":
@@ -88,5 +91,22 @@ while True:
         item = cmd[1]
         player.add_item(item)
         print("You currently possess", player.all_items())
+    elif len(cmd) == 2 and cmd[0] == "drop":
+        item_to_drop = cmd[1]
+        player.drop_item(item_to_drop)
+        print("updated inventory ▶️", player.all_items())
+    elif cmd[0] == "i" or cmd[0] == "inventory":
+        print(player.all_items())
+    elif cmd[0] == "help":
+        print("""
+        [n] move north 
+        [s] move south 
+        [e] move east 
+        [w] move west 
+        [q] quit 
+        [i | inventory] 
+        [get ITEM] 
+        [drop Item] 
+            """)
     else:
         print("I did not understand that command\n")
