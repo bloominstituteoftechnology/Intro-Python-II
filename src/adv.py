@@ -60,7 +60,7 @@ room['foyer'].placed_item(items['potion'])
 room['foyer'].placed_item(items['elixer'])
 room['foyer'].placed_item(items['shield'])
 room['narrow'].placed_item(items['potion'])
-room['narrow'].placed_item(items['shield'])
+room['narrow'].placed_item(items['elixer'])
 room['overlook'].placed_item(items['sword'])
 room['overlook'].placed_item(items['katana'])
 
@@ -104,12 +104,13 @@ def travel (player, room, attr):
 
 
 while True:
+    # print(f"{player.at_room.items_stored}")
     print(f"{player.at_room}\n")
     print("You can: \n")
     print("Enter in direction letter to move north(n), east(e), south(s), west(w)\n")
     print ("'items' to check your items in your inventory\n")
     print("'search' to seach room or area\n")
-    print("'take' to take item\n")
+    print("'obtain' to take item\n")
     print("'drop' to drop item\n") 
     print("'q' to quit game\n")  
 
@@ -139,3 +140,30 @@ while True:
         attr = cmd + '_to'
         travel(player, player.at_room, attr)
         pass
+    elif cmd == "items":
+        if len(player.items_held) == 0:
+            print("You currently do not have any items\n")
+            # cmd == input("Pick another action:")
+        else:
+            print("You have :")
+            for item in player.items_held:
+                print(f" {item.name}")
+    elif cmd == "search":
+        if len(player.at_room.items_stored) == 0:
+            print("There are nothing here!")
+        else:
+            for item in player.at_room.items_stored:
+                print(f" You found {item.name} !")
+    elif cmd == "obtain":
+        if len(player.at_room.items_stored) == 0:
+            print("There is nothing to take!")
+        else:
+            for item in player.at_room.items_stored:
+                player.obtain_item(item)
+                player.at_room.remove_item(item)
+                # room.items_stored.remove(item)
+                print(f"You have obtained: {item.name} ")
+
+
+
+        

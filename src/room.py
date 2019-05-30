@@ -12,3 +12,6 @@ class Room:
 
     def placed_item(self, item):
         self.items_stored.append(item)
+
+    def remove_item(self, item):
+        self.items_stored.remove(item)
