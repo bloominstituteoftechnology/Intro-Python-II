@@ -97,48 +97,8 @@ def single_letter_cmd(single_letter_cmd):
         new_player.travel(cmd)
 
 def split_cmd(cmd):
-    if "take" in cmd:
-        if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False and items_dict["lamp"] not in new_player.current_room.items:
-            print("Good luck finding that in the dark!")
-        elif "lamp" in cmd and items_dict["lamp"] in new_player.current_room.items:
-            new_player.take_item(items_dict["lamp"])
-            new_player.current_room.lose_item(items_dict["lamp"])
-            items_dict["lamp"].on_take()
-        elif "hatchet" in cmd and items_dict["hatchet"] in new_player.current_room.items:
-            new_player.take_item(items_dict["hatchet"])
-            new_player.current_room.lose_item(items_dict["hatchet"])
-            items_dict["hatchet"].on_take()
-        elif "coins" in cmd and items_dict["coins"] in new_player.current_room.items:
-            new_player.take_item(items_dict["coins"])
-            new_player.current_room.lose_item(items_dict["coins"])
-            items_dict["coins"].on_take()
-        elif "emerald" in cmd and items_dict["emerald"] in new_player.current_room.items:
-            new_player.take_item(items_dict["emerald"])
-            new_player.current_room.lose_item(items_dict["emerald"])
-            items_dict["emerald"].on_take()
-        else:
-            print(f"You can't take that. There is no {cmd.split()[1]} here.")
-    elif "get" in cmd:
-        if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False and items_dict["lamp"] not in new_player.current_room.items:
-            print("Good luck finding that in the dark!")
-        elif "lamp" in cmd and items_dict["lamp"] in new_player.current_room.items:
-            new_player.take_item(items_dict["lamp"])
-            new_player.current_room.lose_item(items_dict["lamp"])
-            items_dict["lamp"].on_take()
-        elif "hatchet" in cmd and items_dict["hatchet"] in new_player.current_room.items:
-            new_player.take_item(items_dict["hatchet"])
-            new_player.current_room.lose_item(items_dict["hatchet"])
-            items_dict["hatchet"].on_take()
-        elif "coins" in cmd and items_dict["coins"] in new_player.current_room.items:
-            new_player.take_item(items_dict["coins"])
-            new_player.current_room.lose_item(items_dict["coins"])
-            items_dict["coins"].on_take()
-        elif "emerald" in cmd and items_dict["emerald"] in new_player.current_room.items:
-            new_player.take_item(items_dict["emerald"])
-            new_player.current_room.lose_item(items_dict["emerald"])
-            items_dict["emerald"].on_take()
-        else:
-            print("You can't take that.")
+    if "take" in cmd or "get" in cmd:
+        new_player.get_item(cmd.split(" ")[1])
     elif "drop" in cmd:
         if "lamp" in cmd and items_dict["lamp"] in new_player.items:
             new_player.drop_item(items_dict["lamp"])

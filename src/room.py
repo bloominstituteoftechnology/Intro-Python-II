@@ -30,6 +30,12 @@ class Room:
             else:
                 return None
 
+    def has_item(self, item_name):
+        possible_item = [item for item in self.items if item.name == item_name]
+        if len(possible_item) > 0:
+            return possible_item[0]
+        return None
+
 class PuzzleRoom(Room):
     def __init__(self, name, description, player_puzzle_item, room_puzzle_item, is_light, items= []):
         super().__init__(name, description, is_light, items)

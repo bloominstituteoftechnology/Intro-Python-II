@@ -41,3 +41,12 @@ class Player:
                     print(f"You see a {item.name}.\n")
         else:
             print("You can't see a thing in this darkness!")
+
+    def get_item(self, item_name):
+        probable_item = self.current_room.has_item(item_name)
+        if probable_item is not None:
+            self.items.append(probable_item)
+            self.current_room.items.remove(probable_item)
+            probable_item.on_take()
+        else:
+            print("\nWhy are you trying to pick up something that isn't there? Are you okay?\n")
