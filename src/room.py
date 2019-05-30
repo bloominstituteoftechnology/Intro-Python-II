@@ -1,7 +1,7 @@
 from item import LightSource
 
 
-class Room():
+class Room:
     def __init__(self,
                  name,
                  description,
@@ -47,10 +47,9 @@ class Room():
         return ex_ists
 
     def get_item(self, item_name):
-        if self.in_room(item_name):
-            for i in self.list_items:
-                if i.name == item_name:
-                    return i
+        for i in self.list_items:
+            if i.name == item_name:
+                return i
         return None
 
     def visible(self):

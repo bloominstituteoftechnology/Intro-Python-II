@@ -38,10 +38,9 @@ class Player():
         return ex_ists
 
     def get_item(self, item_name):
-        if self.in_inv(item_name):
-            for i in self.inv_list:
-                if i.name == item_name:
-                    return i
+        for i in self.inv_list:
+            if i.name == item_name:
+                return i
         return None
 
     def has_light(self):

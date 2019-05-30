@@ -10,10 +10,14 @@ def parse_command(com_mand):
     if com_mand == '':
         return
     cmd_words = com_mand.split()  # split into word list
+
     if str(cmd_words[0]).lower() == 'inventory':  # __ player inventory _
         curr_player.list_inventory()
+        return
+
 
     if (curr_player.curr_room.is_light) or (curr_player.has_light()) or (curr_player.curr_room.has_light()):
+
         if (str(cmd_words[0]).lower() == 'get') or (str(cmd_words[0]).lower() == 'take'):        # __ get/take item __
             if len(cmd_words) > 1:
                 item_name = str(cmd_words[1]).lower()
@@ -27,9 +31,13 @@ def parse_command(com_mand):
             else:
                 print('Get what?.......')
                 return
+
+
+
     else:
         print('Good luck finding that in the dark!')
         return
+
 
     if str(cmd_words[0]).lower() == 'drop':       # ___ drop item ___
         if len(cmd_words) > 1:
@@ -44,6 +52,8 @@ def parse_command(com_mand):
         else:
             print('Drop what?.......')
             return
+
+
     # ____ fall-thru:  command is unreckognized ____
     print("Sorry, I did not understand '"+com_mand+"' Try again.\n")
     return

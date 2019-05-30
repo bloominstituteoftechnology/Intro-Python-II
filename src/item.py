@@ -19,6 +19,7 @@ class Item():
 class Treasure(Item):
     def __init__(self, name, description):
         super().__init__(name, description)
+        self.treasured_value
         return
 
     def __str__(self):
@@ -27,6 +28,7 @@ class Treasure(Item):
 class LightSource(Item):
     def __init__(self, name, description):
         super().__init__(name, description)
+        self.lumens=10
         return
 
     def on_drop(self):
