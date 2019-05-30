@@ -71,7 +71,7 @@ treausure_room.items = [items_dict["coins"], items_dict["emerald"]]
 
 # Make a new player object that is currently in the 'outside' room.
 
-new_player = Player(room['outside'])
+new_player = Player(input("What is your name?\n--> "), room['outside'])
 
 # Write a loop that:
 #
@@ -95,17 +95,17 @@ def change_room(direction):
             cmd = input("You can't do that. Please reread the room description and choose a different direction.\n--> ")
         else:
             new_player.current_room = new_player.current_room.n_to
-    if direction == "s":
+    elif direction == "s":
         if new_player.current_room.s_to == None:
             cmd = input("You can't do that. Please reread the room description and choose a different direction.\n--> ")
         else:
             new_player.current_room = new_player.current_room.s_to
-    if direction == "e":
+    elif direction == "e":
         if new_player.current_room.e_to == None:
             cmd = input("You can't do that. Please reread the room description and choose a different direction.\n--> ")
         else:
             new_player.current_room = new_player.current_room.e_to
-    if direction == "w":
+    elif direction == "w":
         if new_player.current_room.w_to == None:
             cmd = input("You can't do that. Please reread the room description and choose a different direction.\n--> ")
         else:
@@ -115,18 +115,12 @@ def single_letter_cmd(single_letter_cmd):
     if cmd == "q":
         print("Thanks for playing!")
         exit()
-    elif cmd == "n":
-        change_room("n")
-    elif cmd == "s":
-        change_room("s")
-    elif cmd == "e":
-        change_room("e")
-    elif cmd == "w":
-        change_room("w")
+    elif cmd in ("n", "s", "e", "w"):
+        new_player.travel(cmd)
 
 def split_cmd(cmd):
     if "take" in cmd:
-        if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
+        if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False and items_dict["lamp"] not in new_player.current_room.items:
             print("Good luck finding that in the dark!")
         elif "lamp" in cmd and items_dict["lamp"] in new_player.current_room.items:
             new_player.take_item(items_dict["lamp"])
@@ -147,7 +141,7 @@ def split_cmd(cmd):
         else:
             print(f"You can't take that. There is no {cmd.split()[1]} here.")
     elif "get" in cmd:
-        if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
+        if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False and items_dict["lamp"] not in new_player.current_room.items:
             print("Good luck finding that in the dark!")
         elif "lamp" in cmd and items_dict["lamp"] in new_player.current_room.items:
             new_player.take_item(items_dict["lamp"])
@@ -187,7 +181,6 @@ def split_cmd(cmd):
         else:
             print("You can't drop that.")
 
-
 while True:
     if items_dict["lamp"] in new_player.items or new_player.current_room.is_light == True or items_dict["lamp"] in new_player.current_room.items:
         print(new_player.current_room.name)
@@ -198,8 +191,6 @@ while True:
     elif items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
         print("It's pitch black!")
     cmd = input("--> ")
-    if cmd not in single_letter_cmds and cmd not in item_cmds and cmd not in split_cmds:
-        print(f"Invalid command. Valid commands are: n, s, e, w, q, get, take, drop, i, inventory, use, with.")
     if len(cmd.split()) > 1:
         split_cmd(cmd)
     elif cmd == "i" or cmd == "inventory":
