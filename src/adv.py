@@ -1,3 +1,5 @@
+import sys
+
 from room import Room
 from player import Player
 
@@ -87,14 +89,17 @@ def getMove(player):
 
     while move not in legal_moves.keys():
         move = input('Which direction would you like to go? (N, S, E, W) ')
+        if move == 'q' or move == 'Q':
+            print('Thanks for playing!')
+            sys.exit()
 
-    if move == 'N':
+    if move == 'N' or move == 'n':
         player.current_room = player.current_room.n_to
-    if move == 'S':
+    if move == 'S' or move == 's':
         player.current_room = player.current_room.s_to
-    if move == 'E':
+    if move == 'E' or move == 'e':
         player.current_room = player.current_room.e_to
-    if move == 'W':
+    if move == 'W' or move == 'w':
         player.current_room = player.current_room.w_to
 
 print(player.current_room)
