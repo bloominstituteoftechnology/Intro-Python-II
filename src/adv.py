@@ -54,10 +54,10 @@ treausure_room.s_to = room['narrow']
 # Add items to rooms
 
 items_dict = {
-    "lamp": LightSource("lamp", "The lamp is well-fueled and will shine brightly for a long time.", 2),
-    "hatchet": PuzzleItem("hatchet", "A small hatchet that can easily fit inside your belt loop. It can be used as a tool or a weapon.", 3),
-    "coins": Treasure("coins", "They shines in the light.", 2),
-    "emerald": Treasure("emerald", "It looks real.", 2)
+    "lamp": LightSource("lamp", "\nThe lamp looks well-fueled and should shine brightly for a long time.\n", 2),
+    "hatchet": PuzzleItem("hatchet", "\nA small hatchet that can easily fit inside your belt loop. It can be used as a tool or a weapon.\n", 3),
+    "coins": Treasure("coins", "\nThey shines in the light.\n", 2),
+    "emerald": Treasure("emerald", "\nIt looks real.\n", 2)
 }
 
 narrow_room.items = [items_dict["lamp"]]
@@ -100,35 +100,9 @@ def split_cmd(cmd):
     if "take" in cmd or "get" in cmd:
         new_player.get_item(cmd.split(" ")[1])
     elif "drop" in cmd:
-        if "lamp" in cmd and items_dict["lamp"] in new_player.items:
-            new_player.drop_item(items_dict["lamp"])
-            new_player.current_room.get_item(items_dict["lamp"])
-            items_dict["lamp"].on_drop()
-        elif "hatchet" in cmd and items_dict["hatchet"] in new_player.items:
-            new_player.drop_item(items_dict["hatchet"])
-            new_player.current_room.get_item(items_dict["hatchet"])
-            items_dict["hatchet"].on_drop()
-        elif "coins" in cmd and items_dict["coins"] in new_player.items:
-            new_player.drop_item(items_dict["coins"])
-            new_player.current_room.get_item(items_dict["coins"])
-            items_dict["coins"].on_drop()
-        elif "emerald" in cmd and items_dict["emerald"] in new_player.items:
-            new_player.drop_item(items_dict["emerald"])
-            new_player.current_room.get_item(items_dict["emerald"])
-            items_dict["emerald"].on_drop()
-        else:
-            print("You can't drop that.")
+        new_player.drop_item(cmd.split(" ")[1])
     elif "look" in cmd:
-        if "lamp" in cmd and (items_dict["lamp"] in new_player.items or items_dict["lamp"] in new_player.current_room.items):
-            print(items_dict["lamp"].description)
-        elif "hatchet" in cmd and (items_dict["hatchet"] in new_player.items or items_dict["hatchet"] in new_player.current_room.items):
-            print(items_dict["hatchet"].description)
-        elif "coins" in cmd and (items_dict["coins"] in new_player.items or items_dict["coins"] in new_player.current_room.items):
-            print(items_dict["coins"].description)
-        elif "emerald" in cmd and (items_dict["emerald"] in new_player.items or items_dict["emerald"] in new_player.current_room.items):
-            print(items_dict["emerald"].description)
-        else:
-            print("You don't need to look at that.")
+        new_player.look_item(cmd.split(" ")[1])
 
 new_player.current_room.__str__()
 

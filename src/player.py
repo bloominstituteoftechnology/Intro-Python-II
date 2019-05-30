@@ -50,3 +50,20 @@ class Player:
             probable_item.on_take()
         else:
             print("\nWhy are you trying to pick up something that isn't there? Are you okay?\n")
+
+    def drop_item(self, item_name):
+        probable_item = self.current_room.has_item(item_name)
+        if probable_item is not None:
+            self.items.remove(probable_item)
+            self.current_room.items.append(probable_item)
+            probable_item.on_drop()
+        else:
+            print("\nWhy are you trying to drop up something that you don't have? Are you okay?\n")
+
+    def look_item(self, item_name):
+        probable_item = self.current_room.has_item(item_name)
+        if probable_item is not None:
+            print(probable_item.description)
+        else:
+            print("\nYou don't need to look at that.\n")
+
