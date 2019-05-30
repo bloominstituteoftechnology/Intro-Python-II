@@ -1,7 +1,8 @@
 from room import Room
+from room import PuzzleRoom
 from player import Player
 from Item import Item
-from Item import Weapon
+from Item import PuzzleItem
 from Item import Treasure
 from Item import LightSource
 
@@ -14,12 +15,16 @@ room = {
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", True),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
+    'overlook': PuzzleRoom("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", False),
+the distance, but there is no way across the chasm. You see a rope going into the
+wall by the south entrance and disappearing into a hole in the ground.""", "hatchet", "rope", False),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air.""", False),
+    
+    'door': Room("Heavy Door", """The passage ends at this heavy door. The smell
+of gold is stronger than ever. The door holds firm and seems impossible to open.""", False),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
@@ -49,10 +54,10 @@ treausure_room.s_to = room['narrow']
 # Add items to rooms
 
 items_dict = {
-    "lamp": Item("lamp", "The lamp is well-fueled and will shine brightly for a long time."),
-    "hatchet": Weapon("hatchet", "A small hatchet that can easily fit inside your belt loop. It can be used as a tool or a weapon.", 1),
-    "coins": Treasure("coins", "They shines in the light.", 10),
-    "emerald": Treasure("emerald", "It looks real.", 5)
+    "lamp": Item("lamp", "The lamp is well-fueled and will shine brightly for a long time.", 2),
+    "hatchet": PuzzleItem("hatchet", "A small hatchet that can easily fit inside your belt loop. It can be used as a tool or a weapon.", 3),
+    "coins": Treasure("coins", "They shines in the light.", 2),
+    "emerald": Treasure("emerald", "It looks real.", 2)
 }
 
 narrow_room.items = [items_dict["lamp"]]
@@ -82,6 +87,7 @@ new_player = Player(room['outside'])
 single_letter_cmds = ["n", "s", "e", "w", "q", "i", "inventory"]
 split_cmds = ["take", "get", "drop"]
 item_cmds = ["lamp", "hatchet", "coins", "emerald"]
+puzzle_comds = ["use", "with"]
 
 def change_room(direction):
     if direction == "n":
@@ -189,11 +195,11 @@ while True:
         if new_player.current_room.items != None:
             for item in new_player.current_room.items:
                 print(f"You see a {item.name}.")
-    if items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
+    elif items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
         print("It's pitch black!")
     cmd = input("--> ")
     if cmd not in single_letter_cmds and cmd not in item_cmds and cmd not in split_cmds:
-        print(f"Invalid command. Valid commands are: n, s, e, w, q, get, take, drop, i, inventory")
+        print(f"Invalid command. Valid commands are: n, s, e, w, q, get, take, drop, i, inventory, use, with.")
     if len(cmd.split()) > 1:
         split_cmd(cmd)
     elif cmd == "i" or cmd == "inventory":
