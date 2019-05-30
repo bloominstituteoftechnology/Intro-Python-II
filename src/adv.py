@@ -102,7 +102,9 @@ def getMove(player):
     if move == 'W' or move == 'w':
         player.current_room = player.current_room.w_to
 
+    return move
+
 print(player.current_room)
 path = ''
 while path is not 'q' or path is not 'Q':
-    getMove(player)
+    path = getMove(player)
