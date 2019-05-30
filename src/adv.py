@@ -163,6 +163,14 @@ while True:
                 player.at_room.remove_item(item)
                 # room.items_stored.remove(item)
                 print(f"You have obtained: {item.name} ")
+    elif cmd == "drop":
+        if len(player.items_held) == 0:
+            print("There is nothing to drop!")
+        else:
+            for item in player.items_held:
+                player.drop_item(item)
+                player.at_room.placed_item(item)
+                print(f"You have dropped the {item.name}")
 
 
 
