@@ -3,7 +3,14 @@
 
 
 class Player:
-    def __init__(self, room, name):
-        self.room = room
+    def __init__(self, name, startingRoom):
         self.name = name
-        self.items = []
+        self.currentRoom = startingRoom
+
+    def travel(self, direction):
+        nextRoom = self.currentRoom.getRoomInDirection(direction)
+        if nextRoom is not None:
+            self.currentRoom = nextRoom
+            print(self.currentRoom)
+        else:
+            print("You cannot move in that direction.")
