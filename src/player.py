@@ -7,5 +7,5 @@ class Player:
         self.name = name
         self.current_room = current_room
 
-    def __str__(self):
-        return f'My name is {self.name} and I am currently in {self.current_room}! '
+    def __repr__(self):
+        return f'{self.name}, {self.current_room} '

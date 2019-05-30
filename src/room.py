@@ -7,6 +7,11 @@ class Room:
         self.name = name
         self.description = description
 
-    def __str__(self):
-        return f'Name: {self.name} Description: {self.decription}!'
+    # def __getitem__(self):
+    #     return {
+    #         'name': self.name,
+    #         'description': self.description
+    #     }
 
+    def __repr__(self):
+        return f'the {self.name}, {self.description}!'
