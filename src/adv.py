@@ -53,6 +53,25 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+#add the items into room
+room['treasure'].placed_item(items['spear'])
+room['treasure'].placed_item(items['tome'])
+room['foyer'].placed_item(items['potion'])
+room['foyer'].placed_item(items['elixer'])
+room['foyer'].placed_item(items['shield'])
+room['narrow'].placed_item(items['potion'])
+room['narrow'].placed_item(items['shield'])
+room['overlook'].placed_item(items['sword'])
+room['overlook'].placed_item(items['katana'])
+
+
+
+
+
+
+
+
+
 #
 # Main
 #
