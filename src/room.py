@@ -6,6 +6,7 @@ class Room:
 
     def __init__(self, room):
         self.room = room
+        self.description = description
 
     def __repr__(self):
-        return self.room
+        return f"{self.name}\n\n{self.description}\n"
