@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -20,6 +21,24 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+}
+
+# Declare all items
+
+items = {
+    'potion': Item('Apple Gel', 'Recovers 25 HP'),
+
+    'elixer': Item('Orange Gel', 'Recovers 25 MP'),
+
+    'shield': Item('Aegis', 'Legendary shield of Zeus'),
+
+    'katana': Item('Masamune', 'A blade that can cut through anything'),
+
+    'sword': Item('Sword of GouJian', 'Ancient sword from the East'),
+
+    'spear': Item('Gae Bolg', 'A cursed spear once wielded by ChuCulain'),
+
+    'tome': Item('Dire Thunder', 'A magic book that summons thunder against enemies')
 }
 
 
