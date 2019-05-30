@@ -9,5 +9,14 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.items = []
 
+    
+    # add items to a room
+    def add_item(self, item):
+        self.items.append(item)
+
+    # remove items from a room
+    def remove_item(self, item):
+        self.items.remove(item)
         

@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -21,6 +22,14 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+item = {
+    "rock": Item("Superrock", "hard, cold, heavy stone"),
+    "mirror": Item("Magicmirror", "magical looking glass"),
+    "parachute": Item("Partychute", "jump to safety"),
+    "flashlight": Item("Lightbeam", "light the way"),
+    "gold": Item("Scrooges", "stacks on stacks on stacks"),
+}
+
 
 # Link rooms together
 
@@ -32,6 +41,25 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+# Add items to rooms
+
+room['outside'].add_item(item["rock"])
+room['foyer'].add_item(item["mirror"])
+room['overlook'].add_item(item["parachute"])
+room['narrow'].add_item(item["flashlight"])
+room['treasure'].add_item(item["gold"])
+
+# room['outside'].items = item["rock"]
+
+
+# room['outside'].add_item(Item("rock", "hard, cold, heavy stone") )
+# room['foyer'].add_item(Item("Magicmirror", "magical looking glass"))
+# room['overlook'].add_item(Item("parachute", "safety first, then teamwork"))
+# room['narrow'].add_item(Item("flashlight", "light the way") )
+# room['treasure'].add_item(Item("gold", "stacks on stacks on stacks"), )
+
+
 
 #
 # Main
@@ -52,28 +80,68 @@ cmds = ["n", "s", "e", "w"]
 
 
 while True:
-    room = player.room
+    room = player.current_room
 
     # * Prints the current room name
-    print(f"You are in {room.name}\n")
+    print(f"------------\nYou are in {room.name}\n")
+
+    # * Prints out the player's inventory
+    if len(player.inventory) < 1:
+        print("You have no inventory")
+    
+    else:
+        print(f'This is your inventory: {player.inventory}')
+
+    print('')
 
     # * Prints the current description (the textwrap module might be useful here).    
     print(f"{room.description}\n")
     #
+
+    # * Prints the items in the room
+    print(f"There is a {room.items} in this room\n")
+
+
     # If the user enters a cardinal direction, attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
-    cmd = input("Please input \"n\" for North, \"s\" for South, \"e\" for East, for \"w\" for West or \"q\" to quit")
+    cmd = input("Enter \"n\" to travel North, \"s\" to go South, \"e\" to go East, \"w\" to go West\n\nEnter \"take\" to pick up an item. \n \nEnter \"drop\" to leave item in room.\n \nEnter \"q\" to quit\n\n")
+    
+    # splitting the inputs
+    cmd = cmd.split()
 
-    if cmd == "q":
+    if len(cmd) ==1:
+        action = cmd[0]
+
+    elif len(cmd) == 2:
+        action = cmd[0]
+        item = cmd[1]
+
+    # if user enters q, game over    
+    if cmd[0] == "q":
         exit()
-    elif cmd in cmds:
-        player.move_player(cmd)
+
+    # if user enters direction, move to new room
+    elif action != "q" and cmd[0] in cmds:
+        player.move_player(cmd[0])
+
+    elif action == "take":
+        player.get_item(item)
+
+        for i in room.items:
+            if i.name == item:
+                room.remove_item(i)
+
+    elif action == "drop":
+        room.add_item(item)
+        
+        for i in player.inventory:
+            if i == item:
+                player.drop_item(i)
+
+        
+
     else:
-        print("That action is not valid.")
+        print("That command is not valid. Please try again.")
 
 
 
-
-
-#
-# If the user enters "q", quit the game.
