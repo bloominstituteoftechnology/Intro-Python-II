@@ -87,7 +87,7 @@ new_player = Player(room['outside'])
 single_letter_cmds = ["n", "s", "e", "w", "q", "i", "inventory"]
 split_cmds = ["take", "get", "drop"]
 item_cmds = ["lamp", "hatchet", "coins", "emerald"]
-puzzle_comds = ["use", "with"]
+puzzle_cmds = ["use", "with"]
 
 def change_room(direction):
     if direction == "n":
