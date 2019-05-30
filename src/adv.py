@@ -103,5 +103,6 @@ def getMove(player):
         player.current_room = player.current_room.w_to
 
 print(player.current_room)
-getMove(player)
-print(player.current_room)
+path = ''
+while path is not 'q' or path is not 'Q':
+    getMove(player)
