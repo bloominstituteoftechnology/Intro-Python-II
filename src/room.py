@@ -2,11 +2,12 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description, is_light, items = [], n_to = None, s_to = None, e_to = None, w_to = None):
+    def __init__(self, name, description, is_light, items = [], n_to = None, s_to = None, e_to = None, w_to = None, present_player = None):
         self.name = name
         self.description = description
         self.is_light = is_light
         self.items = items
+        self.present_player = present_player
 
     def get_item(self, item):
         self.items.append(item)
@@ -35,6 +36,18 @@ class Room:
         if len(possible_item) > 0:
             return possible_item[0]
         return None
+
+    def get_room_exits(self):
+        exits = []
+        if hasattr(self, 'n_to'):
+            exits.append("n")
+        if hasattr(self, 's_to'):
+            exits.append("s")
+        if hasattr(self, 'e_to'):
+            exits.append("e")
+        if hasattr(self, 'w_to'):
+            exits.append("w")
+        return exits
 
 class PuzzleRoom(Room):
     def __init__(self, name, description, player_puzzle_item, room_puzzle_item, is_light, items= []):

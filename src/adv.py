@@ -1,6 +1,7 @@
 from room import Room
 from room import PuzzleRoom
 from player import Player
+from player import Spider
 from Item import Item
 from Item import PuzzleItem
 from Item import Treasure
@@ -72,6 +73,7 @@ treausure_room.items = [items_dict["coins"], items_dict["emerald"]]
 # Make a new player object that is currently in the 'outside' room.
 
 new_player = Player(input("What is your name?\n--> "), room['outside'])
+spider = Spider(1, treausure_room ,True)
 
 # Write a loop that:
 #
@@ -119,5 +121,6 @@ while True:
         split_cmd(cmd)
     elif cmd in single_cmds:
         single_cmd(cmd)
+    spider.travel()
 
 
