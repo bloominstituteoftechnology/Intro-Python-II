@@ -1,6 +1,6 @@
 import random
 from room import Room
-from item import Item
+from item import Item, Treasure
 from player import Player
 from adv_save import load_results, save_results
 import os
@@ -9,14 +9,10 @@ import os
 def parse_command(com_mand):
     if com_mand == '':
         return
-    cmd_words = com_mand.split()
-    
-    # _____ player inventory  _________
-    if str(cmd_words[0]).lower() == 'inventory':
+    cmd_words = com_mand.split()  # split into word list
+    if str(cmd_words[0]).lower() == 'inventory':  # __ player inventory _
         curr_player.list_inventory()
-        return
-    # ___________ get item _________________
-    if str(cmd_words[0]).lower() == 'get':
+    if str(cmd_words[0]).lower() == 'get':        # __ get item __
         if len(cmd_words) > 1:
             item_name = str(cmd_words[1]).lower()
             if curr_player.curr_room.in_room(item_name):
@@ -29,9 +25,8 @@ def parse_command(com_mand):
         else:
             print('Get what?.......')
             return
-    
-    # ___________ drop item ___________________
-    if str(cmd_words[0]).lower() == 'drop':
+    if str(cmd_words[0]).lower() == 'drop':       # ___ drop item ___
+
         if len(cmd_words) > 1:
             item_name = str(cmd_words[1]).lower()
             if curr_player.in_inv(item_name):
@@ -44,7 +39,7 @@ def parse_command(com_mand):
         else:
             print('Drop what?.......')
             return
-
+    # ____ fall-thru:  command is unreckognized ____
     print("Sorry, I did not understand '"+com_mand+"' Try again.\n")
     return
 
@@ -61,7 +56,6 @@ room = {
                       Item('bones', 'some old bones'),
                       ],
                      ),
-
     'overlook': Room("at the Grand Overlook",
                      """A steep cliff appears before you, falling into the darkness.
 Ahead to the north, a light flickers in the distance,
@@ -78,7 +72,6 @@ The smell of gold permeates the air.""",
                       Item('torch', 'a torch'),
                       ],
                      ),
-
     'treasure': Room("in the Treasure Chamber!",
                      """You've found the long-lost treasure chamber!
 Sadly, it has already been completely emptied by earlier adventurers
@@ -86,7 +79,20 @@ The only exit is to the south.""",
                      [Item('amulet', 'an amulet'),
                       Item('rum', 'a bottle of rum'),
                       ],
-                     )
+                     ),
+    'hidden': Room("there is a strange seam in the wall You push on it and find a hidden room!",
+                   """You've found a hidden treasure chamber!""",
+                   [Treasure('emerald', 'an emerald jewel'),
+                    Item('flask', 'a flask'),
+                    ],
+                   ),
+    'library': Room("in a room with old books",
+                   """It seems to be an old library and smells musty""",
+                   [Treasure('bible', 'a bible'),
+                    Item('koran', 'a koran'),
+                    ],
+                   )
+
 }
 
 # Link rooms together
@@ -94,13 +100,15 @@ room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
+room['foyer'].w_to = room['library']
 room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['library'].s_to = room['hidden']
 
 # _________ init  _______________
-# Instantiate new player object that is currently in the 'outside' room.
+# Instantiate new player in the 'outside' room.
 curr_player = Player("Player1", room['outside'])
 
 # _______ get player's name _______
