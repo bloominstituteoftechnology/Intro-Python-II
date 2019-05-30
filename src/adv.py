@@ -54,7 +54,7 @@ treausure_room.s_to = room['narrow']
 # Add items to rooms
 
 items_dict = {
-    "lamp": Item("lamp", "The lamp is well-fueled and will shine brightly for a long time.", 2),
+    "lamp": LightSource("lamp", "The lamp is well-fueled and will shine brightly for a long time.", 2),
     "hatchet": PuzzleItem("hatchet", "A small hatchet that can easily fit inside your belt loop. It can be used as a tool or a weapon.", 3),
     "coins": Treasure("coins", "They shines in the light.", 2),
     "emerald": Treasure("emerald", "It looks real.", 2)
@@ -88,28 +88,6 @@ single_letter_cmds = ["n", "s", "e", "w", "q", "i", "inventory"]
 split_cmds = ["take", "get", "drop"]
 item_cmds = ["lamp", "hatchet", "coins", "emerald"]
 puzzle_cmds = ["use", "with"]
-
-def change_room(direction):
-    if direction == "n":
-        if new_player.current_room.n_to == None:
-            cmd = input("You can't do that. Please reread the room description and choose a different direction.\n--> ")
-        else:
-            new_player.current_room = new_player.current_room.n_to
-    elif direction == "s":
-        if new_player.current_room.s_to == None:
-            cmd = input("You can't do that. Please reread the room description and choose a different direction.\n--> ")
-        else:
-            new_player.current_room = new_player.current_room.s_to
-    elif direction == "e":
-        if new_player.current_room.e_to == None:
-            cmd = input("You can't do that. Please reread the room description and choose a different direction.\n--> ")
-        else:
-            new_player.current_room = new_player.current_room.e_to
-    elif direction == "w":
-        if new_player.current_room.w_to == None:
-            cmd = input("You can't do that. Please reread the room description and choose a different direction.\n--> ")
-        else:
-            new_player.current_room = new_player.current_room.w_to
 
 def single_letter_cmd(single_letter_cmd):
     if cmd == "q":
@@ -181,24 +159,24 @@ def split_cmd(cmd):
         else:
             print("You can't drop that.")
 
+new_player.current_room.__str__()
+
 while True:
     if items_dict["lamp"] in new_player.items or new_player.current_room.is_light == True or items_dict["lamp"] in new_player.current_room.items:
-        print(new_player.current_room.name)
-        print(new_player.current_room.description)
         if new_player.current_room.items != None:
             for item in new_player.current_room.items:
-                print(f"You see a {item.name}.")
+                print(f"You see a {item.name}.\n")
     elif items_dict["lamp"] not in new_player.items and new_player.current_room.is_light == False:
-        print("It's pitch black!")
+        print("It's pitch black!\n")
     cmd = input("--> ")
     if len(cmd.split()) > 1:
         split_cmd(cmd)
     elif cmd == "i" or cmd == "inventory":
         if len(new_player.items) > 0:
             for item in new_player.items:
-                print(f"You have a {item.name}.")
+                print(f"\nYou have a {item.name}.\n")
         else:
-            print("You currently have no items.")
+            print("\nYou currently have no items.\n")
     elif cmd in single_letter_cmds:
         single_letter_cmd(cmd)
 

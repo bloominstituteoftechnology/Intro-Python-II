@@ -2,14 +2,10 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description, is_light, items = []):
+    def __init__(self, name, description, is_light, items = [], n_to = None, s_to = None, e_to = None, w_to = None):
         self.name = name
         self.description = description
         self.is_light = is_light
-        n_to = None
-        s_to = None
-        e_to = None
-        w_to = None
         self.items = items
 
     def get_item(self, item):
@@ -19,20 +15,20 @@ class Room:
         self.items.remove(item)
 
     def __str__(self):
-        print(f"--------------------/n/n{self.name}/n/n/n{self.description}/n/n--------------------/n/n")
+        print(f"--------------------\n\n{self.name}\n\n\n{self.description}\n\n--------------------\n\n")
 
     def get_room_in_direction(self, direction):
         if direction in ("n", "s", "e", "w"):
-            if direction == "n":
+            if direction == "n" and hasattr(self, 'n_to'):
                 return self.n_to
-            if direction == "s":
+            elif direction == "s" and hasattr(self, 's_to'):
                 return self.s_to
-            if direction == "e":
+            elif direction == "e" and hasattr(self, 'e_to'):
                 return self.e_to
-            if direction == "w":
+            elif direction == "w" and hasattr(self, 'w_to'):
                 return self.w_to
             else:
-                print("Invalid command. Please enter a valid command.")
+                return None
 
 class PuzzleRoom(Room):
     def __init__(self, name, description, player_puzzle_item, room_puzzle_item, is_light, items= []):
