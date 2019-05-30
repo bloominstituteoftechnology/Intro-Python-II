@@ -45,12 +45,8 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-#--------------------------------------------------------------------------|
-#     NEED TO BE ABLE TO CHANGE LOCATION WITH ON THE ACTUAL CLASS INSTANCE |
-#--------------------------------------------------------------------------|
-
 player1 = Player('Megan', room['outside'].location )
-player1.location = room['narrow'].location
+# player1.current_room = room['narrow'].location
 
 print(player1)
 
@@ -64,3 +60,5 @@ print(player1)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
