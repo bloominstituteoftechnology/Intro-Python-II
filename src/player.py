@@ -6,10 +6,5 @@ class Player():
       self.name = name
       self.current_room = room
 
-   def change_name(self, name):
-      self.name = name
-   def move_room(self, new_room):
-      self.current_room = new_room
-
    def __repr__(self):
       return f"{self.name} is currently in the {self.current_room}"
