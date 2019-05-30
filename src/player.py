@@ -11,5 +11,5 @@ class Player():
    def move_room(self, new_room):
       self.current_room = new_room
 
-   def __str__(self):
+   def __repr__(self):
       return f"{self.name} is currently in the {self.current_room}"

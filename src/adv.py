@@ -38,16 +38,39 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-# list of acceptable inputs for the game
-valid_inputs = ["n", "s", "e", "w", "q"]
+import textwrap
 
+# grabs user input
 def grab_direction():
     direction = input("\nPlease enter a direction of travel: ").lower()
-    if direction in valid_inputs:
+    if direction in ["n", "s", "e", "w", "q"]:
         return direction
     else:
-        print("Invalid entry! Please use 'n', 's', 'e' or 'w' to navigate\n Enter 'q' to exit the game")
+        print("Invalid entry! Please use 'n', 's', 'e' or 'w' to navigate\nEnter 'q' to exit the game")
         grab_direction()
+
+# checks to see if room has direction attribute
+def try_direction(direction, current_room):
+    attribute = direction + "_to"
+
+    if hasattr(current_room, attribute):
+        return getattr(current_room, attribute)
+    else:
+        print(direction_error(direction))
+        return current_room
+
+# error messages for invalid room directions
+def direction_error(direction):
+    if direction == "n":
+        return "There is no room to the North\n"
+    elif direction == "s":
+        return "There is no room to the South\n"
+    elif direction == "e":
+        return "There is no room to the East\n"
+    elif direction == "w":
+        return "There is no room to the West\n"
+    else:
+        return "Goodbye!"
 
 print("Welcome to the game!\n")
 username = input("Please enter your players name: ")
@@ -55,7 +78,6 @@ print(f"\nHello {username}, within this game you can navigate rooms using n, s, 
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(username, room["outside"])
-print(player)
 
 # Write a loop that:
 #
@@ -67,7 +89,12 @@ print(player)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-direction = grab_direction()
+direction = None
 while (direction != "q"):
-    print(player.current_room)
+    print("Current Position: " + 
+        textwrap.fill(player.current_room.name + 
+        ". " + player.current_room.description, width=50))
     direction = grab_direction()
+    player.current_room = try_direction(direction, player.current_room)
+
+#     direction = grab_direction()
