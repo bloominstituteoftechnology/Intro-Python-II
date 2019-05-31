@@ -1,13 +1,14 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("Outside Cave Entrance", "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""",),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -21,6 +22,10 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+item = {
+    "Katana": Item("Katana", "Shiny and sharp, please don't poke people with the pointy end", "Swing, Slice"),
+    "MIDI Keyboard": Item("MIDI Keyboard", "12 Keys Black and White, One Hole, Two connections", "Music Powa")
+}
 
 # Link rooms together
 
@@ -33,15 +38,17 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+room["treasure"].items = [item["Katana"], item["MIDI Keyboard"]]
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+player_one = Player('outside')
 # Write a loop that:
 #
 # * Prints the current room name
+# --> Look up room in dictionary...?
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
