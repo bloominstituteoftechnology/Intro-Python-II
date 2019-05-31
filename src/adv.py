@@ -96,5 +96,3 @@ while (direction != "q"):
         ". " + player.current_room.description, width=50))
     direction = grab_direction()
     player.current_room = try_direction(direction, player.current_room)
-
-#     direction = grab_direction()
