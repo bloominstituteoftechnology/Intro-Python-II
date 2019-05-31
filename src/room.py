@@ -13,5 +13,5 @@ class Room:
     #         'description': self.description
     #     }
 
-    def __repr__(self):
+    def __str__(self):
         return f'the {self.name}, {self.description}!'

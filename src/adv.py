@@ -49,9 +49,12 @@ room['treasure'].s_to = room['narrow']
 #
 # Make a new player object that is currently in the 'outside' room.
 
-# player = Player('Peter Pan', room['outside'])
+# This is creating
 clearScr()
-player_name = input("Please enter your name: ")
+player_name = ''
+while player_name == '':
+    player_name = input("Please enter your name: ")
+
 
 player = Player(player_name, room['outside'])
 print('You are entering at your own risk! Type q to quit now!')
@@ -68,8 +71,6 @@ directions = {
 direction = ''
 
 # Confirms user has not quite and tells the user to choose direction
-# if direction != 'q':
-#     print('Remember you are in the', player.current_room)
 options = ''
 
 for opt_direction in directions:
@@ -78,21 +79,27 @@ for opt_direction in directions:
 print(options)
 while direction != 'q':
     direction = input('Which way would you like to go? ')
-    if direction == 'n':
-        print('Lets go North')
-        break
-    elif direction == 's':
-        print('Lets go South')
-        break
-    elif direction == 'e':
-        print('Lets go East')
-        break
-    elif direction == 'w':
-        print('Lets go West')
-        break
-    elif direction == 'q':
-        print('See you later')
-        break
+    try:
+        chosen = f'You chose  {direction}, Now lets go {directions[direction]}'
+        if direction == 'n':
+            print(chosen)
+            player.current_room = player.current_room.n_to
+            print('You are in', player.current_room)
+        elif direction == 's':
+            player.current_room = player.current_room.s_to
+            print('You are in', player.current_room)
+        elif direction == 'e':
+            player.current_room = player.current_room.e_to
+            print('You are in', player.current_room)
+        elif direction == 'w':
+            player.current_room = player.current_room.w_to
+            print('You are in', player.current_room)
+        elif direction == 'q':
+            print('See you later, Thanks for playing!')
+    except KeyError:
+        print("Please enter valid key option")
+    except AttributeError:
+        print('Please choose a valid direction!')
 
 # The above code is not complete for testing purposes
 # Write a loop that:
