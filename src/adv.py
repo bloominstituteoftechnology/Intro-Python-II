@@ -1,11 +1,13 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                [Item("sword", "this sword has dull edges")]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -96,3 +98,4 @@ while (direction != "q"):
         ". " + player.current_room.description, width=50))
     direction = grab_direction()
     player.current_room = try_direction(direction, player.current_room)
+    print(player.current_room.items)
