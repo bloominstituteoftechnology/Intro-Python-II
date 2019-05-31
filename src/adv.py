@@ -53,6 +53,12 @@ room['treasure'].s_to = room['narrow']
 
 playerName = input("Please Enter Your Name:")
 
-player1 = Player(name, room["outside"])
-#player position
-positon = ''
+player1 = Player(playerName,'outside')
+#current position 
+cp = ''
+
+while cp != "q":
+    currentRoom = player1.room
+    print(player1.room)
+    print(currentRoom.description)
+    
