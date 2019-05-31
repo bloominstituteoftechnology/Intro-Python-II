@@ -38,13 +38,46 @@ room['treasure'].s_to = room['narrow']
 #
 import textwrap
 
-# Make a new player object that is currently in the 'outside' room.
-class Player:
-    def __init__(self, name, health, weapon, room_name)
-        self.name = name 
-        self.room = world[room_name]
+def grab_direction():
+    direction = input("\nEnter the direction to move: ").lower()
+    if direction in ["n", "s", "e", "w", "q"]:
+        return direction
+    else: 
+        print("Invalid entry")
+        grab_direction()
 
-player = Player("Kyle", 100, [], "outside")
+
+def try_direction(direction, current_room):
+    attribute = direction + "_to"
+
+    if hasattr(current_room, attribute):
+        return getattr(current_room, attribute)
+    else:
+        print(direction_error(direction))
+        return current_room
+
+
+def direction_error(direction):
+    if direction == "n":
+        return "There is no room to the North"
+    elif direction == "s":
+        return "There is no room to the South"
+    elif direction == "e":
+        return "There is no room to the East"
+    elif direction == "w":
+        return "There is no room to the West"
+    else: 
+        return "Goodbye!"
+
+print("Welcome to the game!\n")
+username = input("Please enter your players name: ")
+print(f"\nHello {username}, within this game you can navigate rooms using n, s, w, or e")
+
+
+player = Player(username, room["outside"])
+
+# Make a new player object that is currently in the 'outside' room.
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -55,3 +88,11 @@ player = Player("Kyle", 100, [], "outside")
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+direction = None
+while (direction != "q"):
+    print("Current Position: " +
+        textwrap.fill(player.current_room.name +
+        ". " + player.current_room.description, width=50))
+    direction = grab_direction()
+    player.current_room = try_direction(direction, player.current_room)
