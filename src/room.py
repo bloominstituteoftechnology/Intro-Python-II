@@ -9,6 +9,10 @@ class Room:
         self.s_to = s_to
         self.w_to = w_to
         self.e_to = e_to
-        
+        self.items = list
+
+    def addItem(self, item):
+        self.items.append(item)
+
     def __str__(self):
         return f''

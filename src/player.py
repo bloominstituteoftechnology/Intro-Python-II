@@ -4,6 +4,10 @@
 class Player:
     def __init__(self, current_room):
         self.current_room = current_room
+        self.items = list
 
+    def addItem(self, item):
+        self.items.append(item)
+        
     def __str__(self):
         return f'You are currently located {self.current_room}'
