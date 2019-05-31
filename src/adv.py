@@ -40,7 +40,6 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-player_one = Player("outside")
 
 # Write a loop that:
 #
@@ -53,10 +52,37 @@ player_one = Player("outside")
 #
 # If the user enters "q", quit the game.
 
+class Quit(Exception):
+    pass
 
-def main():
-    print("main()")
+
+def player_input(player):
+    player_input = input("Enter a command: ").lower()
+    command = player_input.split()[0]
+
+    if command in ("quit", "q"):
+        raise Quit
+    elif command in ("n", "s", "e", "w", "north", "south", "east", "west"):
+        player.move(command[0] + "_to")
+        print(player.current_room)
+    else:
+        return command
+
+# Main method for the game
 
 
-if __name__ == "__main__":
-    main()
+def game():
+    print("Lets a go!")
+
+    player_name = input("What would you like your name to be? ")
+    player = Player(player_name, room["outside"])
+    print(player.current_room)
+
+    try:
+        while True:
+            player_input(player)
+    except Quit:
+        pass
+
+# Start game
+game()
