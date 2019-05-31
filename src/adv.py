@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -49,8 +50,58 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+def show_help():
+    print("**********************************************************************")
+    print("    h = this help menu")
+    print("    q = quit game")
+    print("    e = move east")
+    print("    s = move south")
+    print("    w = move west")
+    print("    n = move north")
+
+
 def main():
-    print("main()")
+    player = Player("Eric", room['outside'])
+    show_help()
+
+    while True:
+        print("**********************************************************************")
+        print(player.current_room.name)
+        print(player.current_room.description)
+
+        cmd = input("? ")
+
+        if cmd == 'q':
+            break
+        elif cmd == 'h':
+            show_help()
+        elif cmd == 'e':
+            if player.current_room.e_to is not None:
+                player.current_room = player.current_room.e_to
+            else:
+                print('!!! Unable to move that direction !!!')
+        elif cmd == 's':
+            if player.current_room.s_to is not None:
+                player.current_room = player.current_room.s_to
+            else:
+                print('!!! Unable to move that direction !!!')
+        elif cmd == 'w':
+            if player.current_room.w_to is not None:
+                player.current_room = player.current_room.w_to
+            else:
+                print('!!! Unable to move that direction !!!')
+        elif cmd == 'n':
+            if player.current_room.n_to is not None:
+                player.current_room = player.current_room.n_to
+            else:
+                print('!!! Unable to move that direction !!!')
+        else:
+            print('!!! Invalid command !!!')
+            show_help()
+
+    print('*** End Game ***')
 
 
 if __name__ == "__main__":
