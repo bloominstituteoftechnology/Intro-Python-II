@@ -47,28 +47,8 @@ room['treasure'].add_item(Item('map', 'Map to next gold hunt adventure'))
 #
 
 
-def move_in_dir(direction):
-    current_room = player.get_current_room()
-
-    # Check if player can move in direction given
-    if direction == 'n' and current_room.n_to:
-        player.set_current_room(current_room.n_to)
-        return True
-    elif direction == 's' and current_room.s_to:
-        player.set_current_room(current_room.s_to)
-        return True
-    elif direction == 'e' and current_room.e_to:
-        player.set_current_room(current_room.e_to)
-        return True
-    elif direction == 'w' and current_room.w_to:
-        player.set_current_room(current_room.w_to)
-        return True
-
-    return False
-
-
 def validate_cmd(cmd):
-    valid_cmds = ['n', 's', 'e', 'w', 'q']
+    valid_cmds = ['n', 's', 'e', 'w', 'q', 'i', 'inventory']
 
     split_cmd = cmd.split()
     cmd_len = len(split_cmd)
@@ -98,34 +78,25 @@ def process_cmd(cmd, player):
         if split_cmd[0] == 'q':
             print('\nNice game. Visit again.')
             exit()
+        elif split_cmd[0] == 'i' or split_cmd[0] == 'inventory':
+            player.print_items_info()
         else:
-            if not move_in_dir(cmd.lower()):
+            if player.move_in_dir(cmd.lower()):
+                player.print_room_info()
+            else:
                 print('\nMoving in this direction is not allowed.')
     else:
         if split_cmd[0] == 'take':
-            room = player.get_current_room()
-
-            item_picked = False
-
-            for index, item in enumerate(room.get_items()):
-                if item.name == split_cmd[1]:
-                    item_picked = True
-                    player.add_item(item)
-                    room.remove_item(index)
-            if not item_picked:
+            if player.take_item(split_cmd[1]):
+                print(f'\nYou have taken {split_cmd[1]}')
+                print(f'\n{player.get_current_room().available_items()}')
+            else:
                 print('\nItem mentioned not available in room.')
+                print(f'\n{player.get_current_room().available_items()}')
         else:
-            room = player.get_current_room()
-
-            item_dropped = False
-
-            for index, item in enumerate(player.get_items()):
-                if item.name == split_cmd[1]:
-                    item_dropped = True
-                    room.add_item(item)
-                    player.remove_item(index)
-
-            if not item_dropped:
+            if player.drop_item(split_cmd[1]):
+                print(f'\nYou have dropped {split_cmd[1]}')
+            else:
                 print('\nItem mentioned not available with you.')
 
 
@@ -145,6 +116,7 @@ def print_error():
 # Make a new player object that is currently in the 'outside' room.
 player = Player('Shreyas')
 player.set_current_room(room['outside'])
+player.print_room_info()
 
 # Write a loop that:
 #
@@ -159,18 +131,6 @@ player.set_current_room(room['outside'])
 
 
 while True:
-
-    print(player.current_room)
-
-    item_count_room = len(player.get_current_room().get_items())
-    print(f'\n{item_count_room} available items in room.')
-    for item in player.current_room.get_items():
-        print(item)
-
-    item_count_player = len(player.get_items())
-    print(f'\n{item_count_player} available items with you.')
-    for item in player.get_items():
-        print(item)
 
     cmd = input("\nPlease provide your input: ")
 
