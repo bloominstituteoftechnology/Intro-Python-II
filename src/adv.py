@@ -33,6 +33,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+playerName = input("Please Enter Your Name:")
+
+player1 = Player(name, room["outside"])
+#player position
+pos = ''
+
+
 #
 # Main
 #
