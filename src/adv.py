@@ -5,26 +5,26 @@ from item import Item
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance", "North of you, the cave mount beckons", "Nothing"),
+    'outside':  Room("Outside Cave Entrance", "North of you, the cave mount beckons"),
 
     'studio':  Room("Studio", """Dim light filters in from the south. Dusty
-passages run north and east.""", "Katana"),
+passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", "Nothing"),
+the distance, but there is no way across the chasm."""),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", "Nothing"),
+to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", "MIDI Keyboard"),
+earlier adventurers. The only exit is to the south."""),
 }
 
-items = {
-    "Katana": Item("Katana", "Shiny and sharp, please don't poke people with the pointy end", "Swing, Slice"),
-    "MIDI Keyboard": Item("MIDI Keyboard", "12 Keys Black and White, One Hole, Two connections", "Music Powa")
+item = {
+    "Katana": Item("Katana", "Slices Fruit"),
+    "MIDI Keyboard": Item("MIDI Keyboard", "Produces Music")
 }
 
 # Link rooms together
@@ -38,17 +38,14 @@ room['narrow'].w_to = room['studio']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-room["treasure"].items = [items["Katana"], items["MIDI Keyboard"]]
+room["treasure"].items = [
+    str(item["Katana"]), str(item["Katana"])]
 #
 # Main
 #
 
-currRoom = room["studio"]
-
-name = input("Enter your name soldier\n")
-
 # Make a new player object that is currently in the 'outside' room.
-player = Player(name, room["outside"], items)
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -61,26 +58,27 @@ player = Player(name, room["outside"], items)
 #
 # If the user enters "q", quit the game.
 
-direction = ""
+name = input("Enter your name\n")
+
+player = Player(name, room["outside"], items=["nickel", "good for flippin"])
 
 while True:
     print(
-        f"Current space\n You are Carrying: {player.items}\n This room has these items: {player.room.items}\n {player.room.description}")
-    directionChoice = input(
-        "Pick a direction to move: n, w, s, or e, or enter q to quit\n")
-
-    if directionChoice == "n" or directionChoice == "w" or directionChoice == "s" or directionChoice == "e" or directionChoice == "q":
-        if directionChoice == "n":
-            player.room == player.room.n_to
-        elif directionChoice == "w":
+        f"Current Room: {player.room.name}\nCurrent Items {player.items}\nItems in the Room {player.room.items}\n {player.room.description}")
+    playerInput = input(
+        "Enter N: Move North\nEnter S: Move South\nEnter E: Move East\nEnter W: Move West\nEnter Q: Enter q to quit\n")
+    print(f"You moved {playerInput}\n")
+    if playerInput == 'n' or playerInput == 's' or playerInput == 'w' or playerInput == 'e' or playerInput == 'q':
+        if playerInput == "n":
+            player.room = player.room.n_to
+        elif playerInput == "s":
+            player.room = player.room.s_to
+        elif playerInput == "w":
             player.room == player.room.w_to
-        elif directionChoice == "s":
-            player.room == player.room.s_to
-        elif directionChoice == "e":
+        elif playerInput == "e":
             player.room == player.room.e_to
-        # Quits the game
-        elif directionChoice == "q":
-            print("Ended the game")
+        elif playerInput == "q":
+            print("Game Over (For Now)")
             break
         else:
-            print("Pick another way to walk friend")
+            print("Enter a cardinal direction on your keyboard")

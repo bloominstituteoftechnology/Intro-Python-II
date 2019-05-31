@@ -3,10 +3,10 @@
 
 
 class Player:
-    def __init__(self, name, room, items):
+    def __init__(self, name, room, items=[]):
         self.name = name
         self.room = room
         self.items = items
 
     def __str__(self):
-        return f"My name is {self.name} and I am carrying {self.items}."
+        return f"{self.name} reporting in and I'm lugging around {self.items}."
