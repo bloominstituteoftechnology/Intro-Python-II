@@ -53,12 +53,34 @@ room['treasure'].s_to = room['narrow']
 
 playerName = input("Please Enter Your Name:")
 
-player1 = Player(playerName,'outside')
-#current position 
+player1 = Player(playerName, room['outside'])
+# current position
 cp = ''
 
 while cp != "q":
-    currentRoom = player1.room
-    print(player1.room)
-    print(currentRoom.description)
-    
+    print(player1.currentRoom)
+    cp = input('Where would you like to move ?')
+   
+
+    try:
+        cp = str(cp)
+        if cp == "n":
+            player1.currentRoom = player1.currentRoom.n_to
+
+        if cp == "s":
+            player1.currentRoom = player1.currentRoom.s_to
+
+
+        if cp == "e":
+            player1.currentRoom = player1.currentRoom.e_to
+            
+
+
+        if cp == "w":
+            player1.currentRoom = player1.currentRoom.w_to
+
+        
+        if cp =="q": print("Thank you for playing")
+
+    except:
+        "You Can't Move That Way!"

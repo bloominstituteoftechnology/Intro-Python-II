@@ -8,4 +8,4 @@ class Room():
         self.description = description
 
     def __str__(self):
-        return f"This rooms name is {self.name} and its described as {self.description}"
+        return f"You are currently in {self.name} and {self.description}"

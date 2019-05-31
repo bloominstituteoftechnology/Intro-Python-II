@@ -3,9 +3,9 @@
 
 
 class Player():
-    def __init__(self, name, room):
+    def __init__(self, name, currentRoom):
         self.name = name
-        self.room = room
+        self.currentRoom = currentRoom
 
     def __str__(self):
-        return f"Hello {self.name} you are in room {self.room}."
+        return f"Hello {self.name} you are in room {self.currentRoom.name}."
