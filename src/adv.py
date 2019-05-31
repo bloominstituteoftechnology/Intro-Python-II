@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,6 +40,7 @@ playerName = input("Please Enter Your Name:")
 player1 = Player(name, room["outside"])
 #player position
 pos = ''
+
 
 
 #
