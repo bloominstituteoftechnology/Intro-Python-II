@@ -54,12 +54,16 @@ room['treasure'].s_to = room['narrow']
 
 def show_help():
     print("**********************************************************************")
-    print("    h = this help menu")
-    print("    q = quit game")
-    print("    e = move east")
-    print("    s = move south")
-    print("    w = move west")
-    print("    n = move north")
+    print("    h or help                help menu")
+    print("    q or quit                quit game")
+    print("    e or east                move east")
+    print("    s or south               move south")
+    print("    w or west                move west")
+    print("    n or north               move north")
+    print("    l or look                search room")
+    print("    i or inventory           player inventory")
+    print("    t or take [item]         take item")
+    print("    d or drop [item]         drop item")
 
 
 def main():
@@ -71,35 +75,64 @@ def main():
         print(player.current_room.name)
         print(player.current_room.description)
 
-        cmd = input("? ")
+        tokens = input("? ").strip().split(' ')
 
-        if cmd == 'q':
-            break
-        elif cmd == 'h':
-            show_help()
-        elif cmd == 'e':
-            if player.current_room.e_to is not None:
-                player.current_room = player.current_room.e_to
+        if len(tokens) == 1:
+            cmd = tokens[0]
+            if cmd == 'q' or cmd == 'quit':
+                break
+            elif cmd == 'h' or cmd == 'quit':
+                show_help()
+            elif cmd == 'i' or cmd == 'inventory':
+                    print('*** Player inventory ***')
+                for item in player.items:
+                    print(item)
+                else:
+                    print('None')
+            elif cmd == 'l' or cmd == 'look':
+                    print('*** Items in room ***')
+                for item in player.current_room.items:
+                    print(item)
+                else:
+                    print('None')
+            elif cmd == 'l' or cmd == 'look':
+                if player.current_room. is not None:
+                    player.current_room = player.current_room.n_to
+                else:
+                    print('!!! Unable to move that direction !!!')
+            elif cmd == 'e' or cmd == 'east':
+                if player.current_room.e_to is not None:
+                    player.current_room = player.current_room.e_to
+                else:
+                    print('!!! Unable to move that direction !!!')
+            elif cmd == 's' or cmd == 'south':
+                if player.current_room.s_to is not None:
+                    player.current_room = player.current_room.s_to
+                else:
+                    print('!!! Unable to move that direction !!!')
+            elif cmd == 'w' or cmd == 'west':
+                if player.current_room.w_to is not None:
+                    player.current_room = player.current_room.w_to
+                else:
+                    print('!!! Unable to move that direction !!!')
+            elif cmd == 'n' or cmd == 'north':
+                if player.current_room.n_to is not None:
+                    player.current_room = player.current_room.n_to
+                else:
+                    print('!!! Unable to move that direction !!!')
             else:
-                print('!!! Unable to move that direction !!!')
-        elif cmd == 's':
-            if player.current_room.s_to is not None:
-                player.current_room = player.current_room.s_to
+                print('!!! Invalid command !!!')
+                show_help()
+        elif len(tokens) == 2:
+            cmd = tokens[0]
+            item = tokens[1]
+            if cmd == 't' or cmd == 'take':
+                print('*** Took item ***')
+            elif cmd == 'd' or cmd == 'drop':
+                print('*** Dropped item ***')
             else:
-                print('!!! Unable to move that direction !!!')
-        elif cmd == 'w':
-            if player.current_room.w_to is not None:
-                player.current_room = player.current_room.w_to
-            else:
-                print('!!! Unable to move that direction !!!')
-        elif cmd == 'n':
-            if player.current_room.n_to is not None:
-                player.current_room = player.current_room.n_to
-            else:
-                print('!!! Unable to move that direction !!!')
-        else:
-            print('!!! Invalid command !!!')
-            show_help()
+                print('!!! Invalid command !!!')
+                show_help()
 
     print('*** End Game ***')
 
