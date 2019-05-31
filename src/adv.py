@@ -43,13 +43,20 @@ room['treasure'].s_to = room['narrow']
 import textwrap
 
 # grabs user input
-def grab_direction():
-    direction = input("\nPlease enter a direction of travel: ").lower()
-    if direction in ["n", "s", "e", "w", "q"]:
-        return direction
-    else:
-        print("Invalid entry! Please use 'n', 's', 'e' or 'w' to navigate\nEnter 'q' to exit the game")
-        grab_direction()
+def grab_input():
+    command = input("\nPlease enter a command: ")
+    command = command.strip().lower().split(" ")
+
+    if len(command) < 2:
+        if command[0] in ["n", "s", "e", "w", "q"]:
+            return command[0]
+        else:
+            print("Invalid entry! Please use 'n', 's', 'e' or 'w' to navigate\nEnter 'i' to view the rooms inventory or Enter 'q' to exit the game")
+            grab_input()
+
+# add item to player inventory and remove it from room
+def add_item(item):
+    return None
 
 # checks to see if room has direction attribute
 def try_direction(direction, current_room):
@@ -74,9 +81,15 @@ def direction_error(direction):
     else:
         return "Goodbye!"
 
+# message for room items
+def print_items(item_list):
+    if len(item_list) > 0:
+        print(f"A {item_list[0]} can be found in this room. " +
+            f"To take the {item_list[0]}, type 'get [item name]' or 'take [item name]' ")
+        
 print("Welcome to the game!\n")
 username = input("Please enter your players name: ")
-print(f"\nHello {username}, within this game you can navigate rooms using n, s, w, or e")
+print(f"\nHello {username}, within this game you can navigate rooms using n, s, w, or e\n")
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(username, room["outside"])
@@ -91,11 +104,12 @@ player = Player(username, room["outside"])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-direction = None
-while (direction != "q"):
+action = None
+
+while (action != "q"):
     print("Current Position: " + 
         textwrap.fill(player.current_room.name + 
         ". " + player.current_room.description, width=50))
-    direction = grab_direction()
-    player.current_room = try_direction(direction, player.current_room)
-    print(player.current_room.items)
+    print_items(player.current_room.items)
+    action = grab_input()
+    # player.current_room = try_direction(action, player.current_room)
