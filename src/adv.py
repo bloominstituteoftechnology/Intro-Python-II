@@ -1,5 +1,5 @@
-# from room import Room
-# from player import Player
+from room import Room
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -36,11 +36,15 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+import textwrap
 
 # Make a new player object that is currently in the 'outside' room.
-my_player = Player( "Jimmy", room['outside'].location)
+class Player:
+    def __init__(self, name, health, weapon, room_name)
+        self.name = name 
+        self.room = world[room_name]
 
-print(my_player)
+player = Player("Kyle", 100, [], "outside")
 # Write a loop that:
 #
 # * Prints the current room name
