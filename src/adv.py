@@ -33,9 +33,6 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-# test = getattr(room['foyer'], "w_to")
-# print(test)
-# print(room['foyer'])
 #
 # Main
 #
@@ -106,33 +103,3 @@ def begin_move():
         print("\nThank you for stopping by! See ya soon")
 
 begin_move()
-# def get_direction():
-#     direction = input("Which way would you like to go?").lower()
-#     if direction in possible_directions:
-#         return direction
-#     else:
-#         print(f"{direction} is not a valid input, please choose between 'n', 's', 'e', 'w', 'q'")
-#         return "error"
-
-# def attempt_move(cur_room):
-#     direction = get_direction()
-
-#     if direction == "q":
-#         return False
-#     elif direction == "error":
-#         attempt_move(cur_room)
-#     else:
-#         direction = f"{direction}_to"
-    
-#     print(f"it is trying to run {direction}")
-#     room_returned = getattr(cur_room, direction)
-#     print(f"room returned is {room_returned}")
-#     if room_returned == None:
-#         print("There is no room in that direction")
-#         return cur_room
-#     else:
-#         return room_returned
-
-# while(my_player.cur_room):
-#     print(f"{my_player.name} is currently at {my_player.cur_room.name}")
-#     my_player.cur_room = attempt_move(my_player.cur_room)
