@@ -44,19 +44,49 @@ import textwrap
 
 # grabs user input
 def grab_input():
-    command = input("\nPlease enter a command: ")
+    command = input("\nPlease enter an action: ")
     command = command.strip().lower().split(" ")
-
+    # print(command)
     if len(command) < 2:
-        if command[0] in ["n", "s", "e", "w", "q"]:
+        if command[0] == "q":
+            exit()
+        elif command[0] in ["n", "s", "e", "w"]:
             return command[0]
+        elif command[0] in ["i", "inventory"]:
+            print(f"Current Inventory: {player.inventory}")
         else:
-            print("Invalid entry! Please use 'n', 's', 'e' or 'w' to navigate\nEnter 'i' to view the rooms inventory or Enter 'q' to exit the game")
+            print("Invalid entry! Please use 'n', 's', 'e' or 'w' to navigate rooms\nEnter 'i' to view the rooms inventory\nEnter 'q' to exit the game")
+            grab_input()
+    else:
+        if command[0] in ["get", "take"]:
+            add_item(command[1])
+        elif command[0] == "drop":
+            drop_item(command[1])
+        else:
+            print("Invalid action: ")
             grab_input()
 
 # add item to player inventory and remove it from room
 def add_item(item):
-    return None
+    for i, val in enumerate(player.current_room.items):
+        if str(item) == str(val):
+            player.inventory.append(player.current_room.items[i])
+            player.current_room.items[i].on_take(val)
+            player.current_room.items.remove(val)
+        else:
+            print("\nItem not in room\n")
+
+# drop item from player inventory and add it to room
+def drop_item(item):
+    for i, val in enumerate(player.inventory):
+        if str(item) == str(val):
+            player.current_room.items.append(val)
+            player.inventory.remove(val)
+            print(player.current_room.items)
+            print(player.current_room.items[i])
+            player.current_room.items[i].on_drop(item)
+        else:
+            print("\nItem not in inventory\n")
 
 # checks to see if room has direction attribute
 def try_direction(direction, current_room):
