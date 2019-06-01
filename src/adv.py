@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from items import Item
 from os import system, name
 
 # A function that clears the console for the user
@@ -15,7 +16,7 @@ def clearScr():
 # Declare all the rooms
 room = {
     'outside': Room("Outside Cave Entrance",
-                    "North of you, the cave mount beckons"),
+                    "North of you, the cave mount beckons", Item('Sword', 'Old Sword')),
 
     'foyer': Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -58,7 +59,7 @@ while player_name == '':
 
 player = Player(player_name, room['outside'])
 print('You are entering at your own risk! Type q to quit now!')
-print('Hello', player.name + '!', 'You are in', player.current_room)
+print('Hello', player.name + '!', 'You are starting in', player.current_room)
 print('Now choose where you would like to explore!')
 directions = {
     'n': 'North',
@@ -74,32 +75,39 @@ direction = ''
 options = ''
 
 for opt_direction in directions:
-    options += f'\n Choose {directions[opt_direction]} enter "{opt_direction}"'
+    options += f'\n To go {directions[opt_direction]} enter "{opt_direction}"'
 
 print(options)
 while direction != 'q':
-    direction = input('Which way would you like to go? ')
+    direction = input('Which way would you like to go? ').lower().strip()
+    clearScr()
     try:
         chosen = f'You chose  {direction}, Now lets go {directions[direction]}'
         if direction == 'n':
             print(chosen)
             player.current_room = player.current_room.n_to
-            print('You are in', player.current_room)
+            print('You are now located in the', player.current_room)
+            print(options)
         elif direction == 's':
             player.current_room = player.current_room.s_to
             print('You are in', player.current_room)
+            print(options)
         elif direction == 'e':
             player.current_room = player.current_room.e_to
             print('You are in', player.current_room)
+            print(options)
         elif direction == 'w':
             player.current_room = player.current_room.w_to
             print('You are in', player.current_room)
+            print(options)
         elif direction == 'q':
             print('See you later, Thanks for playing!')
     except KeyError:
         print("Please enter valid key option")
+        print(options)
     except AttributeError:
-        print('Please choose a valid direction!')
+        print('There is no room that way, Choose again!')
+        print(options)
 
 # The above code is not complete for testing purposes
 # Write a loop that:

@@ -9,4 +9,4 @@ class Player:
         self.item = [item]
 
     def __str__(self):
-        return f'{self.name}, {self.current_room} '
+        return f'{self.name}, {self.current_room}, {self.item} '
