@@ -46,7 +46,6 @@ import textwrap
 def grab_input():
     command = input("\nPlease enter an action: ")
     command = command.strip().lower().split(" ")
-    # print(command)
     if len(command) < 2:
         if command[0] == "q":
             exit()
@@ -73,7 +72,7 @@ def add_item(item):
             player.inventory.append(player.current_room.items[i])
             player.current_room.items[i].on_take(val)
             player.current_room.items.remove(val)
-        else:
+        elif i >= len(player.current_room.items) - 1:
             print("\nItem not in room\n")
 
 # drop item from player inventory and add it to room
@@ -82,10 +81,8 @@ def drop_item(item):
         if str(item) == str(val):
             player.current_room.items.append(val)
             player.inventory.remove(val)
-            print(player.current_room.items)
-            print(player.current_room.items[i])
             player.current_room.items[i].on_drop(item)
-        else:
+        elif i >= len(player.current_room.items) - 1:
             print("\nItem not in inventory\n")
 
 # checks to see if room has direction attribute
@@ -114,8 +111,9 @@ def direction_error(direction):
 # message for room items
 def print_items(item_list):
     if len(item_list) > 0:
-        print(f"A {item_list[0]} can be found in this room. " +
-            f"To take the {item_list[0]}, type 'get [item name]' or 'take [item name]' ")
+        for i, val in enumerate(item_list):
+            print(f"A {item_list[i]} can be found in this room. " +
+            f"To take the {item_list[i]}, type 'get [item name]' or 'take [item name]' ")
         
 print("Welcome to the game!\n")
 username = input("Please enter your players name: ")
@@ -142,4 +140,5 @@ while (action != "q"):
         ". " + player.current_room.description, width=50))
     print_items(player.current_room.items)
     action = grab_input()
-    # player.current_room = try_direction(action, player.current_room)
+    if action in ["n", "s", "e", "w"]:
+        player.current_room = try_direction(action, player.current_room)
