@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,6 +35,11 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add items to rooms
+room['foyer'].items.append(Item('Sword', 'A shiny longsword'))
+room['foyer'].items.append(Item('Shield', 'A simple shield'))
+room['foyer'].items.append(Item('Helmet', 'A sturdy helmet'))
+
 #
 # Main
 #
@@ -62,6 +68,7 @@ def show_help():
     print("    n or north               move north")
     print("    l or look                search room")
     print("    i or inventory           player inventory")
+    print("    g or get [item]          get item")
     print("    t or take [item]         take item")
     print("    d or drop [item]         drop item")
 
@@ -84,22 +91,19 @@ def main():
             elif cmd == 'h' or cmd == 'quit':
                 show_help()
             elif cmd == 'i' or cmd == 'inventory':
-                    print('*** Player inventory ***')
-                for item in player.items:
-                    print(item)
+                print('*** Player inventory ***')
+                if len(player.items):
+                    for item in player.items:
+                        print(item.name)
                 else:
                     print('None')
             elif cmd == 'l' or cmd == 'look':
-                    print('*** Items in room ***')
-                for item in player.current_room.items:
-                    print(item)
+                print('*** Items in room ***')
+                if len(player.current_room.items):
+                    for item in player.current_room.items:
+                        print(item.name)
                 else:
                     print('None')
-            elif cmd == 'l' or cmd == 'look':
-                if player.current_room. is not None:
-                    player.current_room = player.current_room.n_to
-                else:
-                    print('!!! Unable to move that direction !!!')
             elif cmd == 'e' or cmd == 'east':
                 if player.current_room.e_to is not None:
                     player.current_room = player.current_room.e_to
@@ -126,10 +130,32 @@ def main():
         elif len(tokens) == 2:
             cmd = tokens[0]
             item = tokens[1]
-            if cmd == 't' or cmd == 'take':
-                print('*** Took item ***')
+            if cmd == 't' or cmd == 'take' or cmd == 'g' or cmd == 'get':
+                index = None
+                for i, val in enumerate(player.current_room.items):
+                    if val.name == item:
+                        index = i
+                        break
+                
+                if index is not None:
+                    i = player.current_room.items.pop(index)
+                    player.items.append(i)
+                    i.on_take()
+                else:
+                    print('!!! Item not in room !!!')
             elif cmd == 'd' or cmd == 'drop':
-                print('*** Dropped item ***')
+                index = None
+                for i, val in enumerate(player.items):
+                    if val.name == item:
+                        index = i
+                        break
+
+                if index is not None:
+                    i = player.items.pop(index)
+                    player.current_room.items.append(i)
+                    i.on_drop()
+                else:
+                    print('!!! Item not in inventory !!!')
             else:
                 print('!!! Invalid command !!!')
                 show_help()
