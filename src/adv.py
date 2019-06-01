@@ -58,6 +58,7 @@ class Quit(Exception):
 
 def player_input(player):
     player_input = input("Enter a command: ").lower()
+    print("\n")
     command = player_input.split()[0]
 
     if command in ("quit", "q"):
@@ -76,6 +77,7 @@ def game():
 
     player_name = input("What would you like your name to be? ")
     player = Player(player_name, room["outside"])
+    print("\n")
     print(player.current_room)
 
     try:
