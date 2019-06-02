@@ -2,17 +2,22 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description, n_to=0, s_to=0, e_to=0, w_to=0):
+    def __init__(self, name, description, items=[]):
         self.name = name
         self.description = description
-        self.n_to = n_to
-        self.s_to = s_to
-        self.w_to = w_to
-        self.e_to = e_to
-        self.items = list
+        self.items = items
+        self.n_to = 0
+        self.s_to = 0
+        self.w_to = 0
+        self.e_to = 0
 
-    def addItem(self, item):
-        self.items.append(item)
+    def remove_item(self, item):
+        self.items.remove(item)
 
     def __str__(self):
-        return f''
+        returnString = f'You are located at {self.name} looking around {self.description}.'
+        if len(self.items) > 0:
+            returnString = returnString + f'There are items on the floor...\n'
+            for i in self.items:
+                returnString = returnString + f'{i.name}:{i.description}\n'
+        return returnString
