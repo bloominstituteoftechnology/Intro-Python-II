@@ -1,11 +1,12 @@
 from room import Room
 from player import Player
+from os import system, name
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the entrance to the mansion awaits."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -24,7 +25,6 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -34,31 +34,34 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#-------------------------------|
-#  Format for printing dialog   |
-#   print(room['treasure'])     |
-#-------------------------------|
+# --- clears console on game launch ---
+def clearCon():
+    #--nt is for windows
+    if name == 'nt':
+        _= system('cls')
+    #--for mac and linux
+    else:
+        _= system('clear')
 
-#
-# Main
-#
+clearCon()
 
-# Make a new player object that is currently in the 'outside' room.
+print("""Welcome to the adventure. In this game you will not be able to save your progress.
+So lace those boots and lets and lets get moving.""")
+#--- stringing capitalize and strip to clear white space and assure name is capital. ---
+newPlayer = input("\nWhat is your name brave traveler?\n").capitalize().strip()
 
-player1 = Player('Megan', room['outside'].location )
-# player1.current_room = room['narrow'].location
+#creates new Player instance with custom name.
+Player1 = Player(newPlayer, room['outside'])
+print(f'\nWelcome {Player1.name}. {Player1.current_room}')
 
-print(player1)
+#--- dictionary for directions ---
+directions = {
+    'n': 'North',
+    's': 'South',
+    'e': 'East',
+    'w': 'West',
+    'q': 'Quit'
+}
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
 
 

@@ -8,5 +8,7 @@ class Room:
         self.dialog = dialog
 
     def __str__(self):
-        dialogToUser = """\n{self.dialog}\n""".format(self=self)
+        dialogToUser = """{self.dialog}\n""".format(self=self)
         return dialogToUser
+
+  
