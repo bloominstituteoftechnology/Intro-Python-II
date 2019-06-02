@@ -5,5 +5,5 @@ class Room:
     self.name = name
     self.description = description
 
-  def __str__(self)  :
-    return f"Hi, This is {self.name} and {self.description}"
+  def __repr__(self)  :
+    return f"{self.name} {self.description}"
