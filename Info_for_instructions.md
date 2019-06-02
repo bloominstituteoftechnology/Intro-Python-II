@@ -27,3 +27,15 @@ If the user enters "q", quit the game.
 #   playerVar.current_room = room['newSelection'].location   |
 #------------------------------------------------------------|
 ```
+# `` room.py ``
+
+Implement a class to hold room information. This should have name and
+description attributes.
+
+
+# `` player.py ``
+Write a class to hold player information, e.g. what room they are in currently.
+
+player needs:
+* Name
+* Current Room 
