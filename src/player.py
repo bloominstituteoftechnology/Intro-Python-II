@@ -2,7 +2,7 @@
 # currently.
 
 
-class player:
+class Player:
     def __init__(self, name, description, fanny_pac, current):
         self.name = name
         self.description = description
@@ -10,5 +10,7 @@ class player:
         self.current = current
 
     def __repr__(self):
-        return
+        return "{self.__class__.__name__}({self.name}{self.fanny_pac}{self.current})".format(
+            self=self
+        )
 

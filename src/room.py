@@ -3,9 +3,12 @@
 
 
 class Room:
-    def __init__(self, name, description):
+    def __init__(self, name, description, tool):
         self.name = name
         self.description = description
+        self.tool = tool
 
     def __repr__(self):
-        return self.name
+        return "{self.__class__.__name__}({self.name}{self.description})".format(
+            self=self
+        )
