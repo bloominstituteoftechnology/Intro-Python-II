@@ -15,12 +15,28 @@ class Player:
     print(result)    
 
   def add_items(self,new_item):
-    self.inventory.append(new_item)
-    self.show_items()   
+    if new_item in self.inventory:
+      print("Item already exits. Duplicates are not allowed.")       
+    else:
+      self.inventory.append(new_item)
+      self.show_items() 
+      
+  def get_item(self, which_item):
+    arr = self.inventory
+    find = False
+    for item in arr:
+      if item == which_item:
+        find = True
+        # print(self.name + "Here is the item you are looking for " + item)
+    if find:
+      print(self.name + " here is the item you are looking for " + item)
+    else:
+      print(self.name + " There is no such a item in the list.")   
 
   def delete_items(self, item_remove):
     if (item_remove in self.inventory):
       self.inventory.remove(item_remove)
+      print(self.name+ " you have deleted " + item_remove)
       self.show_items()
     else:
       print("You do not that item to remove")  

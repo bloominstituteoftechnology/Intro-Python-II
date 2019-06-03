@@ -46,7 +46,7 @@ player = Player(player_name, room['outside'])
 print("Where Am I now? ")
 print(player)
 
-directions = "Enter your directions>>>\n" + "1) S or South "  + "2) N or North "  +"3) E or East " + "4) W or West"
+directions = "Enter your directions>>>\n" + "1) South "  + "2) North "  +"3) East " + "4) West"
 
 def try_directions(direction, current_room):
     attribute = direction + '_to'
@@ -55,40 +55,38 @@ def try_directions(direction, current_room):
     else:
         print("CAUTION:You cannot go that direction")
         return current_room
-
+    
+print(directions) 
 user_input = ''        
 # Write a loop that:
-while user_input != "q":
-    # * Prints the current room name
+while user_input != "q":    
     print(player.current_room.name)
-    # * Prints the current description (the textwrap module might be useful here).
     print(player.current_room.description)
-    # * Waits for user input and decides what to do.
-    print(directions)    
-    user_input = input(">").lower()
-    user_input = user_input.split()
-    # If the user enters a cardinal direction, attempt to move to the room there.
+    user_input = input(">")
+    user_input = user_input.split()    
     if len(user_input) == 1:
-        user_input = user_input[0][0]    # Print an error message if the movement isn't allowed.    
-    # If the user enters "q", quit the game.
+        user_input = user_input[0][0].lower()    # Print an error message if the movement isn't allowed.    
         if user_input == 'i':
             player.show_items()
         elif user_input == 'q':
             print("See you next time!")
             break
-            player.current_room = try_directions(user_input, player.current_room)        
-    elif len(user_input) == 2:
+        player.current_room = try_directions(user_input, player.current_room) 
+        
+    elif (len(user_input) > 1):
         method = user_input[0].lower()
         item = user_input[1].lower()
-        print(user_input)
+       
         if method == "add":
             player.add_items(item)
-
         elif method == "get":
-            player.show_items()  
+            player.get_item(item)
 
         elif method == "drop":
-            player.delete_items(item)      
+            player.delete_items(item)
+            print("You have deleted "+ item)      
+
+print("Thanks for using this app")        
             
 
 
