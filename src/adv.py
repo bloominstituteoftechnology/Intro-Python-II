@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+
 # Declare all the rooms
 
 room = {
@@ -36,47 +37,10 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-import textwrap
-
-def grab_direction():
-    direction = input("\nEnter the direction to move: ").lower()
-    if direction in ["n", "s", "e", "w", "q"]:
-        return direction
-    else: 
-        print("Invalid entry")
-        grab_direction()
-
-
-def try_direction(direction, current_room):
-    attribute = direction + "_to"
-
-    if hasattr(current_room, attribute):
-        return getattr(current_room, attribute)
-    else:
-        print(direction_error(direction))
-        return current_room
-
-
-def direction_error(direction):
-    if direction == "n":
-        return "There is no room to the North"
-    elif direction == "s":
-        return "There is no room to the South"
-    elif direction == "e":
-        return "There is no room to the East"
-    elif direction == "w":
-        return "There is no room to the West"
-    else: 
-        return "Goodbye!"
-
-print("Welcome to the game!\n")
-username = input("Please enter your players name: ")
-print(f"\nHello {username}, within this game you can navigate rooms using n, s, w, or e")
-
-
-player = Player(username, room["outside"])
 
 # Make a new player object that is currently in the 'outside' room.
+
+newPlayer = Player('Louis', room['outside'])
 
 # Write a loop that:
 #
@@ -88,11 +52,20 @@ player = Player(username, room["outside"])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-
-direction = None
-while (direction != "q"):
-    print("Current Position: " +
-        textwrap.fill(player.current_room.name +
-        ". " + player.current_room.description, width=50))
-    direction = grab_direction()
-    player.current_room = try_direction(direction, player.current_room)
+playerInput = ''
+while str(playerInput) != 'q':
+    print(newPlayer.__str__())
+    playerInput = input(
+        "Where do you want to move next? Enter 'n, e, s, w' to move, or enter 'q' to quit.  ")
+    try:
+        if str(playerInput) == 'n':
+            newPlayer.room = newPlayer.room .n_to
+        elif str(playerInput) == 'e':
+            newPlayer.room = newPlayer.room .e_to
+        elif str(playerInput) == 's':
+            newPlayer.room = newPlayer.room .s_to
+        elif str(playerInput) == 'w':
+            newPlayer.room = newPlayer.room .w_to
+    except:
+        print("You cannot go this way!")
+print("You have exited the game")
