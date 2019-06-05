@@ -36,12 +36,24 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 def main():
-    
+
 # Make a new player object that is currently in the 'outside' room.
-drip = Player("Drip", 'outside')
-print("Enjoy This Adventure")
+    drip = Player("Drip", 'outside')
+    print("Enjoy This Adventure")
 
 # Write a loop that:
+action_input = input("Enter a cardinal direction\n[N] for North, [E] for East, [S] for South, [W] for West, and [Q] to Quit")
+while action_input.lower() != 'q':
+        if action_input.lower() == 'n':
+            print("Going North")
+        elif action_input.lower() == 'e':
+            print("Going East")
+        elif action_input.lower() == 's':
+            print("Going South")
+        elif action_input.lower() == 'w':
+            print("Going West")
+        else:
+            print("Action is not valid.")
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
