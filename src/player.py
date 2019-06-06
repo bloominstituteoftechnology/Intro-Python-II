@@ -20,3 +20,11 @@ class Player:
     def move_direction(self, direction):
         if direction == "n"
             self.current_room.n_to
+        elif direction == "s"
+            self.current_room.s_to
+        elif direction == "e"
+            self.current_room.e_to
+        elif direction == "w"
+            self.current_room.w_to
+        else:
+            print("Invalid direction entered")
