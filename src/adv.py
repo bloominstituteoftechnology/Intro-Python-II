@@ -42,16 +42,25 @@ def main():
     print("Enjoy This Adventure")
 
 # Write a loop that:
-action_input = input("Enter a cardinal direction\n[N] for North, [E] for East, [S] for South, [W] for West, and [Q] to Quit")
-while action_input.lower() != 'q':
+    action_input = input("Enter a cardinal direction\n[N] for North, [E] for East, [S] for South, [W] for West, and [Q] to Quit")
+    while action_input.lower() != 'q':
         if action_input.lower() == 'n':
-            print("Going North")
+            try:
+                drip.room = room.n_to
+                print("Going North")
+
         elif action_input.lower() == 'e':
+            try:
             print("Going East")
+
         elif action_input.lower() == 's':
+            try:
             print("Going South")
+
         elif action_input.lower() == 'w':
+            try:
             print("Going West")
+
         else:
             print("Action is not valid.")
 #
