@@ -9,3 +9,8 @@ class Player:
     
     def __str__(self):
         return f'{self.name} is in {self.room}'
+
+    def get_name(self):
+        return str(self.name)
+    def get_current_room(self):
+        return str(self.current_room)
