@@ -38,31 +38,47 @@ room['treasure'].s_to = room['narrow']
 def main():
 
 # Make a new player object that is currently in the 'outside' room.
-    drip = Player("Drip", 'outside')
+    player = Player("Drip", room['outside'])
+    current_room = player.current_room.name
     print("Enjoy This Adventure")
 
 # Write a loop that:
     action_input = input("Enter a cardinal direction\n[N] for North, [E] for East, [S] for South, [W] for West, and [Q] to Quit")
+    
     while action_input.lower() != 'q':
         if action_input.lower() == 'n':
-            try:
-                drip.room = room.n_to
-                print("Going North")
+            print("Going North")
+            print(current_room.n_to.name)
+            print(current_room.description)
+            print(player.move_direction)
+            player.current_room = current_room.n_to
 
         elif action_input.lower() == 'e':
-            try:
+            
             print("Going East")
+            print(current_room.e_to.name)
+            print(current_room.description)
+            print(player.move_direction)
+            player.current_room = current_room.e_to
 
         elif action_input.lower() == 's':
-            try:
+            
             print("Going South")
+            print(current_room.s_to.name)
+            print(current_room.description)
+            print(player.move_direction)
+            player.current_room = current_room.s_to
 
         elif action_input.lower() == 'w':
-            try:
+            
             print("Going West")
+            print(current_room.w_to.name)
+            print(current_room.description)
+            print(player.move_direction)
+            player.current_room = current_room.w_to
 
         else:
-            print("Action is not valid.")
+            print("Direction chosen is not valid.")
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
