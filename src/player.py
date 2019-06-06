@@ -11,6 +11,14 @@ class Player:
 
         return f'name: {self.name}, room: {self.current_room}'
 
-    name = str
-    current_room = str
+    def travel(self, direction):
+        nextRoom = self.current_room.getRoomInDirection(direction)
+        if nextRoom is not None:
+            self.current_room = nextRoom
+            print(self.current_room)
+
+        else:
+            print("You cannot move in that direction.")
+   # name = str
+   # current_room = str
 

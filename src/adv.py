@@ -51,7 +51,33 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
+
+current_room = room["outside"]
+name = input("Please input your name: ")
+player = Player(name, current_room)
+playerRoom = Room(current_room.name, current_room.description)
+
+while True:
+
+   # print(playerRoom)
+   # print(player)
+
+    direction = input("Please input a direction n/s/e/w: ")
+
+    if direction in ["n", "s", "e", "w"]:
+        player.travel(direction)
+    elif direction == "q":
+        break
+    else:
+        print("Movement not allowed. Please enter valid direction.")
+
+
+print("Thank you for playing!")
+
+'''
+
 current_room = "outside"
+# make current_room = room["outside"]
 name = input("Please input your name: ")
 
 while True:
@@ -102,3 +128,6 @@ while True:
             continue
 
 print("Thank you for playing!")
+'''
+
+
