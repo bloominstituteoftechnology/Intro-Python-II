@@ -1,6 +1,7 @@
 
 from player import Player
 from room import Room
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -51,6 +52,25 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
+rock = Item("rock", "This is a rock")
+sword = Item("sword", "This is a sword")
+
+pizza = Item("pizza", "This is a pizza")
+donut = Item("donut", "This is a donut")
+
+pillow = Item("pillow", "This is a pillow")
+chair = Item("chair", "This is a chair")
+
+room["outside"].items.append(rock)
+room["foyer"].items.append(sword)
+room["overlook"].items.append(pizza)
+room["narrow"].items.append(donut)
+room["treasure"].items.append(pillow)
+room["outside"].items.append(chair)
+
+#itemName = "Rock"
+#itemList = room["outside"].items
+
 
 current_room = room["outside"]
 name = input("Please input your name: ")
@@ -61,6 +81,8 @@ while True:
 
    # print(playerRoom)
    # print(player)
+    print(f'Items in current room: {player.current_room.items}')
+    print(f'Your current inventory: {player.inventory}')
 
     direction = input("Please input a direction n/s/e/w: ")
 
@@ -71,6 +93,26 @@ while True:
     else:
         print("Movement not allowed. Please enter valid direction.")
 
+    action = input("Please input an action get item or drop item: ")
+    detail = action.split(" ")
+    print(detail)
+
+    if detail[0] == "get":
+        item = player.current_room.get_item(detail[1])
+        if item == None:
+            print("That item is not in the room.")
+        else:
+           player.current_room.items.remove(item)
+           player.inventory.append(item)
+           item.on_take()
+    elif detail[0] == "drop":
+        item = player.get_item(detail[1])
+        if item == None:
+            print("That item is not in your inventory.")
+        else:
+            player.current_room.items.append(item)
+            player.inventory.remove(item)
+            item.on_drop()
 
 print("Thank you for playing!")
 

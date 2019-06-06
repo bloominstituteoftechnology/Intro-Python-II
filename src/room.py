@@ -16,11 +16,18 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.items = []
 
     def __str__(self):
 
-        return f'room: {self.name}, description: {self.description}, exits: {self.getRoomExitString()}'
+        return f'room: {self.name}\ndescription: {self.description}\nexits: {self.getRoomExitString()}\nitems: {self.items}'
 
+
+    def get_item(self, item_name):
+        for item in self.items:
+            if item.name == item_name:
+                return item
+        return None
 
     def getRoomInDirection(self, direction):
         if direction == "n":
