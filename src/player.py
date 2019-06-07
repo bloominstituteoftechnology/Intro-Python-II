@@ -9,7 +9,8 @@ class Player:
         self.inventory = []
     
     def __str__(self):
-        return f'{self.name} is in {self.current_room}'
+        return f'Player is in {self.current_room}'
+
     def add_item(self, item):
         self.inventory.append(item)
     def get_name(self):
@@ -18,7 +19,7 @@ class Player:
         return str(self.current_room)
 
     def move_direction(self, direction):
-        if direction == "n"
+        if direction == "n":
             self.current_room.n_to
         elif direction == "s"
             self.current_room.s_to
