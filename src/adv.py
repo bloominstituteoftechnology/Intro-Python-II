@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -37,7 +38,11 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+name = input("Enter your name to begin:")
+
 # Make a new player object that is currently in the 'outside' room.
+
+player1 = Player(name, room["outside"])
 
 # Write a loop that:
 #
@@ -49,3 +54,72 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+is_playing = True
+error_message = None
+
+while is_playing:
+	
+	current_room = player1.current_room
+
+	description = current_room.description
+	
+	line_string = len(description)*"-"
+
+	if error_message is not None:
+		print("\n" + error_message + "\n")
+		error_message = None
+	else:
+		print("\n" + "Player: " + player1.name + "\n")
+		print(line_string + "\n")
+		print(current_room.name + "\n")
+		print(description + "\n")
+		print(line_string + "\n")
+
+	direction = input("Which direction would you like to go? (n, e, s, w):").replace(" ", "").lower()
+
+	if direction is not None:
+		if direction == "n":
+			if current_room.n_to is not None:
+				north_room = current_room.n_to
+				player1.current_room = north_room
+				continue
+			else:
+				error_message = "Sorry, you can't go that direction."
+				continue
+		elif direction == "s":
+			if current_room.s_to is not None:
+				south_room = current_room.s_to
+				player1.current_room = south_room
+				continue
+			else:
+				error_message = "Sorry, you can't go that direction."
+				continue
+		elif direction == "e":
+			if current_room.e_to is not None:
+				east_room = current_room.e_to
+				player1.current_room = east_room
+				continue
+			else:
+				error_message = "Sorry, you can't go that direction."
+				continue
+		elif direction == "w":
+			if current_room.w_to is not None:
+				west_room = current_room.s_to
+				player1.current_room = west_room
+				continue
+			else:
+				error_message = "Sorry, you can't go that direction."
+				continue
+		elif direction == "q":
+			is_playing = False
+			break
+		else:
+			error_message = "Sorry that isn't a valid key.\n\nKeys:\n\n n - move north\n e - move east\n s - move south\n w - move west\n q - quit game"
+			continue
+	else:
+		error_message = "Sorry that isn't a valid key.\n\nKeys:\n\n n - move north\n e - move east\n s - move south\n w - move west\n q - quit game"
+		continue
+
+
+print("Thanks for playing!")
