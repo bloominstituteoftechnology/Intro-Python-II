@@ -105,7 +105,7 @@ while is_playing:
 				continue
 		elif direction == "w":
 			if current_room.w_to is not None:
-				west_room = current_room.s_to
+				west_room = current_room.w_to
 				player1.current_room = west_room
 				continue
 			else:
