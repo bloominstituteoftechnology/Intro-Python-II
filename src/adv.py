@@ -65,21 +65,20 @@ key_message = """\n\nKeys:\n\n n - move north\n e - move east\n s - move south\n
 def check_for_items(room, items):
 
 	number_of_checks = 0
-	player_need = None
 
 	for i in items:
-		
 		for player_item in player1.items:
 			if i.name == player_item.name:
 				number_of_checks += 1
-			else:
-				player_need = i
 
 	if len(items) == number_of_checks:
 		player1.current_room = room
 		return
 	else:
-		print(f"\n\nYou need the {player_need.name.lower()} {player_need.description}\nStay here for now...\n")
+		print("\nThat room requires that you have a few things:")
+		for needed_item in room.needed_items:
+			print(f"\n\t- {needed_item.name}")
+		print("\nStay here for now...\n")
 		do_not_print = True
 		return
 
@@ -95,10 +94,10 @@ while is_playing:
 
 	if error_message is not None:
 		print("\n" + error_message + "\n")
-		error_message = None
+		
 	elif do_not_print == True:
 		print("\n")
-		do_not_print = False
+		
 	else:
 		print("\n" + "Player: " + player1.name + "\n")
 		print(line_string + "\n")
@@ -113,6 +112,11 @@ while is_playing:
 			print("There aren't any available items.\n")
 
 		print(line_string + "\n")
+
+	# reset values
+
+	error_message = None
+	do_not_print = False
 
 	direction = input("What would you like to do? (\"k\" for Keys):").lower().split(" ")
 
