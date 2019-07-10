@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,6 +40,10 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+print('Welcome to your fated destiny player!')
+player_input = input('What is your name?: ')
+player = Player(player_input, room['outside'])
+print(f'Well, {player.name} get ready for the adventure of a lifetime.')
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +54,12 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+direction_input = input("Please enter a cardinal direction in the form of 'n', 's', 'e', or 'w': ")
+gameplay = True
+
+while gameplay == True: 
+    
+
+    if direction_input == 'q':
+        gameplay = False
