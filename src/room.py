@@ -8,3 +8,7 @@ class Room:
     def __init__ (self, name, description):
         self.name = name
         self.description = description
+        self.e_to = "nope"
+        self.w_to = "nope"
+        self.n_to = "nope"
+        self.s_to = "nope"
