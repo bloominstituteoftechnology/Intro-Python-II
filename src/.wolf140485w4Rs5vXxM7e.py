@@ -42,8 +42,7 @@ def next_room(current_room, direction):
         },
         "foyer": {
             "n": "overlook",
-            "s": "outside",
-            "e": "narrow"
+            "s": "outside"
         },
         "overlook": {
             "s": "foyer"
@@ -56,7 +55,7 @@ def next_room(current_room, direction):
             "s": "narrow"
         }
     }
-    return rooms[current_room][direction]
+    return (rooms[current_room][direction])
 
 
 #
@@ -89,31 +88,17 @@ while True:
     if player_cmd == "n":
         if room[player_1.current_room].n_to:
             print("you moved to the north")
-            player_1.current_room = next_room(
-                player_1.current_room, player_cmd)
+            player_1.current_room = next
         else:
             print("you can't move there")
     elif player_cmd == "s":
         if room[player_1.current_room].s_to:
-            print("you moved to the south")
-            player_1.current_room = next_room(
-                player_1.current_room, player_cmd)
+            print("you moved to the north")
+            player_1.current_room = "foyer"
         else:
             print("you can't move there")
     elif player_cmd == "e":
-        if room[player_1.current_room].e_to:
-            print("you moved to the east")
-            player_1.current_room = next_room(
-                player_1.current_room, player_cmd)
-        else:
-            print("you can't move there")
     elif player_cmd == "w":
-        if room[player_1.current_room].e_to:
-            print("you moved to the east")
-            player_1.current_room = next_room(
-                player_1.current_room, player_cmd)
-        else:
-            print("you can't move there")
     elif player_cmd == "q":
         break
     else:

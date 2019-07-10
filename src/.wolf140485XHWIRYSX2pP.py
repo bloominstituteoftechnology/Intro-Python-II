@@ -34,31 +34,19 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-
 def next_room(current_room, direction):
     rooms = {
-        "outside": {
-            "n": "foyer"
+        "outside" : {
+            "n" : "foyer"
         },
-        "foyer": {
-            "n": "overlook",
-            "s": "outside",
-            "e": "narrow"
+        "foyer" : {
+            "n" : "overlook",
+            "s" : "outside"
         },
-        "overlook": {
-            "s": "foyer"
-        },
-        "narrow": {
-            "w": "foyer",
-            "n": "treasure"
-        },
-        "treasure": {
-            "s": "narrow"
+        "overlook" : {
+            ""
         }
     }
-    return rooms[current_room][direction]
-
-
 #
 # Main
 #
@@ -89,31 +77,17 @@ while True:
     if player_cmd == "n":
         if room[player_1.current_room].n_to:
             print("you moved to the north")
-            player_1.current_room = next_room(
-                player_1.current_room, player_cmd)
+            player_1.current_room = "foyer"
         else:
             print("you can't move there")
     elif player_cmd == "s":
         if room[player_1.current_room].s_to:
-            print("you moved to the south")
-            player_1.current_room = next_room(
-                player_1.current_room, player_cmd)
+            print("you moved to the north")
+            player_1.current_room = "foyer"
         else:
             print("you can't move there")
     elif player_cmd == "e":
-        if room[player_1.current_room].e_to:
-            print("you moved to the east")
-            player_1.current_room = next_room(
-                player_1.current_room, player_cmd)
-        else:
-            print("you can't move there")
     elif player_cmd == "w":
-        if room[player_1.current_room].e_to:
-            print("you moved to the east")
-            player_1.current_room = next_room(
-                player_1.current_room, player_cmd)
-        else:
-            print("you can't move there")
     elif player_cmd == "q":
         break
     else:
