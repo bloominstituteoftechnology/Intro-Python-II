@@ -49,3 +49,31 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+current_room = room["outside"]
+
+directions = {
+    'n' : "North",
+    'e' : "East",
+    's' : "South",
+    'w' : "West",
+    }
+
+while True:
+
+    print(current_room)
+   # print(player)
+   # print(f'Items in current room: {player.current_room.items}')
+   # print(f'Your current inventory: {player.inventory}')
+
+    direction = input("Enter next direction 'n'/'s'/'e'/'w', or 'q' to end: ")
+
+    if direction in ['n', 's', 'e', 'w']:
+            print("Attempting to go ", directions[direction])
+   #     player.travel(direction)
+    elif direction == 'q':
+        break
+    else:
+        print("Movement not allowed. Please enter valid direction.")
+
+print("Bye")
