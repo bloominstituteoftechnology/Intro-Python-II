@@ -53,28 +53,28 @@ while True:
     print("room name: ", player.current_room.name)
     print("description: ", player.current_room.description, "\n")
 
-    direction = input("provide direction e/w/n/s -> ") + "_to" 
-    if direction == "n_to":
+    direction = input("provide direction e/w/n/s -> ") 
+    if direction == "n":
         if player.current_room.n_to == "nope":
             print("Sorry! there's no room here.", "\n")
         else:
             player.current_room = player.current_room.n_to
-    elif direction == "s_to":
+    elif direction == "s":
         if player.current_room.s_to == "nope":
             print("Sorry! there's no room here.", "\n")
         else:
             player.current_room = player.current_room.s_to
-    elif direction == "e_to":
+    elif direction == "e":
         if player.current_room.e_to == "nope":
             print("Sorry! there's no room here.", "\n")
         else:
             player.current_room = player.current_room.e_to
-    elif direction == "w_to":
+    elif direction == "w":
         if player.current_room.w_to == "nope":
             print("Sorry! there's no room here.", "\n")
         else:
             player.current_room = player.current_room.w_to
-    elif direction == "q_to":
+    elif direction == "q":
         player.current_room = room['outside']
         print("You have quite the game!", "\n")
     else:
