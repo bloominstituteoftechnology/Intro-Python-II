@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -35,11 +36,59 @@ room['treasure'].s_to = room['narrow']
 
 #
 # Main
-#
+def main():
 
 # Make a new player object that is currently in the 'outside' room.
+    player = Player("Drip", room['outside'])
+    current_room = player.current_room
+    print("Enjoy This Adventure")
 
 # Write a loop that:
+    selection = None
+    
+    while selection.lower() != 'q':
+        selection = input("Enter a cardinal direction\n[N] for North, [E] for East, [S] for South, [W] for West, and [Q] to Quit")
+        try:
+            selection = (selection)
+            if action_input.lower() == 'n':
+                print("Going North")
+                print(current_room.n_to.name)
+                print(current_room.description)
+                print(player.move_direction)
+                player.current_room = current_room.n_to
+            else:
+                print("Cannot go further north")
+
+            elif action_input.lower() == 'e':
+            
+                print("Going East")
+                print(current_room.e_to.name)
+                print(current_room.description)
+                print(player.move_direction)
+                player.current_room = current_room.e_to
+            else:
+                print("Cannot go futher east")
+
+            elif action_input.lower() == 's':
+            
+                print("Going South")
+                print(current_room.s_to.name)
+                print(current_room.description)
+                print(player.move_direction)
+                player.current_room = current_room.s_to
+            else:
+                print("Cannot go further south")
+
+            elif action_input.lower() == 'w':
+            
+                print("Going West")
+                print(current_room.w_to.name)
+                print(current_room.description)
+                print(player.move_direction)
+                player.current_room = current_room.w_to
+
+            else:
+                print("Cannot go further west")
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
