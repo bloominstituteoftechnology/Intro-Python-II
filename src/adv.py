@@ -50,35 +50,20 @@ player = Player("Player 1", room["outside"])
 #
 
 while True:
-    print("room name: ", player.current_room.name)
+    print("room name: ", getattr(player.current_room, "name"))
     print("description: ", player.current_room.description, "\n")
 
     direction = input("provide direction e/w/n/s -> ") 
-    if direction == "n":
-        if player.current_room.n_to == "nope":
-            print("Sorry! there's no room here.", "\n")
-        else:
-            player.current_room = player.current_room.n_to
-    elif direction == "s":
-        if player.current_room.s_to == "nope":
-            print("Sorry! there's no room here.", "\n")
-        else:
-            player.current_room = player.current_room.s_to
-    elif direction == "e":
-        if player.current_room.e_to == "nope":
-            print("Sorry! there's no room here.", "\n")
-        else:
-            player.current_room = player.current_room.e_to
-    elif direction == "w":
-        if player.current_room.w_to == "nope":
-            print("Sorry! there's no room here.", "\n")
-        else:
-            player.current_room = player.current_room.w_to
-    elif direction == "q":
-        player.current_room = room['outside']
-        print("You have quite the game!", "\n")
+
+    if direction == "q":
+        player.current_room = room["outside"]
+        print("you have quite the game", "\n")
+    elif direction != "e" and direction != "w" and direction != "n" and direction != "s":
+        print("please provide a valid input", "\n")
+    elif getattr(player.current_room, f"{direction}_to") == "nope":
+        print("Sorry! there's no room here.", "\n")
     else:
-        print("you have not provided a valid input", "\n")
+        player.current_room = getattr(player.current_room, f"{direction}_to")
 
 
 
