@@ -57,11 +57,15 @@ while True:
 
     if direction == "q":
         player.current_room = room["outside"]
-        print("you have quite the game", "\n")
+        print("Adios...!!!", "\n")
+        break
+
     elif direction != "e" and direction != "w" and direction != "n" and direction != "s":
         print("please provide a valid input", "\n")
+
     elif getattr(player.current_room, f"{direction}_to") == "nope":
         print("Sorry! there's no room here.", "\n")
+
     else:
         player.current_room = getattr(player.current_room, f"{direction}_to")
 
