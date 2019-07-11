@@ -1,10 +1,11 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -37,7 +38,47 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+def hero():
+    r = input("\n Are you a hero or villian?  ")
+    if r.upper() == "HERO":
+        return True 
+    elif r.upper() == "VILLIAN":
+        return False 
+    else:
+        print("\n Please type 'hero' or 'villian' ")
+        return hero()
+
+def getSpec():
+    r = input("\n Are you Elvish, Human, or Wizard?  ")
+    if r.upper() == "ELVISH" or r.upper() == "ELF":
+        return "Elf" 
+    elif r.upper() == "HUMAN":
+        return "Human" 
+    elif r.upper() == "WIZARD":
+        return "Wizard"
+    else:
+        print("\n Please type 'Elf', 'Human', or 'Wizard' ")
+        return hero()
+
 # Make a new player object that is currently in the 'outside' room.
+
+def newPlayer():
+    name = input("\n What is your name, new adventurer?  ")
+    good = hero()
+    spec = getSpec()
+    items = ["sword" , "antidote"]
+    return Player(name, good, spec, room["outside"], items)
+
+player = newPlayer()
+
+action = ""
+
+while action != "Q":
+    print(f'Welcome {player.name}.\n')
+    player.locate()
+    # print(player.room.revealItems())
+
+    action = input("Now what? \n [N] North [S] South [E] East [W] West [Q] Quit\n").upper()
 
 # Write a loop that:
 #
