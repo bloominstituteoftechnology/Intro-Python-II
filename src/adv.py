@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -50,30 +52,63 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-current_room = room["outside"]
+# Items & assoc rooms
+rock = Item("rock", "This is a rock")
+sword = Item("sword", "This is a sword")
+pencil = Item("pencil", "This is a pencil")
+burger = Item("burger", "This is a hamburger")
+watch = Item("watch", "This is a watch")
+bike = Item("bike", "This is a bike")
 
-directions = {
-    'n' : "North",
-    'e' : "East",
-    's' : "South",
-    'w' : "West",
-    }
+room["outside"].items.append(rock)
+room["foyer"].items.append(sword)
+room["overlook"].items.append(pencil)
+room["narrow"].items.append(burger)
+room["treasure"].items.append(watch)
+room["outside"].items.append(bike)
+
+#itemName = "Rock"
+#itemList = room["outside"].items
+
+initial_room = room["outside"]
+name = input("Enter your name: ")
+player = Player(name, initial_room)
+print(player)
 
 while True:
+    # print(f'Items in current room: {player.current_room.items}')
+    print(f'Your current inventory: {player.inventory}')
 
-    print(current_room)
-   # print(player)
-   # print(f'Items in current room: {player.current_room.items}')
-   # print(f'Your current inventory: {player.inventory}')
+    action = input("Do you want to 'get x' an item or 'drop x' an item: ")
+    detail = action.split(" ")
+    # print(detail)
 
-    direction = input("Enter next direction 'n'/'s'/'e'/'w', or 'q' to end: ")
+    if detail[0] not in ["get", "drop"]:
+        pass
+    elif detail[0].lower() == "get":
+        item = player.current_room.get_item(detail[1])
+        if item == None:
+            print("That item is not in the room.")
+        else:
+           player.current_room.items.remove(item)
+           player.inventory.append(item)
+           item.on_take()
+    elif detail[0].lower() == "drop":
+        item = player.get_item(detail[1])
+        if item == None:
+            print("That item is not in your inventory.")
+        else:
+            player.current_room.items.append(item)
+            player.inventory.remove(item)
+            item.on_drop()
+
+    direction = input("Please input a direction 'n'/'s'/'e'/'w' or 'q' to end: ")
 
     if direction in ['n', 's', 'e', 'w']:
-            print("Attempting to go ", directions[direction])
-   #     player.travel(direction)
+        player.move(direction)
     elif direction == 'q':
         break
     else:
-        print("Movement not allowed. Please enter valid direction.")
+        print("==>>Invalid direction<<==")
 
-print("Bye")
+print("See ya!")
