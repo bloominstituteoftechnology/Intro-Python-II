@@ -67,21 +67,16 @@ room["narrow"].items.append(burger)
 room["treasure"].items.append(watch)
 room["outside"].items.append(bike)
 
-#itemName = "Rock"
-#itemList = room["outside"].items
-
 initial_room = room["outside"]
 name = input("Enter your name: ")
 player = Player(name, initial_room)
 print(player)
 
 while True:
-    # print(f'Items in current room: {player.current_room.items}')
     print(f'Your current inventory: {player.inventory}')
 
     action = input("Do you want to 'get x' an item or 'drop x' an item: ")
     detail = action.split(" ")
-    # print(detail)
 
     if detail[0] not in ["get", "drop"]:
         pass
