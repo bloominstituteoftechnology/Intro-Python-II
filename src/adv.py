@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,16 +35,12 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
-print('Welcome to your fated destiny player!')
-player_input = input('What is your name?: ')
-player = Player(player_input, room['outside'])
-print(f'Well, {player.name} get ready for the adventure of a lifetime.')
 # Write a loop that:
 #
 # * Prints the current room name
@@ -55,11 +52,43 @@ print(f'Well, {player.name} get ready for the adventure of a lifetime.')
 #
 # If the user enters "q", quit the game.
 
-direction_input = input("Please enter a cardinal direction in the form of 'n', 's', 'e', or 'w': ")
-gameplay = True
+rock = Item("Rock", "heavy rock for smashing toes.")
+sword = Item("Sword", "stricketh thee with thy sword")
+oracle = Item("oracle", "Life precious mysteries revealed")
+wand = Item(
+    "Wand", "Swaths of snakes approach to battle you")
 
-while gameplay == True: 
-    
+room['outside'].items.append(rock)
+room['outside'].items.append(oracle)
 
-    if direction_input == 'q':
-        gameplay = False
+print('Welcome to your fated destiny player!')
+player_input = input('What is your name?: ')
+player = Player(player_input, room['outside'])
+print(f'Well, {player.name} get ready for the adventure of a lifetime.')
+
+current_room = player.current_room
+print(current_room)
+
+
+# player = Player("Brady", room['outside'])
+# current_room = player.current_room
+
+# print(current_room)
+
+valid_directions = ["n", "s", "e", "w"]
+
+while True:
+    # Wait for user input
+    cmd = input(
+        "Please enter a cardinal direction in the form of 'n', 's', 'e', or 'w' -> ")
+    # Parse user inputs (n, s, e, w, q)
+    if cmd in valid_directions:
+        # If input is valid, move the player and loop
+        player.travel(cmd)
+    elif cmd == "i":
+        player.print_inventory()
+    elif cmd == "q":
+        print("Goodbye!")
+        exit()
+    else:
+        print("I did not recognize that command")
