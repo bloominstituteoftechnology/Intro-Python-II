@@ -31,7 +31,8 @@ class Player:
     def addItem(self, item):
         if item != None:
             self.items.append(item)
-            del self.current_room.items[0]
+            current = self.current_room.items.index(item)
+            del current
             print(f'You take the {item.name}.')
 
     def removeItem(self, item_name):

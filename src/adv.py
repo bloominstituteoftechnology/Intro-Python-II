@@ -65,28 +65,37 @@ valid_directions = ["n", "s", "e", "w"]
 while True:
     # Wait for user input
     cmd = input(
-        "Please enter a cardinal direction in the form of 'n', 's', 'e', or 'w' \n or press 'i' to see your inventory \n or press 'q' to quit -> ")
+        """Please enter a cardinal direction in the form of 'n', 's', 'e', or 'w'
+or press 'i' to see your inventory 'get' 'drop' for items
+press 'q' to quit -> """)
     # Parse user inputs (n, s, e, w, q)
-    if cmd in valid_directions:
+    cmd = cmd.split()
+    if cmd[0] in valid_directions:
         # If input is valid, move the player and loop
-        player.travel(cmd)
+        player.travel(cmd[0])
         if len(current_room.items) > 0:
             player.items.extend(current_room.items)
 
-    elif cmd == "get":
-        player.addItem(player.current_room.items[0])
-        # remove the item from room
+    elif cmd[0] == "get":
+        if len(cmd) <= 1:
+            print("get what?")
+            print(player.current_room.items[0].name)
+        else:
+            # player.addItem(player.current_room.items.index(cmd[1]).name)
+            print(player.current_room.items)
+            # remove the item from room
 
-    # elif cmd == "d":
-        # Useful debug info
+    elif cmd[0] == "drop":
+        if len(cmd) <= 1:
+            print("drop what?")
 
-    elif cmd == "i":
+    elif cmd[0] == "i":
         if player.print_inventory() == "":
             print("Your inventory is empty\n")
         else:
             player.print_inventory()
 
-    elif cmd == "q":
+    elif cmd[0] == "q":
         print("Goodbye!")
         exit()
     else:
