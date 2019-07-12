@@ -1,6 +1,7 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 from item import Item
+from room import Room
 
 
 class Player:
@@ -24,6 +25,23 @@ class Player:
 
     def print_inventory(self):
         if len(self.items) > 0:
-            return "You are carrying: \n" + ", ".join([item.name for item in self.items])
+            print("You are carrying: \n" +
+                  ", ".join([item.name for item in self.items]))
         else:
             return ""
+
+    def addItem(self, item):
+        if item != None:
+            self.items.append(item)
+
+            print(f'You take the {item.name}.')
+
+    def removeItem(self, item_name):
+        for item in self.items:
+            if item.name == item_name:
+                self.items.remove(item)
+                return item
+
+        print(f'You can\'t drop something you don\'t have!')
+
+        return None
