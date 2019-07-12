@@ -43,8 +43,9 @@ wand = Item(
     "Wand", "Swaths of snakes approach to battle you")
 
 # place items in rooms
-room['outside'].items.append(rock)
-room['outside'].items.append(oracle)
+# note, if you add items to the starting room, the player will spawn with them in inventory
+room['foyer'].items.append(rock)
+room['foyer'].items.append(oracle)
 room['foyer'].items.append(wand)
 room['narrow'].items.append(sword)
 
@@ -72,8 +73,19 @@ while True:
         if len(current_room.items) > 0:
             player.items.extend(current_room.items)
 
+    elif cmd == "get":
+        player.addItem(player.current_room.items[0])
+        # remove the item from room
+
+    # elif cmd == "d":
+        # Useful debug info
+
     elif cmd == "i":
-        player.print_inventory()
+        if player.print_inventory() == "":
+            print("Your inventory is empty\n")
+        else:
+            player.print_inventory()
+
     elif cmd == "q":
         print("Goodbye!")
         exit()

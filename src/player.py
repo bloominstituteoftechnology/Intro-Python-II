@@ -16,7 +16,7 @@ class Player:
             print(self.current_room)
         else:
             # Else print an error message
-            print("There is no door here", "\n")
+            print("There is no room here", "\n")
 
     def _get_item_string(self):
         return ", ".join([item.name for item in self.items])
@@ -31,7 +31,7 @@ class Player:
     def addItem(self, item):
         if item != None:
             self.items.append(item)
-
+            del self.current_room.items[0]
             print(f'You take the {item.name}.')
 
     def removeItem(self, item_name):
