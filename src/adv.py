@@ -77,3 +77,26 @@ while(playing):
                     character.move_location(currentLocation)
                 else:
                     print("\nInvalid Request")
+            elif request.count('east') > 0 or request.count('e') > 0:
+                if hasattr(currentLocation, 'e_to'):
+                    currentLocation = currentLocation.e_to
+                    character.move_location(currentLocation)
+                else:
+                    print("\nInvalid Request")
+            elif request.count('south') > 0 or request.count('s') > 0:
+                if hasattr(currentLocation, 's_to'):
+                    currentLocation = currentLocation.s_to
+                    character.move_location(currentLocation)
+                else:
+                    print("\nInvalid Request")
+            elif request.count('west') > 0 or request.count('w') > 0:
+                if hasattr(currentLocation, 'w_to'):
+                    currentLocation = currentLocation.w_to
+                    character.move_location(currentLocation)
+                else:
+                    print("\nInvalid Request")
+            else:
+                print("\nInvalid Request")
+
+
+
