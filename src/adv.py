@@ -1,5 +1,11 @@
 from room import Room
 from player import Player
+from item import Item
+
+item = {
+    "cane": Item("cane", "typical walking cane made of wood"),
+    "candlestick": Item("candlestick", "made of brass with a small nub of a candle left")
+}
 
 # Declare all the rooms
 
@@ -8,7 +14,7 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [item["cane"], item["candlestick"]]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -52,6 +58,8 @@ character = Player(currentLocation)
 #
 # If the user enters "q", quit the game.
 playing = True
+print("Type look to see if there are any items in the room")
+print("Type q to quit")
 while(playing):
     print(f"\n{character}")
     request = input("What would you like to do?\n\n").lower().split(' ')
@@ -60,4 +68,12 @@ while(playing):
         if request [0] == 'q' or request[0] == 'quit':
             print("\nThanks for Playing!")
             playing = False
-        
+        elif request[0] == 'look':
+            print(f"\nItems in room: {currentLocation.print_items()}")
+        else:
+            if request.count('north') > 0 or request.count('n') > 0:
+                if hasattr(currentLocation, 'n_to'):
+                    currentLocation = currentLocation.n_to
+                    character.move_location(currentLocation)
+                else:
+                    print("\nInvalid Request")
