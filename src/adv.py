@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(input("Please enter your character name: "), room['outside'])
+
 
 # Write a loop that:
 #
@@ -49,3 +52,7 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# print("Welcome to THE MOST AWSOME ADVENTURE EVER!!\n\n You are an adventurer start on the fifth day of the blood moon festival. You are a young adventurer kine on making a name for yourself as a great treasure hunter.")
+
+
