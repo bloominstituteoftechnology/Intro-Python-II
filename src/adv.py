@@ -62,20 +62,29 @@ player = Player('User', room['outside'])
 
 # # game = Adventure([Room("outside", )], [Room("foyer")], [Room("overlook")], [Room("narrow")], [Room("treasure")])
 # # print(game)
+print("Welcome to J's Room Search Adventure! (Version 1)")
+print('Current user: ', player.name)
+
 
 #       
 # * Prints the current room name
 while True: 
-    print("Welcome to J's Room Search Adventure! (Version 1)")
     selection = input("Select a room to enter! ")
+    print(player.current_room)
     try: 
 
         if selection == "q":
             print("Thanks for playing!")
             break
-        elif selection == "n" or selection == "s" or selection == "w" or selection == "e":
-            print('help')
-            print()
+        elif selection == "n":
+            print(player.current_room)
+            print(room.name)
+        elif selection == "s":
+            print(player.current_room)
+        elif selection == "w":
+            print(player.current_room)
+        elif selection == "e":
+            print(player.current_room)
         else: 
             print ("You can only select 'n', 's','w', 'e'. Press 'q' to quit ")
 

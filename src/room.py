@@ -12,9 +12,9 @@ class Room:
         self.e_to = None
 
     def __str__(self):
-        return f'Room name: {self.name} + Room description: {self.description}'
+        return f'Room name: {self.name}, Room description: {self.description}'
 
-    def __room_direction__(self, direction):
+    def room_direction(self, direction):
         if direction == "n":
             return self.n_to
         elif direction == "s":
