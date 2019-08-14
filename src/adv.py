@@ -1,4 +1,3 @@
-import textwrap
 import os
 from room import Room
 from player import Player
@@ -35,6 +34,9 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+room['foyer'].add_item('sword', 'I can schlice things with this.')
+room['foyer'].add_item('helmet', 'This will protect my head.')
 
 #
 # Main
@@ -92,24 +94,16 @@ def validate_move(user_input):
         return True
 
 
+# * Clear console
+clear()
 # Write a loop that:
 while True:
-    # * Prints the current room name
-    print(player.get_room().name)
-    wrapper = textwrap.TextWrapper(width=50)
-    word_list = textwrap.TextWrapper(
-        width=50).wrap(text=player.get_room().description)
-    # * Prints the current description
-    for e in word_list:
-        print(e)
-
+    print(player.get_room())
     # * Waits for user input and decides what to do.
     #
     user_input = input('What will you do? ')
-
     # * Clear console
     clear()
-
     checked = validate_move(user_input)
     if not checked:
         break
