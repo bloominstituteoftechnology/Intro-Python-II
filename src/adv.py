@@ -41,6 +41,19 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 player = Player(input("Please enter your character name: "), room['outside'])
 
+action = input("Move North(n), South(s), East(e), or West(w) \nItem Action(i) \nQuit Game(q)\n\n")
+player.action_input(action)
+# Write a loop that:
+while True:
+    if action == 'q':
+        break
+    elif player.current_room is not None:
+        player.display_room() 
+        action = input("Move North(n), South(s), East(e), or West(w) \nItem Action(i) \nQuit Game(q)\n\n")
+        player.action_input(action)
+        continue
+    else:
+        print("This room does not exist. Please try again.")
 
 # Write a loop that:
 #
