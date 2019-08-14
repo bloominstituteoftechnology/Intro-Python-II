@@ -1,3 +1,4 @@
+from player import Player
 from room import Room
 
 # Declare all the rooms
@@ -33,15 +34,50 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+# for key, value in room.items():
+#     print(value.name)
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+zach = Player("Zach", "outside")
+player_input = ""
 
 # Write a loop that:
-#
+while player_input.lower() != "exit":
+    player_input = ""
+    for key, value in room.items():
+        if key == zach.room:
+            current_room = {"name": value.name, "desc": value.description }
 # * Prints the current room name
+            print(f'Current Room: {current_room["name"]}\n  Description: {current_room["desc"]}')
+    player_input = input("Please Select a Direction, 'N,S,E,W': ")
+    if player_input.lower() == "n" and room[zach.room].n_to:
+        for key, value in room.items():
+            if current_room['name'] == room[zach.room].name:
+                if value.name == room[zach.room].n_to.name:
+                    zach.room = key
+    elif player_input.lower() == "s" and room[zach.room].s_to:
+        for key, value in room.items():
+            if current_room['name'] == room[zach.room].name:
+                if value.name == room[zach.room].s_to.name:
+                    zach.room = key
+    elif player_input.lower() == "e" and room[zach.room].e_to:
+        for key, value in room.items():
+            if current_room['name'] == room[zach.room].name:
+                if value.name == room[zach.room].e_to.name:
+                    zach.room = key
+    elif player_input.lower() == "w" and room[zach.room].w_to:
+        for key, value in room.items():
+            if current_room['name'] == room[zach.room].name:
+                if value.name == room[zach.room].w_to.name:
+                    zach.room = key
+    else:
+        print("The selected direction doesn't exist for this room")
+
+
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
