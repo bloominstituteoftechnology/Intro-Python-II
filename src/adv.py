@@ -1,3 +1,5 @@
+import textwrap
+import os
 from room import Room
 from player import Player
 
@@ -50,3 +52,59 @@ player = Player(room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+commands = {
+    'n': 'You move north.',
+    'e': 'You move east.',
+    's': 'You move south.',
+    'w': 'You move west.',
+    'q': 'Are you sure you want to quit (Y/N)? '
+}
+
+
+def clear():
+    # for windows
+    if os.name == 'nt':
+        _ = os.system('cls')
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = os.system('clear')
+
+
+def validate_move(user_input):
+    if user_input in commands:
+        if user_input == 'q':
+            yn = input(commands[user_input])
+            clear()
+            if yn.lower() == 'y':
+                return False
+            else:
+                return True
+        else:
+            print(commands[user_input])
+            return True
+    else:
+        print('--------------------')
+        print('|' + 'Input invalid.'.center(18, ' ') + '|')
+        print('|' + 'n - Move North'.center(18, ' ') + '|')
+        print('|' + 's - Move South'.center(18, ' ') + '|')
+        print('|' + 'e - Move East'.center(18, ' ') + '|')
+        print('|' + 'w - Move West'.center(18, ' ') + '|')
+        print('|' + 'q - Exit game'.center(18, ' ') + '|')
+        print('--------------------')
+
+
+while True:
+    print(player.room.name)
+    wrapper = textwrap.TextWrapper(width=50)
+    word_list = textwrap.TextWrapper(
+        width=50).wrap(text=player.room.description)
+    # Print each line.
+    for element in word_list:
+        print(element)
+    user_input = input('What will you do? ')
+    clear()
+    checked = validate_move(user_input)
+    if not checked:
+        break
+    else:
+        continue
