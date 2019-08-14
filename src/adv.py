@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,14 +39,52 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+player = Player('User', room['outside'])
 # Write a loop that:
-#
+# class Adventure:
+#     def __init__(self, room_name, room_description):
+#         # self._room_name = room_name
+#         self.room_name = room_name
+#         self.room_description = room_description
+
+#     # def set_room(self, room_entered):
+#     #     self._room_name = room_entered
+
+#     def __str__(self):
+#         game_output = "Welcome to J's Room Search Adventure! (Version 1)"
+#         print('Press key to begin?')
+#         for room in self.room_name:
+#             game_output += str(i) + " " + room.room_name + "\n"
+#             i += 1
+#         game_output + str(i=="q") + "press 'q' to quit the self"
+
+#         return game_output
+
+# # game = Adventure([Room("outside", )], [Room("foyer")], [Room("overlook")], [Room("narrow")], [Room("treasure")])
+# # print(game)
+
+#       
 # * Prints the current room name
+while True: 
+    print("Welcome to J's Room Search Adventure! (Version 1)")
+    selection = input("Select a room to enter! ")
+    try: 
+
+        if selection == "q":
+            print("Thanks for playing!")
+            break
+        elif selection == "n" or selection == "s" or selection == "w" or selection == "e":
+            print('help')
+            print()
+        else: 
+            print ("You can only select 'n', 's','w', 'e'. Press 'q' to quit ")
+
+    except ValueError:
+        print("You can only enter a string!")
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
-# If the user enters "q", quit the game.
+# If the user enters "q", quit the self.
