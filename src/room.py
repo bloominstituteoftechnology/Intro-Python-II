@@ -9,5 +9,5 @@ class Room:
     def __str__(self):
         return f'room: {self.name}, description: {self.description}'
 
-new_room = Room("outside", "it's the outside, what else is there?")
-print(new_room)
+# new_room = Room("outside", "it's the outside, what else is there?")
+# print(new_room)
