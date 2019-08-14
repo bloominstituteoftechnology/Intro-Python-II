@@ -15,7 +15,7 @@ class Player:
     def get_room(self):
         return self.current_room
 
-    def move_in_dir(self, direction):
+    def move(self, direction):
         current_room = self.get_room()
         try:
             if direction == 'n' and current_room.n_to:
@@ -30,5 +30,7 @@ class Player:
             elif direction == 'w' and current_room.w_to:
                 self.set_room(current_room.w_to)
                 return True
+            else:
+                return False
         except:
             return False

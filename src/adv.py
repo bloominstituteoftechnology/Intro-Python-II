@@ -71,17 +71,14 @@ def validate_move(user_input):
         if user_input == 'q':
             yn = input(commands[user_input])
             clear()
-            if yn.lower() == 'y':
-                return False
-            else:
-                return True
+            return yn.lower() == 'n'
         else:
-            move_check = player.move_in_dir(user_input)
+            move_check = player.move(user_input)
             if move_check:
                 return True
             else:
-                print('You run into the wall.')
-                print('----------------------')
+                print('You can\'t go in that direction.')
+                print('--------------------------------')
                 return True
     else:
         print('+------------------+')
@@ -102,14 +99,17 @@ while True:
     wrapper = textwrap.TextWrapper(width=50)
     word_list = textwrap.TextWrapper(
         width=50).wrap(text=player.get_room().description)
-    # * Prints the current description (the textwrap module might be useful here).
-    for element in word_list:
-        print(element)
+    # * Prints the current description
+    for e in word_list:
+        print(e)
 
     # * Waits for user input and decides what to do.
     #
     user_input = input('What will you do? ')
+
+    # * Clear console
     clear()
+
     checked = validate_move(user_input)
     if not checked:
         break
