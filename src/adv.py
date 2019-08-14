@@ -41,17 +41,9 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(room['outside'])
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+player = Player('Travler')
+player.set_room(room['outside'])
+
 commands = {
     'n': 'You move north.',
     'e': 'You move east.',
@@ -71,6 +63,10 @@ def clear():
 
 
 def validate_move(user_input):
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    # Print an error message if the movement isn't allowed.
+    #
+    # If the user enters "q", quit the game.
     if user_input in commands:
         if user_input == 'q':
             yn = input(commands[user_input])
@@ -80,27 +76,38 @@ def validate_move(user_input):
             else:
                 return True
         else:
-            print(commands[user_input])
-            return True
+            move_check = player.move_in_dir(user_input)
+            if move_check:
+                return True
+            else:
+                print('You run into the wall.')
+                print('----------------------')
+                return True
     else:
-        print('--------------------')
-        print('|' + 'Input invalid.'.center(18, ' ') + '|')
+        print('+------------------+')
+        print('|' + 'Invalid input.'.center(18, ' ') + '|')
         print('|' + 'n - Move North'.center(18, ' ') + '|')
         print('|' + 's - Move South'.center(18, ' ') + '|')
         print('|' + 'e - Move East'.center(18, ' ') + '|')
         print('|' + 'w - Move West'.center(18, ' ') + '|')
         print('|' + 'q - Exit game'.center(18, ' ') + '|')
-        print('--------------------')
+        print('+------------------+')
+        return True
 
 
+# Write a loop that:
 while True:
-    print(player.room.name)
+    # * Prints the current room name
+    print(player.get_room().name)
     wrapper = textwrap.TextWrapper(width=50)
     word_list = textwrap.TextWrapper(
-        width=50).wrap(text=player.room.description)
-    # Print each line.
+        width=50).wrap(text=player.get_room().description)
+    # * Prints the current description (the textwrap module might be useful here).
     for element in word_list:
         print(element)
+
+    # * Waits for user input and decides what to do.
+    #
     user_input = input('What will you do? ')
     clear()
     checked = validate_move(user_input)
