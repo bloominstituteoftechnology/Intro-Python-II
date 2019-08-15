@@ -2,16 +2,15 @@
 # name and description attributes.
   #  def __init__(self, name, description, n_to=None, s_to=None, e_to=None, w_to=None ):
 class Room: 
-    def __init__(self, name, description, n_to=None, s_to=None, e_to=None, w_to=None ):
-        # self._name = name
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.n_to = n_to
-        self.s_to = s_to
-        self.w_to = w_to
-        self.e_to = e_to
+        self.n_to = None
+        self.s_to = None
+        self.w_to = None
+        self.e_to = None
 
-    def __str__(self):
-        roomstr = f'Room name: {self.name}, Room description: {self.description} \n'
-        return roomstr
+    # def __str__(self):
+    #     roomstr = f'Room name: {self.name}, Room description: {self.description} \n'
+    #     return roomstr
 

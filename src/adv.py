@@ -43,14 +43,14 @@ player = Player('Jamar', room['outside'])
 valid_directions = ['n', 's', 'e', 'w']
 print("Welcome to J's Room Search Adventure! (Version 1)")
 print('Current user: ', player.name)
-selection = input("Select a room to enter! ")
 
-player.room_direction(selection)
-print(str(player.room_direction(selection)))
+
+
 #       
 # * Prints the current room name
 while True: 
-    print(f"You are currently in {player.current_room}")
+    print(f"You are currently in {player.current_room.name}. Details? {player.current_room.description}")
+    selection = input("Select a room to enter! ")
     try: 
         if selection == "q":
             print("Thanks for playing!")
@@ -59,18 +59,19 @@ while True:
         elif selection == "n":
             if player.current_room.n_to is not None:
                 player.current_room = player.current_room.n_to
+            else:
+                print('Not sure where you are...')
         elif selection == "s":
             if player.current_room.s_to is not None:
                 player.current_room = player.current_room.s_to
+            else:
+                print('Not sure where you are...')
         elif selection == "w":
-            player.current_room = player.current_room.w_to
+            if player.current_room.w_to is not None:
+                player.current_room = player.current_room.w_to
         elif selection == "e":
-            player.current_room = player.current_room.e_to
-        # elif player.current_room is not None:
-        #     player.playerStatus()
-        #     selection = input("Select a room to enter! ")
-        #     print('idk')
-        #     continue
+            if player.current_room.e_to is not None:
+                player.current_room = player.current_room.e_to
         else: 
             print ("You can only select 'n', 's','w', 'e'. Press 'q' to quit ")
 
