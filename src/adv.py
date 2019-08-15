@@ -39,52 +39,38 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player('User', room['outside'])
-# Write a loop that:
-# class Adventure:
-#     def __init__(self, room_name, room_description):
-#         # self._room_name = room_name
-#         self.room_name = room_name
-#         self.room_description = room_description
-
-#     # def set_room(self, room_entered):
-#     #     self._room_name = room_entered
-
-#     def __str__(self):
-#         game_output = "Welcome to J's Room Search Adventure! (Version 1)"
-#         print('Press key to begin?')
-#         for room in self.room_name:
-#             game_output += str(i) + " " + room.room_name + "\n"
-#             i += 1
-#         game_output + str(i=="q") + "press 'q' to quit the self"
-
-#         return game_output
-
-# # game = Adventure([Room("outside", )], [Room("foyer")], [Room("overlook")], [Room("narrow")], [Room("treasure")])
-# # print(game)
+player = Player('Jamar', room['outside'])
+valid_directions = ['n', 's', 'e', 'w']
 print("Welcome to J's Room Search Adventure! (Version 1)")
 print('Current user: ', player.name)
+selection = input("Select a room to enter! ")
 
-
+player.room_direction(selection)
+print(str(player.room_direction(selection)))
 #       
 # * Prints the current room name
 while True: 
-    selection = input("Select a room to enter! ")
-    print(player.current_room)
+    print(f"You are currently in {player.current_room}")
     try: 
-
         if selection == "q":
             print("Thanks for playing!")
             break
+        # elif selection in valid_directions:
         elif selection == "n":
-            print(player.current_room)
-            print(room.name)
+            if player.current_room.n_to is not None:
+                player.current_room = player.current_room.n_to
         elif selection == "s":
-            print(player.current_room)
+            if player.current_room.s_to is not None:
+                player.current_room = player.current_room.s_to
         elif selection == "w":
-            print(player.current_room)
+            player.current_room = player.current_room.w_to
         elif selection == "e":
-            print(player.current_room)
+            player.current_room = player.current_room.e_to
+        # elif player.current_room is not None:
+        #     player.playerStatus()
+        #     selection = input("Select a room to enter! ")
+        #     print('idk')
+        #     continue
         else: 
             print ("You can only select 'n', 's','w', 'e'. Press 'q' to quit ")
 
