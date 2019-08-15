@@ -14,7 +14,7 @@ class Room:
   def __str__(self):
     return "{}, {}".format(self.name, self.description)
   
-  def room_item(self):
+  def room_items(self):
     if self.items is not None:
       print(f"There are {int(len(self.items))} item(s) in this room\n")
       count = 0
@@ -30,4 +30,4 @@ class Room:
 
 test = Room("foyer", "Very nice looking", items = ['hat', 'cat', 'coat', 'scarf'])
 
-print(test.room_item())
+print(test.room_items())

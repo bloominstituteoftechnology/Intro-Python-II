@@ -1,7 +1,12 @@
-class Player:
-  def __init__(self, name, current_room):
+from item import Inventory
+
+class Player(Inventory):
+  def __init__(self, name, current_room, items = None):
     self.name = name
     self.current_room = current_room
+    self.items = items
+
+    super().__init__()
 
   def __str__(self):
     return f"{self.name}, {self.current_room}"
@@ -24,3 +29,4 @@ class Player:
 
   def display_room(self):
     print(f'Current Room: {self.current_room.name}\n \n{self.current_room.description}\n\n')
+
