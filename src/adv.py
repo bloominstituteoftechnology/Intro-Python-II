@@ -39,8 +39,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player('Jamar', room['outside'])
-valid_directions = ['n', 's', 'e', 'w']
+player = Player(input('select name!'), room['outside'])
+# valid_directions = ['n', 's', 'e', 'w']
 print("Welcome to J's Room Search Adventure! (Version 1)")
 print('Current user: ', player.name)
 
@@ -55,12 +55,11 @@ while True:
         if selection == "q":
             print("Thanks for playing!")
             break
-        # elif selection in valid_directions:
         elif selection == "n":
             if player.current_room.n_to is not None:
                 player.current_room = player.current_room.n_to
             else:
-                print('Not sure where you are...')
+                print('Not sure where you are... try something else')
         elif selection == "s":
             if player.current_room.s_to is not None:
                 player.current_room = player.current_room.s_to
