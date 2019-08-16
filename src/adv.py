@@ -54,8 +54,6 @@ room["narrow"].items.append(broken_shaft)
 
 
 
-
-
 #
 # Main
 #
@@ -78,9 +76,48 @@ name = input("Enter your name: ")
 player1 = Player(name, inital_room)
 
 print("Hello " + name + " welcome to adventure quest!")
-print("you are currently " + inital_room.name + " and " + inital_room.description)
-
+print("you are currently " + player1.current_room.name + " and " + player1.current_room.description)
+# print(f"current items in the room is: {inital_room.items}")
 while True:
+
+    print(f'Your current inventory is: {player1.inventory}')
+
+    print(f"current items in the room is: {player1.current_room.items}")
+    action = input("Do you want to 'get x' and item or 'drop x' an item: ")
+    detail = action.split(" ")
+
+    # print(detail)
+
+    if detail[0] not in ["get", "drop"]:
+        pass
+    elif detail[0].lower() == 'get':
+
+        item = player1.current_room.get_item(detail[1])
+        # print(item)
+
+        if item == None:
+            print("That item is not in the room.")
+        else:
+            player1.current_room.items.remove(item)
+            player1.inventory.append(item)
+            item.take_item()
+            print(f'Your current inventory is: {player1.inventory}')
+            print(f"current items in the room is: {player1.current_room.items}")
+
+
+    elif detail[0].lower() == 'drop':
+        # print(player1.get_item(detail[1]))
+        item = player1.get_item(detail[1])
+        # print(item)
+        if item == None:
+            print("That item isn't in your inventory")
+        else:
+            player1.current_room.items.append(item)
+            player1.inventory.remove(item)
+            item.drop_item()
+            print(f'Your current inventory is: {player1.inventory}')
+            print(f"current items in the room is: {player1.current_room.items}")
+
 
     direction = input("Which direction would you like to go? (n/s/e/w or q to end) ")
 

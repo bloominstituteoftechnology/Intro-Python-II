@@ -20,7 +20,7 @@ class Player:
         nextRoom = self.current_room.get_room(direction)
         if nextRoom is not None:
             self.current_room = nextRoom
-            print(self.current_room)
+            print("you are currently " + self.current_room.name + " and " + self.current_room.description)
         else:
             print("Cannot go that way choose another")
 
