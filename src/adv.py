@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from player import Player_inventory
 
 # Declare all the rooms
 
@@ -8,7 +9,7 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", items = {'candle': 'Looks new', 'Notepad': "There is writing on it, but it is not legible"}),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -34,22 +35,28 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Player inventory
+
+player_inventory = Player_inventory(items=None)
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(input("Please enter your character name: "), room['outside'])
+print("Welcome to THE MOST AWSOME ADVENTURE EVER!!\n\nThis adventure starts when you find yourself wondering in the great woods. You are a young adventurer keen on making a name for yourself as a great treasure hunter. Can you find your first treasure?\n")
+player = Player(input("Please enter your character name: "), room['outside'], player_inventory)
 
-action = input("Move North(n), South(s), East(e), or West(w) \nItem Action(i) \nQuit Game(q)\n\n")
-player.action_input(action)
 # Write a loop that:
 while True:
+    print(f'\n{player.current_room}\n')
+    action = input("Where would you like to move? Move North(n), South(s), East(e), or West(w) \nItem Action(i) \nQuit Game(q)\n\n")
+    player.action_input(action)
     if action == 'q':
         break
     elif player.current_room is not None:
         player.display_room() 
-        action = input("Move North(n), South(s), East(e), or West(w) \nItem Action(i) \nQuit Game(q)\n\n")
+        action = input("Where would you like to move next? Move North(n), South(s), East(e), or West(w) \nItem Action(i) \nQuit Game(q)\n\n")
         player.action_input(action)
         continue
     else:
@@ -66,6 +73,5 @@ while True:
 #
 # If the user enters "q", quit the game.
 
-# print("Welcome to THE MOST AWSOME ADVENTURE EVER!!\n\n You are an adventurer start on the fifth day of the blood moon festival. You are a young adventurer kine on making a name for yourself as a great treasure hunter.")
 
 

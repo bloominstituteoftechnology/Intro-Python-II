@@ -40,14 +40,6 @@ class Inventory:                            # Inventory Class takes in a diction
     self.items = added
     return(self.items)
 
-  def drop_item(self, remove):
-    if remove in self.items.keys():
-      print(f'You dropped {remove}')
-      self.items.pop(remove)
-      return self.items
-    else:
-      print('No such items to drop.')
-
   def show_inventory(self):
     if self.items is not None:
       print(f"There are {int(len(self.items))} item(s).\n")
@@ -65,13 +57,13 @@ class Inventory:                            # Inventory Class takes in a diction
       return "There are no items."
 
 
-more_items={'cat': "cute", 'dog': "poop"}
-test = Inventory()
-new_item = Item('boots','Are made for walking and that is what there will do.')
-# print(new_item.see_item())
-print(test.add_item(more_items))
-print(test.add_item({'bow': 'Long and light; Easy to carry'}))
-print(test.drop_item('bow')) 
+# more_items={'cat': "cute", 'dog': "poop"}
+# test = Inventory()
+# new_item = Item('boots','Are made for walking and that is what there will do.')
+# # print(new_item.see_item())
+# print(test.add_item(more_items))
+# print(test.add_item({'bow': 'Long and light; Easy to carry'}))
+# print(test.drop_item('bow')) 
 
 
 # test.add_item(more_items)

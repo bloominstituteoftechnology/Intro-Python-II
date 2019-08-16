@@ -1,7 +1,7 @@
 from item import Inventory
 
-class Player(Inventory):
-  def __init__(self, name, current_room, items = None):
+class Player:
+  def __init__(self, name, current_room, items):
     self.name = name
     self.current_room = current_room
     self.items = items
@@ -28,5 +28,18 @@ class Player(Inventory):
       print("Thanks for playing")
 
   def display_room(self):
-    print(f'Current Room: {self.current_room.name}\n \n{self.current_room.description}\n\n')
+    print(f'Current Room: {self.current_room.name}\n \n{self.current_room.description}\n \n{self.current_room.room_items()} ')
+
+class Player_inventory(Inventory):
+  def __init__(self, items):
+    super().__init__(items)
+
+  def drop_item(self, remove):
+    if remove in self.items.keys():
+      print(f'You dropped {remove}')
+      self.items.pop(remove)
+      return self.items
+    else:
+      print('You possess no such items to drop.')
+
 
