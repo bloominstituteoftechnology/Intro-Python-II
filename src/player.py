@@ -5,5 +5,5 @@ class Player:
     self.name = name
     self.room = room
 
-  def _-str__(self):
-    return f"{self.name}, you are at {self.room} now. \n{self.room}"
+  def __str__(self):
+    return f"{self.name}, you are at {self.room} now. \n{self.room.description}"
