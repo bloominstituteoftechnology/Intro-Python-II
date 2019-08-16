@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -21,7 +23,11 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+room["foyer"].add_item(Item("Lampy", "This is a Lamp"))
+room["treasure"].add_item(Item("Wand", "Harry's Wand"))
+room["treasure"].add_item(Item("Sword", "Jim's Lake's Sword"))
 
+# name of the room to the instance of each room 
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -32,12 +38,16 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+# . notation accessing attribute on a class 
+# bracket notation for dictionary
 
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
+# print(player)
 
 # Write a loop that:
 #
@@ -49,3 +59,33 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def try_direction(direction, current_room):
+  attribute = direction + '_to'
+  
+  if hasattr(current_room, attribute):
+    return getattr(current_room, attribute)
+  else: 
+    print("You can't go that way")
+    return current_room
+
+done = False
+
+while not done:
+  # currentRoom = player.current_room
+  s = input().lower().split()
+  print(s)
+  s = s[0] #b/c of split it returns a list
+  print(s, " this is s")
+  # split to get rid of white space
+  print(f'This is the current room {player.current_room.name}')
+  print((player.current_room.description))
+  print("Here are the items", player.current_room.printItem())
+
+  if s in ['n', 's', 'e', 'w']:
+    player.current_room = try_direction(s, player.current_room)
+  elif s == 'q':
+    done = not done
+  else: print(f'unknown command "{s}"')
+  
+
