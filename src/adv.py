@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+import textwrap
 # Declare all the rooms
 
 room = {
@@ -38,14 +39,69 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+player = Player('Pete', room['outside'])
+# room1 = Room()
+# print(room1)
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
+
+current_room = player.current_room
+
+def print_room(room):
+    print(f"---------------------")
+    print(f"\n{room.name}")
+    print(f"\n  {room.description}\n")
+
+while True:
+    current_room = player.current_room
+    userInput = input("Make a move: ")
+
+    # print(current_room)
+
+    if userInput == "n":
+        if current_room.n_to is not None:
+            player.current_room = current_room.n_to
+            print_room(player.current_room)
+        else:
+            print("You can't go there")
+
+    elif userInput == "s":
+        if current_room.s_to is not None:
+            player.current_room = current_room.s_to
+            print_room(player.current_room)
+        else:
+            print("You can't go there")
+
+    elif userInput == "w":
+        if current_room.w_to is not None:
+            player.current_room = current_room.w_to
+            print_room(player.current_room)
+        else:
+            print("You can't go there")
+
+    elif userInput == "e":
+        if current_room.e_to is not None:
+            player.current_room = current_room.e_to
+            print_room(player.current_room)
+        else:
+            print("You can't go there")
+
+    elif userInput == "q":
+        print("Till next time!")
+        exit()
+    else:
+        print("Move invalid")
+
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+# while int(userInput) !== "treasure"
+#     userInput = input("Select the direction")
