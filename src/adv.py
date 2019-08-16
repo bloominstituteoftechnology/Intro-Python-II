@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-from player import Player_inventory
+from player import PlayerInventory
 
 # Declare all the rooms
 
@@ -37,30 +37,33 @@ room['treasure'].s_to = room['narrow']
 
 # Player inventory
 
-player_inventory = Player_inventory(items=None)
+player_inventory = PlayerInventory(items={'hat': 'Looks new', 'pad': 'small', 'cloth': 'interesting feeling'})
 
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-print("Welcome to THE MOST AWSOME ADVENTURE EVER!!\n\nThis adventure starts when you find yourself wondering in the great woods. You are a young adventurer keen on making a name for yourself as a great treasure hunter. Can you find your first treasure?\n")
+print("Welcome to THE MOST AWSOME ADVENTURE EVER!!\n\nThis adventure starts when you find yourself wondering in the great woods. You are a young adventurer keen on making a name for yourself as a great treasure hunter.\nCan you find your first treasure?\n")
 player = Player(input("Please enter your character name: "), room['outside'], player_inventory)
+
+print(f'\n{player.current_room}\n')
+
+action = input("Where would you like to move? Move North(n), South(s), East(e), or West(w) \nItem Action(i) \nQuit Game(q)\n\n")
+
+player.action_input(action)
 
 # Write a loop that:
 while True:
-    print(f'\n{player.current_room}\n')
-    action = input("Where would you like to move? Move North(n), South(s), East(e), or West(w) \nItem Action(i) \nQuit Game(q)\n\n")
-    player.action_input(action)
     if action == 'q':
         break
     elif player.current_room is not None:
-        player.display_room() 
+        player.display_room()
         action = input("Where would you like to move next? Move North(n), South(s), East(e), or West(w) \nItem Action(i) \nQuit Game(q)\n\n")
         player.action_input(action)
         continue
     else:
-        print("This room does not exist. Please try again.")
+        print("This room does not exist. Please try again.")  # Else is not being used
 
 # Write a loop that:
 #
@@ -72,6 +75,3 @@ while True:
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-
-
-
