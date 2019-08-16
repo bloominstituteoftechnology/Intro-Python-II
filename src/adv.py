@@ -50,69 +50,26 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-# current_room = "outside"D
-name = input("Please enter your name: ")
-current_room = 'outside'
-# print(player1)
+
+inital_room = room["outside"]
+name = input("Enter your name: ")
+player1 = Player(name, inital_room)
+
+print("Hello " + name + " welcome to adventure quest!")
+print("you are currently " + inital_room.name + " and " + inital_room.description)
 
 while True:
-    # print("Hello!!")
-    # break
-    player1 = Player(name, current_room)
-    GameRoom = Room(room[current_room].name, room[current_room].description)
-    # print(player1)
-    print("You are currently at " + GameRoom.name + " and " + GameRoom.description)
-    # break
-    direction = input('Which direction would you like to go?(n/s/e/w): ')
 
-    if direction == "q":
+    direction = input("Which direction would you like to go? (n/s/e/w or q to end) ")
+
+    if direction in ['n', 's', 'e', 'w']:
+        print("You moved towards " + direction)
+        player1.move(direction)
+
+    elif direction == 'q':
         break
 
-    elif current_room == "outside":
-        if direction =="n":
-            current_room = "foyer"
-            # break
-        else:
-            print("That way is blocked choose another ")
-            continue
-            # break
+    else:
+        print("Unrecognized direction please input n/s/e/w or q")
 
-    elif current_room == "foyer":
-        if direction == "s":
-            current_room = "outside"
-        elif direction == "n":
-            current_room = "overlook"
-        elif direction == "e":
-            current_room = "narrow"
-        else:
-            print("Cannot go that way choose another: ")
-            continue
-
-    elif current_room == "overlook":
-        if direction == "s":
-            current_room = "foyer"
-        elif direction == "n":
-            print("You fall to your death game over!")
-            break
-        else:
-            print("You cannot go that way choose another: ")
-            continue
-
-    elif current_room == "narrow":
-        if direction == "w":
-            current_room = "foyer"
-        elif direction == "n":
-            current_room = "treasure"
-        elif direction == "e":
-            print("You hit a wall ouch! Can't go that way choose another: ")
-            continue
-        else:
-            print("You cannot go that way choose another: ")
-            continue
-
-    elif current_room == "treasure":
-        if direction == "s":
-            current_room = "narrow"
-        else:
-            print("You cannot go that way choose another: ")
-            continue
+print("Bye Thanks for playing!")
