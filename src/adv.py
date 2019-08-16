@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -33,6 +34,27 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+
+rock = Item('rock', 'this is a rock')
+broken_sword = Item('broken_sword', 'this sword is useless might have useable parts')
+healing_herb = Item('healing_herb', 'this herb has a common healing agent')
+common_sword = Item('common_sword', 'this is an everyman sword')
+gold_coin = Item('single_gold_coin', 'this is worth $1')
+barrel = Item('barrel', 'this was used to make mead but empty now')
+broken_shaft = Item('broken_shaft', 'broken speak shaft might have some use')
+
+room["outside"].items.append(rock)
+room["outside"].items.append(healing_herb)
+room["foyer"].items.append(common_sword)
+room["foyer"].items.append(broken_sword)
+room["treasure"].items.append(gold_coin)
+room["treasure"].items.append(barrel)
+room["narrow"].items.append(broken_shaft)
+
+
+
+
 
 #
 # Main

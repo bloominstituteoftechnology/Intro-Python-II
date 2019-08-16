@@ -9,10 +9,16 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.items = []
 
     def __str__(self):
         return f'room: {self.name}, description: {self.description}'
 
+    def get_item(self, item_name):
+        for item in self.items:
+            if item.name == item_name:
+                return item
+        return None
 
     def get_room(self, direction):
         if direction == "n":
