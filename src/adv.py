@@ -21,6 +21,7 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+#add test comment
 
 items = {
     "sword": Item("sword", "This is a sword"),
