@@ -56,7 +56,7 @@ class Inventory:                            # Inventory Class takes in a diction
           inventory_list.update({name: description})
           return inventory_list
     else:
-      return "There are no items.\n"
+      print("There are no items in your inventory.\n")
 
 
 # more_items={'cat': "cute", 'dog': "poop"}

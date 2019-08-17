@@ -24,6 +24,16 @@ class Player:
         self.current_room = self.current_room.w_to
     elif decision == 'i':
       self.items.show_inventory()
+    elif decision == 'p':
+      add = input(f"What would you like to pick up? ")
+      if add != self.current_room.items[add]:		      # False check does not work	
+        print(f'Invalid, item does not exist.')					
+      elif self.current_room.items is not None and self.current_room.items[add]:
+        for i in self.current_room.items: 
+          # print(i, self.current_room.items[i]) 				
+          self.items.add_item({i:self.current_room.items[i]})
+        self.current_room.items.pop(add)
+        print(f'{add} has been added to your inventory')
     else:
       print("Thank you for playing")
 
@@ -50,3 +60,7 @@ class PlayerInventory(Inventory):
     if invent_check == 'd':
       remove = input("which item would you like to drop?: ")
       self.drop_item(remove.lower())
+    elif invent_check == 'b':
+      return
+    else:
+      print('Invalid imput')
