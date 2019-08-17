@@ -19,7 +19,6 @@ class Room:
     return "{}, {}".format(self.name, self.description)
   
   def room_items(self):
-    print(self.items)
     if int(len(self.items)) > 0:
       print(f"You can see {int(len(self.items))} item(s) in this room\n\nItems: ")
       count = 0

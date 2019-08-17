@@ -48,10 +48,12 @@ class Inventory:                            # Inventory Class takes in a diction
 
       for name, description in self.items.items():
         if int(count) < int(len(self.items))-1: 
-          inventory_list.update(f"{name}: {description}, ", end ='')
+          print(f"{name}: {description}, ", end ='')
+          inventory_list.update({name: description})
           count += 1
         elif int(count) == int(len(self.items))-1:
-          inventory_list.update(f"and {name}: {description}")
+          print(f"and {name}: {description}")
+          inventory_list.update({name: description})
           return inventory_list
     else:
       return "There are no items.\n"
