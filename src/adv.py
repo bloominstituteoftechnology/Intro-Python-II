@@ -53,8 +53,37 @@ room['treasure'].s_to = room['narrow']
 # If the user enters "q", quit the game.
 
 player1 = Player("Player One", "outside")
+direction = ''
 
-for key, value in room.items():
-    if player1.current_room == key:
-        print(f"Current Room: \n      {key} \n{value}")
 
+def ask_for_location():
+    global direction
+    direction = input("Choose the direction you want to go next: w, n, e, s \nTYPE HERE: ")
+    startGame(direction)
+
+def describe_the_room():
+    for key, value in room.items():
+        if player1.current_room == key:
+            print(f"Current Room: \n      {key} \n{value}")
+            
+    
+
+def startGame(direction):
+    if player1.current_room == "outside":
+        if direction == 'n':
+           player1.current_room = "foyer"
+           describe_the_room()
+           ask_for_location()
+        else:
+            print ("You hit the wall, try again. You can only go North from outside.")
+    elif player1.current_room == "foyer":
+        if direction == 's':
+           player1.current_room = "outside"
+           describe_the_room()
+           ask_for_location()
+        else:
+            print(f"player1 {player1.current_room}")
+        
+describe_the_room()
+ask_for_location()
+    
