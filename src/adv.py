@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -49,3 +51,10 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player1 = Player("Player One", "outside")
+
+for key, value in room.items():
+    if player1.current_room == key:
+        print(f"Current Room: \n      {key} \n{value}")
+
