@@ -69,21 +69,75 @@ def describe_the_room():
     
 
 def startGame(direction):
+    if direction == 'q': 
+        print("You successfully exited the game")
+        return
     if player1.current_room == "outside":
         if direction == 'n':
            player1.current_room = "foyer"
            describe_the_room()
            ask_for_location()
+
         else:
             print ("You hit the wall, try again. You can only go North from outside.")
+            ask_for_location()
+
     elif player1.current_room == "foyer":
+
         if direction == 's':
            player1.current_room = "outside"
            describe_the_room()
            ask_for_location()
+
+        elif direction == 'n':
+           player1.current_room = "overlook"
+           describe_the_room()
+           ask_for_location()
+
+        elif direction == 'e':
+           player1.current_room = "narrow"
+           describe_the_room()
+           ask_for_location()
+       
         else:
-            print(f"player1 {player1.current_room}")
+            print ("You hit the wall, try again. You can not go West from foyer.")
+            ask_for_location()
+
+    elif player1.current_room == "overlook":
+        if direction == 's':
+           player1.current_room = "foyer"
+           describe_the_room()
+           ask_for_location()
+
+        else:
+            print ("You hit the wall, try again. You can only go South from overlook.")
+            ask_for_location()
+
+    elif player1.current_room == "narrow":
+        if direction == 'w':
+           player1.current_room = "foyer"
+           describe_the_room()
+           ask_for_location()
         
+        elif direction == 'n':
+           player1.current_room = "treasure"
+           describe_the_room()
+           ask_for_location()
+
+        else:
+            print ("You hit the wall, try again. You can only go West and North from narrow room.")
+            ask_for_location()
+
+    elif player1.current_room == "treasure":
+        if direction == 's':
+           player1.current_room = "narrow"
+           describe_the_room()
+           ask_for_location()
+
+        else:
+            print ("You hit the wall, try again. You can only go South from treasure room.")
+            ask_for_location()
+
 describe_the_room()
 ask_for_location()
     
