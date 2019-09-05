@@ -10,3 +10,11 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.items = []
+
+    def print_items(self):
+        if not self.items:
+            pass
+        else:
+            for i in self.items:
+                print(i.name)
