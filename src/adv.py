@@ -1,5 +1,6 @@
 
 # Declare all the rooms
+from src.item import Item
 from src.room import Room
 from src.player import Player
 
@@ -32,6 +33,13 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+item = {
+    'rock': Item("Rock", "Stones you can throw"),
+    'stick': Item("Stick", "You can hit with a stick"),
+    'shield': Item("Shield", "You can block"),
+    'dagger': Item("Dagger", "You can stab with it")
+}
 
 #
 # Main
