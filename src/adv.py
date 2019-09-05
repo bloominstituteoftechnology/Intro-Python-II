@@ -30,6 +30,10 @@ items_of_room = {
     'axe': Item("axe", 'Who does not need axe'),
     'backpack': Item("backpack", 'Help you to carry your items'),
     'water': Item("water", 'A sip of fresh water on your journey, what can be better'),
+    'crampons': Item("crampons", 'Will come handy on a steep path'),
+    'hook': Item("hook", 'What can be better than hook'),
+    'torch': Item("torch", 'Will show a path'),
+    'coin': Item("coin", 'The precious treasure you have been looking for')
 }
 
 
@@ -50,9 +54,9 @@ room['treasure'].s_to = room['narrow']
 
 room['outside'].items = [items_of_room["map"].name, items_of_room["rope"].name, items_of_room["axe"].name]
 room['foyer'].items = [items_of_room["backpack"].name, items_of_room["water"].name]
-room['overlook'].items = ['crampons', 'hook']
-room['narrow'].items = ['torch']
-room['narrow'].items = ['coin']
+room['overlook'].items = [items_of_room["crampons"].name, items_of_room["hook"].name]
+room['narrow'].items = [items_of_room["torch"].name]
+room['treasure'].items = [items_of_room["coin"].name]
 
 #
 # Main
@@ -143,11 +147,13 @@ def startGame(direction):
         elif direction == 'n':
            player1.current_room = "overlook"
            describe_the_room()
+           ask_to_pick_up_item()
            ask_for_location()
 
         elif direction == 'e':
            player1.current_room = "narrow"
            describe_the_room()
+           ask_to_pick_up_item()
            ask_for_location()
        
         else:
@@ -158,6 +164,7 @@ def startGame(direction):
         if direction == 's':
            player1.current_room = "foyer"
            describe_the_room()
+           ask_to_pick_up_item()
            ask_for_location()
 
         else:
@@ -168,11 +175,13 @@ def startGame(direction):
         if direction == 'w':
            player1.current_room = "foyer"
            describe_the_room()
+           ask_to_pick_up_item()
            ask_for_location()
         
         elif direction == 'n':
            player1.current_room = "treasure"
            describe_the_room()
+           ask_to_pick_up_item()
            ask_for_location()
 
         else:
@@ -183,6 +192,7 @@ def startGame(direction):
         if direction == 's':
            player1.current_room = "narrow"
            describe_the_room()
+           ask_to_pick_up_item()
            ask_for_location()
 
         else:
