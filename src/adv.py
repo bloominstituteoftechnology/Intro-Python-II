@@ -38,8 +38,15 @@ item = {
     'rock': Item("Rock", "Stones you can throw"),
     'stick': Item("Stick", "You can hit with a stick"),
     'shield': Item("Shield", "You can block"),
-    'dagger': Item("Dagger", "You can stab with it")
+    'dagger': Item("Dagger", "You can stab with it"),
+    'gold': Item("Gold", "You can become rich")
 }
+
+room['outside'].items.append(item['rock'])
+room['foyer'].items.append(item['stick'])
+room['overlook'].items.append(item['shield'])
+room['narrow'].items.append(item['dagger'])
+room['treasure'].items.append(item['gold'])
 
 #
 # Main
