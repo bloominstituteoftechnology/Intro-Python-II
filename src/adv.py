@@ -87,6 +87,7 @@ def ask_to_pick_up_item():
 def manage_inventory(item):
     print(f"room {player1.current_room}")
     check_if_item_exist = False
+    check_if_inventory_exist = False
     array_of_command = item.split()
 
     #['take' case]
@@ -104,8 +105,27 @@ def manage_inventory(item):
                 return
             
         if not(check_if_item_exist):
-            print(f"Sorry this room does not have this item. Choose another item from this room {array_of_command[1]} thing: {thing}")
+            print(f"Sorry this room does not have this item. Choose another item from this room")
             ask_to_pick_up_item()
+
+    # ['drop' case]
+    if array_of_command[0] == 'drop':
+
+        for thing in player1.inventory:
+
+            if thing == array_of_command[1]:
+
+                room[player1.current_room].items.append(array_of_command[1])
+                player1.inventory.remove(array_of_command[1])
+                print(f"Your inventory: {player1.inventory} Items left in the room: {room[player1.current_room].items}")
+                items_of_room[array_of_command[1]].on_drop()
+                check_if_inventory_exist = True
+                return
+            
+        if not(check_if_inventory_exist):
+            print(f"Sorry your inventory does not have this item. Choose another item from your inventory")
+            ask_to_pick_up_item()
+
 
              
 
