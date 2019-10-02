@@ -51,6 +51,34 @@ os.system( 'clear' )
 
 player = Player( f'{name}' , 'outside' , room['outside'], 3 )
 
+def map( location ):
+    if location == 'outside':
+        print( 'Map:' )
+        print('------------------------------')
+        print('|                            |')
+        print('|                            |')
+        print('|                            |')
+        print('|                            |')
+        print('|  ●                         |')
+        print('|                            |')
+        print('|                            |')
+        print('|                            |')
+        print('------------------------------')
+        print( 'You: ●' )
+        print('')
+
+    if location == 'foyer':
+
+
+    if location == 'overlook':
+
+
+    if location == 'narrow':
+
+
+    if location == 'treasure'
+
+
 def move( direction ):
     os.system( 'clear' )
 
@@ -97,16 +125,40 @@ def move( direction ):
             os.system( 'clear' )
             print( f'{name} fell off a cliff. You lose one life' )
             player.hearts = player.hearts - 1
+
+    elif player.currentroom == 'narrow':
+
+        if direction == 'w':
+
+            player.currentroom = 'foyer'
+            player.roomdescription = room['foyer']
+
+        if direction == 'n':
+
+            player.currentroom = 'treasure'
+            player.roomdescription = room['treasure']
+
+        else:
+
+            print( 'you cant go that way' )
+
+    elif player.currentroom == 'treasure':
+
+        if direction == 's':
+
+            player.currentroom = 'narrow'
+            player.roomdescription = room['narrow']
+
+        else:
+
+            print( 'You cant go that way' )
             
 
     else:
         os.system( 'clear' )
         print( 'try again' )
 
-        
 
-    
-    # if player.currentroom == 'foyer':
 
 
 while ( playing == True ):
@@ -114,40 +166,20 @@ while ( playing == True ):
     if player.hearts == 0:
         break
 
+    print('')
     print( 'Lives: ' + '❤️   '* player.hearts )
     print( f'User: {player.name}' )
+    print('')
     print( f'Current Room: {player.currentroom}' )
     print( f'Description: {player.roomdescription}' )
+    print('')
+    map( player.currentroom )
+
+
 
     direction = input( 'What direction do you want to go? ( n , s , e , w ) ' ).lower()
 
     move( direction )
-
-    # if ( direction == 'n' ):
-    #     os.system( 'clear' )
-
-    #     player.currentroom = room['foyer']
-    #     print( player.currentroom )
-
-
-    # elif ( direction == 's' ):
-    #     os.system( 'clear' )
-
-
-    #     print( 'South' )
-    
-
-    #     # player = Player( f'{name}' , room['outside'].s_to )
-    
-    # elif ( direction == 'e' ):
-    #     os.system( 'clear' )
-
-    #     print( 'East' )
-
-    # elif ( direction == 'w' ):
-    #     os.system( 'clear' )
-
-    #     print( 'West' )
 
 os.system( 'clear' )
 print( 'Game Over' )
