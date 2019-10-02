@@ -49,38 +49,109 @@ name = input( 'What is your name? ' );
 
 os.system( 'clear' )
 
+errorMessage = []
+
 player = Player( f'{name}' , 'outside' , room['outside'], 3 )
 
 def map( location ):
     if location == 'outside':
+
         print( 'Map:' )
-        print('------------------------------')
-        print('|                            |')
-        print('|                            |')
-        print('|                            |')
-        print('|                            |')
-        print('|  ●                         |')
-        print('|                            |')
-        print('|                            |')
-        print('|                            |')
-        print('------------------------------')
+        print(' --------              --------')
+        print('|        |            |        |')
+        print('|        |            |        |')
+        print('|        |            |        |')
+        print('|        |____________|__      |')
+        print('|  ●      ______   ______      |')
+        print('|        |      | |   |        |')
+        print('|        |      | |___|________|')
+        print('|        |      |______        |')
+        print('|        |             |   💎   |')
+        print(' ---------              -------')
         print( 'You: ●' )
         print('')
 
     if location == 'foyer':
 
+        print( 'Map:' )
+        print(' --------              --------')
+        print('|        |            |        |')
+        print('|        |            |        |')
+        print('|        |            |        |')
+        print('|        |____________|__      |')
+        print('|         ______ ● ______      |')
+        print('|        |      | |   |        |')
+        print('|        |      | |___|________|')
+        print('|        |      |______        |')
+        print('|        |             |   💎   |')
+        print(' ---------              -------')
+        print( 'You: ●' )
+        print('')
+
 
     if location == 'overlook':
+
+        print( 'Map:' )
+        print(' --------              --------')
+        print('|        |            |        |')
+        print('|        |            |        |')
+        print('|        |            |        |')
+        print('|        |____________|__      |')
+        print('|         ______   ______●     |')
+        print('|        |      | |   |        |')
+        print('|        |      | |___|________|')
+        print('|        |      |______        |')
+        print('|        |             |   💎   |')
+        print(' ---------              -------')
+        print( 'You: ●' )
+        print('')
 
 
     if location == 'narrow':
 
+        print( 'Map:' )
+        print(' --------              --------')
+        print('|        |            |        |')
+        print('|        |            |        |')
+        print('|        |            |        |')
+        print('|        |____________|__      |')
+        print('|         ______   ______      |')
+        print('|        |      | |   |        |')
+        print('|        |      | |___|________|')
+        print('|        |      |●_____        |')
+        print('|        |             |   💎   |')
+        print(' ---------              -------')
+        print( 'You: ●' )
+        print('')
 
-    if location == 'treasure'
+
+    if location == 'treasure':
+
+        print( 'Map:' )
+        print(' --------              --------')
+        print('|        |            |        |')
+        print('|        |            |        |')
+        print('|        |            |        |')
+        print('|        |____________|__      |')
+        print('|         ______   ______      |')
+        print('|        |      | |   |        |')
+        print('|        |      | |___|________|')
+        print('|        |      |______  ●     |')
+        print('|        |             |   💎   |')
+        print(' ---------              -------')
+        print( 'You: ●' )
+        print('')
 
 
 def move( direction ):
+
     os.system( 'clear' )
+
+    if len( errorMessage ) > 0:
+        for i in errorMessage:
+            errorMessage.pop()
+
+    # os.system( 'clear' )
 
     if player.currentroom == 'outside':
 
@@ -91,7 +162,7 @@ def move( direction ):
 
         else:
 
-            print( 'you cant go that way' )
+            errorMessage.append( 'you cant go that way' )
 
     elif player.currentroom == 'foyer':
 
@@ -112,7 +183,7 @@ def move( direction ):
 
         if direction == 'w':
 
-            print( 'you cant go that way' )
+            errorMessage.append( 'you cant go that way' )
 
     elif player.currentroom == 'overlook':
 
@@ -123,24 +194,29 @@ def move( direction ):
 
         else:
             os.system( 'clear' )
-            print( f'{name} fell off a cliff. You lose one life' )
+            errorMessage.append( f'{name} fell off a cliff. You lose one life' )
             player.hearts = player.hearts - 1
 
     elif player.currentroom == 'narrow':
-
-        if direction == 'w':
-
-            player.currentroom = 'foyer'
-            player.roomdescription = room['foyer']
 
         if direction == 'n':
 
             player.currentroom = 'treasure'
             player.roomdescription = room['treasure']
 
-        else:
+        if direction == 's':
 
-            print( 'you cant go that way' )
+            errorMessage.append( 'you cant go that way' )
+
+        if direction == 'e':
+
+            errorMessage.append( 'you cant go that way' )
+
+        if direction == 'w':
+
+            player.currentroom = 'foyer'
+            player.roomdescription = room['foyer']
+
 
     elif player.currentroom == 'treasure':
 
@@ -151,12 +227,12 @@ def move( direction ):
 
         else:
 
-            print( 'You cant go that way' )
+            errorMessage.append( 'You cant go that way' )
             
 
     else:
         os.system( 'clear' )
-        print( 'try again' )
+        errorMessage.append( 'try again' )
 
 
 
@@ -174,6 +250,12 @@ while ( playing == True ):
     print( f'Description: {player.roomdescription}' )
     print('')
     map( player.currentroom )
+    if len( errorMessage ) > 0:
+        print( errorMessage[0] )
+    else:
+        print( ' ' )
+
+    print( ' ' )
 
 
 
