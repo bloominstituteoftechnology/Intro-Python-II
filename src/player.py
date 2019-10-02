@@ -4,11 +4,11 @@
 from room import Room
 
 class Player:
-    def __init__( self , name , currentroom ):
+    def __init__( self , name , currentroom , roomdescription , hearts ):
         self.name = name
         self.currentroom = currentroom
-
-        print( f'{self.name} is {self.currentroom}' )
+        self.roomdescription = roomdescription
+        self.hearts = hearts
 
             
         

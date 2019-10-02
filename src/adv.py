@@ -49,33 +49,108 @@ name = input( 'What is your name? ' );
 
 os.system( 'clear' )
 
-player = Player( f'{name}' , room['outside'] )
+player = Player( f'{name}' , 'outside' , room['outside'], 3 )
 
-print( player.currentroom )
+def move( direction ):
+    os.system( 'clear' )
+
+    if player.currentroom == 'outside':
+
+        if direction == 'n':
+
+            player.currentroom = 'foyer'
+            player.roomdescription = room['foyer']
+
+        else:
+
+            print( 'you cant go that way' )
+
+    elif player.currentroom == 'foyer':
+
+        if direction == 'n':
+
+            player.currentroom = 'overlook'
+            player.roomdescription = room['overlook']
+
+        if direction == 's':
+
+            player.currentroom = 'outside'
+            player.roomdescription = room['outside']
+
+        if direction == 'e':
+
+            player.currentroom = 'narrow'
+            player.roomdescription = room['narrow']
+
+        if direction == 'w':
+
+            print( 'you cant go that way' )
+
+    elif player.currentroom == 'overlook':
+
+        if direction == 's':
+
+            player.currentroom = 'foyer'
+            player.roomdescription = room['foyer']
+
+        else:
+            os.system( 'clear' )
+            print( f'{name} fell off a cliff. You lose one life' )
+            player.hearts = player.hearts - 1
+            
+
+    else:
+        os.system( 'clear' )
+        print( 'try again' )
+
+        
+
+    
+    # if player.currentroom == 'foyer':
+
 
 while ( playing == True ):
 
+    if player.hearts == 0:
+        break
+
+    print( 'Lives: ' + '❤️   '* player.hearts )
+    print( f'User: {player.name}' )
+    print( f'Current Room: {player.currentroom}' )
+    print( f'Description: {player.roomdescription}' )
+
     direction = input( 'What direction do you want to go? ( n , s , e , w ) ' ).lower()
 
-    if ( direction == 'n' ):
-        os.system( 'clear' )
+    move( direction )
 
-        player = Player( f'{name}' , room[ player.currentroom ].n_to )
+    # if ( direction == 'n' ):
+    #     os.system( 'clear' )
 
-    elif ( direction == 's' ):
-        os.system( 'clear' )
+    #     player.currentroom = room['foyer']
+    #     print( player.currentroom )
 
-        player = Player( f'{name}' , room['outside'].n_to )
+
+    # elif ( direction == 's' ):
+    #     os.system( 'clear' )
+
+
+    #     print( 'South' )
     
-    elif ( direction == 'e' ):
-        os.system( 'clear' )
 
-        print( 'East' )
+    #     # player = Player( f'{name}' , room['outside'].s_to )
+    
+    # elif ( direction == 'e' ):
+    #     os.system( 'clear' )
 
-    elif ( direction == 'w' ):
-        os.system( 'clear' )
+    #     print( 'East' )
 
-        print( 'West' )
+    # elif ( direction == 'w' ):
+    #     os.system( 'clear' )
+
+    #     print( 'West' )
+
+os.system( 'clear' )
+print( 'Game Over' )
 
 
 
