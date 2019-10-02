@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 import sys
+from typing import Tuple, Optional, List, Dict
 # Declare all the rooms
 
 room = {
@@ -34,11 +35,35 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+def change_rooms(player: Player, direction: str):
+    """  """
+    dirs: Tuple[str, str, str, str] = ('n', 's', 'e', 'w')
+
+    dir_to_attr: Dict[str, str] = {dir: dir + '_to' for dir in dirs}
+
+    try:
+        assert direction in dirs
+    except AssertionError:
+        print("please enter a valid cardinal direction")
+    else:
+
+        next_room: Optional[Room] = player.current_room.__dict__[dir_to_attr[direction]]
+
+        if next_room:
+            player.current_room = next_room
+        else:
+            print("The way is blocked! ")
+
+    finally:
+        pass
+
+def message(player: Player) -> str:
+    return f"You are in room {player.current_room.name}. {player.current_room.description}\n"
 #
 # Main
 #
-if __name__=='__main__':
-
+# if __name__=='__main__':
+def main():
     # Make a new player object that is currently in the 'outside' room.
     player = Player("Yoneda", room['outside'])
     # Write a loop that:
@@ -51,3 +76,8 @@ if __name__=='__main__':
     # Print an error message if the movement isn't allowed.
     #
     # If the user enters "q", quit the game.
+    com = input(message(player))
+    while com!='q':
+
+        change_rooms(player, com)
+        com = input(message(player))
