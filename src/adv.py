@@ -113,8 +113,6 @@ playermodel = p_m[0]
 
 os.system( 'clear' )
 
-gameover( playermodel )
-
 def map( location ):
 
     if location == 'outside':
