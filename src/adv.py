@@ -53,18 +53,30 @@ while True:
     print(john.current_room.description)
     myInput = input(f"Which direction do you want to go?: ")
     if (myInput == 'n'):
-        john.current_room = john.current_room.n_to       
+        if hasattr(john.current_room, 'n_to'):
+            john.current_room = john.current_room.n_to
+        else:
+            print("---You can't go there!---")
     elif (myInput == 'e'):
-        john.current_room = john.current_room.e_to
+        if hasattr(john.current_room, 'e_to'):
+            john.current_room = john.current_room.e_to
+        else:
+            print("---You can't go there!---")
     elif (myInput == 's'):
-        john.current_room = john.current_room.s_to
+        if hasattr(john.current_room, 's_to'):
+            john.current_room = john.current_room.s_to
+        else:
+            print("---You can't go there!---")  
     elif (myInput == 'w'):
-        john.current_room = john.current_room.w_to
+        if hasattr(john.current_room, 'w_to'):
+            john.current_room = john.current_room.w_to
+        else:
+            print("---You can't go there!---")
     elif(myInput == 'q'):
-        print(f"Thanks for playing!")
+        print(f"---Thanks for playing!---")
         break
     else:
-        print("You can't go there!")
+        print("---You can't go there!---")
     
 
 #
