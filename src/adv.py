@@ -75,7 +75,9 @@ print( ' 9 ---- 10 ---- 11 ---- 12 ----' )
 print( '  | 🦋  |  | ⛄️  |  | 🏎  |  | 🏍  |' )
 print( '   ----    ----    ----    ----' )
 
-pm = input( 'Choose your Character Number: ' )
+slowprint( 'Choose your Character Number: ' )
+
+pm = input( ' ' )
 
 p_m = []
 
@@ -103,6 +105,8 @@ elif pm == '11':
     p_m.append('🏎')
 elif pm == '12':
     p_m.append('🏍')
+else:
+    p_m.append('●')
 
 playermodel = p_m[0]
 
@@ -210,6 +214,47 @@ def move( direction ):
     if len( errorMessage ) > 0:
         for i in errorMessage:
             errorMessage.pop()
+
+    if direction == 'h':
+
+        os.system( 'clear' )
+        print( 'Help:\n' )
+        print( 'Direction:' )
+        print( '    N - North' )
+        print( '    S - South' )
+        print( '    E - East' )
+        print( '    W - West\n' )
+        print( 'Interaction:' )
+        print( '    Press "L" to look for items in the room.' )
+        print( '    ( If there is an item, confirm to pick it up. )' )
+        print( '    Press "D" to drop an Item.' )
+        print('\n')
+        print( '** Check for error messages **' )
+
+        inp = input( ' Press "Enter" to close menu' )
+        os.system( 'clear' )
+
+    if direction == 'd':
+        if len( player.items ) == 0:
+            errorMessage.append( 'You dont have any items in your inventory to drop.' )
+        else:
+            print( 'What item do you want to drop?' )
+            for i in range( len( player.items ) ):
+                print( f"{i + 1}. {player.items[i]}" )
+
+            print( ' ' )
+            answer = input( 'Number: ' )
+
+            droppingitem = player.items[int(answer) - 1]
+
+            for i in player.items:
+                if ( i == str( droppingitem ) ):
+                    player.items.remove( str( droppingitem ) )
+
+            print( player.currentroom )
+            room[ str(player.currentroom) ].items.append( str( droppingitem ) )
+
+            errorMessage.append( f'You have dropped the {droppingitem}.' )
 
     if player.currentroom == 'outside':
 
@@ -987,19 +1032,35 @@ def move( direction ):
 
         if direction == 'l':
 
+            hasBackpack = []
+
+            if len( player.items ) > 0:
+                for i in player.items:
+                    if ( i == 'Backpack' ):
+
+                        hasBackpack.append( 'boop' )
+
             if len( room['overlook'].items ) > 0:
 
-                os.system( 'clear' )
-                availableitems = room['overlook'].items
-                slowprint( 'Items in room: ' )
-                slowprint( *availableitems )
-                answer = input( '\nPick it up? ( y / n )\n' ).lower()
-                if answer == 'y':
-                    player.items.append( availableitems[0] )
-                    room['overlook'].items.remove( availableitems[0] )
+                if len( hasBackpack ) > 0:
+
                     os.system( 'clear' )
+                    availableitems = room['overlook'].items
+                    slowprint( 'Items in room: ' )
+                    slowprint( *availableitems )
+                    answer = input( '\nPick it up? ( y / n )\n' ).lower()
+
+                    if answer == 'y':
+
+                        player.items.append( availableitems[0] )
+                        room['overlook'].items.remove( availableitems[0] )
+                        os.system( 'clear' )
+
+                    else:
+                        print( 'did not pick it up' )
                 else:
-                    errorMessage.append( 'Did not pick the item up' )
+                    errorMessage.append( 'You have to Have something to store this item in.' )
+
             else:
                 errorMessage.append( 'No Items In This room' )
 
@@ -1869,6 +1930,8 @@ def move( direction ):
 
 while ( playing == True ):
 
+    
+
     if player.hearts == 0:
         break
 
@@ -1891,10 +1954,12 @@ while ( playing == True ):
         print( ' ' )
 
     print( ' ' )
+    print( 'Enter "H" for help' )
+    print( 'Enter "Q" to quit' )
 
 
 
-    direction = input( 'What direction do you want to go? ( n , s , e , w ) ' ).lower()
+    direction = input( 'What direction do you want to go? ' ).lower()
 
     if direction == 'q':
         break
