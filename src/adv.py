@@ -1,6 +1,8 @@
 import os
 from room import Room
 from player import Player
+import sys,time,random
+import time
 
 os.system( 'clear' )
 
@@ -30,6 +32,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+typing_speed = 200
+def slowprint(t):
+    for l in t:
+        sys.stdout.write(l)
+        sys.stdout.flush()
+        time.sleep(random.random()*10.0/typing_speed)
+
 #
 # Main
 #
@@ -45,7 +54,9 @@ room['treasure'].s_to = room['narrow']
 
 playing = True
 
-name = input( 'What is your name? ' );
+slowprint( 'What is your name?' )
+
+name = input(' ');
 
 os.system( 'clear' )
 
@@ -54,6 +65,7 @@ errorMessage = []
 player = Player( f'{name}' , 'outside' , room['outside'], 3 )
 
 def map( location ):
+
     if location == 'outside':
 
         print( 'Map:' )
@@ -62,7 +74,7 @@ def map( location ):
         print('|        |            |        |')
         print('|        |            |        |')
         print('|        |____________|__      |')
-        print('|  ●      ______   ______      |')
+        print('|   ●     ______   ______      |')
         print('|        |      | |   |        |')
         print('|        |      | |___|________|')
         print('|        |      |______        |')
@@ -70,6 +82,8 @@ def map( location ):
         print(' ---------              -------')
         print( 'You: ●' )
         print('')
+
+        
 
     if location == 'foyer':
 
@@ -145,17 +159,275 @@ def map( location ):
 
 def move( direction ):
 
+    o = .1
+
     os.system( 'clear' )
 
     if len( errorMessage ) > 0:
         for i in errorMessage:
             errorMessage.pop()
 
-    # os.system( 'clear' )
-
     if player.currentroom == 'outside':
 
         if direction == 'n':
+
+            print(' \n' * 7 )
+
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|   ●     ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|    ●    ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|     ●   ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|      ●  ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|       ● ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|        ●______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ●_____   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         _●____   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         __●___   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ___●__   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ____●_   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         _____●   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______ ● ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            os.system( 'clear' )
 
             player.currentroom = 'foyer'
             player.roomdescription = room['foyer']
@@ -168,15 +440,461 @@ def move( direction ):
 
         if direction == 'n':
 
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______  ●______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+            
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ●_____      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+            
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   _●____      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   __●___      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ___●__      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ____●_      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   _____●      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
             player.currentroom = 'overlook'
             player.roomdescription = room['overlook']
 
         if direction == 's':
 
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______ ● ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         _____●   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ____●_   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ___●__   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         __●___   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         _●____   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ●_____   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|        ●______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|       ● ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|      ●  ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|     ●   ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|    ●    ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|   ●     ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
             player.currentroom = 'outside'
             player.roomdescription = room['outside']
 
         if direction == 'e':
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      |●|   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      |●|___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
 
             player.currentroom = 'narrow'
             player.roomdescription = room['narrow']
@@ -189,17 +907,423 @@ def move( direction ):
 
         if direction == 's':
 
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   _____●      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ____●_      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ___●__      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   __●___      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   _●____      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ●_____      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______  ●______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
             player.currentroom = 'foyer'
             player.roomdescription = room['foyer']
 
         else:
+
             os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______ ●    |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______  ●   |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______  x   |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______  x   |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
             errorMessage.append( f'{name} fell off a cliff. You lose one life' )
             player.hearts = player.hearts - 1
 
     elif player.currentroom == 'narrow':
 
         if direction == 'n':
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |_●____        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |__●___        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |___●__        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |____●_        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |_____●        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______●       |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______ ●      |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
 
             player.currentroom = 'treasure'
             player.roomdescription = room['treasure']
@@ -214,6 +1338,50 @@ def move( direction ):
 
         if direction == 'w':
 
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      |●|___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      |●|   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
             player.currentroom = 'foyer'
             player.roomdescription = room['foyer']
 
@@ -221,6 +1389,148 @@ def move( direction ):
     elif player.currentroom == 'treasure':
 
         if direction == 's':
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______ ●      |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |______●       |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |_____●        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |____●_        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |___●__        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |__●___        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
+
+            print(' \n' * 7 )
+            print( 'Map:' )
+            print(' --------              --------')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |            |        |')
+            print('|        |____________|__      |')
+            print('|         ______   ______      |')
+            print('|        |      | |   |        |')
+            print('|        |      | |___|________|')
+            print('|        |      |_●____        |')
+            print('|        |             |   💎   |')
+            print(' ---------              -------')
+            print( 'You: ●' )
+            print('')
+
+            time.sleep(o)
+
+            os.system( 'clear' )
 
             player.currentroom = 'narrow'
             player.roomdescription = room['narrow']
@@ -244,6 +1554,7 @@ while ( playing == True ):
 
     print('')
     print( 'Lives: ' + '❤️   '* player.hearts )
+    print('')
     print( f'User: {player.name}' )
     print('')
     print( f'Current Room: {player.currentroom}' )
@@ -261,11 +1572,32 @@ while ( playing == True ):
 
     direction = input( 'What direction do you want to go? ( n , s , e , w ) ' ).lower()
 
-    move( direction )
+    if direction == 'q':
+        break
+
+    else:
+        move( direction )
 
 os.system( 'clear' )
-print( 'Game Over' )
-
+slowprint( '      ____-----------____ \n')
+slowprint( '   _- /#################\ -_ \n')
+slowprint( ' / #####/-           -\##### \ \n')
+slowprint( "|.`\ #                   # /'.|\n" )
+slowprint( '| # |                     | # |\n' )
+slowprint( '|  $########         ######%  |\n' )
+slowprint( '|  `-_####_.         ._####_-`|\n' )
+slowprint( '| ,---====--~      ,--====--, |\n' )
+slowprint( '| ||Game Over|   ||Game Over ||\n' )
+slowprint( "| `-=______=-' /\  `-=_____='|\n" )
+slowprint( " \ `--====- # /  \ #  ====--'/ \n" )
+slowprint( "  | *##  #   -=||=- #  ###* | \n" )
+slowprint( "  |    __    `===='   ___   | \n" )
+slowprint( '   \. \  |#|#|#|#|#|#|  / . / \n' )
+slowprint( "   | * .``=_=_=_=_=_=''. * | \n" )
+slowprint( '    \ # \|#|#|#|#|#|#|/ #  / \n' )
+slowprint( "     \    ` ` `  '' '     / \n" )
+slowprint( '      \ -=____    ____=- / \n' )
+slowprint( '        "====-____-===="  \n\n' )
 
 
     
