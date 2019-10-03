@@ -3,6 +3,7 @@ from room import Room
 from player import Player
 import sys,time,random
 import time
+from gameover import gameover
 
 os.system( 'clear' )
 
@@ -111,6 +112,8 @@ else:
 playermodel = p_m[0]
 
 os.system( 'clear' )
+
+gameover( playermodel )
 
 def map( location ):
 
@@ -1769,7 +1772,43 @@ def move( direction ):
 
     elif player.currentroom == 'treasure':
 
-        if direction == 's':
+        if direction == 'l':
+
+            hasBackpack = []
+
+            if len( player.items ) > 0:
+                for i in player.items:
+                    if ( i == 'Backpack' ):
+
+                        hasBackpack.append( 'boop' )
+
+            if len( room['treasure'].items ) > 0:
+
+                if len( hasBackpack ) > 0:
+
+                    os.system( 'clear' )
+                    availableitems = room['treasure'].items
+                    slowprint( 'Items in room: ' )
+                    slowprint( *availableitems )
+                    answer = input( '\nPick it up? ( y / n )\n' ).lower()
+
+                    if answer == 'y':
+
+                        player.items.append( availableitems[0] )
+                        room['treasure'].items.remove( availableitems[0] )
+                        os.system( 'clear' )
+
+                        gameover( playermodel )
+
+                    else:
+                        print( 'did not pick it up' )
+                else:
+                    errorMessage.append( 'You have to Have something to store this item in.' )
+
+            else:
+                errorMessage.append( 'No Items In This room' )
+
+        elif direction == 's':
 
             os.system( 'clear' )
 
