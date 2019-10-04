@@ -7,11 +7,9 @@ class Room:
         self.description = description
         self.items = []
 
-    def add_items(self, item):
-        self.items.append(item)
-
-    def remove_item(self, item):
-        self.items.remove(item)
+    def add_items(self, *item):
+        for i in item:
+            self.items.append(i)
 
     def __str__(self):
         return f"Name: {self.name}, description: {self.description}, Items: {self.items}"

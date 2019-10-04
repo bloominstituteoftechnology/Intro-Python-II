@@ -7,10 +7,13 @@ class Player:
         self.current_room = current_room
         self.inventory = []
 
-    def pick_up_item(self):
-        removedItem = self.current_room.items.pop()
-        addedItem = self.inventory.append(removedItem)
-        return addedItem
+    def pick_up_item(self, item):
+        self.current_room.items.remove(item)
+        self.inventory.append(item)
+
+    def drop_item(self, item):
+        self.inventory.remove(item)
+        self.current_room.items.append(item)
 
     def __str__(self):
         return f"Name: {self.name}, current room: {self.current_room.items}, player inventory: {self.inventory}"
