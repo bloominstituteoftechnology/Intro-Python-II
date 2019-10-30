@@ -1,3 +1,4 @@
+
 from room import Room
 
 # Declare all the rooms
@@ -49,3 +50,14 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+def game_intro():
+    print("Welcome to Mike's Adventure!")
+
+    while True:
+        direction = input("Direction you would like to travel: ")
+        print(direction)
+
+
+game_intro()
