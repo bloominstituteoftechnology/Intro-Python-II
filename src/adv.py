@@ -1,3 +1,4 @@
+import re
 from room import Room
 from player import Player
 
@@ -49,7 +50,26 @@ print(player.loc)
 while True:
     print('\n')
     act = input('$ do what now: ')
-    
+
+    m = re.match(r"^go\s?([a-z]*)", act)
+    if m != None:
+        dir = m.group(1)
+        if dir not in ['north','east','west','south']:
+            print('\n')
+            print(f'{dir} is not a recognized direction')
+            continue
+        else:
+            move = dir[0] + '_to'
+            x = getattr(player.loc, move)
+            if x != None:
+                player.loc = x
+                print('\n')
+                print(player.loc)
+                continue
+            else:
+                print('\n')
+                print(f'You cannot move {dir} from here')
+                continue
     if act == 'help':
         print('\n')
         print('??? HELP ???')
@@ -64,7 +84,10 @@ while True:
         continue
     if act == 'q':
         print('\n')
-        print('>> Your mind feels electric, and you wonder: Is this real? Am I dreaming this moment?')
+        print(' Your mind feels electric, ')
+        print(' the taste of copper fills your mouth, ')
+        print(' and you wonder: ')
+        print(' "Is this real? Am I dreaming this moment?" ')
         break
     else:
         print('\n')
