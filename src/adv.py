@@ -1,37 +1,83 @@
-from room import Room
-
-# Declare all the rooms
-
-room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
-
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
-
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
-
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
-
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
-}
+from player import Player
+from rooms import rooms
 
 
-# Link rooms together
+class Parser:
+    """Parse user input into game commands."""
+    def __init__(self, commands, player):
+        self.commands = commands
+        self.actions = ['move', 'look', 'get', 'take', 'drop', 'slash', 'use']
+        self.directions = ['n', 's', 'e', 'w']
+        self.current_player = player
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+    def parse(self):
+        # TODO: Make this better.
+        print(f"Okay, I'll try to {self.commands} \n")
+        command = self.commands.split()
+
+        if command[0] in self.actions:
+
+            if command[0] == 'move':
+                if len(command) < 2:
+                    print("I need to know which direction to move. \n")
+                    return
+                if command[1] in self.directions:
+                    return self.current_player.move(command[1])
+                print("I couldn't understand. Which direction? \n")
+
+            if command[1] in self.current_player.items:
+                self.current_player.action(command[0], command[1:])
+        print(f'Unknown action: {command[0]}')
+        print(f'Available actions: {self.actions} \n')
+        self.current_player.print_position()
+
+
+def set_player(name=None):
+    if not name:
+        while True:
+            try:
+                name = input('What is your name? \n:')
+                if not name == "":
+                    break
+                else:
+                    print("I didn't catch that. \n")
+                    continue
+            except ValueError:
+                print("I didn't understand that. \n")
+                continue
+    player = Player(name)
+    return player
+
+
+def get_player_input(player):
+    while True:
+        try:
+            command = input('What should I do? \n:')
+        except ValueError as e:
+            print("I didn't understand that. \n")
+            print(e)
+            continue
+        else:
+            if command.lower().startswith('q'):
+                break
+            if command == "":
+                print("Please, say something... I don't know what to do. \n")
+                continue
+        Parser(command.lower(), player).parse()
+    print('Thanks for playing!')
+
+
+def main(rooms):
+    player = set_player()
+    player.current_room = rooms['rest_stop']
+    rooms['rest_stop'].characters[player.name] = player
+    player.print_position()
+    get_player_input(player)
+
+
+if __name__ == '__main__':
+    main(rooms)
+
 
 #
 # Main
