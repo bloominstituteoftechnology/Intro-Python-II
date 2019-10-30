@@ -1,36 +1,56 @@
 import re
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside': Room("Outer Gate", "North of you, a long, unlit gravel pathway leads to the main house. The gate behind you is locked, and topped with several layers of razor wire. Somebody is serious about home security."),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'gravel': Room("Gravel Pathway", "It is [dark], and lawns seem stretch out to either side. To the north you can see the main house, a large white mansion in the colonial style. You can hear something rustling around quietly."),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'frontLawn': Room("Front Lawn of the Mansion", "North of you, the door to the mansion is wide open.  Something happened here, there are several large holes dug into the lawn. It is [dark]. You can hear something rustling around quietly."),
+    
+    'foyer': Room("Foyer", "Dim light filters in from the south. Dusty passages run east and west, a grand staircase leads north. "),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'ballroom': Room("Grand Ballroom", "You admire the polished hardwood floors. One of the chandeliers has fallen and radiates crystal shrapnel from the far end of the room. The only exit is south."),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+    'library': Room("Library", "You stand among thousands of years of collected thoughts. Bookshelves line every wall, and the floor is barely beneath piles of mangled books. Someone has recently searched this room, violently. The only exit is east."),
+
+    'narrow': Room("Narrow Passage", "The narrow passage bends here from west to north. The smell of lavender permeates the air."),
+
+    'treasure': Room("Treasure Chamber", "You see a large door, engraved with mysterious symbols. It seems to be made from solid gold, and feels warm to the touch. There is a large [keyhole] in the center. The only exit is to the south."),
 }
 
 # Link rooms together
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
+room['outside'].n_to = room['gravel']
+room['gravel'].s_to = room['outside']
+
+room['gravel'].s_to = room['outside']
+room['gravel'].n_to = room['frontLawn']
+
+room['frontLawn'].s_to = room['gravel']
+room['frontLawn'].n_to = room['foyer']
+
+room['foyer'].s_to = room['frontLawn']
+room['foyer'].n_to = room['ballroom']
+room['ballroom'].s_to = room['foyer']
+
+room['foyer'].w_to = room['library']
+room['library'].e_to = room['foyer']
+
 room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
+
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+items = {
+    'key': Item('Large Key', 'This Key is unusally large, and feels warm to the touch.'),
+    'dogtoy': Item('Rubber Duck', 'It is covered in slobber, and somewhat ripped apart.'),
+    'flashlight': Item('MagLite Brand Flashlight', 'A sturdy piece of metal filled with D cell batteries.\nYou could light up a dark room or beat down a door with this american classic.'),
+    'map': Item('Hastily Drawn Map', 'It is drawn on a used napkin, is that red ink, or ketchup?\nThere are a few letters written in pencil, "wnwne"')
+}
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player('steve', room['outside'])
@@ -48,35 +68,30 @@ player = Player('steve', room['outside'])
 print('\n')
 print(player.loc)
 while True:
-    print('\n')
     act = input('$ do what now: ')
 
-    m = re.match(r"^go\s?([a-z]*)", act)
-    if m != None:
-        dir = m.group(1)
+    goDir = re.match(r"^go\s?([a-z]*)", act)
+    if goDir != None:
+        dir = goDir.group(1)
         if dir not in ['north','east','west','south']:
-            print('\n')
-            print(f'{dir} is not a recognized direction')
+            print(f'\t{dir} is not a recognized direction')
             continue
         else:
-            move = dir[0] + '_to'
-            x = getattr(player.loc, move)
-            if x != None:
-                player.loc = x
+            moveTo = dir[0] + '_to'
+            newRoom = getattr(player.loc, moveTo)
+            if newRoom != None:
+                player.loc = newRoom
                 print('\n')
                 print(player.loc)
                 continue
             else:
-                print('\n')
-                print(f'You cannot move {dir} from here')
+                print(f'\tYou cannot go {dir} from here')
                 continue
     if act == 'help':
-        print('\n')
-        print('??? HELP ???')
-        print('go (direction): ex. go north >> move in that direction')
-        print('look: observe your current situation')
-        print('q: quit')
-        print('\n')
+        print('*** list of commands ***\n')
+        print('go [north, east, west, south]\n>> Move in that direction (ex. go north)\n')
+        print('look\n>> Observe your surroundings\n')
+        print('q\n>> Quit\n\f')
         continue
     if act == 'look':
         print('\n')
@@ -90,6 +105,6 @@ while True:
         print(' "Is this real? Am I dreaming this moment?" ')
         break
     else:
-        print('\n')
+        print('\f')
         print(f'{act} command not recognized, type help to see a list of commands')
         continue
