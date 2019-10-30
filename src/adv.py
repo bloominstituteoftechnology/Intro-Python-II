@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,7 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+me = Player("Will", room['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +50,46 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+def handle_input(command, player):
+    end_game = False
+    if command == 'n':
+        if player.current_room.n_to != None:
+            player.current_room = player.current_room.n_to
+            display_room_description(player.current_room)
+        else:
+            print("You cannot go this direction.")
+    elif command == 'e':
+        if player.current_room.e_to != None:
+            player.current_room = player.current_room.e_to
+            display_room_description(player.current_room)
+        else:
+            print("You cannot go this direction.")
+    elif command == 's':
+        if player.current_room.s_to != None:
+            player.current_room = player.current_room.s_to
+            display_room_description(player.current_room)
+        else:
+            print("You cannot go this direction.")
+    elif command == 'w':
+        if player.current_room.w_to != None:
+            player.current_room = player.current_room.w_to
+            display_room_description(player.current_room)
+        else:
+            print("You cannot go this direction.")
+    elif command == 'q':
+        end_game = True
+    else:
+        print('Enter a valid direction.')
+    return end_game
+
+def display_room_description(room):
+    print(f'You are standing {room.name}')
+    print(room.description)
+end_game = False
+
+display_room_description(me.current_room)
+
+while end_game == False:
+    end_game = handle_input(str(input()), me)
+
+print('Thank you for playing.')
