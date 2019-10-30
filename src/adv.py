@@ -1,7 +1,7 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -21,9 +21,7 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -33,11 +31,8 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
-
 # Make a new player object that is currently in the 'outside' room.
+player = Player('steve', room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +44,29 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+print('\n')
+print(player.loc)
+while True:
+    print('\n')
+    act = input('$ do what now: ')
+    
+    if act == 'help':
+        print('\n')
+        print('??? HELP ???')
+        print('go (direction): ex. go north >> move in that direction')
+        print('look: observe your current situation')
+        print('q: quit')
+        print('\n')
+        continue
+    if act == 'look':
+        print('\n')
+        print(player.loc)
+        continue
+    if act == 'q':
+        print('\n')
+        print('>> Your mind feels electric, and you wonder: Is this real? Am I dreaming this moment?')
+        break
+    else:
+        print('\n')
+        print(f'{act} command not recognized, type help to see a list of commands')
+        continue
