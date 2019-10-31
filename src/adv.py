@@ -43,10 +43,11 @@ class Game:
         self.player = None
         self.parser = Parser()
 
-    def set_player(self, name: str = None) -> None:
+    def set_player(self, name: str = None) -> Player:
         """Validate user input and set instantiate Player with input.
 
-        :var name: name of Player used for setting up players manually"""
+        :var name: name of Player used for setting up players manually
+        """
         if not name:
             while True:
                 try:
@@ -60,7 +61,9 @@ class Game:
                     print("I didn't understand that. \n")
                     continue
         player = Player(name)
-        self.player = player
+        if not self.player:
+            self.player = player
+        return player
 
     def get_player_input(self) -> None:
         """Validate user input and feed to parser."""
