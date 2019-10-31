@@ -1,3 +1,6 @@
+from player import Player
+
+
 class Item(object):
     """A game item.
 
@@ -13,7 +16,7 @@ class Item(object):
         self.is_light = False
         self.weight = weight
         self.active = False
-        # TODO: Add 'seen' functionality
+        self.seen = False
 
     def __str__(self) -> str:
         return f"{self.name}, {self.description}"
@@ -21,7 +24,7 @@ class Item(object):
     def __repr__(self) -> str:
         return self.description
 
-    def on_get(self) -> None:
+    def on_get(self, *args) -> None:
         """Print statement confirming item added to inventory."""
         print(f"I have added the {self.name} to the inventory. \n")
 
@@ -44,25 +47,58 @@ class Container(Item):
         self.items_ = {}
 
 
-class Weapon(Item):
+class SlingShot(Item):
     """An attack Item.
 
     Inherits from Item
 
     """
 
-    def __init__(self, name, description, weight, attack) -> None:
+    def __init__(self, name: str, description: str, weight: int, owner: Player = None) -> None:
         super().__init__(name, description, weight)
-        self.attack = attack
+        self.owner = owner
+
+    def shoot(self, character: Player) -> None:
+        """Increase character attackpts to reflect use of sling shot.
+
+        calls owner._attack() then decreases attackpts to baseline.
+        :var character: The character to attack
+        """
+        self.owner.attackpts += 30
+        self.owner._attack(character)
+        self.owner.attackpts -= 30
+
+    def on_get(self, player: Player = None) -> None:
+        """Update self to have an owner and the owner to have a sling shot."""
+        self.owner = player
+        self.owner.has_slingshot = True
+        super().on_get()
+
+    def blank(self):
+        """Nothing to shoot at or no ammo."""
+        if not self.owner.has_pebbles:
+            print("You need some ammo first.")
+        else:
+            print("There's nothing to shoot. Better conserve ammo.")
 
 
-class Shield(Item):
-    """A shielding Item.
+class Pebbles(Item):
+    """A rock Item.
 
     Inherits from Item
 
     """
 
-    def __init__(self, name, description, weight, shield) -> None:
+    def __init__(self, name: str, description: str, weight: int, owner: Player = None) -> None:
         super().__init__(name, description, weight)
-        self.shield = shield
+        self.owner = owner
+
+    def on_get(self, player: Player = None) -> None:
+        """Update self to have an owner and owner to have pebbles."""
+        self.owner = player
+        self.owner.has_pebbles = True
+        super().on_get()
+
+    def rock(self):
+        print("I'm just a rock.")
+

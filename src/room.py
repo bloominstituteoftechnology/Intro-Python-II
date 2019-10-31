@@ -1,5 +1,6 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
+from collections import  deque
 
 
 class Room(object):
@@ -20,3 +21,25 @@ class Room(object):
         self.to_s = None
         self.to_w = None
         self.to_e = None
+
+
+class Arena(Room):
+    """A room to battle in.
+
+    Inherits from Room
+
+    """
+
+    def battle(self):
+        """A fight to the death!"""
+        battle_q = deque()
+        for player in self.characters:
+            battle_q.append(self.characters[player])
+        while not any(player.hp <= 0 for player in battle_q):
+            attacker = battle_q.popleft()
+            attackee = battle_q.popleft()
+
+            attacker.attack(attackee)
+
+            battle_q.append(attackee)
+            battle_q.append(attacker)

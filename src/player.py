@@ -1,6 +1,8 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 import random
+import sys
+from room import Arena
 
 
 class Player(object):
@@ -8,20 +10,21 @@ class Player(object):
 
     :var name: str - Player name
     :var hp: int - default 100
-    :var attack: int - default 5
+    :var attackpts: int - default 5
     :var weight_limit: int - default 50
 
     """
 
-    def __init__(self, name: str, hp: int = 100, attack: int = 5, weight_limit: int = 50) -> None:
+    def __init__(self, name: str, hp: int = 100, attackpts: int = 5, weight_limit: int = 50) -> None:
         self.name = name
         self.items_ = {}
         self.current_room = None
         self.hp = hp
-        self.attack = attack
-        self.shield = 0
+        self.attackpts = attackpts
         self.weight = 0
         self.weight_limit = weight_limit
+        self.has_slingshot = False
+        self.has_pebbles = False
 
     def __repr__(self) -> str:
         return f"Player({repr(self.name)})"
@@ -47,6 +50,8 @@ class Player(object):
                 self.current_room = valid_move
                 self.current_room.characters[self.name] = self
                 self.print_position()
+                if isinstance(valid_move, Arena):
+                    valid_move.battle()
             else:
                 ways = {'n': 'North', 's': 'South', 'w': 'West', 'e': 'East'}
                 print(f"There is no path to the {ways[direction]}. \n")
@@ -56,21 +61,29 @@ class Player(object):
         """Print the current room and its description."""
         print(f"{self.current_room.name} \n{self.current_room.description} \n")
 
+    def add_slingshot(self):
+        self.has_slingshot = True
+
+    def add_pebbles(self):
+        self.has_pebbles = True
+
     def look(self, *args) -> None:
         """Look in current room for available items.
 
+        Mark items seen as seen.
         :var args: unused
         """
         if self.current_room.light or any(item.is_light and item.active for item in self.items_.values()):
             if self.current_room.items_:
                 print("I can see:")
                 for val in self.current_room.items_.values():
+                    val.seen = True
                     print(val)
             else:
                 print(f"I don't see anything notable here.")
         else:
             print("It's too dark in here to see anything.")
-        print()
+        print()  # Just a blank line for display purposes.
 
     def get(self, *args: str) -> None:
         """Collect item named in args.
@@ -81,38 +94,20 @@ class Player(object):
             print("Please tell me what you want to get. \n")
             return
         item_name = args[0][0]
-        if item_name in self.current_room.items_:
+        if item_name in self.current_room.items_ and self.current_room.items_[item_name].seen:
             item = self.current_room.items_[item_name]
             if self.weight + item.weight <= self.weight_limit:
                 self.items_[item.name] = item
                 self.weight += item.weight
                 self.current_room.items_.pop(item.name, None)
-                item.on_get()
+                item.on_get(self)
             else:
                 print(f"I'm carrying too much weight to add {item.name}")
                 print(f"Current inventory weight: {self.weight}")
                 print(f"Item weight: {item.weight}")
                 print(f"Current weight limit: {self.weight_limit} \n")
         else:
-            print(f"I don't see {'an' if item_name.startswith(('a', 'e', 'i', 'o', 'u')) else 'a'} {item_name}")
-
-    def take(self, item: str, character: str) -> None:
-        """Take item from another Player.
-
-        :var item: str - item to be taken
-        :var character: Player to take from
-        """
-        # if self.weight + item.weight <= self.weight_limit and self.hp > character.hp:
-        #     self.items_[item.name] = item
-        #     self.weight += item.weight
-        #     character.items.pop(item.name, None)
-        #     print(f"I have taken the {item.name} and added it to the inventory. \n")
-        # else:
-        #     print("I'm carrying too much weight to add this item")
-        #     print(f"Current inventory weight: {self.weight}")
-        #     print(f"Item weight: {item.weight}")
-        #     print(f"Current weight limit: {self.weight_limit} \n")
-        pass
+            print(f"I haven't seen {'an' if item_name.startswith(('a', 'e', 'i', 'o', 'u')) else 'a'} {item_name}")
 
     def drop(self, *args: str) -> None:
         """Drop item in current room.
@@ -133,14 +128,29 @@ class Player(object):
         else:
             print(f"I don't have {'an' if item_name.startswith(('a', 'e', 'i', 'o', 'u')) else 'a'} {item_name} \n")
 
-    # def slash(self, character):
-    #     if random.randint(0, 10) & 1:
-    #         character.hp -= (self.attack - character.shield)
-    #         if character.hp <= 0:
-    #             character.die()
-    #         print(f"You slash {character.name}! Their health is now {character.hp} \n")
-    #     else:
-    #         print(f"You missed! \n")
+    def attack(self, character: 'Player') -> None:
+        """Helper function to call _attack.
+
+        :var character: The character to attack.
+        """
+        if self.has_pebbles and self.has_slingshot:
+            self.items_['sling_shot'].shoot(character)
+        else:
+            self._attack(character)
+
+    def _attack(self, character: 'Player') -> None:
+        """Attack another character.
+
+        :var character: The character to attack.
+        """
+        if random.randint(0, 10) & 1:
+            character.hp -= self.attackpts
+            if character.hp <= 0:
+                character.die()
+            print(f"{self.name} {'shoots' if self.has_slingshot and self.has_pebbles else 'hits'} "
+                  f"{character.name}! Their health is now {character.hp} \n")
+        else:
+            print(f"{self.name} missed! \n")
 
     def use(self, *args: str) -> None:
         """Use an item.
@@ -157,6 +167,10 @@ class Player(object):
             self.items_[item_name].active = True
         if 'key' in item_name:
             self._unlock_box(item_name)
+        if 'sling' in item_name:
+            self.items_[item_name].blank()
+        if 'pebble' in item_name:
+            self.items_[item_name].rock()
 
     def _unlock_box(self, key_name: str) -> None:
         """Unlock a box in the room if Player has the correct color key.
@@ -175,10 +189,17 @@ class Player(object):
             print(f"I don't see anything that this key fits. \n")
 
     def die(self) -> None:
-        """Player has died, drop all items."""
-        for item in self.items_:
+        """Player has died, drop all items.
+
+        If the user has died, exit the game.
+        #TODO: make game start over.
+        """
+        for item in self.items_.values():
             self.current_room.items_[item.name] = item
-        print(f"{self.name} has died! Now littered about the room are {self.items_.keys()} \n")
+        if not self.name == 'The Bear':
+            print(f"{self.name} has died! Now littered about the area "
+                  f"are {[item.name for item in self.items_.values()]} \n")
+            sys.exit()
 
     def inventory(self, *args) -> None:
         """Print out all items in Player items_.

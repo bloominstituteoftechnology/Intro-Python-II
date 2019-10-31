@@ -11,10 +11,11 @@ class Parser:
     """
 
     def __init__(self) -> None:
-        self.actions = ['move', 'look', 'get', 'drop', 'use', 'inventory']
+        self.actions = ['move', 'look', 'get', 'drop', 'use', 'inventory', 'quit']
         self.directions = ['n', 's', 'e', 'w']
 
     def print_actions(self) -> None:
+        """Print actions available to user."""
         print(f'Available actions: {self.actions} \n')
 
     def parse(self, player: Player, commands: str) -> None:
@@ -43,7 +44,7 @@ class Game:
         self.player = None
         self.parser = Parser()
 
-    def set_player(self, name: str = None) -> Player:
+    def set_player(self, name: str = None, **kwargs) -> Player:
         """Validate user input and set instantiate Player with input.
 
         :var name: name of Player used for setting up players manually
@@ -60,7 +61,7 @@ class Game:
                 except ValueError:
                     print("I didn't understand that. \n")
                     continue
-        player = Player(name)
+        player = Player(name, **kwargs)
         if not self.player:
             self.player = player
         return player
@@ -85,12 +86,21 @@ class Game:
         print('Thanks for playing!')
 
 
-def main(rooms):
-    """Instantiates game, sets up current room, starts game."""
+def main(rooms: dict) -> None:
+    """Instantiates game, sets up current room, starts game.
+
+    :var rooms: dict mapping of game rooms
+    """
     game = Game()
+
     game.set_player()
     game.player.current_room = rooms['rest_stop']
     rooms['rest_stop'].characters[game.player.name] = game.player
+
+    bear = game.set_player('The Bear', attackpts=20)
+    bear.current_room = rooms['trail_east']
+    rooms['trail_east'].characters[bear.name] = bear
+
     game.player.print_position()
     game.parser.print_actions()
     game.get_player_input()
