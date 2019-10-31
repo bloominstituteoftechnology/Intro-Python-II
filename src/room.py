@@ -2,13 +2,20 @@
 # description attributes.
 
 class Room(object):
-    def __init__(self, name, color):
+    def __init__(self, name, description, items):
         self.name = name
-        self.color = color
+        self.description = description
+        self.items = items
+
+        self.n_to = None
+        self.s_to = None
+        self.w_to = None
+        self.e_to = None
         
+    def __str__(self):
+        f'The room is {self.room}, {self.description}'
 
     def __repr__(self):
-        pass
+        return f'Room: {repr(self.name)}'
 
-    def __str__(self):
-        pass
+    
