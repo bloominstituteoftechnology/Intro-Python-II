@@ -1,4 +1,5 @@
 from textwrap import wrap
+from color import Color
 
 class Room:
     def __init__(self, name, desc, holding=[]):
@@ -10,6 +11,14 @@ class Room:
         self.e_to = None
         self.s_to = None
         self.w_to = None
-    
+
+    def printItems(self):
+        items = [i.name for i in self.holding]
+        itemString = ', '.join(items)
+        if len(items) > 0:
+            itemString = f'You can see {Color.RED}{items}{Color.END}'
+        return itemString
+
     def __str__(self):
-        return f">> {self.name} <<\n\f{self.desc}\n"
+        itemString = self.printItems()
+        return f"{Color.PURPLE}>> {self.name} <<{Color.END}\n\f{self.desc}\n"+f"\f{itemString}"
