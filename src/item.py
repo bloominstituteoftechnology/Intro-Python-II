@@ -7,6 +7,7 @@ class Item:
         self.name = name
         self.desc = '\n'.join(desc)
         self.useRooms = useRooms
+        self.seen = False
 
     def useItem(self, room):
         if room not in self.useRooms:

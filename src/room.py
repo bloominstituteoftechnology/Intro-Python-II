@@ -7,12 +7,15 @@ class Room:
         self.name = name
         self.desc = '\n'.join(desc)
         self.holding = holding
+        self.seen = False
         self.n_to = None
         self.e_to = None
         self.s_to = None
         self.w_to = None
+        self.u_to = None
+        self.d_to = None
 
-    def printItems(self):
+    def roomItems(self):
         items = [i.name for i in self.holding]
         itemString = ', '.join(items)
         if len(items) > 0:
@@ -20,5 +23,4 @@ class Room:
         return itemString
 
     def __str__(self):
-        itemString = self.printItems()
-        return f"{Color.PURPLE}>> {self.name} <<{Color.END}\n\f{self.desc}\n"+f"\f{itemString}"
+        return f'{self.desc}\n'

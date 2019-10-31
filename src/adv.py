@@ -7,10 +7,12 @@ from player import Player
 from room import Room
 from textwrap import wrap
 
+
+
 items = {
     'key': Item('Key', 'This Key is unusally large, and feels warm to the touch.'),
 
-    'dogtoy': Item('Rubber Duck', 'It is covered in slobber, and somewhat ripped apart.'),
+    'dogtoy': Item('Rubber Duck', 'It is bright yellow, dripping with dog slobber, and somewhat ripped apart.'),
 
     'flashlight': Item('Flashlight', 'MagLite Brand: A sturdy piece of metal filled with D cell batteries. You could light up a dark room or beat down a door with this american classic.', useRooms={'Gravel Pathway': 'You see a large dog, he starts to growl so you shine the flashlight directly into his eyes. The dog seems confused and runs away.', 'Front Lawn of the Mansion': f'You shine the light around the muddy holes in the lawn. A flash of yellow catches your eye. You {Color.PURPLE}look{Color.RED} again.{Color.END}'}),
 
@@ -18,21 +20,21 @@ items = {
 }
 
 room = {
-    'outside': Room("Outer Gate", f"To the {Color.GREEN}north{Color.END} lies a long, unlit, gravel pathway that leads to the main house. The iron gate behind you is locked, and topped with several layers of razor wire. Somebody is serious about home security.", holding=[items['key'],items['flashlight']]),
+    'outside': Room("Outer Gate", f"To the {Color.PURPLE}north{Color.END} lies a long, unlit, gravel pathway lined with trees. The iron gate to the south is locked, and topped with several layers of razor wire. Somebody is serious about home security.", holding=[items['key'],items['flashlight']]),
 
-    'gravel': Room("Gravel Pathway", f"It is [{Color.RED}dark{Color.END}], and lawns seem stretch out to either side. To the {Color.GREEN}north{Color.END} you can see the main house, a large white mansion in the colonial style. You can hear something rustling around quietly."),
+    'gravel': Room("Gravel Pathway", f"It is [{Color.RED}dark{Color.END}]. Lawns stretch out to either side, but you cannot see much of anything past the large oak trees lining the pathway. To the {Color.PURPLE}north{Color.END} you can see the shape of a building. As you walk further down the noisy gravel path the shape comes into focus, a decrepit looking white mansion in the colonial style. You can hear something rustling around nearby."),
 
-    'frontLawn': Room("Front Lawn of the Mansion", f"{Color.GREEN}North{Color.END} of you, the door to the mansion is wide open.  Something happened here, there are several large holes dug into the lawn. It is [{Color.RED}dark{Color.END}]. You can hear something rustling around quietly."),
+    'frontLawn': Room("Front Lawn of the Mansion", f"{Color.PURPLE}North{Color.END} of you, the door to the mansion is wide open.  What happened here? It is [{Color.RED}dark{Color.END}], but you can see several large holes dug into the lawn. You can hear something rustling around nearby."),
     
-    'foyer': Room("Foyer", f"Dim light filters in from the south. Dusty passages run {Color.GREEN}east{Color.END} and {Color.GREEN}west{Color.END}, a grand staircase leads {Color.GREEN}north{Color.END}. "),
+    'foyer': Room("Foyer", f"This room is mostly empty space surrounding a grand staircase, a few steps are missing but you could climb {Color.PURPLE}up{Color.END}. Dusty passages run {Color.PURPLE}east{Color.END} and {Color.PURPLE}west{Color.END}. "),
 
-    'ballroom': Room("Grand Ballroom", f"You admire the polished hardwood floors. One of the chandeliers has fallen and radiates crystal shrapnel from the far end of the room. The only exit is {Color.GREEN}south{Color.END}."),
+    'ballroom': Room("Grand Ballroom", f"You admire the polished hardwood floors. One of the chandeliers has fallen and radiates crystal shrapnel from the far end of the room. The only exit is {Color.PURPLE}down{Color.END}."),
 
-    'library': Room("Library", f"You stand among thousands of years of collected thoughts. Bookshelves line every wall, and the carpeted floor is barely visible beneath piles of mangled books. Someone has recently searched this room. The only exit is {Color.GREEN}east{Color.END}."),
+    'library': Room("Library", f"You stand among thousands of years of collected thoughts. Bookshelves line every wall, and the carpeted floor is barely visible beneath piles of mangled books. Someone has recently searched this room. The only exit is {Color.PURPLE}east{Color.END}."),
 
-    'narrow': Room("Narrow Passage", f"The narrow passage bends here from {Color.GREEN}west{Color.END} to {Color.GREEN}north{Color.END}. The smell of lavender permeates the air."),
+    'narrow': Room("Narrow Passage", f"The narrow passage bends here from {Color.PURPLE}west{Color.END} to {Color.PURPLE}north{Color.END}. The smell of lavender permeates the air."),
 
-    'treasure': Room("Treasure Chamber", f"You see a large door, engraved with mysterious symbols. It seems to be made from solid gold, and feels warm to the touch. There is a large [{Color.RED}keyhole{Color.END}] in the center. The only exit is to the {Color.GREEN}south{Color.END}."),
+    'treasure': Room("Treasure Chamber", f"You see a large door, engraved with mysterious symbols. It seems to be made from solid gold, and feels warm to the touch. There is a large [{Color.RED}keyhole{Color.END}] in the center. The only exit is to the {Color.PURPLE}south{Color.END}."),
 }
 
 # Link rooms together
@@ -46,8 +48,8 @@ room['frontLawn'].s_to = room['gravel']
 room['frontLawn'].n_to = room['foyer']
 
 room['foyer'].s_to = room['frontLawn']
-room['foyer'].n_to = room['ballroom']
-room['ballroom'].s_to = room['foyer']
+room['foyer'].u_to = room['ballroom']
+room['ballroom'].d_to = room['foyer']
 
 room['foyer'].w_to = room['library']
 room['library'].e_to = room['foyer']
@@ -60,11 +62,12 @@ room['treasure'].s_to = room['narrow']
 
 # GAMEPLAY & DISPLAY FUNCTIONS
 def showHelp():
-    print(f'{Color.RED}go{Color.END} [{Color.PURPLE}north, east, west, south{Color.END}] $ Move in that direction (ex. go north)')
-    print(f'{Color.RED}get{Color.END} [{Color.PURPLE}item{Color.END}] $ Pick up an item you see (ex. get Rubber Duck)')
-    print(f'{Color.RED}use{Color.END} [{Color.PURPLE}item{Color.END}] $ Use an item you are holding (ex. use Flashlight)')
-    print(f'{Color.RED}look{Color.END} $ Observe your surroundings')
-    print(f'{Color.RED}q{Color.END} $ Quit\n')
+    print(f'{Color.RED}go{Color.END} [{Color.PURPLE}north, east, west, south{Color.END}] {Color.GREEN}$ Move in that direction (ex. go north){Color.END}')
+    print(f'{Color.RED}get{Color.END} [{Color.RED}item{Color.END}] {Color.GREEN}$ Pick up an item you see (ex. get Rubber Duck){Color.END}')
+    print(f'{Color.RED}drop{Color.END} [{Color.RED}item{Color.END}] {Color.GREEN}$ Drop an item you are holding (ex. drop Flashlight){Color.END}')
+    print(f'{Color.RED}use{Color.END} [{Color.RED}item{Color.END}] {Color.GREEN}$ Use an item you are holding (ex. use Flashlight){Color.END}')
+    print(f'{Color.RED}look{Color.END} {Color.GREEN}$ Observe your surroundings{Color.END}')
+    print(f'{Color.RED}q{Color.END} {Color.GREEN}$ Quit{Color.END}')
     
 def crawlText(text, delay=0.01):
     text = wrap(text, 50)
@@ -76,84 +79,120 @@ def crawlText(text, delay=0.01):
     print('\n')
 
 def quitGame():
-    quitMsg = f'{Color.RED}Your mind feels electric, the taste of copper fills your mouth, and you wonder:{Color.PURPLE} "Is this real? Am I dreaming this moment?"\n\f\t\t{Color.END}'
-    crawlText(quitMsg)
-    sys.exit('x')
+    print('\n')
+    crawlText(f'{Color.RED}Your mind feels electric, the taste of copper fills your mouth, and you wonder:')
+    crawlText(f'{Color.PURPLE} "Is this real? Am I dreaming this moment?"\n\f\t\t{Color.END}')
+    sys.exit()
 
 def handleGoDir(dir):
-    if dir not in ['north','east','west','south']:
-        print(f'\t{dir} is not a recognized direction')
+    if dir not in ['north','east','west','south','up','down']:
+        print(f'{Color.PURPLE}{dir}{Color.RED} is not an option{Color.END}')
     else:
         moveTo = dir[0] + '_to'
         newRoom = getattr(player.loc, moveTo)
         if newRoom != None:
             player.loc = newRoom
-            print('\n')
-            print(player.loc)
+            if player.loc.seen == False: 
+                player.loc.seen = True
+                print('\n')
+                crawlText(f'{Color.PURPLE}{player.loc.name}{Color.END}',0.03)
+                crawlText(player.loc.desc,0.02)
+            else:
+                print('\n')
+                crawlText(f'{Color.PURPLE}You have been here before{Color.END}',0.03)
+                print(player.loc)
         else:
-            print(f'\t{Color.RED}You cannot go {dir} from here{Color.END}')
+            print(f'{Color.RED}You cannot go {Color.PURPLE}{dir}{Color.RED} from here{Color.END}')
 
-def handleGetItem(getItem):
-    index = -1
+def handleGetItem(thisItem):
+    index = None
     for i, item in enumerate(player.loc.holding):
-        if item.name == getItem:
+        if item.name.lower() == thisItem.lower():
             index = i
-    if index != -1:
+    if index != None:
         thisItem = player.loc.holding.pop(index)
         player.holding.append(thisItem)
-        print(f'You pick up the {thisItem}')
+        crawlText(f'You pick up the {Color.RED}{thisItem.name}{Color.END}')
+        if thisItem.seen == False:
+            thisItem.seen = True
+            crawlText(f'{Color.PURPLE}{thisItem.desc}{Color.END}', 0.03)
+        else:
+            print(f'{Color.PURPLE}{thisItem.desc}{Color.END}')
+        
         if thisItem.name == 'Rubber Duck':
-            youDied = f'{Color.RED}You hear a faint growl growing louder, as you turn you can see death in the eye of the beast. A sharp bark is the last thing you hear before you fall to the ground, the weight of a giant dog pressing you into the mud. The pain is terrible, and you faintly remember two words from a past life: King Corso.{Color.END}'
-            crawlText(youDied, 0.03)
-            print('\n')
+            crawlText(f'{Color.RED}You hear a faint growl growing louder. As you turn to {Color.PURPLE}look{Color.RED}, the growl explodes into a bark. You can see death in the eye of the beast. You hear nothing as you fall to the ground, the weight of a giant dog pressing you into the mud. The pain is terrible, and you faintly remember two words from a past life: {Color.PURPLE}King Corso.{Color.END}', 0.03)
             quitGame()
     else:
-        print(f'\t{Color.RED}{getItem} not found (Case Sensitive){Color.END}')
+        print(f'You cannot see a {Color.RED}{thisItem}{Color.END}')
+
+def handleDropItem(thisItem):
+    index = None
+    for i, item in enumerate(player.holding):
+        if item.name.lower() == thisItem.lower():
+            index = i
+    if index != None:
+        thisItem = player.holding.pop(index)
+        player.loc.holding.append(thisItem)
+        crawlText(f'You dropped the {Color.RED}{thisItem.name}{Color.END}')
+    else:
+        print(f'You cannot see a {Color.RED}{thisItem}{Color.END}')
 
 def handleUseItem(thisItem):
-    index = -1
+    index = None
     for i, item in enumerate(player.holding):
-        if item.name == thisItem:
+        if item.name.lower() == thisItem.lower():
             index = i
-    if index != -1:
+    if index != None:
         thisItem = player.holding[index]
         thisHappened = thisItem.useItem(room=player.loc.name)
-        thisHappened = f'{Color.RED}{thisHappened}{Color.END}'
-        crawlText(thisHappened)
+        print('\n')
+        crawlText(f'{Color.RED}{thisHappened}{Color.END}')
         if thisItem.name == 'Flashlight' and player.loc.name == 'Front Lawn of the Mansion':
             player.loc.holding = [items['dogtoy']]
-            youSee = player.loc.printItems()
-            print(f'{youSee}')
     else:
-        print(f'\t{thisItem} {Color.RED}not found (Case Sensitive){Color.END}')
+        print(f'You are not holding {Color.RED}{thisItem}{Color.END}')
 
-# DRAMATIC INTRO
-print('\n')
-intro = f'You awaken suddenly, your head is aching and your clothes are stained with mud. You {Color.RED}look{Color.END} around to see a locked iron gate behind you, and a gravel pathway before you. How did you get here? Why does this all seem so familiar?'
-crawlText(intro, delay=0.05)
+def startNewGame(name):
+    # DRAMATIC INTRO
+    # INIT PLAYER and GET flashlight
+    print('\n')
+    intro = f'You awaken suddenly. Your body is aching and your clothes are stained with mud. You {Color.PURPLE}look{Color.END} around to see a locked iron gate behind you, and a gravel pathway before you. How did you get here? You touch your head and feel a lump, it is wet, and sticky. You can see a {Color.RED}Flashlight{Color.END} on the gravel nearby. It\'s YOUR flashlight.'
+    crawlText(intro, delay=0.03)
+    handleGetItem('flashlight')
+    crawlText(f'{Color.PURPLE}It is wet with blood. Did someone knock you out with your own flashlight?{Color.END}', 0.02)
+    crawlText(f'{Color.PURPLE}You can see your name engraved on the handle: {Color.RED}{player.name.upper()}{Color.END}', 0.02)
+    crawlText(player.loc.desc, 0.02)
 
-# INIT PLAYER and PRINT CURRENT LOCATION
-# player = Player('steve', room['frontLawn'], holding=[items['flashlight']])
-player = Player('steve', room['outside'])
-print('\n')
-print(player.loc)
-
-# START GAME LOOP
+# START GAME
+player = Player('Ricky', room['outside'])
+startNewGame(player.name)
+# GAMEPLAY LOOP
 while True:
+    player.loc.seen = True
+    location = player.loc.name
+    print(f'You are at the {Color.PURPLE}{location}{Color.END}')
+    youSee = player.loc.roomItems()
+    print(youSee)
     myItems = player.myItems()
     print(myItems)
-    act = input('$ do what now: ')
+    act = input(f'{Color.GREEN}$ action: {Color.END}')
 
-    useItem = re.match(r"^use\s([A-Z][a-z]*\s?[A-Z]*[a-z]*)", act)
+    DropItem = re.match(r"^drop\s([a-z]*\s?[a-z]*)", act, flags=re.I)
+    if DropItem != None:
+        thisItem = DropItem.group(1)
+        handleDropItem(thisItem)
+        continue
+
+    useItem = re.match(r"^use\s([a-z]*\s?[a-z]*)", act, flags=re.I)
     if useItem != None:
         thisItem = useItem.group(1)
         handleUseItem(thisItem)
         continue
 
-    getItem = re.match(r"^get\s([A-Z][a-z]*\s?[A-Z]*[a-z]*)", act)
+    getItem = re.match(r"^get\s([a-z]*\s?[a-z]*)", act, flags=re.I)
     if getItem != None:
-        getItem = getItem.group(1)
-        handleGetItem(getItem)
+        thisItem = getItem.group(1)
+        handleGetItem(thisItem)
         continue
 
     goDir = re.match(r"^go\s([a-z]*)", act, flags=re.I)
@@ -174,4 +213,5 @@ while True:
     else:
         print('\n')
         print(f'{act} {Color.RED}command not recognized{Color.END}\ntype {Color.PURPLE}help{Color.END} to see a list of commands')
+        print('\n')
         continue
