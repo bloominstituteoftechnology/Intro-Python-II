@@ -69,8 +69,8 @@ class Items:
         self.can_hold = can_hold
         # self.items = ['Ship', 'Key', 'Chest', 'Hammer', 'Food']
 
-    def list_items(self):
-        return self.items
+    # def list_items(self):
+    #     return self.items
 
 class Weapons(Items):
         def __init__(self, name, power, can_hold, energy=3):
@@ -108,13 +108,13 @@ class Bag:
 
 i = Islands()
 
-b = Bag()
-it = Items()
+# b = Bag()
+# it = Items()
 
-b.add_item('Ship')
-b.add_item('x')
+# b.add_item('Ship')
+# b.add_item('x')
 
 i.move_to_island()
 
 print(i)
-print(b)
+# print(b)
