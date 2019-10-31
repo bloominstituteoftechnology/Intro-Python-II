@@ -1,13 +1,11 @@
 from textwrap import wrap
 from color import Color
+from gameObj import GameObj
 
-class Item:
+class Item(GameObj):
     def __init__(self, name, desc, useRooms={}):
-        desc = wrap(desc, 50)
-        self.name = name
-        self.desc = '\n'.join(desc)
+        super().__init__(name, desc)
         self.useRooms = useRooms
-        self.seen = False
 
     def useItem(self, room):
         if room not in self.useRooms:

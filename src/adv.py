@@ -171,9 +171,9 @@ while True:
     player.loc.seen = True
     location = player.loc.name
     print(f'You are at the {Color.PURPLE}{location}{Color.END}')
-    youSee = player.loc.roomItems()
+    youSee = player.loc.showItems()
     print(youSee)
-    myItems = player.myItems()
+    myItems = player.showItems()
     print(myItems)
     act = input(f'{Color.GREEN}$ action: {Color.END}')
 
