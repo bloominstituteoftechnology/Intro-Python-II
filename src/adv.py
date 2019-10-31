@@ -2,7 +2,7 @@
 A classic-style text-based adventure game!
 """
 from player import Player
-from map import rooms
+from mapping import rooms
 
 
 class Parser:
