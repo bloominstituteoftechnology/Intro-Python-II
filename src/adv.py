@@ -73,103 +73,105 @@ def crawlText(text, delay=0.01):
         sys.stdout.write(ln)
         sys.stdout.flush()
         time.sleep(delay)
+    print('\n')
 
 def quitGame():
-    quitMsg = f'{Color.RED}Your mind feels electric, the taste of copper fills your mouth, and you wonder: {Color.END}  {Color.PURPLE}"Is this real? Am I dreaming this moment?"\n\t{Color.END}'
-    print('\n')
+    quitMsg = f'{Color.RED}Your mind feels electric, the taste of copper fills your mouth, and you wonder:{Color.PURPLE} "Is this real? Am I dreaming this moment?"\n\f\t\t{Color.END}'
     crawlText(quitMsg)
+    sys.exit('x')
+
+def handleGoDir(dir):
+    if dir not in ['north','east','west','south']:
+        print(f'\t{dir} is not a recognized direction')
+    else:
+        moveTo = dir[0] + '_to'
+        newRoom = getattr(player.loc, moveTo)
+        if newRoom != None:
+            player.loc = newRoom
+            print('\n')
+            print(player.loc)
+        else:
+            print(f'\t{Color.RED}You cannot go {dir} from here{Color.END}')
+
+def handleGetItem(getItem):
+    index = -1
+    for i, item in enumerate(player.loc.holding):
+        if item.name == getItem:
+            index = i
+    if index != -1:
+        thisItem = player.loc.holding.pop(index)
+        player.holding.append(thisItem)
+        print(f'You pick up the {thisItem}')
+        if thisItem.name == 'Rubber Duck':
+            youDied = f'{Color.RED}You hear a faint growl growing louder, as you turn you can see death in the eye of the beast. A sharp bark is the last thing you hear before you fall to the ground, the weight of a giant dog pressing you into the mud. The pain is terrible, and you faintly remember two words from a past life: King Corso.{Color.END}'
+            crawlText(youDied, 0.03)
+            print('\n')
+            quitGame()
+    else:
+        print(f'\t{Color.RED}{getItem} not found (Case Sensitive){Color.END}')
+
+def handleUseItem(thisItem):
+    index = -1
+    for i, item in enumerate(player.holding):
+        if item.name == thisItem:
+            index = i
+    if index != -1:
+        thisItem = player.holding[index]
+        thisHappened = thisItem.useItem(room=player.loc.name)
+        thisHappened = f'{Color.RED}{thisHappened}{Color.END}'
+        crawlText(thisHappened)
+        if thisItem.name == 'Flashlight' and player.loc.name == 'Front Lawn of the Mansion':
+            player.loc.holding = [items['dogtoy']]
+            youSee = player.loc.printItems()
+            print(f'{youSee}')
+    else:
+        print(f'\t{thisItem} {Color.RED}not found (Case Sensitive){Color.END}')
 
 # DRAMATIC INTRO
 print('\n')
-intro = f'You awaken suddenly, your head is aching and you cannot remember where you are, you {Color.RED}look{Color.END} around and observe your surroundings.'
-# crawlText(intro, delay=0.05)
+intro = f'You awaken suddenly, your head is aching and your clothes are stained with mud. You {Color.RED}look{Color.END} around to see a locked iron gate behind you, and a gravel pathway before you. How did you get here? Why does this all seem so familiar?'
+crawlText(intro, delay=0.05)
 
 # INIT PLAYER and PRINT CURRENT LOCATION
-player = Player('steve', room['frontLawn'], holding=[items['flashlight']])
-# player = Player('steve', room['outside'])
+# player = Player('steve', room['frontLawn'], holding=[items['flashlight']])
+player = Player('steve', room['outside'])
 print('\n')
 print(player.loc)
 
 # START GAME LOOP
 while True:
-    myItems = [i.name for i in player.holding]
-    if len(myItems) > 0:
-        print(f'You are holding {Color.RED}{[i.name for i in player.holding]}{Color.END}')
+    myItems = player.myItems()
+    print(myItems)
     act = input('$ do what now: ')
 
     useItem = re.match(r"^use\s([A-Z][a-z]*\s?[A-Z]*[a-z]*)", act)
     if useItem != None:
         thisItem = useItem.group(1)
-        index = -1
-        for i, item in enumerate(player.holding):
-            if item.name == thisItem:
-                index = i
-        if index != -1:
-            thisItem = player.holding[index]
-            thisHappened = thisItem.useItem(room=player.loc.name)
-            thisHappened = wrap(thisHappened, 50)
-            thisHappened = '\n'.join(thisHappened)
-            print(f'\n\f{Color.RED}{thisHappened}{Color.END}')
-            if thisItem.name == 'Flashlight' and player.loc.name == 'Front Lawn of the Mansion':
-                player.loc.holding = [items['dogtoy']]
-                youSee = player.loc.printItems()
-                print(f'\n{youSee}')
-                continue
-            else: continue
-        else:
-            print(f'\t{thisItem} {Color.RED}not found (Case Sensitive){Color.END}')
-            continue
+        handleUseItem(thisItem)
+        continue
 
     getItem = re.match(r"^get\s([A-Z][a-z]*\s?[A-Z]*[a-z]*)", act)
     if getItem != None:
         getItem = getItem.group(1)
-        index = -1
-        for i, item in enumerate(player.loc.holding):
-            if item.name == getItem:
-                index = i
-        if index != -1:
-            thisItem = player.loc.holding.pop(index)
-            player.holding.append(thisItem)
-            print(f'You pick up the {thisItem}')
-            if thisItem.name == 'Rubber Duck':
-                youDied = f'{Color.RED}You hear a faint growl growing louder, as you turn you can see death in the eye of the beast. A sharp bark is the last thing you hear before you fall to the ground, the weight of a giant dog pressing you into the mud. The pain is terrible, and you faintly remember two words from a past life: King Corso.{Color.END}'
-                crawlText(youDied, 0.03)
-                print('\n')
-                quitGame()
-                break
-            else: continue
-        else:
-            print(f'\t{Color.RED}{getItem} not found (Case Sensitive){Color.END}')
-            continue
+        handleGetItem(getItem)
+        continue
 
     goDir = re.match(r"^go\s([a-z]*)", act, flags=re.I)
     if goDir != None:
         dir = goDir.group(1).lower()
-        if dir not in ['north','east','west','south']:
-            print(f'\t{dir} is not a recognized direction')
-            continue
-        else:
-            moveTo = dir[0] + '_to'
-            newRoom = getattr(player.loc, moveTo)
-            if newRoom != None:
-                player.loc = newRoom
-                print('\n')
-                print(player.loc)
-                continue
-            else:
-                print(f'\t{Color.RED}You cannot go {dir} from here{Color.END}')
-                continue
+        handleGoDir(dir)
+        continue
+
     if act == 'help':
         showHelp()
         continue
     if act == 'look':
-        print('\n')
         print(player.loc)
         continue
     if act == 'q':
         quitGame()
         break
     else:
-        print('\f')
-        print(f'{act} {Color.RED}command not recognized{Color.END} \ntype help to see a list of commands')
+        print('\n')
+        print(f'{act} {Color.RED}command not recognized{Color.END}\ntype {Color.PURPLE}help{Color.END} to see a list of commands')
         continue
