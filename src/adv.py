@@ -2,12 +2,12 @@ import re
 import sys
 import time
 from color import Color
+from crawlText import crawlText
 from item import Item
 from player import Player
 from room import Room
 from textwrap import wrap
-
-
+from quitGame import quitGame
 
 items = {
     'key': Item('Key', 'This Key is unusally large, and feels warm to the touch.'),
@@ -69,21 +69,6 @@ def showHelp():
     print(f'{Color.RED}look{Color.END} {Color.GREEN}$ Observe your surroundings{Color.END}')
     print(f'{Color.RED}q{Color.END} {Color.GREEN}$ Quit{Color.END}')
     
-def crawlText(text, delay=0.01):
-    text = wrap(text, 50)
-    text = '\n\r'.join(text)
-    for ln in text:
-        sys.stdout.write(ln)
-        sys.stdout.flush()
-        time.sleep(delay)
-    print('\n')
-
-def quitGame():
-    print('\n')
-    crawlText(f'{Color.RED}Your mind feels electric, the taste of copper fills your mouth, and you wonder:')
-    crawlText(f'{Color.PURPLE} "Is this real? Am I dreaming this moment?"\n\f\t\t{Color.END}')
-    sys.exit()
-
 def handleGoDir(dir):
     if dir not in ['north','east','west','south','up','down']:
         print(f'{Color.PURPLE}{dir}{Color.RED} is not an option{Color.END}')
@@ -103,27 +88,6 @@ def handleGoDir(dir):
                 print(player.loc)
         else:
             print(f'{Color.RED}You cannot go {Color.PURPLE}{dir}{Color.RED} from here{Color.END}')
-
-def handleGetItem(thisItem):
-    index = None
-    for i, item in enumerate(player.loc.holding):
-        if item.name.lower() == thisItem.lower():
-            index = i
-    if index != None:
-        thisItem = player.loc.holding.pop(index)
-        player.holding.append(thisItem)
-        crawlText(f'You pick up the {Color.RED}{thisItem.name}{Color.END}')
-        if thisItem.seen == False:
-            thisItem.seen = True
-            crawlText(f'{Color.PURPLE}{thisItem.desc}{Color.END}', 0.03)
-        else:
-            print(f'{Color.PURPLE}{thisItem.desc}{Color.END}')
-        
-        if thisItem.name == 'Rubber Duck':
-            crawlText(f'{Color.RED}You hear a faint growl growing louder. As you turn to {Color.PURPLE}look{Color.RED}, the growl explodes into a bark. You can see death in the eye of the beast. You hear nothing as you fall to the ground, the weight of a giant dog pressing you into the mud. The pain is terrible, and you faintly remember two words from a past life: {Color.PURPLE}King Corso.{Color.END}', 0.03)
-            quitGame()
-    else:
-        print(f'You cannot see a {Color.RED}{thisItem}{Color.END}')
 
 def handleDropItem(thisItem):
     index = None
@@ -157,10 +121,10 @@ def startNewGame(name):
     # INIT PLAYER and GET flashlight
     print('\n')
     intro = f'You awaken suddenly. Your body is aching and your clothes are stained with mud. You {Color.PURPLE}look{Color.END} around to see a locked iron gate behind you, and a gravel pathway before you. How did you get here? You touch your head and feel a lump, it is wet, and sticky. You can see a {Color.RED}Flashlight{Color.END} on the gravel nearby. It\'s YOUR flashlight.'
-    crawlText(intro, delay=0.03)
-    handleGetItem('flashlight')
-    crawlText(f'{Color.PURPLE}It is wet with blood. Did someone knock you out with your own flashlight?{Color.END}', 0.02)
-    crawlText(f'{Color.PURPLE}You can see your name engraved on the handle: {Color.RED}{player.name.upper()}{Color.END}', 0.02)
+    # crawlText(intro, delay=0.03)
+    player.loc.getItem('flashlight', player)
+    # crawlText(f'{Color.PURPLE}It is wet with blood. Did someone knock you out with your own flashlight?{Color.END}', 0.02)
+    # crawlText(f'{Color.PURPLE}You can see your name engraved on the handle: {Color.RED}{player.name.upper()}{Color.END}', 0.02)
     crawlText(player.loc.desc, 0.02)
 
 # START GAME
@@ -192,7 +156,7 @@ while True:
     getItem = re.match(r"^get\s([a-z]*\s?[a-z]*)", act, flags=re.I)
     if getItem != None:
         thisItem = getItem.group(1)
-        handleGetItem(thisItem)
+        player.loc.getItem(thisItem, player)
         continue
 
     goDir = re.match(r"^go\s([a-z]*)", act, flags=re.I)
