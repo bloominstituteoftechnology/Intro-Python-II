@@ -26,7 +26,7 @@ room = {
 
     'gravel': Room("Gravel Pathway", f"Lawns stretch out to either side, but you cannot see much of anything past the large oak trees lining the pathway. To the {Color.PURPLE}north{Color.END} you can see the shape of a building. As you walk further down the noisy gravel path the shape comes into focus, a decrepit looking white mansion in the colonial style. You can hear something rustling around nearby.", isDark=True),
 
-    'frontLawn': Room("Front Lawn of the Mansion", f"{Color.PURPLE}North{Color.END} of you, the door to the mansion is wide open.  What happened here? It is [{Color.RED}dark{Color.END}], but you can see several large holes dug into the lawn. You can hear something rustling around nearby.", holding=[items['dogtoy']], isDark=True),
+    'frontLawn': Room("Front Lawn of the Mansion", f"{Color.PURPLE}North{Color.END} of you, the door to the mansion is wide open.  What happened here? It is {Color.RED}dark{Color.END}, but you can see several large holes dug into the lawn. You can hear something rustling around nearby.", holding=[items['dogtoy']], isDark=True),
     
     'foyer': Room("Foyer", f"This room is mostly empty space surrounding a grand staircase, a few steps are missing but you could climb {Color.PURPLE}up{Color.END}. Dusty passages run {Color.PURPLE}east{Color.END} and {Color.PURPLE}west{Color.END}. "),
 
@@ -63,8 +63,8 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # START GAME
-player = Player('Ricky', room['frontLawn'], holding=[items['flashlight']])
-# startGame(player)
+player = Player('Ricky', room['outside'])
+startGame(player)
 
 # GAMEPLAY LOOP
 while True:

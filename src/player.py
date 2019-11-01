@@ -1,6 +1,7 @@
 from gameObj import GameObj
 from color import Color
 from crawlText import crawlText
+from quitGame import quitGame
 
 class Player(GameObj):
     def __init__(self, name, loc, desc='n/a', holding=[]):
@@ -29,6 +30,9 @@ class Player(GameObj):
             thisHappened = thisItem.useItem(room=self.loc.name)
             if thisItem.name == 'Flashlight':
                 self.loc.isDark=False
+            if thisItem.name == 'Key' and self.loc.name == 'Treasure Chamber':
+                crawlText(f'{Color.RED}{thisHappened}{Color.END}')
+                quitGame()
             print('\n')
             crawlText(f'{Color.RED}{thisHappened}{Color.END}')
         else:
