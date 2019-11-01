@@ -68,6 +68,7 @@ class Player(object):
         :var args: unused
         """
         if self.current_room.light or any(item.is_light and item.active for item in self.items_.values()):
+            self.current_room.light = True
             if self.current_room.items_:
                 print("I can see:")
                 for val in self.current_room.items_.values():
@@ -183,11 +184,14 @@ class Player(object):
         color = key_name.split('_')[0]
         if eval(f"'{color}_lock_box' in self.current_room.items_"):
             box_name = f"{color}_lock_box"
-            if self.current_room.items_[box_name].key is self.items_[key_name]:
+            if (self.current_room.items_[box_name].seen and
+                    self.current_room.items_[box_name].key is self.items_[key_name]):
                 self.current_room.items_[box_name].locked = False
                 for item in self.current_room.items_[box_name].items_.values():
                     self.current_room.items_[item.name] = item
                 print(f"I have unlocked the {box_name} \n")
+            else:
+                print(f"I don't see anything that this key fits. \n")
         else:
             print(f"I don't see anything that this key fits. \n")
 
@@ -203,6 +207,8 @@ class Player(object):
             print(f"{self.name} has died! Now littered about the area "
                   f"are {[item.name for item in self.items_.values()]} \n")
             sys.exit()
+        else:
+            print("Take that The Bear! I win! \n")
 
     def inventory(self, *args) -> None:
         """Print out all items in Player items_.

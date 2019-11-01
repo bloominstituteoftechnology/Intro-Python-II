@@ -76,13 +76,15 @@ class SlingShot(Item):
         self.owner = player
         self.owner.has_slingshot = True
         super().on_get()
+        if not self.owner.has_pebbles:
+            print("Sweet! Now I need some ammo! \n")
 
     def blank(self):
         """Nothing to shoot at or no ammo."""
         if not self.owner.has_pebbles:
-            print("You need some ammo first.")
+            print("You need some ammo first. \n")
         else:
-            print("There's nothing to shoot. Better conserve ammo.")
+            print("There's nothing to shoot. Better conserve ammo.\n")
 
 
 class Pebbles(Item):
@@ -117,9 +119,9 @@ class Berries(Item):
 
     """
 
-    def __init__(self, name: str, description: str, weight: int = 3, owner: Player = None) -> None:
+    def __init__(self, name: str, description: str, weight: int = 3) -> None:
         super().__init__(name, description, weight)
-        self.owner = owner
+        self.owner = None
 
     def on_get(self, player: Player = None) -> None:
         """Update self to have an owner and owner to have berries.
@@ -133,4 +135,5 @@ class Berries(Item):
         """Consume berries, feel better."""
         old = self.owner.hp
         self.owner.hp += 15
-        print(f"{self.owner.name} health has gone from {old} to {self.owner.hp} ")
+        self.owner.items_.pop(self.name, None)
+        print(f"{self.owner.name} health has gone from {old} to {self.owner.hp} \n")
