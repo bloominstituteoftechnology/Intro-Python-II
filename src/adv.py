@@ -3,8 +3,6 @@ from player import Player
 
 print('Welcome to a Haunted House Adventure!')
 
-user = input()
-
 # Declare all the rooms
 
 room = {
@@ -35,26 +33,34 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-mike = Player('mike')
+name = input('Howdy, what is your name?')
 
-while True:
-    player_location = room
-    print(player_location.name)
-    print(player_location.description)
+player1 = Player(name, room['outside'])
 
-    dir = input('Start Exploring! Press [s] to move South, [n] for North, \
-            [e] for East, [w] for West, and [q] to quit: ')
-
-    if dir == 'n':
-        player_location = player_location.n_to
-    elif dir == 's':
-        player_location = player_location.s_to
-    elif dir == 'w':
-        player_location = player_location.w_to
-    elif dir == 'e':
-        player_location = player_location.e_to
+dir = input(f'Start exploring, {player1.name}! You are in the {player1.room}Press [s] to move South, [n] for North, [e] for East, [w] for West, and [q] to quit: ')
+for answer in dir:
+    if answer not in ['n', 's', 'e', 'w', 'q']:
+        print("Sorry that's not a possible direction!")
+        continue
+    elif answer == 'q':
+        print('Thanks for playing!')
+        break
     else:
-        print(f"{dir} isn't a possible direction!")
+        player_location = player1.room
+        print(f'You are now in {player_location}: ')
+        print(player_location.description)
+
+        if dir == 'n':
+            player_location = player_location.n_to
+        elif dir == 's':
+            player_location = player_location.s_to
+        elif dir == 'w':
+            player_location = player_location.w_to
+        elif dir == 'e':
+            player_location = player_location.e_to
+        else:
+            print("Oops you can't move that way")
+        break  # to stop infinite loop
 
 
 # If the user enters a cardinal direction, attempt to move to the room there.
