@@ -69,7 +69,10 @@ class SlingShot(Item):
         self.owner.attackpts -= 30
 
     def on_get(self, player: Player = None) -> None:
-        """Update self to have an owner and the owner to have a sling shot."""
+        """Update self to have an owner and the owner to have a sling shot.
+
+        :var player: The proud owner of a new slingshot
+        """
         self.owner = player
         self.owner.has_slingshot = True
         super().on_get()
@@ -94,11 +97,40 @@ class Pebbles(Item):
         self.owner = owner
 
     def on_get(self, player: Player = None) -> None:
-        """Update self to have an owner and owner to have pebbles."""
+        """Update self to have an owner and owner to have pebbles.
+
+        :var player: The proud owner of new pebbles.
+        """
         self.owner = player
         self.owner.has_pebbles = True
         super().on_get()
 
     def rock(self):
+        """Be rock."""
         print("I'm just a rock.")
 
+
+class Berries(Item):
+    """Delicious Berries.
+
+    Restore 15 hp by eating.
+
+    """
+
+    def __init__(self, name: str, description: str, weight: int = 3, owner: Player = None) -> None:
+        super().__init__(name, description, weight)
+        self.owner = owner
+
+    def on_get(self, player: Player = None) -> None:
+        """Update self to have an owner and owner to have berries.
+
+        :var player: The proud owner of new berries.
+        """
+        self.owner = player
+        super().on_get()
+
+    def eat(self):
+        """Consume berries, feel better."""
+        old = self.owner.hp
+        self.owner.hp += 15
+        print(f"{self.owner.name} health has gone from {old} to {self.owner.hp} ")

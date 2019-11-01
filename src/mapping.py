@@ -1,9 +1,9 @@
 from room import Room, Arena
-from item import Item, Container, SlingShot, Pebbles
+from item import Item, Container, SlingShot, Pebbles, Berries
 
 # Declare rooms in rooms dict.
 rooms = {
-    'rest_stop': Room("\nA North Cascades Hwy rest-stop.",
+    'rest_stop': Room("\nYou are at a North Cascades Hwy rest-stop. It is a crisp fall morning.",
                       "North of you, a little dog barks and dashes down a forest trail. \nTo the South, your warm car "
                       "and the open road."),
 
@@ -14,13 +14,13 @@ rooms = {
                          "To the North, a wild river runs \nOther trails lead to the East and West. \nReturn to the "
                          "parking lot to the South."),
 
-    'river_bank': Room("The clear, cold river rushes at your feet.",
+    'river_bank': Room("The clear, cold Skagit river rushes at your feet.",
                        "Attempt to ford the river by heading North \nHead upstream to the East \nMove toward the "
                        "Puget Sound by heading downstream, to the West. \nGo back toward the start by moving South"),
 
-    'trail_east': Room("A massive peak looms above.",
-                       "Climb the peak by continuing East. \nHead North along Kendal Catwalk. \nTo the South is the "
-                       "difficult Section K of the Pacific Crest Trail. \nThe sweeping valley vistas lie to the West"),
+    'trail_east': Arena("A massive peak looms above.",
+                        "Climb the peak by continuing East. \nHead North along Kendal Catwalk. \nTo the South is the "
+                        "difficult Section K of the Pacific Crest Trail. \nThe sweeping valley vistas lie to the West"),
 
     'trail_west': Room("The trail forks at a granite outcropping.",
                        "A short climb West looks like the entrance to a cave. \nThe trail continues both North and "
@@ -33,8 +33,8 @@ rooms = {
                       "Continue into the unknown up another steep climb to the South. \nGive up and return to easier "
                       "territory by heading North"),
 
-    'mountain_east': Arena("It's no easy feat to top one of these giants. Enjoy the view!",
-                           "Really only one way down from here. \nHead West"),
+    'mountain_east': Room("It's no easy feat to top one of these giants. Enjoy the view!",
+                          "Really only one way down from here. \nHead West"),
 
     'clearing': Room("An opening in the forest reveals a heard of elk grazing.",
                      "The trail seems to disappear here. \nBetter stick to the trail and turn back South"),
@@ -49,17 +49,20 @@ rooms = {
                          "Not a good idea.  \nYou're dead."),
 
     'shallow_crossing': Room("It's much colder than you thought. You loose 10 health.",
-                             ""),
+                             "Head East to reach a bridge. \nGo West to return to the river bank."),
 
-    'bridge_crossing': Room("Well worth walking a little further to find this! And there's the little dog from the "
+    'bridge_crossing': Room("Wait, did I just cross a river to find a bridge?! Oh! There's the little dog from the "
                             "rest-stop!",
-                            "Walk North to approach the doggo. \nHead back across the bridge to the South"),
+                            "Walk North to approach the doggo. \nHead back across the bridge to the South."),
 
     'river_delta': Room("The sun glistens off of the wetlands while songbirds fill the air with sound.",
                         "Head back to the East, unless you have a boat."),
 
     'stevens_pass': Room("You made it to Steven's Pass! Hope you brought your board!",
-                         "Head back North when you've shredded your gnar, brah")
+                         "Head back North when you've shredded your gnar, brah"),
+
+    'doggo': Room("Finally, the dog that led you into the forest is right here!",
+                  "South is the only way to go.")
 
 }
 
@@ -108,6 +111,9 @@ rooms['shallow_crossing'].to_w = rooms['river_bank']
 rooms['shallow_crossing'].to_e = rooms['bridge_crossing']
 
 rooms['river_delta'].to_e = rooms['river_bank']
+
+rooms['doggo'].to_s = rooms['bridge_crossing']
+rooms['bridge_crossing'].to_n = rooms['doggo']
 
 # Add items.
 flashlight = Item('flashlight',
@@ -164,3 +170,17 @@ pebbles = Pebbles('pebbles',
                   'Small round stones',
                   weight=2)
 rooms['clearing'].items_[pebbles.name] = pebbles
+
+berry1 = Berries('huckleberries',
+                 'Purple berries bursting with flavor')
+rooms['trail_west'].items_[berry1.name] = berry1
+
+berry2 = Berries('blue_berries',
+                 'Blue berries bursting with flavor')
+
+rooms['kendal_catwalk'].items_[berry2.name] = berry2
+
+berry3 = Berries('black_berries',
+                 'Black berries bursting with flavor')
+
+rooms['river_delta'].items_[berry3.name] = berry3

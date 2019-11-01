@@ -52,7 +52,7 @@ class Game:
         if not name:
             while True:
                 try:
-                    name = input('What is your name? \n:')
+                    name = input('\nWhat is your name? \n:')
                     if not name == "":
                         break
                     else:
@@ -100,6 +100,10 @@ def main(rooms: dict) -> None:
     bear = game.set_player('The Bear', attackpts=20)
     bear.current_room = rooms['trail_east']
     rooms['trail_east'].characters[bear.name] = bear
+    print(f"\nThe Adventure Begins! \nGood luck {game.player.name}!!")
+
+    doggo = game.set_player('doggo')
+    rooms['doggo'].characters[doggo.name] = doggo
 
     game.player.print_position()
     game.parser.print_actions()

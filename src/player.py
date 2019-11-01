@@ -61,12 +61,6 @@ class Player(object):
         """Print the current room and its description."""
         print(f"{self.current_room.name} \n{self.current_room.description} \n")
 
-    def add_slingshot(self):
-        self.has_slingshot = True
-
-    def add_pebbles(self):
-        self.has_pebbles = True
-
     def look(self, *args) -> None:
         """Look in current room for available items.
 
@@ -80,9 +74,9 @@ class Player(object):
                     val.seen = True
                     print(val)
             else:
-                print(f"I don't see anything notable here.")
+                print(f"I don't see anything notable here. \n")
         else:
-            print("It's too dark in here to see anything.")
+            print("It's too dark in here to see anything. \n")
         print()  # Just a blank line for display purposes.
 
     def get(self, *args: str) -> None:
@@ -107,7 +101,7 @@ class Player(object):
                 print(f"Item weight: {item.weight}")
                 print(f"Current weight limit: {self.weight_limit} \n")
         else:
-            print(f"I haven't seen {'an' if item_name.startswith(('a', 'e', 'i', 'o', 'u')) else 'a'} {item_name}")
+            print(f"I haven't seen {'an' if item_name.startswith(('a', 'e', 'i', 'o', 'u')) else 'a'} {item_name} \n")
 
     def drop(self, *args: str) -> None:
         """Drop item in current room.
@@ -171,6 +165,15 @@ class Player(object):
             self.items_[item_name].blank()
         if 'pebble' in item_name:
             self.items_[item_name].rock()
+        if 'dog' in item_name:
+            if 'doggo' in self.current_room.characters:
+                print(f"You found the dog and gave them a treat! They'll be your friend forever now. "
+                      f"You win! \n")
+                sys.exit()
+            else:
+                print("I don't see any dogs around here. \n")
+        if 'berrie' in item_name:
+            self.items_[item_name].eat()
 
     def _unlock_box(self, key_name: str) -> None:
         """Unlock a box in the room if Player has the correct color key.
@@ -192,7 +195,7 @@ class Player(object):
         """Player has died, drop all items.
 
         If the user has died, exit the game.
-        #TODO: make game start over.
+        #TODO: make game reset and start over.
         """
         for item in self.items_.values():
             self.current_room.items_[item.name] = item
@@ -212,3 +215,4 @@ class Player(object):
                 print(f'Item: {item.name} - Weight: {item.weight}')
         else:
             print("I don't seem to have anything.")
+        print()  # Blank line for display purposes.
