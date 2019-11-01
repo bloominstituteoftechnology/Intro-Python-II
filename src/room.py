@@ -1,12 +1,11 @@
 from gameObj import GameObj
 from color import Color
 from crawlText import crawlText
-from textwrap import wrap
 from quitGame import quitGame
 
 class Room(GameObj):
-    def __init__(self, name, desc, holding=[]):
-        super().__init__(name, desc, holding)
+    def __init__(self, name, desc, holding=[], isDark=False):
+        super().__init__(name, desc, holding, isDark)
         self.n_to = None
         self.e_to = None
         self.s_to = None
