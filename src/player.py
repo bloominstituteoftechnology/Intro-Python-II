@@ -1,12 +1,20 @@
 from gameObj import GameObj
 from color import Color
-from crawlText import crawlText
-from quitGame import quitGame
 
 class Player(GameObj):
     def __init__(self, name, loc, desc='n/a', holding=[]):
         super().__init__(name, desc, holding)
         self.loc = loc
+    
+    def startGame(self):
+        # DRAMATIC INTRO
+        print('\n')
+        self.crawlText('You awaken suddenly.')
+        self.crawlText(f'Your body is aching and your clothes are stained with mud. You {Color.PURPLE}look{Color.END} around to see a locked iron gate behind you, and a gravel pathway before you. How did you get here? You touch your head and feel a lump, it is wet, and sticky. You can see a {Color.RED}Flashlight{Color.END} on the gravel nearby. It\'s YOUR flashlight.', delay=0.03)
+        self.loc.getItem('flashlight', self)
+        self.crawlText(f'{Color.PURPLE}It is wet with blood. Did someone knock you out with your own flashlight?{Color.END}', 0.02)
+        self.crawlText(f'{Color.PURPLE}You can see your name engraved on the handle: {Color.RED}{self.name.upper()}{Color.END}', 0.02)
+        self.crawlText(self.loc.desc, 0.02)
 
     def drop(self, thisItem):
         index = None
@@ -16,7 +24,7 @@ class Player(GameObj):
         if index != None:
             thisItem = self.holding.pop(index)
             self.loc.holding.append(thisItem)
-            crawlText(f'You dropped the {Color.RED}{thisItem.name}{Color.END}')
+            self.crawlText(f'You dropped the {Color.RED}{thisItem.name}{Color.END}')
         else:
             print(f'You cannot see a {Color.RED}{thisItem}{Color.END}')
 
@@ -31,10 +39,10 @@ class Player(GameObj):
             if thisItem.name == 'Flashlight':
                 self.loc.isDark=False
             if thisItem.name == 'Key' and self.loc.name == 'Treasure Chamber':
-                crawlText(f'{Color.RED}{thisHappened}{Color.END}')
-                quitGame()
+                self.crawlText(f'{Color.RED}{thisHappened}{Color.END}')
+                self.quitGame()
             print('\n')
-            crawlText(f'{Color.RED}{thisHappened}{Color.END}')
+            self.crawlText(f'{Color.RED}{thisHappened}{Color.END}')
         else:
             print(f'You are not holding {Color.RED}{thisItem}{Color.END}')
 
@@ -49,11 +57,11 @@ class Player(GameObj):
                 if self.loc.seen == False: 
                     self.loc.seen = True
                     print('\n')
-                    crawlText(f'{Color.PURPLE}{self.loc.name}{Color.END}',0.03)
-                    crawlText(self.loc.desc,0.02)
+                    self.crawlText(f'{Color.PURPLE}{self.loc.name}{Color.END}',0.03)
+                    self.crawlText(self.loc.desc,0.02)
                 else:
                     print('\n')
-                    crawlText(f'{Color.PURPLE}You have been here before{Color.END}',0.03)
+                    self.crawlText(f'{Color.PURPLE}You have been here before{Color.END}',0.03)
                     print(self.loc)
             else:
                 print(f'{Color.RED}You cannot go {Color.PURPLE}{there}{Color.RED} from here{Color.END}')

@@ -2,14 +2,10 @@ import re
 import sys
 import time
 from color import Color
-from crawlText import crawlText
 from item import Item
 from player import Player
 from room import Room
 from textwrap import wrap
-from quitGame import quitGame
-from help import showHelp
-from startGame import startGame
 
 items = {
     'key': Item('Key', 'This Key is unusally large, and feels warm to the touch.', useRooms={'Treasure Chamber': f'You hesitate for a moment, contemplating the strange engravings on this golden door. You feel the warmth of the key in your hand as it turns with a satisfying {Color.PURPLE}*CLIK*{Color.END}'}),
@@ -64,7 +60,7 @@ room['treasure'].s_to = room['narrow']
 
 # START GAME
 player = Player('Ricky', room['outside'])
-startGame(player)
+player.startGame()
 
 # GAMEPLAY LOOP
 while True:
@@ -108,14 +104,14 @@ while True:
         continue
 
     if action == 'help':
-        showHelp()
+        player.showHelp()
         continue
     if action == 'look':
         print('\n')
         print(player.loc)
         continue
     if action == 'q':
-        quitGame()
+        player.quitGame()
         break
     else:
         print('\n')
