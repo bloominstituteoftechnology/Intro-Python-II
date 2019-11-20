@@ -1,5 +1,6 @@
 from room import Room
 
+
 # Declare all the rooms
 
 room = {
@@ -36,6 +37,26 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+
+
+class House:
+    def __init__(self, name, rooms=[]):
+        self.name = name
+        self.rooms = rooms
+
+    def __str__(self):
+        output = ''
+        output += f'Welcome to {self.name} {for k,v self.rooms.items()}'
+
+        return output
+
+
+haunted_house = House('Haunted House', rooms=[room for room in room.items()])
+# print(haunted_house)
+# for k, v in room.items():
+#     print(f'{k} and {v}\n')
+print(haunted_house)
+
 
 # Make a new player object that is currently in the 'outside' room.
 
