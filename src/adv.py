@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -19,6 +20,10 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+'secret': Room("Secret Chamber", """CONGRATULATIONS! You have found the secret 
+chamber! There may be no treasures left but, grab a bottle of 
+our oldest bourbon and relax in triumph knowing you found the real treasure"""),
 }
 
 
@@ -32,6 +37,8 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['treasure'].e_to = room['secret']
+room['secret'].w_to = room['treasure']
 
 #
 # Main
@@ -39,6 +46,69 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+currentRoom = "outside"
+playerName = input("Enter Player Name: ")
+
+while True:
+    player = Player(playerName, currentRoom)
+    playerRoom = Room(room[currentRoom].playerName, room[currentRoom].description)
+    print(playerRoom)
+    print(player)
+
+    path = input("Which way do you go (n,s,w,e)? Enter your decision: ")
+
+    if path == "q":
+        exit()
+
+    elif currentRoom == "outside":
+        if path == "n":
+            currentRoom = "foyer"
+        else:
+            print("Sorry, that path is not available")    
+            continue
+
+    elif currentRoom == "foyer":
+        if path == "n":
+            currentRoom = "overlook"
+        elif path == "s":
+            currentRoom = "outside"
+        elif path == "e":
+            currentRoom = "narrow"    
+        else:
+            print("Sorry, that path is not available")    
+            continue
+
+    elif currentRoom == "overlook":
+        if path == "s":
+            currentRoom = "foyer"
+        else:
+            print("Sorry, that path is not available")    
+            continue
+
+    elif currentRoom == "narrow":
+        if path == "n":
+            currentRoom = "treasure"
+        elif path == "w":
+            currentRoom = "foyer"   
+        else:
+            print("Sorry, that path is not available")    
+            continue
+
+    elif currentRoom == "treasure":
+        if path == "s":
+            currentRoom = "narrow"
+        elif path == "e":
+            currentRoom = "secret"    
+        else:
+            print("Sorry, that path is not available")    
+            continue
+
+    elif currentRoom == "secret":
+        if path == "w":
+            currentRoom = "treasure"    
+        else:
+            print("Sorry, that path is not available")    
+            continue
 # Write a loop that:
 #
 # * Prints the current room name
