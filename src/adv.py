@@ -1,5 +1,13 @@
 from room import Room
-#some change
+from player import Player
+import textwrap
+import sys
+
+
+print("\n")
+print("welcome, enter q to quit \n")
+
+
 # Declare all the rooms
 
 room = {
@@ -21,6 +29,16 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+wrapper = textwrap.TextWrapper(width=50)
+
+def get_word_list(current_room):
+     word_list = wrapper.fill(text=room[current_room].description)
+     print(word_list)
+
+def get_room_key(room_name):
+    for k, v in room.items():
+        if room_name == v.name:
+            return k
 
 # Link rooms together
 
@@ -39,6 +57,9 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player_1 = Player('outside')
+
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +70,44 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+while True:
+    
+    
+    print("Current Room: ", player_1.current_room, "\n")
+
+    
+    # prints room description
+    get_word_list(player_1.current_room)
+    print('\n')
+    
+    cmd = input('Move in which direction? n, s, e, w:')
+
+    if cmd == 'q':
+        sys.exit()
+
+    if cmd == 'n':
+        try:
+            player_1.current_room = get_room_key(room[player_1.current_room].n_to.name)
+            print("Moved to: ", player_1.current_room, '\n')
+        except:
+            print('Nothing in that direction, try another path \n')
+    if cmd == 's':
+        try:
+            player_1.current_room = get_room_key(room[player_1.current_room].s_to.name)
+            print("Moved to: ", player_1.current_room, '\n')
+        except:
+            print('Nothing in that direction, try another path \n')
+    if cmd == 'e':
+        try:
+            player_1.current_room = get_room_key(room[player_1.current_room].e_to.name)
+            print("Moved to: ", player_1.current_room, '\n')
+        except:
+            print('Nothing in that direction, try another path \n')
+    if cmd == 'w':
+        try:
+            player_1.current_room = get_room_key(room[player_1.current_room].w_to.name)
+            print("Moved to: ", player_1.current_room, '\n')
+        except:
+            print('Nothing in that direction, try another path \n')
