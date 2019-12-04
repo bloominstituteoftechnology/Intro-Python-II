@@ -29,7 +29,7 @@ class Player(object):
 
     def move(self, direction):
         if direction == 'N' and self.current_room.n_to.name == room['cybertruck'].name and all(x in self.items for x in [items['redkey'].name, items['greenkey'].name, items['bluekey'].name]) == True:
-            slow_print('You use all three keys and open the door and walk in.\n')
+            print_slow('You use all three keys and open the door and walk in.\n')
             self.current_room = room['cybertruck']
             print_slow(f'{self.current_room.description}')
         elif direction == 'N' and self.current_room.n_to.name == room['cybertruck'].name and all(x in self.items for x in [items['redkey'].name, items['greenkey'].name, items['bluekey'].name]) != True:
