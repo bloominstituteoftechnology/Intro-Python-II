@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -33,15 +34,14 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-print(room['outside'].n_to)
+
 #
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
-
-player1 = Player("Ann", "outside")
-print(player1)
+# [X] Make a new player object that is currently in the 'outside' room.
+player1 = Player("Ann", room['outside'].name)
+# print(player1)
 
 # Write a loop that:
 #
@@ -53,3 +53,17 @@ print(player1)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+choices = ['n', 's', 'w', 'e']
+
+while True: #Loop
+    print(f'You are at {player1.current_room}')
+    player_input = input("-> ").lower().strip()
+
+    if player_input in choices:
+        print(player1.current_room)
+    elif player_input == 'q':
+        print('Bye')
+        break
+    else: 
+        print("Invalid command")

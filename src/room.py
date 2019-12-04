@@ -10,4 +10,4 @@ class Room:
         self.e_to = None
         self.w_to = None
     def __str__(self):
-        return 'Room(name: '+str(self.name)+', description: '+str(self.description)+')'
+        return 'Yor are at '+str(self.name)+', description: '+str(self.description)+''
