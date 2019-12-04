@@ -1,4 +1,8 @@
 from room import Room
+from player import Player
+from item import Item
+import os
+
 
 # Declare all the rooms
 
@@ -21,6 +25,20 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+#Items
+
+# health_pot = Item("Health Potion", "Take a lickin and keep on kickin")
+# shield = Item("Shield", "Protects you from the bad ouchy things")
+# sword = Item("sword", "The pointy bit faces away from you")
+# poisonApple = Item("Browning apple", "It doesn't look like the kind of apple you would want to eat")
+
+#put the stuff in the places
+
+# room['treasure'].items = [shield, sword]
+# room['foyer'].items = [health_pot]
+# room['narrow'].items = [poisonApple]
+# room['oustide'].items = [health_pot]
+
 
 # Link rooms together
 
@@ -37,7 +55,13 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+
+
 # Make a new player object that is currently in the 'outside' room.
+
+player = Player(room['outside'])
+
+
 
 # Write a loop that:
 #
@@ -49,3 +73,39 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def direction(d, currentRoom):
+
+    attrib = d + '_to'
+
+    if hasattr(currentRoom, attrib):
+        return getattr(currentRoom, attrib)
+    else:
+        print("You cant go that way")
+
+    return currentRoom
+
+done = False
+
+while not done:
+    print('\nWelcome! Press N,S,W,E to move around!')
+    print(f'\n{player.currentRoom}\n')
+  
+
+ 
+
+    user_input = input("\nType direction to go: ").strip().lower().split()
+
+    if len(user_input) != 1:
+        print('That is a weird command my dude Type n,s,w, or e')
+        continue
+
+    if  user_input[0] == 'q':
+        done = True
+
+    elif user_input[0] in ["n", "north", "s", "south", "w", "west", "e", "east"]:
+        player.currentRoom = direction(user_input[0], player.currentRoom)
+
+    else:
+        unknown_input = user_input[0]
+        print('Unknown command: ', unknown_input)
