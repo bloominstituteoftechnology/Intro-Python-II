@@ -17,24 +17,23 @@ class Player:
         print(f'\nEntering "{self.current_room.name}"')
         print(f"Description: {self.current_room.description}\n")
         if len(self.current_room.items) > 0:
-          for item in self.current_room.items:
-             print(f"You see a {item} in the room.")
+            for item in self.current_room.items:
+                print(f"You see a {item.name} in the room.")
         else:
-          print("Nothing worth taking in this room.")
+            print("Nothing worth taking in this room.")
 
-    def inventory(self, verb, obj):
-      if self.verb in ['take','get','pick']:
-        if self.obj in self.current_room.items:
-          ds
-        else:
-          print(f"No {self.obj} to pick up.")
-      elif self.verb in ['drop']:
-        if self.obj in self.player.items:
-          sdff
-        else:
-          print(f'No {self.obj} in inventory.')
-      else:
-        
+    # def inventory(self, verb, obj):
+    #   if self.verb in ['take','get','pick']:
+    #     if self.obj in self.current_room.items:
+    #       ds
+    #     else:
+    #       print(f"No {self.obj} to pick up.")
+    #   elif self.verb in ['drop']:
+    #     if self.obj in self.player.items:
+    #       sdff
+    #     else:
+    #       print(f'No {self.obj} in inventory.')
+    #   else:
 
     def move(self, direction):
         if direction == "N":

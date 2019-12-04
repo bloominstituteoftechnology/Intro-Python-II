@@ -26,11 +26,11 @@ print(f"Current room: {player.current_room.name}")
 print(f"Description: {player.current_room.description}\n")
 
 while True:
-    action = input("What to do? ").upper()
+    action = input("\nWhat next? ").upper()
     if action in ['N', 'E', 'S', 'W']:
         player.move(action)
-    elif action[0] in ['take','get','pick','drop']:
-        player.inventory(action[0],action[1])
+    # elif action[0] in ['take','get','pick','drop']:
+    #     player.inventory(action[0],action[1])
     elif action == "Q":
         print("\nGame Over\n")
         sys.exit()
