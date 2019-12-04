@@ -7,3 +7,4 @@ class Player:
         self.current_room = current_room
     def __str__(self):
         return 'Player('+str(self.name)+', current room:'+str(self.current_room)+')'
+    
