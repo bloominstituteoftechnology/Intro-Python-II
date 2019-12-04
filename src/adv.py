@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -32,6 +33,16 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+# Verify room assignments
+# for key in room:
+#     if room[key].n_to:
+#         print(room[key].n_to.name)
+
+player = Player("Bremwick", room['outside'])
+
+# Verify player starting assignment
+# print(player.room.n_to.name)
 
 #
 # Main
