@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 
 [dev-packages]
+pep8 = "*"
+rope = "*"
 
 [requires]
 python_version = "3"
