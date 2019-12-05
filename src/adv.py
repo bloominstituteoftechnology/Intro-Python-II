@@ -24,9 +24,20 @@ earlier adventurers. The only exit is to the south."""),
 
 # Make a new player object that is currently in the 'outside' room.
 new_player = Player('Link', room['outside'])
+choices = ['n', 's', 'w', 'e']
 # print('NEW PLAYER', new_player)
+items = {
+    'scroll': Item("Scroll", 'A worn piece of parchment that contains faded directions to get out'),
+    'sword': Item("Sword", 'A dull blunt sword lays against the wall in a dark corner'),
+    'torch': Item("Torch", 'The torch looks as though it can be seperated from the wall and carried')
+}
 
+print(items['scroll'].description)
+print(room['outside'].items) #empty array 
+room['treasure'].items = items['scroll'] #adds item to room 
+print(room['treasure'])
 # Link rooms together
+# don't forgot to use append to add item; or overwriting everything 
 
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
@@ -65,51 +76,74 @@ def directions():
 # want a loop that won't end
 
 while True: 
-    # print(f'\n {new_player.current_room.description}')
+    print(f'\n  You have entered the {new_player.current_room.description}\n') 
+    cmd = input("-> ").lower().strip() #if you have space won't affect code 
 # #     #READ
 # #     #create prompt that allows you to set; always a string
-    cmd = input("-> ") 
-    if len(cmd) <= 0:
-        oops()
-    if cmd == "directions":
-        directions()
-    elif cmd == "n":
-        if new_player.current_room == room.get("outside", ['Room cannot be found']):
+    # make this dynamic, instead of the hard code use if none
+   
+    if cmd in choices:
+        if cmd == 'n' and new_player.current_room.n_to != None:
             new_player.current_room = new_player.current_room.n_to
-            print(f'\n  You have entered the {new_player.current_room.description}\n') ##player in the foyer 
-            
-        elif new_player.current_room == room.get("foyer", ['Room cannot be found']):
-            new_player.current_room = new_player.current_room.n_to
-            print(f'\n  You have entered the {new_player.current_room.description}\n') ##player in the overlook
-            
-        else:
-            new_player.current_room != ("foyer" or "outside")
-            new_player.current_room = room.get("treasure")
-            print(f'\n  You have entered the {new_player.current_room.description}\n') #player in treasure 
-            
-    elif cmd == "s":
-        if new_player.current_room == room.get("foyer", ['Room cannot be found']):
-            new_player.current_room = new_player.current_room.s_to #to overlook
-            print(f'\n  You have entered the {new_player.current_room.description}\n') #outside 
-            
-        elif  new_player.current_room == room.get("overlook", ['Room cannot be found']):
-            new_player.current_room = new_player.current_room.s_to #to foyer
-            print(f'\n  You have entered the {new_player.current_room.description}\n') # player in foyer 
-            
-        else:
-            new_player.current_room != ("foyer" or "overlook")
-            new_player.current_room = room.get("narrow") #to treasure room to foyer
-            print(f'\n  You have entered the {new_player.current_room.description}\n')  #to narrow 
-            
-    elif cmd == "e":
-        if new_player.current_room == room.get("foyer", ['Room cannot be found']):
-            new_player.current_room = new_player.current_room.e_to
-            print(f'\n  You have entered the {new_player.current_room.description}\n') #player in narrow
-            
-    elif cmd == "w":
-        if new_player.current_room == room.get("narrow", ['Room cannot be found']):
+              
+        elif cmd == 's'and new_player.current_room.s_to != None:
+            new_player.current_room = new_player.current_room.s_to
+
+        elif cmd == 'w' and new_player.current_room.w_to != None:
             new_player.current_room = new_player.current_room.w_to
-            print(f'\n  You have entered the {new_player.current_room.description}\n') #player in foyer
-    elif cmd == "q":
-        print('Peace Out!')
+   
+        elif cmd == 'e'and new_player.current_room.e_to != None:
+            new_player.current_room = new_player.current_room.e_to
+           
+        else:
+            cmd = input("That's wrong direction! type  N, S, E, W -> ").lower().strip()
+    elif cmd == 'q':
+        print('Bye')
         break
+    else: 
+        print("Invalid command")
+
+
+
+
+
+
+
+    # # print(f'\n  You have entered the {new_player.current_room.description}\n') 
+    # #bug when you hit the third n room about about none attr
+    
+    # if len(cmd) <= 0:
+    #     oops()
+    # if cmd == "directions":
+    #     directions()
+    # elif cmd == "n":  #check if equal to none
+    #     new_player.current_room != None
+    #     new_player.current_room = new_player.current_room.n_to
+    #     print(f'\n  You have entered the {new_player.current_room.description}\n') 
+            
+    #     else:
+    #         print('This wrong is invalid Sir!')
+    # elif cmd == "s":
+    #     new_player.current_room != None
+    #     new_player.current_room = new_player.current_room.s_to
+    #     print(f'\n  You have entered the {new_player.current_room.description}\n')
+    #     else:
+    #         print('This wrong is invalid Sir!')
+    # elif cmd == "e":
+    #     new_player.current_room != None
+    #     new_player.current_room = new_player.current_room.e_to
+    #     print(f'\n  You have entered the {new_player.current_room.description}\n') 
+            
+    #     else:
+    #         print('This wrong is invalid Sir!')
+    # elif cmd == "w":
+    #     new_player.current_room != None
+    #     new_player.current_room = new_player.current_room.w_to
+    #     print(f'\n  You have entered the {new_player.current_room.description}\n') 
+        
+    # else:
+    #     print('This wrong is invalid Sir!')
+    # elif cmd == "q":
+    #     print('Peace Out!')
+    #     break 
+    
