@@ -1,11 +1,15 @@
 from room import Room
 from player import Player
+from item import Item
 import textwrap
 import sys
 
 
 print("\n")
 print("welcome, enter q to quit \n")
+print("Directional commands: n, s, e, w")
+print("Available actions: take <item>, drop <item>")
+print("Available queries(displays currently held items): i, inventory \n")
 
 
 # Declare all the rooms
@@ -29,6 +33,23 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Declare all the items
+item = {
+    'shovel': Item("Shovel", "Tool for moving material"),
+
+    'rope': Item("Rope", "Long and sturdy"),
+
+    'ladder': Item("Ladder", "Tall and safe"),
+
+    'club': Item("Club", "Solid oak club"),
+
+    'bucket': Item("Bucket", "Old metal conatiner")
+}
+
+
+
+
+
 wrapper = textwrap.TextWrapper(width=50)
 
 def get_word_list(current_room):
@@ -51,13 +72,20 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Put items in their starting rooms
+room['outside'].items.append(item['bucket'])
+room['foyer'].items.append(item['ladder'])
+room['overlook'].items.append(item['shovel'])
+room['narrow'].items.append(item['rope'])
+room['treasure'].items.append(item['club'])
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
 
-player_1 = Player('outside')
+player_1 = Player('Player_1','outside')
 
 
 # Write a loop that:
@@ -76,13 +104,14 @@ while True:
     
     
     print("Current Room: ", player_1.current_room, "\n")
+    print("Items in room: ", room[player_1.current_room].items, "\n")
 
     
     # prints room description
     get_word_list(player_1.current_room)
     print('\n')
     
-    cmd = input('Move in which direction? n, s, e, w:')
+    cmd = input('What do?:')
 
     if cmd == 'q':
         sys.exit()
@@ -111,3 +140,29 @@ while True:
             print("Moved to: ", player_1.current_room, '\n')
         except:
             print('Nothing in that direction, try another path \n')
+
+    if cmd.startswith('take'):
+        t_item = cmd[5:]
+        t_item = item[t_item.lower()]
+        if t_item in room[player_1.current_room].items:
+            room[player_1.current_room].items.remove(t_item)
+            player_1.items.append(t_item)
+            t_item.on_take()
+        else:
+            print("Invalid input")
+
+    if cmd.startswith('drop'):
+        d_item = cmd[5:]
+        d_item = item[d_item.lower()]
+        if d_item in player_1.items:
+            player_1.items.remove(d_item)
+            room[player_1.current_room].items.append(d_item)
+            d_item.on_drop()
+        else:
+            print("Invalid input")
+
+    if cmd == 'i' or cmd == 'inventory':
+        print("Currently held item(s): ", player_1.items)
+
+    else:
+        print("invalid command \n")
