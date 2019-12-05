@@ -41,7 +41,7 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
- 
+
 
 
 def oops():
@@ -78,12 +78,13 @@ while True:
             new_player.current_room = new_player.current_room.n_to
             print(f'\n  You have entered the {new_player.current_room.description}\n') ##player in the foyer 
             
-        if new_player.current_room == room.get("foyer", ['Room cannot be found']):
+        elif new_player.current_room == room.get("foyer", ['Room cannot be found']):
             new_player.current_room = new_player.current_room.n_to
             print(f'\n  You have entered the {new_player.current_room.description}\n') ##player in the overlook
             
-        if new_player.current_room == room.get("narrow", ['Room cannot be found']):
-            new_player.current_room = new_player.current_room.n_to
+        else:
+            new_player.current_room != ("foyer" or "outside")
+            new_player.current_room = room.get("treasure")
             print(f'\n  You have entered the {new_player.current_room.description}\n') #player in treasure 
             
     elif cmd == "s":
@@ -91,12 +92,13 @@ while True:
             new_player.current_room = new_player.current_room.s_to #to overlook
             print(f'\n  You have entered the {new_player.current_room.description}\n') #outside 
             
-        if  new_player.current_room == room.get("overlook", ['Room cannot be found']):
+        elif  new_player.current_room == room.get("overlook", ['Room cannot be found']):
             new_player.current_room = new_player.current_room.s_to #to foyer
             print(f'\n  You have entered the {new_player.current_room.description}\n') # player in foyer 
             
-        if new_player.current_room == room.get("treasure", ['Room cannot be found']):
-            new_player.current_room = new_player.current_room.s_to #to foyer
+        else:
+            new_player.current_room != ("foyer" or "overlook")
+            new_player.current_room = room.get("narrow") #to treasure room to foyer
             print(f'\n  You have entered the {new_player.current_room.description}\n')  #to narrow 
             
     elif cmd == "e":
