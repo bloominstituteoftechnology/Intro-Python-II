@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -40,7 +40,7 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
-#
+
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -49,3 +49,22 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# want a loop that won't end
+while True: 
+    #READ
+    #create prompt that allows you to set; always a string
+    cmd = input("-> ")
+    #EVAL
+    if cmd == "n":
+        #do something
+        elif cmd == "e":
+        #do something
+        elif cmd == "w"
+        #do something
+        elif cmd == "s"
+        #do something
+    else cmd == "q":
+        #break out of loop
+        print("Peace out!")
+        break
