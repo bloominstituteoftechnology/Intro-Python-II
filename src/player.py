@@ -6,6 +6,15 @@
 # current_room
 
 class Player:
-    def __init__(self, name, current_room):
+    def __init__(self, name, room, items=[]):
         self.name = name
-        self.current_room = current_room
+        self.room = room
+        self.items = items
+    def __str__(self):
+        return f"Player: {self.name}"
+    def __repr__(self):
+        return f"Player({repr(self.name, self.room)})"
+    def add_item(self, item):
+        self.items.append(item)
+    def remove_item(self, item):
+        self.items.remove(item)
