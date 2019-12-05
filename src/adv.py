@@ -1,5 +1,5 @@
-from .room import Room
-from .player import Player
+from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -52,7 +52,32 @@ print(f"Welcome, {player.name}!")
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+choice = None
+moved = True
+while choice not in ['q', 'quit']:
+    choice = input(
+        "\nMove (n, s, w, e, or quit)")
 
+    if moved:
+        print("===============\n")
+        print(f"{player.name} enters \"{player.room.name}\"")
+        print(f"{player.room.desc}\n")
 
+        if choice in ['n', 'N'] and hasattr(player.room, 'n_to'):
+            moved = True
+            player.room = player.room.n_to
+        elif choice in ['s', 'S'] and hasattr(player.room, 's_to'):
+            moved = True
+            player.room = player.room.s_to
+        elif choice in ['e', 'E'] and hasattr(player.room, 'e_to'):
+            moved = True
+            player.room = player.room.e_to
+        elif choice in ['w', 'W'] and hasattr(player.room, 'w_to'):
+            moved = True
+            player.room = player.room.w_to
+        elif choice in ['q', 'quit']:
+            print(f"\nThanks for playing!\n")
+        else:
+            moved = False
+            print(
+                f"\n!*****!\nMove not allowed, please select again\n!*****!\n")
