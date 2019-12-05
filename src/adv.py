@@ -1,10 +1,11 @@
 from room import Room
 from player import Player
+from item import Item
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -21,6 +22,9 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Make a new player object that is currently in the 'outside' room.
+new_player = Player('Link', room['outside'])
+# print('NEW PLAYER', new_player)
 
 # Link rooms together
 
@@ -33,12 +37,19 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
 #
 # Main
 #
+ 
 
-# Make a new player object that is currently in the 'outside' room.
 
+def oops():
+    print('You forgot to type haha')
+    
+def directions():
+    print('*hint player can move go n, w, e, or s *')
+    
 # Write a loop that:
 
 # * Prints the current room name
@@ -50,21 +61,53 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
+# need a method to access dictionary data 
 # want a loop that won't end
+
 while True: 
-    #READ
-    #create prompt that allows you to set; always a string
-    cmd = input("-> ")
-    #EVAL
-    if cmd == "n":
-        #do something
-        elif cmd == "e":
-        #do something
-        elif cmd == "w"
-        #do something
-        elif cmd == "s"
-        #do something
-    else cmd == "q":
-        #break out of loop
-        print("Peace out!")
+    # print(f'\n {new_player.current_room.description}')
+# #     #READ
+# #     #create prompt that allows you to set; always a string
+    cmd = input("-> ") 
+    if len(cmd) <= 0:
+        oops()
+    if cmd == "directions":
+        directions()
+    elif cmd == "n":
+        if new_player.current_room == room.get("outside", ['Room cannot be found']):
+            new_player.current_room = new_player.current_room.n_to
+            print(f'\n  You have entered the {new_player.current_room.description}\n') ##player in the foyer 
+            
+        if new_player.current_room == room.get("foyer", ['Room cannot be found']):
+            new_player.current_room = new_player.current_room.n_to
+            print(f'\n  You have entered the {new_player.current_room.description}\n') ##player in the overlook
+            
+        if new_player.current_room == room.get("narrow", ['Room cannot be found']):
+            new_player.current_room = new_player.current_room.n_to
+            print(f'\n  You have entered the {new_player.current_room.description}\n') #player in treasure 
+            
+    elif cmd == "s":
+        if new_player.current_room == room.get("foyer", ['Room cannot be found']):
+            new_player.current_room = new_player.current_room.s_to #to overlook
+            print(f'\n  You have entered the {new_player.current_room.description}\n') #outside 
+            
+        if  new_player.current_room == room.get("overlook", ['Room cannot be found']):
+            new_player.current_room = new_player.current_room.s_to #to foyer
+            print(f'\n  You have entered the {new_player.current_room.description}\n') # player in foyer 
+            
+        if new_player.current_room == room.get("treasure", ['Room cannot be found']):
+            new_player.current_room = new_player.current_room.s_to #to foyer
+            print(f'\n  You have entered the {new_player.current_room.description}\n')  #to narrow 
+            
+    elif cmd == "e":
+        if new_player.current_room == room.get("foyer", ['Room cannot be found']):
+            new_player.current_room = new_player.current_room.e_to
+            print(f'\n  You have entered the {new_player.current_room.description}\n') #player in narrow
+            
+    elif cmd == "w":
+        if new_player.current_room == room.get("narrow", ['Room cannot be found']):
+            new_player.current_room = new_player.current_room.w_to
+            print(f'\n  You have entered the {new_player.current_room.description}\n') #player in foyer
+    elif cmd == "q":
+        print('Peace Out!')
         break

@@ -7,6 +7,5 @@ class Player():
         self.current_room = current_room
         
     def __str__(self):
-        return f'{self.name} is located in {self.current_room}.'
+        return f'{self.name} is located in the {self.current_room}.'
 
-print(Player)
