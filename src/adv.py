@@ -100,6 +100,7 @@ player_1 = Player('Player_1','outside')
 # If the user enters "q", quit the game.
 
 
+
 while True:
     
     
@@ -114,6 +115,7 @@ while True:
     cmd = input('What do?:')
 
     if cmd == 'q':
+        print("Goodbye")
         sys.exit()
 
     if cmd == 'n':
@@ -122,24 +124,28 @@ while True:
             print("Moved to: ", player_1.current_room, '\n')
         except:
             print('Nothing in that direction, try another path \n')
+        continue
     if cmd == 's':
         try:
             player_1.current_room = get_room_key(room[player_1.current_room].s_to.name)
             print("Moved to: ", player_1.current_room, '\n')
         except:
             print('Nothing in that direction, try another path \n')
+        continue
     if cmd == 'e':
         try:
             player_1.current_room = get_room_key(room[player_1.current_room].e_to.name)
             print("Moved to: ", player_1.current_room, '\n')
         except:
             print('Nothing in that direction, try another path \n')
+        continue
     if cmd == 'w':
         try:
             player_1.current_room = get_room_key(room[player_1.current_room].w_to.name)
             print("Moved to: ", player_1.current_room, '\n')
         except:
             print('Nothing in that direction, try another path \n')
+        continue
 
     if cmd.startswith('take'):
         t_item = cmd[5:]
@@ -150,6 +156,7 @@ while True:
             t_item.on_take()
         else:
             print("Invalid input")
+        continue
 
     if cmd.startswith('drop'):
         d_item = cmd[5:]
@@ -160,9 +167,11 @@ while True:
             d_item.on_drop()
         else:
             print("Invalid input")
+        continue
 
     if cmd == 'i' or cmd == 'inventory':
         print("Currently held item(s): ", player_1.items)
+        continue
 
     else:
-        print("invalid command \n")
+        print("Invalid command \n")
