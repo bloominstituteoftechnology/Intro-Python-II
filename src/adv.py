@@ -54,8 +54,6 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-player = Player("Ann", room['outside'])
-choices = ['n', 's', 'w', 'e']
 
 backpack = Item('Backpack', 'To store your gold')
 flashlight = Item('Flashlight', "maybe it's dark inside")
@@ -71,57 +69,63 @@ room['narrow'].items = [fire]
 room['outside'].items = [flashlight]
 
 
-def getItem():
-    for item in player.current_room.items:
-        print(f'\n\n\n\nThis room has "{item.name}" \nDiscription: {item.discription}\n\n\n')
-    item_choies = input('Get item Y/N -> ').lower().strip()
-    for i in player.current_room.items:
-        if item_choies == 'y':
-            player.items.append(i)
-        elif item_choies == 'n':
-            pass
-        else:
-           item_choies = input('Please enter Y/N -> ').lower().strip()
 
-def removeItem():
-    remove_item_input = input('Drop your first item Y/N -> ').lower().strip()
-    for i in player.items:
-        if player.items != [0]:
-            if remove_item_input == 'y':
-                player.items.remove(i)
-            elif remove_item_input == 'n':
-                pass
-        else:
-            remove_item_input = input('Please enter Y/N ->').lower().strip()
+print("\n\n\nWelcome to the game!\n".upper())    
+print("Enter 'h' to get help.\n")   
+player = Player("Ann", room['outside'])
+choices = ['n', 's', 'w', 'e']
 while True: #Loop
+    print("\n")
+    player_input = input("Enter command -> ").lower().strip()
     print(f'\nYou are at: {player.current_room.name}'.upper())
     print(f'\n{player.current_room.description}\n')
-   
-    for item in player.items:
-        print(f'Your item: {item.name}, {item.discription}')
-
-    print(f'\n{player.current_room.name}')
-    player_input = input("direction to N, S, E, W -> ").lower().strip()
 
     if player_input in choices:
+
         if player_input == 'n' and player.current_room.n_to != None:
             player.current_room = player.current_room.n_to
-            getItem()
-            removeItem()
         elif player_input == 's'and player.current_room.s_to != None:
             player.current_room = player.current_room.s_to
-            getItem()
-            removeItem()
         elif player_input == 'w' and player.current_room.w_to != None:
             player.current_room = player.current_room.w_to
-            getItem()
-            removeItem()
         elif player_input == 'e'and player.current_room.e_to != None:
             player.current_room = player.current_room.e_to
-            getItem()
-            removeItem()
         else:
             player_input = input("You can't go that way! type  N, S, E, W -> ").lower().strip()
+    elif player_input == 'h':
+        print('\nHow to play')
+        print("'n' = go North")
+        print("'s' = go South")
+        print("'w' = go West")
+        print("'e' = go East")
+        print("'c' = to check room's item")
+        print("'t' = to take the item")
+        print("'d' = to drop your item")
+        print("'i' = to check your inventory")
+        # print("'r' = to see your current room")
+        print("'q' = to quit")
+    elif player_input == 'c':
+        print(f'\n\n\n\n{player.current_room.name}')
+        for item in player.current_room.items:
+            print(f'This room has "{item.name}" \nDiscription: {item.discription}\n\n\nEnter "t" to take "{item.name}"')
+    elif player_input == 't':
+        for i in player.current_room.items:
+            if player_input == 't':
+                player.items.append(i)
+            else:
+                pass
+        for i in player.items:
+            print(f'\n\n\n\nYou got "{i.name}"\n\n\n\n') 
+    elif player_input == 'i':
+        print(f"\n\nYour items")
+        for i in player.items:
+            print(f'Item: {i.name}, {i.discription}')   
+    elif player_input == 'd':
+        for i in player.items:
+            if player.items is not []:
+                player.items.remove(i)   
+    # elif player_input == 'r':
+    #     print(f'\n\n\nYou are at {player.current_room.name}')   
     elif player_input == 'q':
         print('Bye')
         break
