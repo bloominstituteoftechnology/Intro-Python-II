@@ -27,17 +27,17 @@ earlier adventurers. The only exit is to the south."""),
 
 #Items
 
-# health_pot = Item("Health Potion", "Take a lickin and keep on kickin")
-# shield = Item("Shield", "Protects you from the bad ouchy things")
-# sword = Item("sword", "The pointy bit faces away from you")
-# poisonApple = Item("Browning apple", "It doesn't look like the kind of apple you would want to eat")
+health_pot = Item("Health Potion", "Take a lickin and keep on kickin")
+shield = Item("Shield", "Protects you from the bad ouchy things")
+sword = Item("sword", "The pointy bit faces away from you")
+poison_apple = Item("Browning apple", "It doesn't look like the kind of apple you would want to eat")
 
 #put the stuff in the places
 
-# room['treasure'].items = [shield, sword]
-# room['foyer'].items = [health_pot]
-# room['narrow'].items = [poisonApple]
-# room['oustide'].items = [health_pot]
+room['treasure'].items = [shield, sword]
+room['foyer'].items = [health_pot]
+room['narrow'].items = [poison_apple]
+room['outside'].items = [health_pot]
 
 
 # Link rooms together
@@ -81,7 +81,7 @@ def direction(d, currentRoom):
     if hasattr(currentRoom, attrib):
         return getattr(currentRoom, attrib)
     else:
-        print("You cant go that way")
+        print("There is nothing there, you cannot go forward")
 
     return currentRoom
 
@@ -108,4 +108,4 @@ while not done:
 
     else:
         unknown_input = user_input[0]
-        print('Unknown command: ', unknown_input)
+        print('I do not know what you are saying ', unknown_input)
