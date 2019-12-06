@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -21,6 +22,14 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+item = {
+    'coins': Item('Coins', 'You will unlock everything in this coins'),
+
+    'key': Item('Key', 'get the key access to all the doors'),
+
+    'pencil': Item('pencil', 'Just write your dream')
+}
+
 
 # Link rooms together
 
@@ -32,6 +41,11 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+#  rooms link to items
+room['overlook'].items.append(item['coins'])
+room['narrow'].items.append(item['key'])
+room['foyer'].items.append(item['pencil'])
 
 #####################################
 #                                   #
@@ -77,60 +91,96 @@ def initialize():
         else:
             return False
 
+    def items_available(room):
+        if (len(room.items)):
+            return True
+        else:
+            return False
+
+    nl = '\n'
+
+    def print_items(room):
+        print(
+            f'It contains: {nl}{nl.join(str(x.name) for x in room.items)}{nl}'
+        )
+
     while True:
         answer = input('Which direction do you want to go?')
 
-        if (answer == 'n' or answer == 's' or answer == 'w' or answer == 'e'):
-            if answer == 'n':
-                if is_valid_move(current_player.get_location().n_to):
-                    current_player.set_location(
-                        current_player.get_location().n_to
-                    )
+        if(len(answer.split(', ')) == 1):
+            if (answer == 'n' or answer == 's' or answer == 'w' or answer == 'e'):
+                if answer == 'n':
+                    if is_valid_move(current_player.get_location().n_to):
+                        current_player.set_location(
+                            current_player.get_location().n_to
+                        )
 
-                    print_current_location()
+                        print_current_location()
 
-                else:
-                    print(
-                        'Path does not exists. Try another direction.\n'
-                    )
-            if answer == "s":
-                if is_valid_move(current_player.get_location().s_to):
-                    current_player.set_location(
-                        current_player.get_location().s_to
-                    )
-                    print_current_location()
+                        if items_available(current_player.get_location()):
+                            print_items(current_player.get_location())
 
-                else:
-                    print(
-                        'Path does not exists. Try another direction.\n'
-                    )
-            if answer == "w":
-                if is_valid_move(current_player.get_location().w_to):
-                    current_player.set_location(
-                        current_player.get_location().w_to
-                    )
-                    print_current_location()
+                    else:
+                        print(
+                            'Path does not exists. Try another direction.\n'
+                        )
+                if answer == "s":
+                    if is_valid_move(current_player.get_location().s_to):
+                        current_player.set_location(
+                            current_player.get_location().s_to
+                        )
+                        print_current_location()
 
-                else:
-                    print(
-                        'Path does not exists. Try another direction.\n'
-                    )
-            if answer == "e":
-                if is_valid_move(current_player.get_location().e_to):
-                    current_player.set_location(
-                        current_player.get_location().e_to
-                    )
-                    print_current_location()
+                    else:
+                        print(
+                            'Path does not exists. Try another direction.\n'
+                        )
+                if answer == "w":
+                    if is_valid_move(current_player.get_location().w_to):
+                        current_player.set_location(
+                            current_player.get_location().w_to
+                        )
+                        print_current_location()
 
-                else:
-                    print(
-                        'Path does not exists. Try another direction.\n'
-                    )
-        elif (answer == 'q'):
-            print(f'Thanks for playing!')
-            break
+                    else:
+                        print(
+                            'Path does not exists. Try another direction.\n'
+                        )
+                if answer == "e":
+                    if is_valid_move(current_player.get_location().e_to):
+                        current_player.set_location(
+                            current_player.get_location().e_to
+                        )
+                        print_current_location()
+
+                    else:
+                        print(
+                            'Path does not exists. Try another direction.\n'
+                        )
+            elif (answer == 'q'):
+                print(f'Thanks for playing!')
+                break
+            else:
+                print(
+                    f'Seems like you entered a wrong value. Either n,s,w,e or q for quit')
         else:
-            print(f'Seems like you entered a wrong value. Either n,s,w,e or q for quit')
+            split_input = answer.split()
+
+            if split_input[0] == 'get' or split_input[0] == 'drop':
+                if split_input[0] == 'get':
+                    if items_available(current_player.get_location()):
+                        current_player.items.append(item[split_input[1]])
+                        current_player.current_room.items.remove(
+                            item[split_input[1]]
+                        )
+
+                        print(f'You got: {current_player.items[0].name}!{nl}')
+                else:
+                    print('Item does not exist!')
+            else:
+                print(
+                    'Invalid command: use either "take" or "drop" to interact with items'
+                )
 
 
 initialize()
