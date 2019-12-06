@@ -5,6 +5,10 @@ class Player:
     def __init__(self, name, current_room):
         self.name = name
         self.current_room = current_room
+        self.items = []
     def __str__(self):
-        return 'Player('+str(self.name)+', current room:'+str(self.current_room)+')'
+        player_inventory = f'{self.name} {self.current_room} {self.items}'
+        for i in self.items:
+            player_inventory += f'{i}'
+        return player_inventory
     

@@ -9,5 +9,10 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.items = []
     def __str__(self):
-        return 'Yor are at '+str(self.name)+', description: '+str(self.description)+''
+        room_items = f'{self.name} {self.description} Items: {self.items}'
+        for i in self.items:
+            room_items += f'{i}'
+        return room_items
+    

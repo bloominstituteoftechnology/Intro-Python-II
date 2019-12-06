@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 import textwrap
 
 # Declare all the rooms
@@ -56,24 +57,71 @@ room['treasure'].s_to = room['narrow']
 player = Player("Ann", room['outside'])
 choices = ['n', 's', 'w', 'e']
 
+backpack = Item('Backpack', 'To store your gold')
+flashlight = Item('Flashlight', "maybe it's dark inside")
+sword = Item('Sword', 'You need this to protect yourself')
+rope = Item('Rope', 'You can do anything with it')
+fire = Item('Fire', 'You can burn anything')
 
+
+room['foyer'].items = [sword]
+room['overlook'].items = [rope]
+room['treasure'].items = [backpack]
+room['narrow'].items = [fire]
+room['outside'].items = [flashlight]
+
+
+def getItem():
+    for item in player.current_room.items:
+        print(f'\n\n\n\nThis room has "{item.name}" \nDiscription: {item.discription}\n\n\n')
+    item_choies = input('Get item Y/N -> ').lower().strip()
+    for i in player.current_room.items:
+        if item_choies == 'y':
+            player.items.append(i)
+        elif item_choies == 'n':
+            pass
+        else:
+           item_choies = input('Please enter Y/N -> ').lower().strip()
+
+def removeItem():
+    remove_item_input = input('Drop your first item Y/N -> ').lower().strip()
+    for i in player.items:
+        if player.items != [0]:
+            if remove_item_input == 'y':
+                player.items.remove(i)
+            elif remove_item_input == 'n':
+                pass
+        else:
+            remove_item_input = input('Please enter Y/N ->').lower().strip()
 while True: #Loop
-    print(f'You are at: {player.current_room.name}')
-    print(f'{player.current_room.description}')
-    
-    player_input = input("-> ").lower().strip()
+    print(f'\nYou are at: {player.current_room.name}'.upper())
+    print(f'\n{player.current_room.description}\n')
+   
+    for item in player.items:
+        print(f'Your item: {item.name}, {item.discription}')
+
+    print(f'\n{player.current_room.name}')
+    player_input = input("direction to N, S, E, W -> ").lower().strip()
 
     if player_input in choices:
         if player_input == 'n' and player.current_room.n_to != None:
             player.current_room = player.current_room.n_to
+            getItem()
+            removeItem()
         elif player_input == 's'and player.current_room.s_to != None:
             player.current_room = player.current_room.s_to
+            getItem()
+            removeItem()
         elif player_input == 'w' and player.current_room.w_to != None:
             player.current_room = player.current_room.w_to
+            getItem()
+            removeItem()
         elif player_input == 'e'and player.current_room.e_to != None:
             player.current_room = player.current_room.e_to
+            getItem()
+            removeItem()
         else:
-            print('You can not go there. Try again.')
+            player_input = input("You can't go that way! type  N, S, E, W -> ").lower().strip()
     elif player_input == 'q':
         print('Bye')
         break
