@@ -33,6 +33,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+#####################################
+#                                   #
+#          overlook  #   treasure   #
+#           foyer       narrow      #
+#          Outside                  #
+#####################################
+
+
 #
 # Main
 #
@@ -70,11 +78,10 @@ def initialize():
             return False
 
     while True:
-        player_input = input('Which direction will are you planning?\n')
+        answer = input('Which direction do you want to go?')
 
-        if player_input == 'n' or player_input == 's' or player_input == 'e' or player_input == 'w':
-            if player_input == 'n':
-
+        if (answer == 'n' or answer == 's' or answer == 'w' or answer == 'e'):
+            if answer == 'n':
                 if is_valid_move(current_player.get_location().n_to):
                     current_player.set_location(
                         current_player.get_location().n_to
@@ -82,38 +89,48 @@ def initialize():
 
                     print_current_location()
 
-            elif player_input == 's':
+                else:
+                    print(
+                        'Path does not exists. Try another direction.\n'
+                    )
+            if answer == "s":
                 if is_valid_move(current_player.get_location().s_to):
                     current_player.set_location(
                         current_player.get_location().s_to
                     )
-
                     print_current_location()
 
-            elif player_input == 'e':
-                if is_valid_move(current_player.get_location().e_to):
-                    current_player.set_location(
-                        current_player.get_location().e_to
+                else:
+                    print(
+                        'Path does not exists. Try another direction.\n'
                     )
-
-                    print_current_location()
-
-            else:
+            if answer == "w":
                 if is_valid_move(current_player.get_location().w_to):
                     current_player.set_location(
                         current_player.get_location().w_to
                     )
-
                     print_current_location()
 
-        elif player_input == 'q':
-            print(
-                f'Goodbye {current_player.get_name()}, we hope you\'ll play again!')
+                else:
+                    print(
+                        'Path does not exists. Try another direction.\n'
+                    )
+            if answer == "e":
+                if is_valid_move(current_player.get_location().e_to):
+                    current_player.set_location(
+                        current_player.get_location().e_to
+                    )
+                    print_current_location()
+
+                else:
+                    print(
+                        'Path does not exists. Try another direction.\n'
+                    )
+        elif (answer == 'q'):
+            print(f'Thanks for playing!')
             break
         else:
-            print(
-                'Invalid command: Navigate using "n", "s", "e", or "w", or press "q" to quit'
-            )
+            print(f'Seems like you entered a wrong value. Either n,s,w,e or q for quit')
 
 
 initialize()
