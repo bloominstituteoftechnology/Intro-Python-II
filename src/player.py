@@ -5,9 +5,9 @@ from room import Room
 
 class Player(object):
 
-    def __init__(self, name, room):
+    def __init__(self, name, current_room):
         self.name = name
-        self.room = room
+        self.current_room = current_room
 
     def __str__(self):
-        return str(self.room)
+        return str(self.current_room)
