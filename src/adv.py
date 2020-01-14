@@ -49,3 +49,22 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+if __name__ == "__main__":
+    directions = ['n', 's', 'e', 'w']
+    print(f"Room: {room.name}, description: {room.description}")
+    move = input("What direction would you like to go? (n, e, w, s)")
+
+    while not move == 'q':
+        if move in directions:
+            if move == 'n':
+                break
+            elif move == 'e':
+                break
+            elif move == 's':
+                break
+            else:
+                break
+            break
+
+    print(f"Room: {room.name}, description: {room.description}")
+    move = input("What direction would you like to go? (n, e, w, s)")
