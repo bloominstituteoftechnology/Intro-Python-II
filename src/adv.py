@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+
 
 # Declare all the rooms
 
@@ -38,6 +40,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("player1", room['outside'])
 
 # Write a loop that:
 #
@@ -49,22 +52,52 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def get_room_and_input():
+    print(f"Room: {player.current_room.name}, description: {player.current_room.description}")
+    move = input("What direction would you like to go? (n, e, w, s)")
+    return move
+
+def bad_direction():
+    print()
+    print("There is no room in that direction. Please choose another direction.")
+    print()
+
 if __name__ == "__main__":
     directions = ['n', 's', 'e', 'w']
-    print(f"Room: {room.name}, description: {room.description}")
-    move = input("What direction would you like to go? (n, e, w, s)")
+    move = get_room_and_input()
 
     while not move == 'q':
         if move in directions:
             if move == 'n':
-                break
-            elif move == 'e':
-                break
-            elif move == 's':
-                break
-            else:
-                break
-            break
+                if (hasattr(player.current_room, "n_to")):
+                    print("You went north.")
+                    player.current_room = player.current_room.n_to
+                else:
+                    bad_direction()
 
-    print(f"Room: {room.name}, description: {room.description}")
-    move = input("What direction would you like to go? (n, e, w, s)")
+            elif move == 'e':
+                if (hasattr(player.current_room, "e_to")):
+                    print('You went east.')
+                    player.current_room = player.current_room.e_to
+                else:
+                    bad_direction()
+
+            elif move == 's':
+                if (hasattr(player.current_room, "s_to")):
+                    print('You went south.')
+                    player.current_room = player.current_room.s_to
+                else:
+                    bad_direction()
+
+            else:
+                if (hasattr(player.current_room, "w_to")):
+                    print('You went west')
+                    player.current_room = player.current_room.w_to
+                else:
+                    bad_direction()               
+
+            print()
+            move = get_room_and_input()
+            # print(f"Room: {player.current_room.name}, description: {player.current_room.description}")
+            # move = input("What direction would you like to go? (n, e, w, s)")
