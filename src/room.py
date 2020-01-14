@@ -32,3 +32,15 @@ class Room():
 
     def containsItem(self, item):
         return item in self.items
+
+    def containsItemNamed(self, item):
+        if self.itemNamed(item):
+            return True
+        else:
+            return False
+
+    def itemNamed(self, name):
+        for item in self.items:
+            lcName = item.name.lower()
+            if name == lcName:
+                return item

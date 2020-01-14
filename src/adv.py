@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-from item import Item
+from item import *
 
 # Declare all the rooms
 
@@ -38,8 +38,8 @@ room['treasure'].s_to = room['narrow']
 
 # Set dress rooms
 room['outside'].items = [
-    Item("Small Rocks"),
-    Item("Big Rocks"),
+    Rock("Pebbles"),
+    Rock("Rocks"),
     Item("Caterpiller")
 ]
 
@@ -71,14 +71,18 @@ def printHelp():
 def promptPlayerInput():
     playerInput = input("What do you want to do?: ").lower()
 
-    direction = analyzePlayerDirection(playerInput)
     # If the user enters a cardinal direction, attempt to move to the room there.
+    direction = analyzePlayerDirection(playerInput)
     if direction:
         changeRooms(direction)
         return
 
-    gameCommand = analyizeGameCommand(playerInput)
-    if gameCommand:
+    finished = analyzeLookingAround(playerInput)
+    if finished:
+        return
+
+    finished = analyizeGameCommand(playerInput)
+    if finished:
         return
     # Print an error message if the movement isn't allowed.
     print("Invalid input. Try again.")
@@ -98,8 +102,14 @@ def analyzePlayerDirection(direction):
     else:
         return None
 
-# def analyzeLookingAround(looking):
-#     if looking == "l":
+def analyzeLookingAround(looking):
+    if looking == "l":
+        room = player.current_room
+        print(room.description)
+        print("Looking around, you see the following items scattered about:")
+        for item in room.items:
+            print(f"\t{item.name}")
+        return True
 
 
 def changeRooms(direction):
