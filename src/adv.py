@@ -81,13 +81,17 @@ def promptPlayerInput():
     if finished:
         return
 
-    finished = analyizeGameCommand(playerInput)
+    finished = analyzeInteraction(playerInput)
+    if finished: 
+        return
+
+    finished = analyzeGameCommand(playerInput)
     if finished:
         return
     # Print an error message if the movement isn't allowed.
     print("Invalid input. Try again.")
 
-def analyizeGameCommand(command):
+def analyzeGameCommand(command):
     # If the user enters "q", quit the game.
     if command == "q":
         print("Exiting game.")
@@ -109,6 +113,23 @@ def analyzeLookingAround(looking):
         print("Looking around, you see the following items scattered about:")
         for item in room.items:
             print(f"\t{item.name}")
+        return True
+
+def performTake(interaction):
+    room = player.current_room
+    try:
+        itemName = interaction.split(" ")[1]
+    except:
+        print("No item described. Try again.")
+    item = room.itemNamed(itemName)
+    if item:
+        player.pickUpItem(item)
+    else:
+        print(f"There's no item named {itemName}")
+
+def analyzeInteraction(interaction):
+    if interaction.startswith("take") or interaction.startswith("grab"):
+        performTake(interaction)
         return True
 
 

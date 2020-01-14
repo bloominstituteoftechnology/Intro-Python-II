@@ -19,13 +19,13 @@ class Player():
         else:
             self.current_room.removeItem(item)
             self.items.append(item)
-            item.onTake()
+            item.onTake(self)
 
     def setDownItem(self, item):
         if self.holdingItem(item):
             self.items.remove(item)
             self.current_room.addItem(item)
-            item.onDrop()
+            item.onDrop(self)
 
     def holdingItem(self, item):
         return item in self.items
