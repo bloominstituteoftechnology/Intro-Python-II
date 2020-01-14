@@ -37,48 +37,74 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+# Write a loop that:
 
     
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(input("Enter your character's name: "), room['outside'])
 
-# Write a loop that:
-def promptPlayerDirection():
-    direction = input("Which way will you go? [n/s/w/e]: ")
+def printHelp():
+    print("""
+    The following inputs are valid:
+        n - move to the room to the north
+        s - move to the room to the south
+        e - move to the room to the east
+        w - move to the room to the west
+
+        q - quit the game
+        h - show this help
+    """)
+
+# * Waits for user input and decides what to do.
+def promptPlayerInput():
+    playerInput = input("What do you want to do?: ").lower()
+
+    direction = analyzePlayerDirection(playerInput)
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    if direction:
+        changeRooms(direction)
+        return
+
+    gameCommand = analyizeGameCommand(playerInput)
+    if gameCommand:
+        return
+    # Print an error message if the movement isn't allowed.
+    print("Invalid input. Try again.")
+
+def analyizeGameCommand(command):
+    # If the user enters "q", quit the game.
+    if command == "q":
+        print("Exiting game.")
+        exit()
+    elif command == "h" or command == "help":
+        printHelp()
+        return True
+
+def analyzePlayerDirection(direction):
     if direction == "n" or direction == "s" or direction == "w" or direction == "e":
         return direction
     else:
-        print("Invalid direction...")
-        return promptPlayerDirection()
+        return None
 
-def changeRooms(player, direction):
+def changeRooms(direction):
     newRoom = player.current_room.roomInDirection(direction)
     if newRoom:
         player.changeRoom(newRoom)
     else:
-        print("That way is blocked! Try again.")
-        newDirection = promptPlayerDirection()
-        changeRooms(player, newDirection)
+        print("That way is blocked! Try something else.")
+        promptPlayerInput()
 
 
 def gameLoop():
     global player
+    # * Prints the current room name
+    # * Prints the current description (the textwrap module might be useful here).
     print(f"\n{player.name} entered {player.current_room.name}. {player.current_room.description}")
-    direction = promptPlayerDirection()
-    changeRooms(player, direction)
+    promptPlayerInput()
 
 def main():
     while True:
         gameLoop()
 
 main()
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
