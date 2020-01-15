@@ -6,7 +6,7 @@ class Room:
         self.name = name
         self.description = description
         self.items = []
-        self.gold = 0
+        self.gold = []
         self.n_to = None
         self.e_to = None
         self.s_to = None

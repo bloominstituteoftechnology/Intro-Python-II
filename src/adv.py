@@ -2,6 +2,7 @@ from room import Room
 from player import Player
 from item import Item
 import os
+from gold import Gold
 
 
 # Declare all the rooms
@@ -38,6 +39,10 @@ room['treasure'].items = [shield, sword]
 room['foyer'].items = [health_pot]
 room['narrow'].items = [poison_apple]
 room['outside'].items = [health_pot]
+
+
+#random bits of gold
+
 
 
 # Link rooms together
