@@ -63,6 +63,8 @@ def printHelp():
 
         l - look around the room you're in
 
+        grab/use/drop [item] - interact with items
+
         q - quit the game
         h - show this help
     """)
@@ -70,6 +72,10 @@ def printHelp():
 # * Waits for user input and decides what to do.
 def promptPlayerInput():
     playerInput = input("What do you want to do?: ").lower()
+
+    # in each of the following function calls, it will perform actions if the 
+    # input is valid for a given function. Otherwise, if the given function returns 
+    # a False value, it will try the next function until something matches.
 
     # If the user enters a cardinal direction, attempt to move to the room there.
     direction = analyzePlayerDirection(playerInput)
@@ -128,9 +134,49 @@ def performTake(interaction):
         print(f"There's no item named {itemName}")
 
 def analyzeInteraction(interaction):
-    if interaction.startswith("take") or interaction.startswith("grab"):
-        performTake(interaction)
-        return True
+    room = player.current_room
+    commandParts = interaction.split(" ")
+    command = commandParts[0]
+
+    validTakeCommands = ["take", "grab"]
+    validUseCommands = ["use"]
+    validDropCommands = ["drop", "set"]
+    validCommands = validTakeCommands + validDropCommands + validUseCommands
+
+    if not (command in validCommands):
+        return False
+
+    try:
+        itemName = commandParts[1]
+    except:
+        print("No item described. Try again.")
+        return False
+
+    roomItem = room.itemNamed(itemName)
+    playerItem = player.itemNamed(itemName)
+
+    if command in validTakeCommands:
+        if roomItem:
+            player.pickUpItem(roomItem)
+        else:
+            print(f"There's no item in the room named {itemName}")
+            return False
+    elif command in validUseCommands:
+        if playerItem:
+            player.useItem(playerItem)
+        else:
+            print(f"You're not holding an item named {itemName}")
+            return False
+    elif command in validDropCommands:
+        if playerItem:
+            player.dropItem(playerItem)
+        else:
+            print(f"You're not holding an item named {itemName}")
+            return False
+    else:
+        print("Somehow you broke the game!")
+        return False
+    return True
 
 
 def changeRooms(direction):

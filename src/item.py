@@ -6,7 +6,7 @@ class Item():
         print(f"{player.name} picked up {self.name}.")
 
     def onDrop(self, player):
-        print(f"{player.name} dropped {self.name}.")
+        print(f"{player.name} is no longer holding {self.name}.")
 
     def onUse(self, player):
         print(f"Using {self.name}...")
@@ -19,5 +19,5 @@ class Rock(Item):
 
     def onUse(self, player):
         super().onUse(player)
-        print("Threw {self.name}")
-        player.setDownItem(self)
+        print(f"Threw {self.name}")
+        player.dropItem(self)

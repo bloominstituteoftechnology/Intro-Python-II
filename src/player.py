@@ -21,11 +21,21 @@ class Player():
             self.items.append(item)
             item.onTake(self)
 
-    def setDownItem(self, item):
+    def dropItem(self, item):
         if self.holdingItem(item):
             self.items.remove(item)
             self.current_room.addItem(item)
             item.onDrop(self)
 
+    def useItem(self, item):
+        if self.holdingItem(item):
+            item.onUse(self)
+
     def holdingItem(self, item):
         return item in self.items
+
+    def itemNamed(self, name):
+        for item in self.items:
+            lcName = item.name.lower()
+            if name == lcName:
+                return item
