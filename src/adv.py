@@ -19,8 +19,9 @@ the distance, but there is no way across the chasm."""),
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+chamber! There are some flickering torches lining the room. You can see the overlook
+from here. Sadly, it has already been completely emptied by earlier adventurers. The
+only exit is to the south."""),
 }
 
 
@@ -43,6 +44,26 @@ room['outside'].items = [
     Item("Caterpiller")
 ]
 
+room['foyer'].items = [
+    Chair("Chair"),
+    Item("BrokenStool"),
+    Item("Doorknob")
+]
+
+room['overlook'].items = [
+    Item("Spiderweb"),
+    Rock("Stone")
+]
+
+room['narrow'].items = [
+    Item("Dust")
+]
+
+room['treasure'].items = [
+    Item("SeveralCoins"),
+    Item("EmptyTreasureChest"),
+    Item("LooseTorch")
+]
 #
 # Main
 #
@@ -62,6 +83,7 @@ def printHelp():
         w - move to the room to the west
 
         l - look around the room you're in
+        i - see what you're holding
 
         grab/use/drop [item] - interact with items
 
@@ -81,6 +103,10 @@ def promptPlayerInput():
     direction = analyzePlayerDirection(playerInput)
     if direction:
         changeRooms(direction)
+        return
+
+    finished = analyzeInventory(playerInput)
+    if finished:
         return
 
     finished = analyzeLookingAround(playerInput)
@@ -178,6 +204,12 @@ def analyzeInteraction(interaction):
         return False
     return True
 
+def analyzeInventory(inventory):
+    if inventory == "i":
+        print("Looking down at your hands, you see yourself holding the following:")
+        for item in player.items:
+            print(f"\t{item.name}")
+        return True
 
 def changeRooms(direction):
     newRoom = player.current_room.roomInDirection(direction)

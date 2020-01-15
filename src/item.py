@@ -21,3 +21,21 @@ class Rock(Item):
         super().onUse(player)
         print(f"Threw {self.name}")
         player.dropItem(self)
+
+class Chair(Item):
+    isBroken = False
+    def __init__(self, name):
+        super().__init__(name)
+
+    def onUse(self, player):
+        if self.isBroken:
+            print("The chair is broken. If you sit on it, you could severely injure yourself.")
+        else:
+            print("""You sit on the chair for a moment, relaxing. \
+This long journey is taxing, so it's nice take a small re...
+...
+...
+The chair broke. You're too fat.
+""")
+            self.name = f"Broken{self.name}"
+            self.isBroken = True
