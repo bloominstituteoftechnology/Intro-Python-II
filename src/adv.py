@@ -8,12 +8,14 @@ room = {
                      'nothing',
                      'nothing',
                      'nothing',
+                     'nothing',
                      'nothing'
                      ),
 
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""",
+                     'nothing',
                      'nothing',
                      'nothing',
                      'nothing',
@@ -26,11 +28,13 @@ the distance, but there is no way across the chasm.""",
                      'nothing',
                      'nothing',
                      'nothing',
+                     'nothing',
                      'nothing'
                      ),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air.""", 'nothing',
+                     'nothing',
                      'nothing',
                      'nothing',
                      'nothing'
@@ -39,6 +43,7 @@ to north. The smell of gold permeates the air.""", 'nothing',
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south.""", 'nothing',
+                     'nothing',
                      'nothing',
                      'nothing',
                      'nothing'
@@ -53,9 +58,10 @@ room['overlook'].e = room['narrow']
 room['narrow'].w = room['foyer']
 room['narrow'].n = room['treasure']
 room['treasure'].s = room['narrow']
+room['treasure'].loot = "gold"
 
 # Main
-current_player = Player("Brandon", "outside")
+current_player = Player("Brandon", "outside", ["sword", "belt"])
 current_room_in = current_player.current_room
 # welcome adventurers
 print("Welcome to your adventure!")
@@ -65,7 +71,7 @@ print(room[current_room_in].description)
 msg = str(input(
     "what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
 # set initial settings
-current_player = Player("Brandon", "outside")
+
 current_room_in = ""
 current_player.current_room_in = current_player.current_room
 
@@ -79,6 +85,7 @@ def adventure(msg):
                     room[current_player.current_room], msg).name
                 current_room_description = getattr(
                     room[current_player.current_room], msg).description
+                # check to see if el item exists. if it does offer to take it yes or no... then add conditional to drop item???
                 # splitting each word into array of lowercase
                 current_player.current_room = getattr(room[current_player.current_room], msg).name.lower(
                 ).split(" ")

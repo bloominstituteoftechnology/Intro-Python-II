@@ -3,9 +3,10 @@
 
 
 class Room:
-    def __init__(self, name, description, n, s, w, e):
+    def __init__(self, name, description, loot, n, s, w, e):
         self.description = description
         self.name = name
+        self.loot = loot
         self.n = n
         self.s = s
         self.w = w
