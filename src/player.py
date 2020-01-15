@@ -3,5 +3,5 @@
 
 
 class Player:
-    def __init__(self):
-        self.curr_room = 'outside'
+    def __init__(self, curr_room):
+        self.curr_room = curr_room
