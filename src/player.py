@@ -5,3 +5,4 @@
 class Player:
     def __init__(self, curr_room):
         self.curr_room = curr_room
+    game_map = [['outside', None], [None, None, None]]
