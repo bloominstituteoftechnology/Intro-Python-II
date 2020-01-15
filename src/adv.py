@@ -74,6 +74,7 @@ player = Player(room['outside'])
 #
 # If the user enters "q", quit the game.
 
+
 def direction(d, currentRoom):
 
     attrib = d + '_to'
@@ -103,9 +104,15 @@ while not done:
     if  user_input[0] == 'q':
         done = True
 
+    if user_input[0] in ["get item"]:
+        player.add_item
+        print(player.inventory)
+    
+
     elif user_input[0] in ["n", "north", "s", "south", "w", "west", "e", "east"]:
         player.currentRoom = direction(user_input[0], player.currentRoom)
 
+    
     else:
         unknown_input = user_input[0]
         print('I do not know what you are saying ', unknown_input)
