@@ -16,16 +16,26 @@ class Item():
 class Rock(Item):
     def __init__(self, name):
         super().__init__(name)
+        self.isThrown = False
+
+    def onTake(self, player):
+        self.isThrown = False
+        super().onTake(player)
 
     def onUse(self, player):
         super().onUse(player)
         print(f"Threw {self.name}")
+        self.isThrown = True
         player.dropItem(self)
 
+    def onDrop(self, player):
+        if not self.isThrown:
+            super().onDrop(player)
+
 class Chair(Item):
-    isBroken = False
     def __init__(self, name):
         super().__init__(name)
+        self.isBroken = False
 
     def onUse(self, player):
         if self.isBroken:
