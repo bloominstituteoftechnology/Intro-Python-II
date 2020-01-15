@@ -3,16 +3,15 @@ from item import Item
 # description attributes.
 
 class Room():
-    n_to = None
-    s_to = None
-    e_to = None
-    w_to = None
-
     items = []
 
     def __init__(self, name, description):
         self.name = name
         self.description = description
+        self.n_to = None
+        self.s_to = None
+        self.e_to = None
+        self.w_to = None
 
     def roomInDirection(self, direction):
         if direction == "n":
@@ -21,9 +20,11 @@ class Room():
             return self.s_to
         elif direction == "w":
             return self.w_to
-        else:
+        elif direction == "e":
             return self.e_to
-    
+        else:
+            return None
+
     def addItem(self, item):
         self.items.append(item)
 
