@@ -78,6 +78,14 @@ current_player.current_room_in = current_player.current_room
 
 def adventure(msg):
     while not msg == "q":
+
+        item_drop = msg.split(" ")
+
+        if "drop" in item_drop and item_drop[1] in current_player.items:
+            print(f"you have dropped {item_drop[1]}")
+            current_player.items.remove(item_drop[1])
+        else:
+            print("you don't have that $%#@")
         if hasattr(room[current_player.current_room], msg):
             if getattr(room[current_player.current_room], msg) != 'nothing':
                 # two things that we need to print, name and description
@@ -116,7 +124,7 @@ def adventure(msg):
                     "That was is blocked. What direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
         else:
             msg = str(input(
-                "Please enter a real direaction! what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
+                "Please enter a DIRECTION! what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
 
 
 adventure(msg)
