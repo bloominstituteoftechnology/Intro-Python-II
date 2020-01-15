@@ -1,5 +1,10 @@
 from room import Room
 from player import Player
+from basic_room import basic_room
+from cave import cave
+from narrow import narrow
+from treasure import treasure
+from overlook import overlook
 # Declare all the rooms
 
 room = {
@@ -41,8 +46,7 @@ to north. The smell of gold permeates the air.""", 'nothing',
                      ),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", 'nothing',
+chamber! The only exit is to the south.""", 'nothing',
                      'nothing',
                      'nothing',
                      'nothing',
@@ -58,7 +62,7 @@ room['overlook'].e = room['narrow']
 room['narrow'].w = room['foyer']
 room['narrow'].n = room['treasure']
 room['treasure'].s = room['narrow']
-room['treasure'].loot = ["gold"]
+room['treasure'].loot = ["gold", "silver"]
 
 # Main
 current_player = Player("Brandon", "outside", ["sword", "belt"])
@@ -67,9 +71,10 @@ current_room_in = current_player.current_room
 print("Welcome to your adventure!")
 print(room[current_room_in].name)
 print(room[current_room_in].description)
+print(cave())
 # set initial direction
 msg = str(input(
-    "what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
+    "what direction will you go? Please press n s w e or q for quit.\n"))
 # set initial settings
 
 current_room_in = ""
@@ -81,11 +86,12 @@ def adventure(msg):
 
         item_drop = msg.split(" ")
 
-        if "drop" in item_drop and item_drop[1] in current_player.items:
-            print(f"you have dropped {item_drop[1]}")
-            current_player.items.remove(item_drop[1])
-        else:
-            print("you don't have that $%#@")
+        if "drop" in item_drop:
+            if item_drop[1] in current_player.items:
+                print(f"you have dropped {item_drop[1]}")
+                current_player.items.remove(item_drop[1])
+            else:
+                print("you don't have that *^&%")
         if hasattr(room[current_player.current_room], msg):
             if getattr(room[current_player.current_room], msg) != 'nothing':
                 # two things that we need to print, name and description
@@ -107,24 +113,43 @@ def adventure(msg):
                         # print where we are
                 print(current_room_in, current_room_description)
                 # check for an item in the room
+                # refactor to be conditional here
+                if current_room_in == "Foyer":
+                    print(basic_room())
+                if current_room_in == "Narrow Passage":
+                    print(narrow())
+                if current_room_in == "Treasure Chamber":
+                    print(treasure())
+                if current_room_in == "Grand Overlook":
+                    print(overlook())
                 if isinstance(current_rooms_items, list) and len(current_rooms_items) > 0:
+                    items_string = " ".join(current_rooms_items)
                     item = str(input(
-                        f"you see {current_rooms_items[0]} would you like to pick it up? press y or n\n"))
-                    if item == "y":
-                        current_player.items.append(current_rooms_items[0])
-                        print(f"you have picked up {current_rooms_items[0]}")
-                        if "gold" in current_rooms_items:
-                            current_rooms_items.remove("gold")
+                        f"you see {items_string}. type get and the name the item you would like to get!"))
+                    item = item.split(" ")
+                    if len(item) > 1:
+                        if item[1] in current_rooms_items and item[0] == "get":
+                            index = current_rooms_items.index(item[1])
+                            current_player.items.append(
+                                current_rooms_items[index])
+                            print(
+                                f"you have picked up {current_rooms_items[index]}")
+                            current_rooms_items.remove(
+                                current_rooms_items[index])
+                        else:
+                            print("this does not exist")
+                    else:
+                        print("did you type get?")
 
                 msg = str(input(
-                    "what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
+                    "what direction will you go? Please press n s w e or q for quit.\n"))
 
             else:
                 msg = str(input(
-                    "That was is blocked. What direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
+                    "That was is blocked. What direction will you go? Please press n s w e or q for quit.\n"))
         else:
             msg = str(input(
-                "Please enter a DIRECTION! what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
+                "Please enter a DIRECTION! what direction will you go? Please press n for s w e or q for quit.\n"))
 
 
 adventure(msg)
