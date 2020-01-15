@@ -24,22 +24,22 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
+room['outside'].n_to = 'foyer'
 room['outside'].exits = 'N'
 
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['foyer'].exits = ['N, S, and E']
+room['foyer'].s_to = 'outside'
+room['foyer'].n_to = 'overlook'
+room['foyer'].e_to = 'narrow'
+room['foyer'].exits = 'N, S, and E'
 
-room['overlook'].s_to = room['foyer']
+room['overlook'].s_to = 'foyer'
 room['overlook'].exits = 'S'
 
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
+room['narrow'].w_to = 'foyer'
+room['narrow'].n_to = 'treasure'
 room['narrow'].exits = 'N and W'
 
-room['treasure'].s_to = room['narrow']
+room['treasure'].s_to = 'narrow'
 room['treasure'].exits = 'S'
 #
 # Main
@@ -50,10 +50,14 @@ player_one = Player('outside')
 # Write a loop that:
 #
 # * Prints the current room name
-print(room[player_one.curr_room].name+'\n')
-# * Prints the current description (the textwrap module might be useful here).
-print(room[player_one.curr_room].description)
-print('Exits are: '+room[player_one.curr_room].exits)
+
+
+def print_room():
+    print(room[player_one.curr_room].name+'\n')
+    # * Prints the current description (the textwrap module might be useful here).
+    print(room[player_one.curr_room].description+'\n')
+    print('Exits are: '+room[player_one.curr_room].exits)
+
 # Print Map
 
 
@@ -68,11 +72,47 @@ def print_map():
     print(top+mid_comp+bot)
 
 
+print_room()
 # print_map()
+while True:
+    # * Waits for user input and decides what to do.
+    #
+    uimp = input('Enter Command===>')
 
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    # Print an error message if the movement isn't allowed.
+    #
+    # If the user enters "q", quit the game.
+
+    if uimp == 'q':
+        break
+    elif uimp == 'n':
+        if hasattr(room[player_one.curr_room], 'n_to'):
+            print("Moving North\n")
+            player_one.curr_room = room[player_one.curr_room].n_to
+            print_room()
+        else:
+            print("Can't move that way\n")
+    elif uimp == 's':
+        if hasattr(room[player_one.curr_room], 's_to'):
+            print("Moving South\n")
+            player_one.curr_room = room[player_one.curr_room].s_to
+            print_room()
+        else:
+            print("Can't move that way\n")
+    elif uimp == 'w':
+        if hasattr(room[player_one.curr_room], 'w_to'):
+            print("Moving West\n")
+            player_one.curr_room = room[player_one.curr_room].w_to
+            print_room()
+        else:
+            print("Can't move that way\n")
+    elif uimp == 'e':
+        if hasattr(room[player_one.curr_room], 'e_to'):
+            print("Moving East\n")
+            player_one.curr_room = room[player_one.curr_room].e_to
+            print_room()
+        else:
+            print("Can't move that way\n")
+    else:
+        print("Sorry, I don't understand")
