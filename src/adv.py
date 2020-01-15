@@ -1,4 +1,13 @@
 from room import Room
+from player import Player
+import sys
+
+class InvalidMove(Exception):
+    pass
+
+class NoRoomThatDirection(Exception):
+    pass
+
 
 # Declare all the rooms
 
@@ -39,7 +48,54 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player('Scott', room['outside'])
+
+
+
 # Write a loop that:
+while(True):
+
+    # printing room name and description
+    print(player.room.name)
+    print(player.room.description)
+
+    try:
+        # defining valid moves
+        moves = ['n', 's', 'e', 'w', 'q']
+
+        # get user move
+        print('What would you like to do?')
+        move = input().lower()
+            
+        # check that move is valid
+        if move not in moves:
+          raise InvalidMove
+          
+        # getting name of next room attribute corresponding to the user move
+        attr = move+"_to"
+        
+        # check that there is a room in that direction
+        if getattr(player.room, attr, 'error') == 'error':
+            raise NoRoomThatDirection
+
+        # updating room based on user move
+        player.room = getattr(player.room,attr)
+    
+    except InvalidMove:
+        # if move is invalid, print error message   
+        print("That is an invalid move. To move, please enter 'n', 's', 'e', or 'w'.\n" \
+                "To quit the game, enter 'q'.")
+    
+    except NoRoomThatDirection:
+        # if there is no room that direction, print error message
+        print("There's nowhere to go in that direction. Try another direction.")
+    
+    finally:
+        # if player enters 'q' quit the game
+        if move == 'q':
+            print('Thanks for playing!')
+            sys.exit(0)
+
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
