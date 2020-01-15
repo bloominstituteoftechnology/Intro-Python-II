@@ -44,38 +44,59 @@ earlier adventurers. The only exit is to the south.""", 'nothing',
                      'nothing'
                      ),
 }
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['outside'].n = room['foyer']
+room['foyer'].s = room['outside']
+room['foyer'].n = room['overlook']
+room['foyer'].e = room['narrow']
+room['overlook'].s = room['foyer']
+room['overlook'].e = room['narrow']
+room['narrow'].w = room['foyer']
+room['narrow'].n = room['treasure']
+room['treasure'].s = room['narrow']
 
 # Main
 current_player = Player("Brandon", "outside")
 current_room_in = current_player.current_room
-
+# welcome adventurers
 print("Welcome to your adventure!")
 print(room[current_room_in].name)
 print(room[current_room_in].description)
+# set initial direction
 msg = str(input(
     "what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
-
+# set initial settings
 current_player = Player("Brandon", "outside")
 current_room_in = ""
-# Write a loop that:
 current_player.current_room_in = current_player.current_room
 
 
-while not msg == "q":
-    # * Prints the current description
-    if msg == "n":
-        current_room_in = room[current_player.current_room].n_to.name
-        current_player.current_room = room[current_player.current_room].n_to.name.lower(
-        )
-        print(current_room_in)
-    # Print an error message if the movement isn't allowed
-    msg = str(input(
-        "what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
+def adventure(msg):
+    while not msg == "q":
+        if hasattr(room[current_player.current_room], msg):
+            if getattr(room[current_player.current_room], msg) != 'nothing':
+                # two things that we need to print, name and description
+                current_room_in = getattr(
+                    room[current_player.current_room], msg).name
+                current_room_description = getattr(
+                    room[current_player.current_room], msg).description
+                # splitting each word into array of lowercase
+                current_player.current_room = getattr(room[current_player.current_room], msg).name.lower(
+                ).split(" ")
+                # checking to see if one of those words exists in the dictionary of rooms
+                for key in room:
+                    if key in current_player.current_room:
+                        # if it does use that word as the new room
+                        current_player.current_room = key
+                        # print where we are
+                print(current_room_in, current_room_description)
+                msg = str(input(
+                    "what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
+            else:
+                msg = str(input(
+                    "That was is blocked. What direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
+        else:
+            msg = str(input(
+                "Please enter a real direaction! what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
+
+
+adventure(msg)
