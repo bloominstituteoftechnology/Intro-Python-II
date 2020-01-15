@@ -58,7 +58,7 @@ room['overlook'].e = room['narrow']
 room['narrow'].w = room['foyer']
 room['narrow'].n = room['treasure']
 room['treasure'].s = room['narrow']
-room['treasure'].loot = "gold"
+room['treasure'].loot = ["gold"]
 
 # Main
 current_player = Player("Brandon", "outside", ["sword", "belt"])
@@ -85,6 +85,8 @@ def adventure(msg):
                     room[current_player.current_room], msg).name
                 current_room_description = getattr(
                     room[current_player.current_room], msg).description
+                current_rooms_items = getattr(
+                    room[current_player.current_room], msg).loot
                 # check to see if el item exists. if it does offer to take it yes or no... then add conditional to drop item???
                 # splitting each word into array of lowercase
                 current_player.current_room = getattr(room[current_player.current_room], msg).name.lower(
@@ -96,8 +98,19 @@ def adventure(msg):
                         current_player.current_room = key
                         # print where we are
                 print(current_room_in, current_room_description)
+                # check for an item in the room
+                if isinstance(current_rooms_items, list) and len(current_rooms_items) > 0:
+                    item = str(input(
+                        f"you see {current_rooms_items[0]} would you like to pick it up? press y or n\n"))
+                    if item == "y":
+                        current_player.items.append(current_rooms_items[0])
+                        print(f"you have picked up {current_rooms_items[0]}")
+                        if "gold" in current_rooms_items:
+                            current_rooms_items.remove("gold")
+
                 msg = str(input(
                     "what direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
+
             else:
                 msg = str(input(
                     "That was is blocked. What direction will you go? Please press n for north s for south w for west or e for east or q for quit.\n"))
