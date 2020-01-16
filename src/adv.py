@@ -1,6 +1,5 @@
-from room import Room
-
 # Declare all the rooms
+from src.room import Room
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -38,10 +37,70 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+currentRoom = room['outside']
+player = str(input("[N] North  [S] South   [E] East   [W] West    [Q] Quit\n"))
 
 # Write a loop that:
 #
 # * Prints the current room name
+# gamplay loop
+while not player == "Q":
+    # player chooses North
+    if player == "N":
+        if currentRoom == room['outside']:
+            print("You find yourself outside.")
+        elif currentRoom == room['foyer']:
+            print("You find yourself in the foyer.")
+        elif currentRoom == room['narrow']:
+            print("You find yourself in the foyer.")
+        else:
+            print("You found the treasure!!!")
+
+    # player chooses South
+    elif player == "S":
+        if currentRoom == room['outside']:
+            print("You find yourself outside.")
+        elif currentRoom == room['foyer']:
+            print("You find yourself in the foyer.")
+        elif currentRoom == room['narrow']:
+            print("You find yourself in the foyer.")
+        else:
+            print("You found the treasure!!!")
+
+
+    # player chooses East
+    elif player == "E":
+        if currentRoom == room['outside']:
+            print("You find yourself outside.")
+        elif currentRoom == room['foyer']:
+            print("You find yourself in the foyer.")
+        elif currentRoom == room['narrow']:
+            print("You find yourself in the foyer.")
+        else:
+            print("You found the treasure!!!")
+
+    # player chooses West
+    elif player == "W":
+        if currentRoom == room['outside']:
+            print("You find yourself outside.")
+        elif currentRoom == room['foyer']:
+            print("You find yourself in the foyer.")
+        elif currentRoom == room['narrow']:
+            print("You find yourself in the foyer.")
+        else:
+            print("You found the treasure!!!")
+    else:
+        print("Please choose a valid Cardinal Direction...")
+
+    # prompt player to make another selection
+    print("Please choose a Direction to continue...")
+
+    # initialize player
+    player = str(input("[N] North  [S] South   [E] East   [W] West    [Q] Quit\n"))
+
+# Game over
+print("Game Over. Thanks for playing!!")
+
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
