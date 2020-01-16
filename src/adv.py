@@ -1,4 +1,12 @@
+#!/usr/bin/env python3
+
 from room import Room
+from player import Player
+import textwrap
+
+name = input("What is the name of your character: ")
+
+print(f"Let's begin your adventure, {name}!")
 
 # Declare all the rooms
 
@@ -21,6 +29,28 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+def print_move_options(current_room):
+    if current_room == "Outside Cave Entrance":
+        return "Move: [n] North [q] Quit: "
+    elif current_room == "Foyer":
+        return "Move: [n] North [s] South [e] East [q] Quit: "
+    elif current_room == "Grand Overlook":
+        return "Move: [s] South [q] Quit: "
+    elif current_room == "Narrow Passage":
+        return "Move: [n] North [w] West [q] Quit: "
+    else:
+        return "Move: [s] South [q] Quit: "
+
+
+def help_hud():
+    help_str = """
+[l] Locate Me / [la] Look Around / [m] Move Options / [ci] Check Inventory: """
+    
+    usr_input = input(textwrap.dedent(help_str))
+    
+    if 
+    
+# def move_options():
 
 # Link rooms together
 
@@ -38,8 +68,55 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+p = Player(name, room['outside'])
 
 # Write a loop that:
+flag = True
+
+while flag:    
+    room = p.current_room
+    print(room.name)
+    
+    m = input("What would you like to do?       hint: (Press 'h' for help): ")
+
+    if m == "h":
+        help_hud()
+    
+    if m == "n":
+        if  room.n_to: 
+            p.move_to_room(room.n_to)
+            print(p.current_room.name)
+        else:
+            print("Can't move there. Try again.")
+            
+    elif m == "s":
+        if  p.current_room.s_to:
+            print(p.current_room.name)
+            p.current_room = p.current_room.s_to
+            print(p.current_room.name)
+        else:
+            print("Can't move there. Try again.")
+            
+    elif m == "w":
+        if  p.current_room.w_to:
+            print(p.current_room.name)
+            p.current_room = p.current_room.w_to
+            print(p.current_room.name)
+        else:
+            print("Can't move there. Try again.")
+            
+    elif m == "e":
+        if  p.current_room.e_to:
+            print(p.current_room.name)
+            p.current_room = p.current_room.e_to
+            print(p.current_room.name)
+        else:
+            print("Can't move there. Try again.")
+        
+
+        
+    
+    
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
