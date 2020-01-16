@@ -2,14 +2,18 @@
 # description attributes.
 class Room:
 
-    # n_to = Room()
-    # s_to = Room()
-    # e_to = Room()
-    # w_to = Room()
-
-    def __init__(self, name, description):
+    def __init__(self, name, description, items):
         self.name = name
         self.description = description
+        self.items = items
 
     def __str__(self):
-        return 'Name: {self.name} description: {self.description}'
+        if len(self.items) == 2:
+            return f'Name~> {self.name}\nDescription~> {self.description}\nItems~> {self.items[0]} and {self.items[1]}'
+        elif len(self.items) == 1:
+            return f'Name~> {self.name}\nDescription~> {self.description}\nItems~> {self.items[0]}'
+        else:
+            return f'Name~> {self.name}\nDescription~> {self.description}\nItems~> None'
+
+    def remove_item(self, item):
+        self.items.remove(item)
