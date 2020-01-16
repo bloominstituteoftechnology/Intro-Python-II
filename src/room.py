@@ -1,4 +1,5 @@
 from item import Item
+from player import Player
 # Implement a class to hold room information. This should have name and
 # description attributes.
 
@@ -40,3 +41,21 @@ class Room():
             lcName = item.name.lower()
             if name == lcName:
                 return item
+
+    def canEnter(self, player):
+        return (True, "No lock")
+
+
+class LockedRoom(Room):
+
+    def __init__(self, name, description, requiredItemName):
+        super().__init__(name, description)
+        self.requiredItemName = requiredItemName
+
+    def canEnter(self, player):
+        item = player.itemNamed(self.requiredItemName)
+        print(item)
+        if item and player.holdingItem(item):
+            return (True, f"The door was unlocked by {self.requiredItemName}.")
+        else:
+            return (False, "The door is locked.")

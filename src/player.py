@@ -12,9 +12,17 @@ class Player():
 
     def moveDirection(self, direction):
         newRoom = self.current_room.roomInDirection(direction)
+        try:
+            canEnter = newRoom.canEnter(self)
+        except:
+            pass
+
         if newRoom:
-            self.current_room = newRoom
-            self.announceCurrentRoom()
+            if canEnter[0] == True:
+                self.current_room = newRoom
+                self.announceCurrentRoom()
+            else:
+                print(f"That room cannot be entered. {canEnter[1]}")
         else:
             print("That way is blocked! Try something else.")
 
@@ -67,6 +75,7 @@ class Player():
         return item in self.items
 
     def itemNamed(self, name):
+        name = name.lower()
         for item in self.items:
             lcName = item.name.lower()
             if name == lcName:

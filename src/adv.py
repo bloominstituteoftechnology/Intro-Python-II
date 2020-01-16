@@ -1,4 +1,4 @@
-from room import Room
+from room import Room, LockedRoom
 from player import Player
 from item import *
 
@@ -18,10 +18,10 @@ but there is no way across the chasm."""),
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west\
 to north. The smell of gold permeates the air."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure \
+    'treasure': LockedRoom("Treasure Chamber", """You've found the long-lost treasure \
 chamber! There are some flickering torches lining the room. You can see the overlook \
 from here. Sadly, it has already been completely emptied by earlier adventurers. The \
-only exit is to the south."""),
+only exit is to the south.""", "OrnateKey"),
 }
 
 
@@ -56,7 +56,8 @@ room['overlook'].items = [
 ]
 
 room['narrow'].items = [
-    Item("Dust")
+    Item("Dust"),
+    Item("OrnateKey")
 ]
 
 room['treasure'].items = [
@@ -64,6 +65,7 @@ room['treasure'].items = [
     Item("EmptyTreasureChest"),
     Item("LooseTorch")
 ]
+
 #
 # Main
 #
