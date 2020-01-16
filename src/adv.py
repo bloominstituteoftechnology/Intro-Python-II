@@ -63,6 +63,10 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['treasure'].e_to = room['Room1']
+room['Room1'].w_to = room ['treasure']
+room['Room1'].e_to = room ['Room2']
+room['Room2'].w_to = room ['Room1']
 
 #
 # Main
