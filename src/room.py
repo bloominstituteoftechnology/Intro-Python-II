@@ -14,14 +14,9 @@ class Room():
         self.w_to = None
 
     def roomInDirection(self, direction):
-        if direction == "n":
-            return self.n_to
-        elif direction == "s":
-            return self.s_to
-        elif direction == "w":
-            return self.w_to
-        elif direction == "e":
-            return self.e_to
+        room = getattr(self, f"{direction}_to")
+        if room is not None:
+            return room
         else:
             return None
 
