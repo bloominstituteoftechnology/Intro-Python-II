@@ -106,7 +106,7 @@ def promptPlayerInput():
     baseCmd = cmd[0]
 
     if baseCmd in directions:
-        changeRooms(baseCmd)
+        player.moveDirection(baseCmd)
         return
 
     if baseCmd in inventory:
@@ -129,7 +129,6 @@ def promptPlayerInput():
     print("Invalid input. Try again.")
 
 def analyzeGameCommand(command):
-    # If the user enters "q", quit the game.
     if command == "q" or command == "quit":
         print("Exiting game.")
         exit()
@@ -187,21 +186,8 @@ def analyzeInteraction(*interactions):
         return False
     return True
 
-
-def changeRooms(direction):
-    newRoom = player.current_room.roomInDirection(direction)
-    if newRoom:
-        player.changeRoom(newRoom)
-    else:
-        print("That way is blocked! Try something else.")
-        promptPlayerInput()
-
-
 def gameLoop():
     global player
-    # * Prints the current room name
-    # * Prints the current description (the textwrap module might be useful here).
-    # print(f"\n{player.name} entered {player.current_room.name}. {player.current_room.description}")
     promptPlayerInput()
 
 def main():

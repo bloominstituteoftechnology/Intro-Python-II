@@ -10,9 +10,13 @@ class Player():
         self.name = name
         self.current_room = current_room
 
-    def changeRoom(self, room):
-        self.current_room = room
-        self.announceCurrentRoom()
+    def moveDirection(self, direction):
+        newRoom = self.current_room.roomInDirection(direction)
+        if newRoom:
+            self.current_room = newRoom
+            self.announceCurrentRoom()
+        else:
+            print("That way is blocked! Try something else.")
 
     def announceCurrentRoom(self):
         output = "\n--------------\n\n"
@@ -21,7 +25,7 @@ class Player():
 
     def lookAroundRoom(self):
         room = self.current_room
-        print(room.description)
+        print(f"\n{room.description}\n")
         print("Looking around, you see the following items scattered about:")
         for item in room.items:
             print(f"\t{item.name}")
