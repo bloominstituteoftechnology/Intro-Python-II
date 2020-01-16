@@ -68,10 +68,10 @@ if __name__ == "__main__":
         if len(move_list) == 1:
             ### Where you go to move to new rooms
             if move in directions:
-                player.move(move)           
+                player.move(move) # attempts to move in requested direction          
                 print()
                 move, move_list = get_room_and_input()
-            elif (move == 'i' or move == 'inventory'):
+            elif (move == 'i' or move == 'inventory'): # Looking at inventory
                 print("Current inventory: ")
                 if (len(player.items) == 0):
                     print('No items')
@@ -94,10 +94,10 @@ if __name__ == "__main__":
                         room_item.on_take()
                         player.current_room.remove_item(room_item)
                         print()
-            elif (move_list[0].lower() in ['drop']):
+            #if you want to drop an item in your inventory
+            elif (move_list[0].lower() in ['drop']): 
                 for item in player.items:
-                    print(item)
-                    if (move_list[1].lower() == item.name.lower()):
+                    if (move_list[1].lower() == item.name.lower()): #checks to make sure the item requested is in player inventory
                         player.drop_item(item)
                         item.on_drop()
                         print()
