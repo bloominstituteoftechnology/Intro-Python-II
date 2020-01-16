@@ -53,3 +53,28 @@ new_player = Player('Billy', room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+paths = ['n', 'e', 's', 'w']
+
+while True:
+    print(f'Current room: {new_player.current_room.name}.')
+    print(f'"{new_player.current_room.description}"\n')
+
+    key = input("How will you proceed? ").lower()
+
+    if key in paths:
+        if key == 'n' and new_player.current_room.n_to != None:
+            new_player.current_room = new_player.current_room.n_to
+        elif key == 'e' and new_player.current_room.s_to != None:
+            new_player.current_room = new_player.current_room.s_to
+        elif key == 's' and new_player.current_room.e_to != None:
+            new_player.current_room = new_player.current_room.e_to
+        elif key == 'w' and new_player.current_room.w_to != None:
+            new_player.current_room = new_player.current_room.w_to
+        else:
+            key = input("Could not enter, please procced with different path. (Press Enter to continue)").lower()
+    elif key == 'q':
+        print(f'Goodbye {new_player.name}! (Better luck next time!)')
+        break
+    else:
+        print("Input was unrecognized, try again. ")
