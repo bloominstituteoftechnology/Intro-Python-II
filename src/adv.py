@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -21,6 +22,14 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+item = {
+    'coins': Item('Coins', 'You will unlock everything in this coins'),
+
+    'key': Item('Key', 'get the key access to all the doors'),
+
+    'pencil': Item('pencil', 'Just write your dream')
+}
+
 
 # Link rooms together
 
@@ -32,6 +41,19 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+#  rooms link to items
+room['overlook'].items.append(item['coins'])
+room['narrow'].items.append(item['key'])
+room['foyer'].items.append(item['pencil'])
+
+#####################################
+#                                   #
+#          overlook  #   treasure   #
+#           foyer       narrow      #
+#          Outside                  #
+#####################################
+
 
 #
 # Main
