@@ -35,13 +35,17 @@ class Player():
         for item in self.items:
             print(f"\t{item.name}")
 
-    def pickUpItem(self, item):
-        if len(self.items) >= 2:
-            print("You can only hold two items at a time! (Two hands, after all) Set something down first.")
+    def pickUpItem(self, itemName):
+        item = self.current_room.itemNamed(itemName)
+        if item:
+            if len(self.items) >= 2:
+                print("You can only hold two items at a time! (Two hands, after all) Set something down first.")
+            else:
+                self.current_room.removeItem(item)
+                self.items.append(item)
+                item.onTake(self)
         else:
-            self.current_room.removeItem(item)
-            self.items.append(item)
-            item.onTake(self)
+            print(f"There was no item in the room named {itemName}")
 
     def dropItem(self, item):
         if self.holdingItem(item):

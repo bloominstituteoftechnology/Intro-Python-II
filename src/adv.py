@@ -125,7 +125,6 @@ def promptPlayerInput():
         analyzeGameCommand(baseCmd)
         return
 
-    # Print an error message if the movement isn't allowed.
     print("Invalid input. Try again.")
 
 def analyzeGameCommand(command):
@@ -151,7 +150,6 @@ def performTake(interaction):
 def analyzeInteraction(*interactions):
     if len(interactions) < 2:
         return
-    room = player.current_room
     command = interactions[0]
 
     try:
@@ -160,15 +158,10 @@ def analyzeInteraction(*interactions):
         print("No item described. Try again.")
         return
 
-    roomItem = room.itemNamed(itemName)
     playerItem = player.itemNamed(itemName)
 
     if command in validTakeCommands:
-        if roomItem:
-            player.pickUpItem(roomItem)
-        else:
-            print(f"There's no item in the room named {itemName}")
-            return False
+        player.pickUpItem(itemName)
     elif command in validUseCommands:
         if playerItem:
             player.useItem(playerItem)
