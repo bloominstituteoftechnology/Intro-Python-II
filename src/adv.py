@@ -50,70 +50,92 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
+player = Player(input("Please enter your name: "), room['outside'])
+print(player.current_room)
 
-def initialize():
-    player_name = input('What is your name?\n')
-
-    current_player = Player(player_name, room['outside'])
-
-    print(
-        f'Welcome {current_player.get_name()}! Your current location is: {current_player.get_location().name}\n'
-    )
-
-    def print_current_location():
-        print(f'You are now in the {current_player.get_location().name}\n')
-
-    def is_valid_move(move):
-        if move != None:
-            return True
-        else:
-            return False
-
-    while True:
-        player_input = input('Which direction will are you planning?\n')
-
-        if player_input == 'n' or player_input == 's' or player_input == 'e' or player_input == 'w':
-            if player_input == 'n':
-
-                if is_valid_move(current_player.get_location().n_to):
-                    current_player.set_location(
-                        current_player.get_location().n_to
-                    )
-
-                    print_current_location()
-
-            elif player_input == 's':
-                if is_valid_move(current_player.get_location().s_to):
-                    current_player.set_location(
-                        current_player.get_location().s_to
-                    )
-
-                    print_current_location()
-
-            elif player_input == 'e':
-                if is_valid_move(current_player.get_location().e_to):
-                    current_player.set_location(
-                        current_player.get_location().e_to
-                    )
-
-                    print_current_location()
-
-            else:
-                if is_valid_move(current_player.get_location().w_to):
-                    current_player.set_location(
-                        current_player.get_location().w_to
-                    )
-
-                    print_current_location()
-
-        elif player_input == 'q':
-            print(
-                f'Goodbye {current_player.get_name()}, we hope you\'ll play again!')
-            break
-        else:
-            print(
-                'Invalid command: Navigate using "n", "s", "e", or "w", or press "q" to quit'
-            )
+directions = ["n", "s", "e", "w"]
+# Create basic REPL loop
+while True:
+    # Read command
+    cmd = input("~~> ").lower()
+    # Check if it's n/s/e/w/q
+    if cmd in directions:
+        # Make player travel in that direction
+        player.travel(cmd)
+    elif cmd == "q":
+        # Quit
+        print("Goodbye!")
+        exit()
+    else:
+        print("I did not recognize that command")
 
 
-initialize()
+### REFACTORED SOLUTION ###
+# def initialize():
+#     player_name = input('What is your name?\n')
+
+#     current_player = Player(player_name, room['outside'])
+
+#     print(
+#         f'Welcome {current_player.get_name()}! Your current location is: {current_player.get_location().name}\n'
+#     )
+
+#     directions = ["n", "s", "e", "w"]
+
+#     def print_current_location():
+#         print(f'You are now in the {current_player.get_location().name}\n')
+
+#     def is_valid_move(move):
+#         if move != None:
+#             return True
+#         else:
+#             return False
+
+#     while True:
+#         player_input = input('Which direction will are you planning?\n')
+
+#         if player_input == 'n' or player_input == 's' or player_input == 'e' or player_input == 'w':
+#             if player_input == 'n':
+
+#                 if is_valid_move(current_player.get_location().n_to):
+#                     current_player.set_location(
+#                         current_player.get_location().n_to
+#                     )
+
+#                     print_current_location()
+
+#             elif player_input == 's':
+#                 if is_valid_move(current_player.get_location().s_to):
+#                     current_player.set_location(
+#                         current_player.get_location().s_to
+#                     )
+
+#                     print_current_location()
+
+#             elif player_input == 'e':
+#                 if is_valid_move(current_player.get_location().e_to):
+#                     current_player.set_location(
+#                         current_player.get_location().e_to
+#                     )
+
+#                     print_current_location()
+
+#             else:
+#                 if is_valid_move(current_player.get_location().w_to):
+#                     current_player.set_location(
+#                         current_player.get_location().w_to
+#                     )
+
+#                     print_current_location()
+
+#         elif player_input == 'q':
+#             print(
+#                 f'Goodbye {current_player.get_name()}, we hope you\'ll play again!')
+#             break
+#         else:
+#             print(
+#                 'Invalid command: Navigate using "n", "s", "e", or "w", or press "q" to quit'
+#             )
+
+
+# initialize()
