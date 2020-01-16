@@ -25,8 +25,10 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 
-'Room1': Room("Room1", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
+'Room1': Room("Room 1", """You've found the long-lost room 1! Sadly, it has already been completely emptied by
+earlier adventurers. The only exit is to the south."""),
+
+'Room2': Room("Room 2", """You've found the long-lost room 2! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 
 
