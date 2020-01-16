@@ -6,21 +6,21 @@ from item import *
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mouth beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    Room("Foyer", """Dim light filters in from the south. \
+Dusty passages run north and east."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'overlook': Room("Grand Overlook", """A steep cliff appears before you, \
+falling into the darkness. Ahead to the north, a light flickers in the distance, \
+but there is no way across the chasm."""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
+    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west\
 to north. The smell of gold permeates the air."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! There are some flickering torches lining the room. You can see the overlook
-from here. Sadly, it has already been completely emptied by earlier adventurers. The
+    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure \
+chamber! There are some flickering torches lining the room. You can see the overlook \
+from here. Sadly, it has already been completely emptied by earlier adventurers. The \
 only exit is to the south."""),
 }
 
@@ -91,33 +91,36 @@ def printHelp():
         h - show this help
     """)
 
-# * Waits for user input and decides what to do.
+
+directions = ["n", "s", "e", "w"]
+inventory = ["i", "inventory"]
+lookAround = ['l', "look"]
+
 def promptPlayerInput():
-    playerInput = input("What do you want to do?: ").lower()
+    cmd = input("What do you want to do?: ").lower()
 
     # in each of the following function calls, it will perform actions if the 
     # input is valid for a given function. Otherwise, if the given function returns 
     # a False value, it will try the next function until something matches.
 
     # If the user enters a cardinal direction, attempt to move to the room there.
-    direction = analyzePlayerDirection(playerInput)
-    if direction:
-        changeRooms(direction)
+    if cmd in directions:
+        changeRooms(cmd)
         return
 
-    finished = analyzeInventory(playerInput)
+    if cmd in inventory:
+        showInventory()
+        return
+
+    finished = analyzeLookingAround(cmd)
     if finished:
         return
 
-    finished = analyzeLookingAround(playerInput)
-    if finished:
-        return
-
-    finished = analyzeInteraction(playerInput)
+    finished = analyzeInteraction(cmd)
     if finished: 
         return
 
-    finished = analyzeGameCommand(playerInput)
+    finished = analyzeGameCommand(cmd)
     if finished:
         return
     # Print an error message if the movement isn't allowed.
@@ -131,12 +134,6 @@ def analyzeGameCommand(command):
     elif command == "h" or command == "help":
         printHelp()
         return True
-
-def analyzePlayerDirection(direction):
-    if direction == "n" or direction == "s" or direction == "w" or direction == "e":
-        return direction
-    else:
-        return None
 
 def analyzeLookingAround(looking):
     if looking == "l":
@@ -204,12 +201,10 @@ def analyzeInteraction(interaction):
         return False
     return True
 
-def analyzeInventory(inventory):
-    if inventory == "i":
-        print("Looking down at your hands, you see yourself holding the following:")
-        for item in player.items:
-            print(f"\t{item.name}")
-        return True
+def showInventory():
+    print("Looking down at your hands, you see yourself holding the following:")
+    for item in player.items:
+        print(f"\t{item.name}")
 
 def changeRooms(direction):
     newRoom = player.current_room.roomInDirection(direction)
@@ -224,10 +219,11 @@ def gameLoop():
     global player
     # * Prints the current room name
     # * Prints the current description (the textwrap module might be useful here).
-    print(f"\n{player.name} entered {player.current_room.name}. {player.current_room.description}")
+    # print(f"\n{player.name} entered {player.current_room.name}. {player.current_room.description}")
     promptPlayerInput()
 
 def main():
+    player.announceCurrentRoom()
     while True:
         gameLoop()
 

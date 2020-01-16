@@ -12,6 +12,10 @@ class Player():
 
     def changeRoom(self, room):
         self.current_room = room
+        self.announceCurrentRoom()
+
+    def announceCurrentRoom(self):
+        print(f"\n{self.name} is in {self.current_room.name}. {self.current_room.description}")
 
     def pickUpItem(self, item):
         if len(self.items) >= 2:
