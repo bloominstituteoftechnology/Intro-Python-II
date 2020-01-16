@@ -12,18 +12,4 @@ class Room():
             print(self.description)
         else:
             print(f'{self.description} You see the following items: {self.items}')
-
-# Example abstract class left in for future reference
-# from abc import ABC, abstractmethod
-
-
-# class Animal(ABC):
-#     def __init__(self, name, legs):
-#         self.name = name
-#         self.legs = legs
-#     @abstractmethod
-#     def speak(self):
-#         pass
-#     @abstractmethod
-#     def species(self):
-#         pass
+            

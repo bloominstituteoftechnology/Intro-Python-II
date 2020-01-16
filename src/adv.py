@@ -2,13 +2,14 @@ from room import Room
 from player import Player
 import sys
 
-class InvalidMove(Exception):
-    pass
-
 class NoRoomThatDirection(Exception):
     pass
 
 def change_rooms(move):
+    """
+    Function to change the room a player is in.
+    Valid inputs are ['n','s','e','w']
+    """
     try:
         # get attribute corresponding to player move
         attr = move+"_to"
@@ -23,8 +24,8 @@ def change_rooms(move):
     except NoRoomThatDirection:
         print("There's nowhere to go in that direction, try another direction.")
 
-# Declare all the rooms
 
+# Declare all the rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons",
@@ -47,7 +48,6 @@ earlier adventurers. The only exit is to the south.""", ['rusty sword']),
 
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -64,7 +64,6 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 
 player = Player('Scott', room['outside'])
-
 
 # Write a loop that:
 while(True):
@@ -122,13 +121,3 @@ while(True):
         print("That is an invalid move. To move, please enter 'n', 's', 'e', or 'w'.\n" \
         "To pick up or drop an item, please enter 'get [item]' or 'drop [item]\n" \
         "To quit the game, enter 'q'.")
-
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
