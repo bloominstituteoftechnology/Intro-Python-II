@@ -3,6 +3,7 @@
 from room import Room
 from player import Player
 import textwrap
+import Item
 
 name = input("What is the name of your character: ")
 
@@ -48,7 +49,10 @@ def help_hud():
     
     usr_input = input(textwrap.dedent(help_str))
     
-    if 
+    if usr_input ==  "l":
+        print(p.current_room)
+    elif usr_input == "la":
+        print("")
     
 # def move_options():
 
