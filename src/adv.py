@@ -95,53 +95,46 @@ def printHelp():
 directions = ["n", "s", "e", "w"]
 inventory = ["i", "inventory"]
 lookAround = ['l', "look"]
+validTakeCommands = ["take", "grab"]
+validUseCommands = ["use"]
+validDropCommands = ["drop", "set"]
+validCommands = validTakeCommands + validDropCommands + validUseCommands
+gameCommands = ['q', 'quit', 'h', 'help']
 
 def promptPlayerInput():
-    cmd = input("What do you want to do?: ").lower()
+    cmd = input("What do you want to do?: ").lower().split(" ")
+    baseCmd = cmd[0]
 
-    # in each of the following function calls, it will perform actions if the 
-    # input is valid for a given function. Otherwise, if the given function returns 
-    # a False value, it will try the next function until something matches.
-
-    # If the user enters a cardinal direction, attempt to move to the room there.
-    if cmd in directions:
-        changeRooms(cmd)
+    if baseCmd in directions:
+        changeRooms(baseCmd)
         return
 
-    if cmd in inventory:
-        showInventory()
+    if baseCmd in inventory:
+        player.showInventory()
         return
 
-    finished = analyzeLookingAround(cmd)
-    if finished:
+    if baseCmd in lookAround:
+        player.lookAroundRoom()
         return
 
-    finished = analyzeInteraction(cmd)
-    if finished: 
+    if baseCmd in validCommands:
+        analyzeInteraction(*cmd)
         return
 
-    finished = analyzeGameCommand(cmd)
-    if finished:
+    if baseCmd in gameCommands:
+        analyzeGameCommand(baseCmd)
         return
+
     # Print an error message if the movement isn't allowed.
     print("Invalid input. Try again.")
 
 def analyzeGameCommand(command):
     # If the user enters "q", quit the game.
-    if command == "q":
+    if command == "q" or command == "quit":
         print("Exiting game.")
         exit()
     elif command == "h" or command == "help":
         printHelp()
-        return True
-
-def analyzeLookingAround(looking):
-    if looking == "l":
-        room = player.current_room
-        print(room.description)
-        print("Looking around, you see the following items scattered about:")
-        for item in room.items:
-            print(f"\t{item.name}")
         return True
 
 def performTake(interaction):
@@ -156,24 +149,17 @@ def performTake(interaction):
     else:
         print(f"There's no item named {itemName}")
 
-def analyzeInteraction(interaction):
+def analyzeInteraction(*interactions):
+    if len(interactions) < 2:
+        return
     room = player.current_room
-    commandParts = interaction.split(" ")
-    command = commandParts[0]
-
-    validTakeCommands = ["take", "grab"]
-    validUseCommands = ["use"]
-    validDropCommands = ["drop", "set"]
-    validCommands = validTakeCommands + validDropCommands + validUseCommands
-
-    if not (command in validCommands):
-        return False
+    command = interactions[0]
 
     try:
-        itemName = commandParts[1]
+        itemName = interactions[1]
     except:
         print("No item described. Try again.")
-        return False
+        return
 
     roomItem = room.itemNamed(itemName)
     playerItem = player.itemNamed(itemName)
@@ -201,10 +187,6 @@ def analyzeInteraction(interaction):
         return False
     return True
 
-def showInventory():
-    print("Looking down at your hands, you see yourself holding the following:")
-    for item in player.items:
-        print(f"\t{item.name}")
 
 def changeRooms(direction):
     newRoom = player.current_room.roomInDirection(direction)
