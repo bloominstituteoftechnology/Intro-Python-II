@@ -108,6 +108,7 @@ done = False
 while not done:
     print('\nWelcome! Press N,S,W,E to move around!')
     print(f'\n{player.currentRoom}\n')
+    print(f'\n{player.currentRoom.description}\n')
   
 
  
