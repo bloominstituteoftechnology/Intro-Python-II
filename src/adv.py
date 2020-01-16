@@ -158,26 +158,14 @@ def analyzeInteraction(*interactions):
         print("No item described. Try again.")
         return
 
-    playerItem = player.itemNamed(itemName)
-
     if command in validTakeCommands:
         player.pickUpItem(itemName)
     elif command in validUseCommands:
-        if playerItem:
-            player.useItem(playerItem)
-        else:
-            print(f"You're not holding an item named {itemName}")
-            return False
+        player.useItem(itemName)
     elif command in validDropCommands:
-        if playerItem:
-            player.dropItem(playerItem)
-        else:
-            print(f"You're not holding an item named {itemName}")
-            return False
+        player.dropItem(itemName)
     else:
         print("Somehow you broke the game!")
-        return False
-    return True
 
 def gameLoop():
     global player

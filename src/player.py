@@ -47,15 +47,21 @@ class Player():
         else:
             print(f"There was no item in the room named {itemName}")
 
-    def dropItem(self, item):
+    def dropItem(self, itemName):
+        item = self.itemNamed(itemName)
         if self.holdingItem(item):
             self.items.remove(item)
             self.current_room.addItem(item)
             item.onDrop(self)
+        else:
+            print(f"You're not holding an item named {itemName}")
 
-    def useItem(self, item):
+    def useItem(self, itemName):
+        item = self.itemNamed(itemName)
         if self.holdingItem(item):
             item.onUse(self)
+        else:
+            print(f"You're not holding an item named {itemName}")
 
     def holdingItem(self, item):
         return item in self.items

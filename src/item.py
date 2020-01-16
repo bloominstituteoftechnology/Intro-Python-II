@@ -23,10 +23,9 @@ class Rock(Item):
         super().onTake(player)
 
     def onUse(self, player):
-        super().onUse(player)
         print(f"Threw {self.name}")
         self.isThrown = True
-        player.dropItem(self)
+        player.dropItem(self.name.lower())
 
     def onDrop(self, player):
         if not self.isThrown:
