@@ -8,7 +8,7 @@ def load_results():
     text_file.close()
     return history
 
-def save_results( w, t, l):
+def save_results(w, t, l):
     text_file = open("history.txt", "w")
     text_file.write( str(w) + "," + str(t) + "," + str(l))
     text_file.close()
