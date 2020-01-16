@@ -42,11 +42,6 @@ def get_room_and_input():
     move_list = move.split()
     return move.lower(), move_list
 
-def bad_direction():
-    print()
-    print("~~~~~~~~~~There is no room in that direction. Please choose another direction.~~~~~~~~~~")
-    print()
-
 #
 # Main
 #
@@ -68,43 +63,12 @@ player = Player('player1', room['outside'])
 if __name__ == "__main__":
     directions = ['n', 's', 'e', 'w']
     move, move_list = get_room_and_input()
-    # move_list = move.split()
 
     while not move == 'q':
         if len(move_list) == 1:
             ### Where you go to move to new rooms
             if move in directions:
-                if move == 'n':
-                    if (hasattr(player.current_room, "n_to")):
-                        print()
-                        print("~~~~~~~~~~You went north.~~~~~~~~~~")
-                        player.current_room = player.current_room.n_to
-                    else:
-                        bad_direction()
-
-                elif move == 'e':
-                    if (hasattr(player.current_room, "e_to")):
-                        print()
-                        print('~~~~~~~~~~You went east.~~~~~~~~~~')
-                        player.current_room = player.current_room.e_to
-                    else:
-                        bad_direction()
-
-                elif move == 's':
-                    if (hasattr(player.current_room, "s_to")):
-                        print()
-                        print('~~~~~~~~~~You went south.~~~~~~~~~~')
-                        player.current_room = player.current_room.s_to
-                    else:
-                        bad_direction()
-
-                elif move == 'w':
-                    if (hasattr(player.current_room, "w_to")):
-                        print()
-                        print('~~~~~~~~~~You went west~~~~~~~~~~')
-                        player.current_room = player.current_room.w_to
-                    else:
-                        bad_direction()               
+                player.move(move)           
                 print()
                 move, move_list = get_room_and_input()
             elif (move == 'i' or move == 'inventory'):
@@ -139,6 +103,6 @@ if __name__ == "__main__":
                         print()
             else:
                 print()
-                print("Bad command. Try again...")
+                print("~~~~~~~~~~Bad command. Try again...~~~~~~~~~~")
                 print()
             move, move_list = get_room_and_input()
