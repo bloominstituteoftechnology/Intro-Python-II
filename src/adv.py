@@ -1,4 +1,10 @@
 from room import Room
+from player import Player
+from item import Item
+from textwrap import wrap
+
+# Welcome message
+print('Welcome to "This Game!"\n')
 
 # Declare all the rooms
 
@@ -21,6 +27,8 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# User inputs name
+name = input('What is your name? ')
 
 # Link rooms together
 
@@ -37,7 +45,51 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+choices = ['n', 's', 'e', 'w']
+
 # Make a new player object that is currently in the 'outside' room.
+user = Player({name}, room['outside'])
+go = input(f"""Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et nulla in tortor maximus dignissim. 
+            Phasellus elementum vestibulum nibh, vel congue risus. Praesent vitae mauris convallis, mollis enim non, 
+            fermentum erat. Sed sed ex mi. Donec diam turpis, placerat eu ornare sed, ornare nec urna.
+            To move North press the [n] key, to move South press the [s] key, to move East press the [e] key, to move 
+            West press the [w] key. To quit the game press the [q] key. """)
+
+
+# LOOP
+cmd = None
+while cmd != 'q':
+    print(user.current_room, '\n')
+    cmd = input('Press [n], [s], [e], [w] to move or [q] to quit\n')
+    error_msg = f'''There is nowhere to go in that direction. Please select a valid direction to move. You are 
+                    currently in {user.current_room}.'''
+    if cmd == 'n':
+        if user.current_room.n_to is not None:
+            user.current_room = user.current_room.n_to
+            print(user.current_room.description)
+        else:
+            print(error_msg)
+    elif cmd == 's':
+        if user.current_room.s_to is not None:
+            user.current_room = user.current_room.s_to
+            print(user.current_room.description)
+        else:
+            print(error_msg)
+    elif cmd == 'e':
+        if user.current_room.e_to is not None:
+            user.current_room = user.current_room.e_to
+            print(user.current_room.description)
+        else:
+            print(error_msg)
+    elif cmd == 'w':
+        if user.current_room.w_to is not None:
+            user.current_room = user.current_room.w_to
+            print(user.current_room.description)
+        else:
+            print(error_msg)
+    elif cmd == 'q':
+        print(f"Goodbye {name}!")
+        break
 
 # Write a loop that:
 #
@@ -49,3 +101,8 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# LOOP
+# READ
+# EVAL
+# PRINT
