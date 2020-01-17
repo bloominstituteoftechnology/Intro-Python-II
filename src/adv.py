@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -22,7 +23,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -34,51 +34,49 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+gear = Item("gear", "This is a small silver gear.")
+coin = Item("coin", "A small gold piece.")
+key1 = Item("key1", "A small key.")
+key2 = Item("key2", "A medium key.")
+key3 = Item("key3", "A large key.")
+lemon = Item("lemon", "A yellow round piece of fruit.")
+banana = Item("banana", "a yellow telephone shaped fruit.")
+apple = Item("apple", "a small round red fruit.")
+orange = Item("orange", "a small round orange fruit.")
+lime = Item("lime", "a small green oval shaped fruit.")
+coconut = Item("coconut", "A round medium sized item full of juice. ")
 
-# Make a new player object that is currently in the 'outside' room.
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+room['foyer'].items.append(gear)
+room['foyer'].items.append(banana)
+room['foyer'].items.append(key2)
+room['overlook'].items.append(key1)
+room['overlook'].items.append(coconut)
+room['overlook'].items.append(lime)
+room['narrow'].items.append(coin)
+room['narrow'].items.append(key3)
+room['narrow'].items.append(apple)
+room['narrow'].items.append(orange)
+room['treasure'].items.append(coin)
+room['treasure'].items.append(coin)
+room['treasure'].items.append(coin)
+room['treasure'].items.append(key1)
+room['treasure'].items.append(key2)
+room['treasure'].items.append(key3)
+room['treasure'].items.append(gear)
+room['treasure'].items.append(gear)
+room['outside'].items.append(apple)
+room['outside'].items.append(apple)
+room['outside'].items.append(orange)
+room['outside'].items.append(orange)
 
-def main():
-# Make a new player object that is currently in the 'outside' room.
-    player = Player(input("Please supply a name for character: "), room["outside"])
+player = Player("Nick", room["outside"])
 
-    while True:
-        # * Prints the current room name
-        print(f"Current location: {player.current_room.name}")
-        # * Prints the current room description
-        print(player.current_room.description)
-        # * Waits for user input and decides what to do.
-        user_input = input(">>> ")
+# Main Controller
 
-        directions = ("n", "s", "e", "w")
-        # If the user enters a cardinal direction, attempt to move to the room there.
-        if user_input in directions:
-            attempted_room = getattr(player.current_room, f"{user_input}_to")
-        #if movement is allowed, update the current room
-        if attempted_room != None:
-            player.change_room(attempted_room)
-        # Print an error message if the movement isn't allowed.
-        else:
-            print("You can't move in that direction")
-        # If the user enters "q", quit the game.
-        elif user_input == "q":
-            break
-        # Print an error message if the users input is invalid
-        else:
-            print("This input is not valid, please try again!")
+while True:
 
-if __name__ == "__main__":
-    main()
+    quit = player.input_instructions()
+
+    if quit == True:
+        break
