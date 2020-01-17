@@ -54,8 +54,9 @@ class LockedRoom(Room):
 
     def canEnter(self, player):
         item = player.itemNamed(self.requiredItemName)
-        print(item)
         if item and player.holdingItem(item):
-            return (True, f"The door was unlocked by {self.requiredItemName}.")
+            unlockString = f"The door was unlocked by {self.requiredItemName}."
+            print(unlockString)
+            return (True, unlockString)
         else:
             return (False, "The door is locked.")

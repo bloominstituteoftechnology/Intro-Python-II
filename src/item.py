@@ -48,3 +48,27 @@ The chair broke. You're too fat.
 """)
             self.name = f"Broken{self.name}"
             self.isBroken = True
+
+class FlavorItem(Item):
+    def __init__(self, name, flavorText):
+        super().__init__(name)
+        self.flavorText = flavorText
+
+    def onUse(self, player):
+        print(self.flavorText)
+
+class Box(Item):
+    def __init__(self, name, content):
+        super().__init__(name)
+        self.content = None
+        if type(content) == Item:
+            self.content = content
+
+    def onUse(self, player):
+        if self.content:
+            print(f"You open {self.name} and {self.content.name} falls out onto the ground!")
+            room = player.current_room
+            room.addItem(self.content)
+            self.content = None
+        else:
+            print(f"{self.name} is empty!")

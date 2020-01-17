@@ -9,7 +9,9 @@ room = {
                      "North of you, the cave mouth beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. \
-Dusty passages run north and east."""),
+Dusty passages run north and east and an opening to a small cavern to the west."""),
+
+    'cavern':    Room("Dusty Cavern", """Junk is strewn about this dusty room."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, \
 falling into the darkness. Ahead to the north, a light flickers in the distance, \
@@ -31,6 +33,8 @@ room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
+room['foyer'].w_to = room['cavern']
+room['cavern'].e_to = room['foyer']
 room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
@@ -41,7 +45,7 @@ room['treasure'].s_to = room['narrow']
 room['outside'].items = [
     Rock("Pebbles"),
     Rock("Rocks"),
-    Item("Caterpiller")
+    FlavorItem("Caterpiller", "What would you do with a caterpiller? Eat it?! Gross!")
 ]
 
 room['foyer'].items = [
@@ -56,14 +60,22 @@ room['overlook'].items = [
 ]
 
 room['narrow'].items = [
-    Item("Dust"),
-    Item("OrnateKey")
+    FlavorItem("Dust", "It suddenly got dusty in here.")
 ]
 
 room['treasure'].items = [
     Item("SeveralCoins"),
     Item("EmptyTreasureChest"),
     Item("LooseTorch")
+]
+
+room['cavern'].items = [
+    FlavorItem("BrokenArrows", "They are broken. You can't use these."),
+    Item("ScatteredCoins"),
+    Item("BrokenChestArmor"),
+    Box("SmallPouch", Item("OrnateKey")),
+    FlavorItem("GlassSlippers", "You try on the glass slippers, but they don't fit."),
+    FlavorItem("Skull", "You put the skull over your hand with the jaw controlled with your thumb. It's a puppet!")
 ]
 
 #
