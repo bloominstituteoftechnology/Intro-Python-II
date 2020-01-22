@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,14 +39,43 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Me", room['outside'])
 
 # Write a loop that:
 #
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+while True:
+    current_room = player.current_room
+    # * Prints the current room name
+    print(f"Your current location --> {current_room.area}")
+    # * Prints the current description (the textwrap module might be useful here).
+    print(f"*** {current_room.description} ***")
+    # * Waits for user input and decides what to do.
+    move = input("Make a move > ")
+    if move == "n":
+        if current_room.n_to is not None:
+            player.current_room = current_room.n_to
+        else:
+            print("YOU MAY NOT ENTER! Try a different move.")
+    elif move == "s":
+        if current_room.s_to is not None:
+            player.current_room = current_room.s_to
+        else:
+            print("YOU MAY NOT ENTER! Try a different move.")
+    elif move == "e":
+        if current_room.e_to is not None:
+            player.current_room = current_room.e_to
+        else:
+            print("YOU MAY NOT ENTER! Try a different move.")
+    elif move == "w":
+        if current_room.w_to is not None:
+            player.current_room = current_room.w_to
+        else:
+            print("YOU MAY NOT ENTER! Try a different move.")
+        # If the user enters "q", quit the game.
+    elif move == "q":
+        print("Thank you for playing! Farewell!")
+        exit()
+    else:
+        # Print an error message if the movement isn't allowed.
+        print("Not a valid move. Please enter: n, s, e, w or q")
+        # If the user enters a cardinal direction, attempt to move to the room there.
