@@ -28,22 +28,22 @@ narrow.connect(room=foyer, direction='w')
 narrow.connect(room=treasure, direction='n')
 treasure.connect(room=narrow, direction='s')
 
-#
-# Main
-#
 
-# Make a new player object that is currently in the 'outside' room.
 
-player_1 = Player(outside)
+if __name__ == "__main__":
+    # Make a new player object that is currently in the 'outside' room.
 
-# Write a loop that:
+    player_1 = Player(outside)
 
-run = True
+    # Write a loop that:
 
-while run:
-    player_1.look()
-    direction = input('Where do you go? (n, e, s, w or quit with "q") ')
-    if direction == 'q':
-        print('Bye!')
-        break
-    player_1.move(direction=direction)
+    run = True
+
+    while run:
+        player_1.look()
+        direction = input('Where do you go? (n, e, s, w or quit with "q") ')
+        if direction == 'q':
+            print('Bye!')
+            break
+        player_1.move(direction=direction)
+        print('\n')
