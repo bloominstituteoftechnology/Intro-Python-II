@@ -6,6 +6,7 @@ class Room():
         self.name = name
         self.description = description
         self.connections = {}
+        self.items = {}
 
     def connect(self, room, direction):
         self.connections.update({direction:room})

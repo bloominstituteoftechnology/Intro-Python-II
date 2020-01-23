@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item, ItemHandler
 
 # Declare all the rooms
 
@@ -28,12 +29,32 @@ narrow.connect(room=foyer, direction='w')
 narrow.connect(room=treasure, direction='n')
 treasure.connect(room=narrow, direction='s')
 
+# Make some items
 
+chalice = Item(id=100, name='Golden Chalice', desccription='Actually an adult toy.')
+
+# Create Item Handler
+
+item_handler = ItemHandler()
+
+# Have item_handler place chalice
+
+item_handler.place_item(chalice, outside)
+
+
+### Helper Functions ###
+def select_item(command, inventory):
+    item_name = command.split(' ')
+    item_name = ' '.join(item_name[1:])
+    for item_id in inventory.keys():
+        if inventory[item_id].name.lower() == item_name.lower():
+            return inventory[item_id]
 
 if __name__ == "__main__":
     # Make a new player object that is currently in the 'outside' room.
 
-    player_1 = Player(outside)
+    player_1 = Player()
+    player_1.current_room = outside
 
     # Write a loop that:
 
@@ -41,9 +62,34 @@ if __name__ == "__main__":
 
     while run:
         player_1.look()
-        direction = input('Where do you go? (n, e, s, w or quit with "q") ')
-        if direction == 'q':
+        command = input('Where do you go? (Move: n-e-s-w, \nInteract: "grab", "drop" \nor quit with "q") ')
+        if command == 'q':
             print('Bye!')
             break
-        player_1.move(direction=direction)
+
+        elif command in ['n', 'e', 's', 'w']:
+            player_1.move(direction=command)
+
+        elif command == 'i':
+            print('Your Inventory: ', player_1.scan_items())
+
+
+        elif 'grab' in command:
+            item = select_item(command=command, inventory=player_1.current_room.items)
+            item_handler.move_item(
+                player_1.current_room, 
+                player_1,
+                item,
+                )
+        
+        elif 'drop' in command:
+            item = select_item(command=command, inventory=player_1.items)
+            item_handler.move_item(
+                player_1,
+                player_1.current_room,
+                item,
+                )
+
         print('\n')
+
+
