@@ -41,24 +41,37 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-my_player = Player()
+my_player = Player("Morgan", {Room("outside", "North of you, the cave mount beckons")} )
 
 # Write a loop that:
-#
+
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 print(my_player)
 
-selection = ""
 
-while selection is not "q":
-    selection = input(f"Please enter change rooms by entering the directions 'n' for North, 's' for South, 'e' for East"\
-    
-       f" , 'w' for West or 'q' to quit" ).lower
-    print(f"{my_player.get_roomname()[str(selection)-1]}")
-#
+while f"{room}.{selection}_to" is not 'q':
+    selection = input(f"Please enter 'n' for North, 's' for South, 'e' for East"\
+       f" , 'w' for West to change rooms or 'q' to quit: ").lower
+    print(f"{my_player.get_roomname()}")
+
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
-#
+if selection == "":
+    print("Select a direction please to change rooms")
+elif selection == "n" and room != None:
+    print(f"{room.get_roomname()}")
+elif selection == "s" and room != None:
+    print(f"{room.get_roomname()}")
+elif selection == "e" and room != None:
+    print(f"{room.get_roomname()}")
+elif selection == "w" and room != None:
+    print(f"{room.get_roomname()}")
+elif room == None:
+    print("you can't move there")
+
+
+
 # If the user enters "q", quit the game.
