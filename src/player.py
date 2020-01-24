@@ -22,5 +22,5 @@ class Player:
             print("You don't seem to have any items!")
 
     def __str__(player):
-        str = f'{player.name} is currently in {player.room}'
-        return str
+        s = f'{player.name} is currently {player.room}'
+        return s
