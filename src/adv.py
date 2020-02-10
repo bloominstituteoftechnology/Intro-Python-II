@@ -1,3 +1,4 @@
+from item import Item
 from room import Room
 from player import Player
 from shutil import get_terminal_size
@@ -9,7 +10,8 @@ cols, rows = get_terminal_size()
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                     visible_items=['gumdrop']),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -24,6 +26,16 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+}
+
+item = {
+    'gumdrop' : Item('gumdrop', 'A plump, delicious-looking gumdrop candy.',
+                     {'Eat the gumdrop.':
+                        {'default':"You pop the gumdrop your mouth. It's not too bad, if a bit stale.",
+                        'hungry':"You gobble down the gumdrop without even chewing. But it doesn't satisfy your hunger."}
+                     }
+                    )
+
 }
 
 
@@ -43,7 +55,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-Player = Player(input("Your name?"), room['outside'])
+Player = Player(input("Your name?"), room['outside'], status_effects=['hungry'])
 
 # Write a loop that:
 #
@@ -76,8 +88,34 @@ while True:
     print("\n"*(rows-23), Player.current_room.name.upper())
     print("\n", Player.current_room.__directions__(), "\n")
     print(Player.current_room.description)
-
-    choice = input("Which direction do you move? ")
+    if Player.current_room.visible_items:
+        print("In the room you can see: ",
+              ", ".join([item[x].name for x in Player.current_room.visible_items]))
+    choice = input("Choose an action: ")
+    if choice == "q":
+        print("quit game!")
+        break
+    if any(x in choice for x in Player.current_room.visible_items):
+        chosen = list(set(choice.split(" ")) & set(Player.current_room.visible_items))[0]
+        print(f"Options:")
+        options = {}
+        for i, option in enumerate(item[chosen].options.keys()):
+            options[str(i)] = option
+            print(f"{i}. " + option)
+        key = input("Choose an option: ")
+        if key not in list(options.keys()):
+            print(key)
+            print(list(options.keys()))
+            print("You think better of it.")
+            continue
+        action = options[key]
+        if any(x in item[chosen].options[action].keys() for x in Player.status_effects):
+            effect = list(set(Player.status_effects) & set(item[chosen].options[action].keys()))[0]
+            print(item[chosen].options[action][effect])
+            continue
+        else:
+            print(item[chosen].options[action]['default'])
+            continue
     if choice not in ['n', 's', 'e', 'w']:
         print("You can't just sit here. Choose a direction!")
         continue
