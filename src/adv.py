@@ -33,7 +33,8 @@ item = {
                      {'Eat the gumdrop.':
                         {'default':"You pop the gumdrop your mouth. It's not too bad, if a bit stale.",
                         'hungry':"You gobble down the gumdrop without even chewing. But it doesn't satisfy your hunger."}
-                     }
+                     },
+                     takeable=True
                     )
 
 }
@@ -91,7 +92,8 @@ while True:
     if Player.current_room.visible_items:
         print("In the room you can see: ",
               ", ".join([item[x].name for x in Player.current_room.visible_items]))
-    choice = input("Choose an action: ")
+    print("Your items: ", Player.items)
+    choice = input("Choose an item or direction: ")
     if choice == "q":
         print("quit game!")
         break
@@ -109,13 +111,17 @@ while True:
             print("You think better of it.")
             continue
         action = options[key]
+        print(action)
         if any(x in item[chosen].options[action].keys() for x in Player.status_effects):
             effect = list(set(Player.status_effects) & set(item[chosen].options[action].keys()))[0]
             print(item[chosen].options[action][effect])
-            continue
         else:
             print(item[chosen].options[action]['default'])
-            continue
+        if 'take' in action.lower():
+            print("Inventory updated!")
+            Player.items.append(chosen)
+            Player.current_room.visible_items.remove(chosen)
+        continue
     if choice not in ['n', 's', 'e', 'w']:
         print("You can't just sit here. Choose a direction!")
         continue
