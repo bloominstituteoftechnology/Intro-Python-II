@@ -1,5 +1,9 @@
 from room import Room
 from player import Player
+from shutil import get_terminal_size
+
+# set screen size
+cols, rows = get_terminal_size()
 
 # Declare all the rooms
 
@@ -69,7 +73,8 @@ def move(choice):
         return movement
 
 while True:
-    print("\n", Player.current_room.name.upper())
+    print("\n"*(rows-23), Player.current_room.name.upper())
+    print("\n", Player.current_room.__directions__(), "\n")
     print(Player.current_room.description)
 
     choice = input("Which direction do you move? ")
