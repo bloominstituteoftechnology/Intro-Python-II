@@ -1,44 +1,66 @@
 # Declare all the rooms
 from game import Game
-import sys,tty,termios
+import sys, tty, termios
 
-class _Getch:
-    """Gets a single character from standard input.  Does not echo to the
-screen."""
-    def __init__(self):
-        try:
-            self.impl = _GetchWindows()
-        except ImportError:
-            self.impl = _GetchUnix()
+# class _Getch:
+#     """Gets a single character from standard input.  Does not echo to the
+# screen."""
+#     def __init__(self):
+#         try:
+#             self.impl = _GetchWindows()
+#         except ImportError:
+#             self.impl = _GetchUnix()
 
-    def __call__(self): return self.impl()
-
-
-class _GetchUnix:
-    def __init__(self):
-        import tty, sys
-
-    def __call__(self):
-        import sys, tty, termios
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
-        try:
-            tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(1)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
+#     def __call__(self): return self.impl()
 
 
-class _GetchWindows:
-    def __init__(self):
-        import msvcrt
+# class _GetchUnix:
+#     def __init__(self):
+#         import tty, sys
 
-    def __call__(self):
-        import msvcrt
-        return msvcrt.getch()
+#     def __call__(self):
+#         import sys, tty, termios
+#         fd = sys.stdin.fileno()
+#         old_settings = termios.tcgetattr(fd)
+#         try:
+#             tty.setraw(sys.stdin.fileno())
+#             ch = sys.stdin.read(1)
+#         finally:
+#             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+#         return ch
+
+
+# class _GetchWindows:
+#     def __init__(self):
+#         import msvcrt
+
+#     def __call__(self):
+#         import msvcrt
+#         return msvcrt.getch()
 
 game = Game()
-getch = _Getch()
+gameActions = ["w", "a", "s", "d", " "]
+# getch = _Getch()
 
-# while(True):
+def doAction(action):
+    if action == "w":
+        game.moveUp()
+    elif action == "a":
+        game.moveLeft()
+    elif action == "s":
+        game.moveDown()
+    elif action == "d":
+        game.moveRight()
+
+
+while(True):
+    action = input()
+    
+    if action == "x":
+        print("Ending game")
+        break
+    
+    if action in gameActions:
+        doAction(action)
+    else:
+        game.updateMap()
