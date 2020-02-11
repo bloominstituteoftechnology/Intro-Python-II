@@ -1,6 +1,6 @@
 # Player and Weapon class declaration
 
-from random import random
+from item import Weapon, WeaponType
 
 class Player:
     def __init__(self, x = 3, y = 34, health = 10, level = 1, xp = 0):
@@ -8,6 +8,7 @@ class Player:
         self.y = y
         self.health = health
         self.level = level
+        self.inventory = []
         self.xp = xp
         self.levelxp = []
         for val in range(1, 11):
@@ -45,7 +46,7 @@ class Player:
             self.levelxp.remove(self.levelxp[0])
 
     def getHealth(self):
-        return "♥"*self.health
+        return "♥" * self.health
 
     def getXp(self):
         return self.xp
@@ -61,19 +62,3 @@ class Player:
 
     def __str__(self):
         return f"Health: {self.getHealth()}, {self.weapon}, Damage: {self.getDamage()} Level: {self.level}, XP: {self.xp}/{self.levelxp[0]}"
-
-
-class Weapon:
-    def __init__(self, name = "Fists", damage = 1.0):
-        self.name = name
-        self.damage = damage
-        if name != "Fists":
-            self.getRandomAttr()
-
-    def getRandomAttr(self):
-        attrs = ["Dull", "Sharpened", "Broken", "Godly", "Evil", "Holy"]
-        attrIndex = int(random() * (len(attrs)))
-        self.name = f"{attrs[attrIndex]} {self.name}"
-    
-    def __str__(self):
-        return f"Weapon: {self.name}"

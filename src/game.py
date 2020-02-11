@@ -33,7 +33,7 @@ class Game:
             print(self.convert(arr))
 
         if isTick:
-            print("update enemies") # TODO: Create enemies and update their location every tick
+            print("update tick") # TODO: Create enemies and update their location every tick
 
     def playerCanMove(self, direction):
         if direction == Direction.UP:
