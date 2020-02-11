@@ -38,9 +38,9 @@ import sys, tty, termios
 #         import msvcrt
 #         return msvcrt.getch()
 
+# getch = _Getch()
 game = Game()
 gameActions = ["w", "a", "s", "d", " "]
-# getch = _Getch()
 
 def doAction(action):
     if action == "w":

@@ -22,10 +22,10 @@ class Player:
         self.y += 1
 
     def moveLeft(self):
-        self.x -= 1
+        self.x -= 2
 
     def moveRight(self):
-        self.x += 1
+        self.x += 2
 
     def takeHealth(self, health):
         self.health -= int(health)
