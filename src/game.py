@@ -9,18 +9,19 @@ class Direction(Enum):
     LEFT = "◀"
 
 class Game:
-    badChars = ["|", "-", "*"]
+    specialChar = ["|", "-", "*"]
 
     def __init__(self):
         self.player = Player()
         self.map = [[]]
         with open ("map.txt", "r") as mapTxt:
-            self.map = [self.split(line.rstrip()) for line in mapTxt]
+            for line in mapTxt.readlines():
+                self.map.append(self.split(line.rstrip()))
             self.updatePlayer()
 
 
     def updatePlayer(self, direction = Direction.UP):
-        self.map = self.map[self.player.y][:self.player.x] + [direction.value] + self.map[self.player.y][self.player.x + 1:]
+        self.map[self.player.y][self.player.x] = direction.value
         self.updateMap()
 
     def updateMap(self):
@@ -78,11 +79,10 @@ class Game:
         string = ""
         for char in arr:
             string += char
-
         return string
 
     def checkForChar(self, char):
-        for val in self.badChars:
+        for val in self.specialChar:
             if val == char:
                 return True
         return False

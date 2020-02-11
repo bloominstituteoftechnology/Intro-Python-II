@@ -3,7 +3,7 @@
 from random import random
 
 class Player:
-    def __init__(self, x = 2, y = 0, health = 10, level = 1, xp = 0):
+    def __init__(self, x = 3, y = 34, health = 10, level = 1, xp = 0):
         self.x = x
         self.y = y
         self.health = health
