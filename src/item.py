@@ -15,15 +15,16 @@ class PotionType(Enum):
 class WeaponType(Enum):
             # Name, BaseDmg, val
     FISTS = ("Fists",  1,    -1)
-    SWORD = ("Sword",  4,     6)
-    AXE =   ("Axe",    3,     5)
+    SWORD = ("Sword",  4,     10)
+    AXE =   ("Axe",    3,     7)
+    CLUB =  ("Club",   3,     4)
 
 class WeaponEffect(Enum):
              # Name,      dmg, val
     DULL =   ("Dull",     -1, -3 )
     SHARP =  ("Sharpened", 1,  2 )
     BROKEN = ("Broken",   -2, -5 )
-    GODLY =  ("Godly",     3,  10)
+    GODLY =  ("Godly",     3,  20)
     EVIL =   ("Evil",      1,  5 )
     HOLY =   ("Holy",      1,  5 )
 

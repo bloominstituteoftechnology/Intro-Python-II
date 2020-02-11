@@ -25,17 +25,16 @@ def getch(): # Credit to https://stackoverflow.com/questions/510357/python-read-
     return c
 
 game = Game()
-gameActions = ["w", "a", "s", "d", " "]
+gameActions = ["w", "a", "s", "d", " ", "A", "B", "C", "D"]
 
 def doAction(action):
-    print()
-    if action == "w":
+    if action == "w" or action == "A":
         game.moveUp()
-    elif action == "a":
+    elif action == "a" or action == "D":
         game.moveLeft()
-    elif action == "s":
+    elif action == "s" or action == "B":
         game.moveDown()
-    elif action == "d":
+    elif action == "d" or action == "C":
         game.moveRight()
 
 while(True):
@@ -50,5 +49,4 @@ while(True):
     elif action == '':
         continue
     else:
-        print()
         game.updateMap(False)

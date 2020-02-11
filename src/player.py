@@ -3,7 +3,7 @@
 from item import Weapon, WeaponType
 
 class Player:
-    def __init__(self, x = 3, y = 34, health = 10, level = 1, xp = 0):
+    def __init__(self, x = 3, y = 33, health = 10, level = 1, xp = 0):
         self.x = x
         self.y = y
         self.health = health
@@ -46,7 +46,7 @@ class Player:
             self.levelxp.remove(self.levelxp[0])
 
     def getHealth(self):
-        return "♥" * self.health
+        return "♥ " * self.health
 
     def getXp(self):
         return self.xp
@@ -61,4 +61,4 @@ class Player:
         self = Player(level = self.level)
 
     def __str__(self):
-        return f"Health: {self.getHealth()}, {self.weapon}, Damage: {self.getDamage()} Level: {self.level}, XP: {self.xp}/{self.levelxp[0]}"
+        return f"Health: {self.getHealth()}| {self.weapon} | Damage: {self.getDamage()} | Level: {self.level} | XP: {self.xp}/{self.levelxp[0]}"

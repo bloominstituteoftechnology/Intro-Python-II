@@ -28,6 +28,8 @@ class Game:
         self.updateMap()
 
     def updateMap(self, isTick = True):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print()
         print(self.player)
         for arr in self.map:
             print(self.convert(arr))
