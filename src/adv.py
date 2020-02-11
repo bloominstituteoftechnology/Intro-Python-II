@@ -2,6 +2,7 @@ from item import Item
 from room import Room
 from player import Player
 from shutil import get_terminal_size
+from title import title
 
 # set screen size
 cols, rows = get_terminal_size()
@@ -54,7 +55,7 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
+title()
 # Make a new player object that is currently in the 'outside' room.
 Player = Player(input("Your name?"), room['outside'], status_effects=['hungry'])
 
@@ -92,8 +93,10 @@ while True:
     if Player.current_room.visible_items:
         print("In the room you can see: ",
               ", ".join([item[x].name for x in Player.current_room.visible_items]))
-    print("Your items: ", Player.items)
     choice = input("Choose an item or direction: ")
+    while choice == 'i':
+        print("Your items: ", Player.items)
+        choice = input("Choose an item or direction: ")
     if choice == "q":
         print("quit game!")
         break
