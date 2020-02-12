@@ -1,4 +1,24 @@
 from room import Room
+from player import Player
+
+
+commandListFormated = """
++----------+----------------------+
+| COMMANDS | DESCRIPTION          |
++----------+----------------------+
+|     q    | Exit the game        |
++----------+----------------------+
+|     n    | Move character north |
++----------+----------------------+
+|     s    | Move character south |
++----------+----------------------+
+|     e    | Move character east  |
++----------+----------------------+
+|     w    | Move character west  |
++----------+----------------------+
+|   help   | Open commands list   |
++----------+----------------------+
+"""
 
 # Declare all the rooms
 
@@ -39,6 +59,10 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+print("Let's play a game")
+name = input("\nWhat is your name? ")
+player = Player(name, room["outside"])
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +73,29 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def userInput():
+    return input("\n> ").lower()
+print("=================================================")
+print(f"Welcome {player.name}")
+print("INFO: Execute 'help' if you want a list of commands")
+print("=================================================")
+while True:
+    print(f"\nYou're currently in {player.current_room.name}")
+    print(f"{player.current_room.description}")
+    command = userInput()
+    if command == 'help':
+        print(commandListFormated)
+    elif command == 'q':
+        print("You quitted the game")
+        exit()
+    elif command == 'n':
+        player.travel(player.current_room.n_to)
+    elif command == 's':
+        player.travel(player.current_room.s_to)
+    elif command == 'e':
+        player.travel(player.current_room.e_to)
+    elif command == 'w':
+        player.travel(player.current_room.w_to)
+    else:
+        print(f"INFO: Command '{command}' not recognized")
