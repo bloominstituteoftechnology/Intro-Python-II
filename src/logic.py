@@ -1,5 +1,5 @@
 # Declare all the rooms
-from game import Game
+from game import Game, TermColors
 import os, sys, termios, fcntl
 
 def getch(): # Credit to https://stackoverflow.com/questions/510357/python-read-a-single-character-from-the-user for this solution!
@@ -24,9 +24,6 @@ def getch(): # Credit to https://stackoverflow.com/questions/510357/python-read-
         fcntl.fcntl(fd, fcntl.F_SETFL, oldflags)
     return c
 
-game = Game()
-gameActions = ["w", "a", "s", "d", " ", "A", "B", "C", "D"]
-
 def doAction(action):
     if action == "w" or action == "A":
         game.moveUp()
@@ -37,16 +34,38 @@ def doAction(action):
     elif action == "d" or action == "C":
         game.moveRight()
 
+startScreen = ""
+with open("lambda_ascii_shield.txt", "r") as shield:
+    for index, line in enumerate(shield.readlines()):
+        if index >= 23:
+            break
+        startScreen += line
+    startScreen += "\n"
+    print(startScreen)
+
+gameActions = ["w", "a", "s", "d", " ", "A", "B", "C", "D"]
+
+play = True
 while(True):
     action = getch()
-    
-    if action == "x":
-        print("Ending game")
+
+    if action == '\n':
+        break
+    elif action == 'x':
+        play = False
         break
 
-    if action in gameActions:
-        doAction(action)
-    elif action == '':
+if play:
+    game = Game()
+while(play):
+    action = getch()
+    
+    if action == "":
         continue
+    elif action == "x":
+        print(f"{TermColors.HEADER}Ending game{TermColors.ENDC}")
+        break
+    elif action in gameActions:
+        doAction(action)
     else:
         game.updateMap(False)
