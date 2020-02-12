@@ -86,6 +86,29 @@ def move(choice):
     else:
         return movement
 
+def item_action(chosen):
+    print(f"Options:")
+    options = {}
+    for i, option in enumerate(item[chosen].options.keys()):
+        options[str(i)] = option
+        print(f"{i}. " + option)
+    key = input("Choose an option: ")
+    if key not in list(options.keys()):
+        print(key)
+        print(list(options.keys()))
+        print("You think better of it.")
+    action = options[key]
+    print(action)
+    if any(x in item[chosen].options[action].keys() for x in Player.status_effects):
+        effect = list(set(Player.status_effects) & set(item[chosen].options[action].keys()))[0]
+        print(item[chosen].options[action][effect])
+    else:
+        print(item[chosen].options[action]['default'])
+    if 'take' in action.lower():
+        print("Inventory updated!")
+        Player.items.append(chosen)
+        Player.current_room.visible_items.remove(chosen)
+
 while True:
     print("\n"*(rows-23), Player.current_room.name.upper())
     print("\n", Player.current_room.__directions__(), "\n")
@@ -97,33 +120,15 @@ while True:
     while choice == 'i':
         print("Your items: ", Player.items)
         choice = input("Choose an item or direction: ")
+    if choice in Player.items:
+        item_action(choice)
+        continue
     if choice == "q":
         print("quit game!")
         break
     if any(x in choice for x in Player.current_room.visible_items):
         chosen = list(set(choice.split(" ")) & set(Player.current_room.visible_items))[0]
-        print(f"Options:")
-        options = {}
-        for i, option in enumerate(item[chosen].options.keys()):
-            options[str(i)] = option
-            print(f"{i}. " + option)
-        key = input("Choose an option: ")
-        if key not in list(options.keys()):
-            print(key)
-            print(list(options.keys()))
-            print("You think better of it.")
-            continue
-        action = options[key]
-        print(action)
-        if any(x in item[chosen].options[action].keys() for x in Player.status_effects):
-            effect = list(set(Player.status_effects) & set(item[chosen].options[action].keys()))[0]
-            print(item[chosen].options[action][effect])
-        else:
-            print(item[chosen].options[action]['default'])
-        if 'take' in action.lower():
-            print("Inventory updated!")
-            Player.items.append(chosen)
-            Player.current_room.visible_items.remove(chosen)
+        item_action(chosen)
         continue
     if choice not in ['n', 's', 'e', 'w']:
         print("You can't just sit here. Choose a direction!")
