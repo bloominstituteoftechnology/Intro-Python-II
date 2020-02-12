@@ -26,12 +26,16 @@ earlier adventurers. The only exit is to the south."""),
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
+
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
+
 room['overlook'].s_to = room['foyer']
+
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
+
 room['treasure'].s_to = room['narrow']
 
 #
@@ -52,10 +56,32 @@ player1 = Player('Adventurer', 'outside')
 #
 # If the user enters "q", quit the game.
 
-current_room = player1.current_room
-room_desc = room[current_room].description
-movement_choices = ['n', 's', 'e', 'w', 'q']
+current_room = room[player1.current_room]
+room_name = current_room.name
+room_desc = current_room.description
+directions = ['n', 's', 'e', 'w']
 
 while True:
-    print(f'{player1.name} is currently in {current_room}. {room_desc}')
-    cmd = input('Please select a direction (N, S, E, W) or q to quit')
+    print(f'---------------------------------------------------------------------------')
+    print(f'{player1.name} is currently in the {current_room.name}.')
+    print(f'{current_room.description}')
+    print(f'---------------------------------------------------------------------------')
+    cmd = input(
+        f'Please select a direction ([N], [E], [S], [W]) or [Q] to quit  ')
+    if cmd in directions:
+        if getattr(current_room, f'{cmd}_to') == None:
+            print(
+                f'---------------------------------------------------------------------------')
+            print('There is nothing in that direction')
+            print(
+                f'---------------------------------------------------------------------------')
+        else:
+            current_room = getattr(current_room, f'{cmd}_to')
+
+    elif cmd == "q":
+        print('Goodbye!')
+        break
+    else:
+        print(
+            f'Command not found, please select a direction ([N], [E], [S], [W]) or [Q] to quit   ')
+        print(cmd)
