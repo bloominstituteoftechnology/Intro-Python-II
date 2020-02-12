@@ -1,29 +1,70 @@
 from room import Room
 from player import Player
+from item import Item
 # Declare all the rooms
+
+item = [
+    Item('Small radio'),
+    Item('knife'),
+    Item('key'),
+    Item('Herbs'),
+    Item('Gold')
+]
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
-
+                     "North of you, the cave mount beckons",
+                     None,
+                     None,
+                     None,
+                     None,
+                     [
+                        item[3]
+                     ]),
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
-
+passages run north and east.""",
+                     None,
+                     None,
+                     None,
+                     None,
+                     [
+                         item[1]
+                     ]),
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
-
+the distance, but there is no way across the chasm.""",
+                     None,
+                     None,
+                     None,
+                     None,
+                     [
+                         item[2]
+                     ]),
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
-
+to north. The smell of gold permeates the air.""",
+                     None,
+                     None,
+                     None,
+                     None,
+                     [
+                         item[0]
+                     ]),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""",
+                     None,
+                     None,
+                     None,
+                     None,
+                     [
+                         item[4]
+                     ]),
 }
 
 
-# Link rooms together
 
+
+# Link rooms together
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -32,13 +73,10 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-
 #
 # Main
 #
-
 # Make a new player object that is currently in the 'outside' room.
-# player = Player("Muamer", room ['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,21 +87,51 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-
-# user = str(input("[n] North  [s] South  [e] East  [w] west  [q] Quit\n"))
-
-
-# while Game:
-#     current_room = player.current_room
-#     print(f"Welcome to {current_room.name}")
-#     print(f"""{current_room.description}""")
-
+player = Player("Steve", room ['outside'])
 def show_welcome_message():
-    welcome_message = "welcome to the game!"
+    welcome_message = "Welcome to the game!"
     print(welcome_message)
-
 def get_user_choice():
-    choice = input("[n] North  [s] South  [e] East  [w] west  [q] Quit\n")
-    return choice_options(str(choice_options))
-
-    choice_options = {"n": "north", "s": "south", "e": "east", "w": "west"} 
+    choice = input("[n] north [s] south [e] east [w] west [q] quit\n")
+    return choice_options[str(choice)]
+choice_options = {
+    "n": "north",
+    "s": "south",
+    "e": "east",
+    "w": "west",
+    "q": "quit"
+}
+show_welcome_message()
+while True:
+    current_room = player.current_room
+    print(f"You are currently in {current_room.name}")
+    print(f"{current_room.description}")
+    move = input("Select N, S, E, or W >>> ")
+    if move == "n":
+        if current_room.n_to is not None:
+            player.current_room = current_room.n_to
+            print(f"You picked up {current_room.items[0]}")
+           
+        else:
+            print("You hit a dead end!  Try again.")
+    elif move == "s":
+        if current_room.s_to is not None:
+            player.current_room = current_room.s_to
+            print(f"You picked up {current_room.items}")
+        else:
+            print("the path is blocked by rubble! Try again.")
+    elif move == "e":
+        if current_room.e_to is not None:
+            player.current_room = current_room.e_to
+            print(f"You picked up {current_room.items}")
+        else:
+            print("You fell thew the floor! Try again.")
+    elif move == "w":
+        if current_room.w_to is not None:
+            print(f"You picked up {current_room.items}")
+            player.current_room = current_room.w_to
+        else:
+            print("You went through an illusion!  Try again.")
+    elif move == "q":
+        print("Game has quit")
+        exit()
