@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -38,7 +38,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+# player = Player("Muamer", room ['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +49,21 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# user = str(input("[n] North  [s] South  [e] East  [w] west  [q] Quit\n"))
+
+
+# while Game:
+#     current_room = player.current_room
+#     print(f"Welcome to {current_room.name}")
+#     print(f"""{current_room.description}""")
+
+def show_welcome_message():
+    welcome_message = "welcome to the game!"
+    print(welcome_message)
+
+def get_user_choice():
+    choice = input("[n] North  [s] South  [e] East  [w] west  [q] Quit\n")
+    return choice_options(str(choice_options))
+
+    choice_options = {"n": "north", "s": "south", "e": "east", "w": "west"} 
