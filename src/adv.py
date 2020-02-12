@@ -108,6 +108,10 @@ def item_action(chosen):
         print("Inventory updated!")
         Player.items.append(chosen)
         Player.current_room.visible_items.remove(chosen)
+    if 'drop' in action.lower():
+        print("Inventory updated!")
+        Player.items.remove(chosen)
+        Player.current_room.visible_items.append(chosen)
 
 while True:
     print("\n"*(rows-23), Player.current_room.name.upper())
@@ -127,8 +131,8 @@ while True:
         print("quit game!")
         break
     if any(x in choice for x in Player.current_room.visible_items):
-        chosen = list(set(choice.split(" ")) & set(Player.current_room.visible_items))[0]
-        item_action(chosen)
+        choice = list(set(choice.split(" ")) & set(Player.current_room.visible_items))[0]
+        item_action(choice)
         continue
     if choice not in ['n', 's', 'e', 'w']:
         print("You can't just sit here. Choose a direction!")

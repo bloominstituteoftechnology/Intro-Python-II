@@ -7,3 +7,4 @@ class Item():
 
         if self.takeable:
             self.options[f"Take {name}."] = {'default':f"You take {name}."}
+            self.options[f"Drop {name}."] = {'default':f"You drop {name}."}
