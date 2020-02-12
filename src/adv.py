@@ -5,10 +5,10 @@ from item import Item
 # Items
 
 item = [
-    Item('Badass Sword of Unity'),
-    Item('Killer Mace'),
-    Item('Strong Shield'),
-    Item('Potion of Healthyness')
+    Item('Badass Sword of Unity', 'This sword contains a lot of power, use it wisely'),
+    Item('Killer Mace', 'This mace can deal a lot of damage, watch out!'),
+    Item('Strong Shield', 'Ths shield will help you in combat!'),
+    Item('Potion of Healthyness', 'This is just cocaine, pure Columbian cocaine.')
 ]
 
 # Declare all the rooms
@@ -88,13 +88,16 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-player = Player("Steve", room ['outside'])
+player = Player("Not Steve", room ['outside'])
+
 def show_welcome_message():
     welcome_message = "Welcome to the game!"
     print(welcome_message)
+
 def get_user_choice():
     choice = input("[n] north [s] south [e] east [w] west [q] quit\n")
     return choice_options[str(choice)]
+
 choice_options = {
     "n": "north",
     "s": "south",
@@ -103,6 +106,7 @@ choice_options = {
     "q": "quit"
 }
 show_welcome_message()
+
 while True:
     current_room = player.current_room
     print(f"You are currently in {current_room.name}")
