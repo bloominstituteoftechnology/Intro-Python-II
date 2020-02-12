@@ -1,6 +1,7 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 import sys, time
+from random import randint
 
 class Player:
   def __init__(self, name, current_room):
@@ -15,9 +16,9 @@ class Player:
 
   def travel(self, direction):
     if direction != None:
-      self.wait(5)
+      self.wait(randint(3, 7))
       print(f"\nYou're headed for {direction.name}", sep="")
-      self.wait(11)
+      self.wait(randint(5, 12))
       self.current_room = direction
     else:
       self.wait(5)
