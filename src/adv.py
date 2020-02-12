@@ -1,37 +1,8 @@
-from room import Room
+from random import random
+from utils import find_key
 
-# Declare all the rooms
-
-room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
-
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
-
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
-
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
-
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
-}
-
-
-# Link rooms together
-
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+from rooms import rooms
+from player import Player
 
 #
 # Main
@@ -39,13 +10,82 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+dirs = ['n', 's', 'e', 'w']
+
+player = Player('Dom', rooms['outside'], [])
+
+
+run_count = 0
+
+while True:
+
+    run_count += 1
+
+    room_key = find_key(player.current_room)
+
+    if run_count == 1:
+        print("""\n--------------------------------------------------------------------------------------------\n
+Welcome to Lambda Quest IV! Will you find the treasure,
+or perish along the way like the many adventurers that came before you?\n
+--------------------------------------------------------------------------------------------\n""")
+
+    player.print_current_room()
+    player.current_room.check_light(player)
+    player.look_around()
+
+    #
+    # GET PLAYER INPUT
+    #
+
+    action = input('What do you want to do?\n').strip().split()
+
+    if 'q' in action:
+        exit()
+
+    for i in dirs:
+        if i in action:
+            chosen_direction = i
+            player.move(chosen_direction)
+
+    if ('get' in action or 'take' in action) and len(action) == 2:
+        player.take(action)
+
+    if 'drop' in action:
+        player.drop(action)
+        
+    if 'check' in action or 'inventory' in action:
+        player.inventory(action)
+
+    if 'attack' in action and len(player.current_room.enemies) > 0:
+        # todo
+        pass
+
+    if player.current_room.has_unique_action is True:
+        player.current_room.run_room_action(room_key, player, action)
+
+
+    if room_key == 'dark':
+        if 'read' in action:
+            print(
+                "You take your lamp in one hand and squint at the note. You can make out some text\n")
+            print(
+                "1T'S A TR4P! DON'T G0 THROUGH THE SECRET DOOR IN EAST SIDE OF THE TREASURE ROOM!\n")
+            for i in player.current_room.items:
+                if i.name == 'note':
+                    player.items.append(i)
+                    player.current_room.items.remove(i)
+
+    if room_key == 'treasure':
+        for i in player.items:
+            if i.name == 'note':
+                print("""Looking closely at the east side of the room, you can see a faint outline among
+the rocks. Brushing the dust away, you see the outline of a dusty, stone-coloured door. In the centre
+is a keypad and a screen. You're puzzled by this sudden thematic inconsistency with the fantasy theme 
+that this game has so far maintained.""")
+        sub_action = input("What do you do?").strip().split()
+        if 'enter' in sub_action or 'type' in sub_action:
+            if sub_action[1] == '140':
+                print("The door swings open!")
+                player.current_room = find_key(rooms['final'])
+            else:
+                print("Nothing happens.")
