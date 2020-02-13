@@ -62,7 +62,7 @@ player = Player(x, room['outside'])
 #
 # If the user enters "q", quit the game.
 def switch():
-    print("Press n for North \n press s for South \n press e for East \n press w for West \n press q to Quit")
+    print("\n Press n for North \n press s for South \n press e for East \n press w for West \n press q to Quit")
 
     player_option = str(input("\n where to next?: "))
 
@@ -79,7 +79,8 @@ def switch():
         player.move(Direction.West)
 
     def quit():
-        quit()
+        print("thank you for playing! See you again")
+        player.current_room = room['treasure']
 
     def default():
         print("Incorrect option")
@@ -92,4 +93,6 @@ def switch():
         "q": quit
     }.get(player_option, default)()
 
-switch()
+
+while player.current_room != room['treasure']:
+    switch()

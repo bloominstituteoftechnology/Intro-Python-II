@@ -14,7 +14,7 @@ class Player:
 
         new_room = self.current_room.get_nearby_room(direction)
 
-        if new_room == None:
+        if new_room is None:
             print(f'The path is blocked to the {direction.value}.')
         else:
             self.current_room = new_room
