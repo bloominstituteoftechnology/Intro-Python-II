@@ -48,15 +48,9 @@ player = Player(input("What is your name, brave soul: "), room["outside"])
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 while True:
-    print(player.current_room)
     cmd = input("-> ").lower()
     if cmd in ["n", "e", "s", "w"]:
-        current_room = player.current_room
-        next_room = getattr(current_room, f"{cmd}_to")
-        if next_room is not None:
-            player.current_room = next_room
-        else:
-            print("Nothing there")
+        player.travel(cmd)
     elif cmd == "q":
         print("leaving already?")
         exit()
