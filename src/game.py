@@ -2,41 +2,25 @@
 import os
 from enum import Enum
 from entity import Player, Enemy
+from direction import Direction, TermColors
 from item import Weapon, WeaponType, PotionType
 
-class TermColors:
-    HEADER = "\033[95m"
-    OKBLUE = "\033[94m"
-    OKGREEN = "\033[92m"
-    WARNING = "\033[93m"
-    FAIL = "\033[91m"
-    ENDC = "\033[0m"
-    BOLD = "\033[1m"
-    UNDERLINE = "\033[4m"
-
-class Direction(Enum):
-    UP = "▲"
-    RIGHT = "▶"
-    DOWN = "▼"
-    LEFT = "◀"
-
 class Game:
-    specialChar = ["|", "-", "*", "x", "@"]
+    specialChar = ["|", "-", "*", "x", "@", "▲", "▶", "▼", "◀"]
 
-    def __init__(self, enemies = [Enemy(True, False, 10, 10, 1), Enemy(True, False, 11, 10, 1)], Items = []):
+    def __init__(self, enemies = [Enemy(10, 10, 1), Enemy(11, 10, 1)]):
         self.player = Player()
         self.enemies = enemies
-        self.previousLocation = (self.player.getX(), self.player.getY())
         self.map = [[]]
+        self.items = []
         with open("map.txt", "r") as mapTxt:
             for line in mapTxt.readlines():
                 self.map.append(self.split(line.rstrip()))
-            self.updatePlayer()
+            self.updatePlayer(self.player.getPreviousLocation())
 
-    def updatePlayer(self, direction = Direction.UP, isTick = True):
-        self.map[self.previousLocation[1]][self.previousLocation[0]] = " "
+    def updatePlayer(self, previousLocation, direction = Direction.UP, isTick = True):
+        self.map[previousLocation[1]][previousLocation[0]] = " "
         self.map[self.player.getY()][self.player.getX()] = direction.value
-        self.previousLocation = (self.player.getX(), self.player.getY())
         self.updateMap(isTick)
 
     def updateMap(self, isTick = True):
@@ -46,12 +30,15 @@ class Game:
         # 🛡
         if isTick:
             self.updateEntities()
+            print("Tick")
+        else:
+            print("Not tick")
         for arr in self.map:
             print(self.convert(arr))
 
-    def entityCanMove(self, direction):
-        x = self.player.getX()
-        y = self.player.getY()
+    def entityCanMove(self, direction, entity):
+        x = entity.getX()
+        y = entity.getY()
         if direction == Direction.UP:
             if self.checkForChar(self.map[y-1][x]):
                 self.updateMap(False)
@@ -79,40 +66,51 @@ class Game:
         return False
 
     def moveUp(self):
-        if self.entityCanMove(Direction.UP):
+        previousLocation = self.player.getPreviousLocation()
+        if self.entityCanMove(Direction.UP, self.player):
             self.player.moveUp()
-            self.updatePlayer(Direction.UP)
+            self.updatePlayer(previousLocation, Direction.UP)
         else:
-            self.updatePlayer(Direction.UP, False)
+            self.updatePlayer(previousLocation, Direction.UP, False)
 
     def moveDown(self):
-        if self.entityCanMove(Direction.DOWN):
+        previousLocation = self.player.getPreviousLocation()
+        if self.entityCanMove(Direction.DOWN, self.player):
             self.player.moveDown()
-            self.updatePlayer(Direction.DOWN)
+            self.updatePlayer(previousLocation, Direction.DOWN)
         else:
-            self.updatePlayer(Direction.DOWN, False)
+            self.updatePlayer(previousLocation, Direction.DOWN, False)
 
     def moveLeft(self):
-        if self.entityCanMove(Direction.LEFT):
+        previousLocation = self.player.getPreviousLocation()
+        if self.entityCanMove(Direction.LEFT, self.player):
             self.player.moveLeft()
-            self.updatePlayer(Direction.LEFT)
+            self.updatePlayer(previousLocation, Direction.LEFT)
         else:
-            self.updatePlayer(Direction.LEFT, False)
+            self.updatePlayer(previousLocation, Direction.LEFT, False)
 
     def moveRight(self):
-        if self.entityCanMove(Direction.RIGHT):
+        previousLocation = self.player.getPreviousLocation()
+        if self.entityCanMove(Direction.RIGHT, self.player):
             self.player.moveRight()
-            self.updatePlayer(Direction.RIGHT)
+            self.updatePlayer(previousLocation, Direction.RIGHT)
         else:
-            self.updatePlayer(Direction.RIGHT, False)
+            self.updatePlayer(previousLocation, Direction.RIGHT, False)
 
     # def performAction():
         # if
 
     def updateEntities(self):
         for enemy in self.enemies:
-            self.map[enemy.getY()][enemy.getX()] = "x"
+            directionList = []
+            for direction in Direction:
+                if self.entityCanMove(direction, enemy):
+                    directionList.append(direction)
 
+            prevLoc = enemy.getPreviousLocation()
+            enemy.move(self.player, self.map, directionList)
+            self.map[prevLoc[1]][prevLoc[0]] = " "
+            self.map[enemy.getY()][enemy.getX()] = "x"
 
 
     def split(self, str):

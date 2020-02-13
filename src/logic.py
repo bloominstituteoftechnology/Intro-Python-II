@@ -1,5 +1,6 @@
 # Declare all the rooms
-from game import Game, TermColors
+from game import Game
+from direction import TermColors
 import os, sys, termios, fcntl
 
 def getch(): # Credit to https://stackoverflow.com/questions/510357/python-read-a-single-character-from-the-user for this solution!
@@ -12,7 +13,6 @@ def getch(): # Credit to https://stackoverflow.com/questions/510357/python-read-
 
     oldflags = fcntl.fcntl(fd, fcntl.F_GETFL)
     fcntl.fcntl(fd, fcntl.F_SETFL, oldflags)
-
     try:
         while True:
             try:
@@ -36,11 +36,13 @@ def doAction(action):
 
 startScreen = ""
 with open("lambda_ascii_shield.txt", "r") as shield:
+    # Artwork is original, but text was generated from http://patorjk.com/software/taag/#p=display&f=Ogre&t=Sword%20and%20Shield
     for index, line in enumerate(shield.readlines()):
-        if index >= 23:
+        if index >= 30:
             break
         startScreen += line
-    startScreen += "\n"
+    startScreen += "\n" * 6
+    startScreen += f"\n{TermColors.OKGREEN}Press 'Enter' start or 'x' to quit{TermColors.ENDC}"
     print(startScreen)
 
 gameActions = ["w", "a", "s", "d", " ", "A", "B", "C", "D"]
