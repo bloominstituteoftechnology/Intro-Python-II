@@ -1,4 +1,5 @@
 from src.room import Room
+from src.directions import Direction
 # Declare all the rooms
 
 room = {
@@ -22,14 +23,23 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+# room['outside'].n_to = room['foyer']
+# room['foyer'].s_to = room['outside']
+# room['foyer'].n_to = room['overlook']
+# room['foyer'].e_to = room['narrow']
+# room['overlook'].s_to = room['foyer']
+# room['narrow'].w_to = room['foyer']
+# room['narrow'].n_to = room['treasure']
+# room['treasure'].s_to = room['narrow']
+
+room['outside'].set_nearby_room(Direction.North, room['foyer'])
+room['foyer'].set_nearby_room(Direction.South, room['outside'])
+room['foyer'].set_nearby_room(Direction.North, room['overlook'])
+room['foyer'].set_nearby_room(Direction.East, room['narrow'])
+room['overlook'].set_nearby_room(Direction.South, room['foyer'])
+room['narrow'].set_nearby_room(Direction.West, room['foyer'])
+room['narrow'].set_nearby_room(Direction.North, room['treasure'])
+room['treasure'].set_nearby_room(Direction.South, room['narrow'])
 
 #
 # Main
