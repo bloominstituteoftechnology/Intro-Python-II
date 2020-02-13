@@ -15,19 +15,12 @@ item = [
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons",
-                     None,
-                     None,
-                     None,
-                     None,
                      [
                         item[1]
                      ]),
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""",
-                     None,
-                     None,
-                     None,
-                     None,
+
                      [
                          item[3],
                          item[4]
@@ -35,29 +28,17 @@ passages run north and east.""",
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm.""",
-                     None,
-                     None,
-                     None,
-                     None,
                      [
                          item[2]
                      ]),
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air.""",
-                     None,
-                     None,
-                     None,
-                     None,
                      [
                          item[0]
                      ]),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south.""",
-                     None,
-                     None,
-                     None,
-                     None,
                      [
                          item[4]
                      ]),
@@ -107,36 +88,38 @@ choice_options = {
     "get": "get item",
     "drop": "drop item",
     "i": "inventory",
-    "inventory": "inventory"
+    "inventory": "inventory",
+    "search": "search"
 }
 
 show_welcome_message()
 while True:
     current_room = player.current_room
-    print(f"You are currently in {current_room.name}\n")
-    print(f"{current_room.description}")
-    move = input("\nType N, S, E, or W to move >>> ")
+    move = input("\nType N, S, E, or W to move\nType search to search a room\nType get item name to pick up item\nType drop item name to drop an item >>>")
     
-    if move == "n":
-        if current_room.n_to is not None:
-            player.current_room = current_room.n_to           
-        else:
-            print("You hit a dead end!  Try again.")
-    elif move == "s":
-        if current_room.s_to is not None:
-            player.current_room = current_room.s_to
-        else:
-            print("\nthe path is blocked by rubble! Try again.\n")
-    elif move == "e":
-        if current_room.e_to is not None:
-            player.current_room = current_room.e_to
-        else:
-            print("\nYou fell thew the floor! Try again.\n")
-    elif move == "w":
-        if current_room.w_to is not None:
-            player.current_room = current_room.w_to
-        else:
-            print("\nYou went through an illusion!  Try again.\n")
+    if move in ["n", "s", "e", "w"]:
+        player.travel(move)
+
+    # if move == "n":
+    #     if current_room.n_to is not None:
+    #         player.current_room = current_room.n_to           
+    #     else:
+    #         print("You hit a dead end!  Try again.")
+    # elif move == "s":
+    #     if current_room.s_to is not None:
+    #         player.current_room = current_room.s_to
+    #     else:
+    #         print("\nthe path is blocked by rubble! Try again.\n")
+    # elif move == "e":
+    #     if current_room.e_to is not None:
+    #         player.current_room = current_room.e_to
+    #     else:
+    #         print("\nYou fell thew the floor! Try again.\n")
+    # elif move == "w":
+    #     if current_room.w_to is not None:
+    #         player.current_room = current_room.w_to
+    #     else:
+    #         print("\nYou went through an illusion!  Try again.\n")
    
     elif "get" in move: 
         item = move[4:]
@@ -144,21 +127,21 @@ while True:
         for x in range(len(current_room.items)):
             if item == current_room.items[x].item_name:
                 player.inventory.append(current_room.items[x])
-                print(f"you have picked up {current_room.items[x]}")
+                print(f"\nyou have picked up {current_room.items[x]}")
                 del current_room.items[x]
                 break
             else:
-                print("Item not in room")
+                print("\nItem not in room")
         
         if len(current_room.items) == 0:
-            print("Item not in room")
+            print("\nItem not in room")
     elif "drop" in move:
         item = move[5:]
 
         for x in range(len(player.inventory)):
             if item == player.inventory[x].item_name:
                 current_room.items.append(player.inventory[x])
-                print(f"you have dropped {player.inventory[x]}")
+                print(f"\nyou have dropped {player.inventory[x]}")
                 del player.inventory[x]
                 break
             else:
@@ -166,8 +149,12 @@ while True:
 
     elif move == "i" or move == "inventory":
         for x in range(len(player.inventory)):
-            print(player.inventory[x])
+            print(f"\n{player.inventory[x]}")
 
+    elif move == "search":
+        for x in range(len(current_room.items)):
+            print(f"\nYou Found:\n{current_room.items[x]}")
+               
     elif move == "q":
         print("\nGame has quit\n")
         exit()

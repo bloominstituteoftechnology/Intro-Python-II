@@ -2,7 +2,7 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description, n_to, s_to, e_to, w_to, items):
+    def __init__(self, name, description, items, search = None, n_to = None, s_to = None, e_to = None, w_to = None):
         self.name = name
         self.description = description
         self.n_to = n_to
@@ -10,5 +10,8 @@ class Room:
         self.e_to = e_to
         self.w_to = w_to
         self.items = items
-    
-    
+        self.search = search
+
+    def __str__(self):
+         return f"\nYou are currently in {self.name}. {self.description}\n"
+      
