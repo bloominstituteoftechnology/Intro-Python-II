@@ -1,9 +1,9 @@
-from item import Item, Weapon, PotionType
+from item import Item, Weapon, PotionType, WeaponType
 from location import Location, Direction
 import random
 
 class Entity:
-    specialChar = ["|", "-", "*", "x", "@", "▲", "▶", "▼", "◀"]
+    specialChar = ["|", "-", "*", "x", "+", "@", "▲", "▶", "▼", "◀"]
 
     def __init__(self, isHostile, isMobile, location, level):
         self.isHostile = isHostile
@@ -12,6 +12,7 @@ class Entity:
         self.previousLocation = location
         self.level = level
         self.health = level * 2 + 5
+        self.isDead = False
 
     def moveTo(self, x = 0, y = 0):
         if self.isMobile:
@@ -26,6 +27,9 @@ class Entity:
 
     def getPreviousLocation(self):
         return (self.previousLocation.getX()//2 + 1, self.previousLocation.getY())
+
+    def getCurrentLocation(self):
+        return (self.getX()//2 + 1, self.getY())
 
     def getDamage(self):
         return self.level * 1.5
@@ -50,6 +54,8 @@ class Entity:
         self.setPreviousLocation(self.getX(), self.getY())
 
     def getHealth(self):
+        if self.health <= 0:
+            self.die()
         return self.health
 
     def giveHealth(self, health):
@@ -64,21 +70,29 @@ class Entity:
             self.die()
 
     def die(self):
-        print("I died!")
+        self.isDead = True
+        self.isMobile = False
+        self.isHostile = False
+
+    def checkIfDead(self):
+        return self.isDead
 
     def move(self, player, map, possibleDirections):
         pass
 
     def updateEntity(self, map, player):
-        directionList = []
-        for direction in Direction:
-            if self.entityCanMove(direction, map):
-                directionList.append(direction)
-            
-        prevLoc = self.getPreviousLocation()
-        self.move(player, map, directionList)
-        map[prevLoc[1]][prevLoc[0]] = " "
-        map[self.getY()][self.getX()] = "x"
+        if self.isDead:
+            map[self.getY()][self.getX()] = " "
+        else:
+            directionList = []
+            for direction in Direction:
+                if self.entityCanMove(direction, map):
+                    directionList.append(direction)
+                
+            prevLoc = self.getPreviousLocation()
+            self.move(player, map, directionList)
+            map[prevLoc[1]][prevLoc[0]] = " "
+            map[self.getY()][self.getX()] = "x"
 
     def entityCanMove(self, direction, map):
         x = self.getX()
@@ -111,19 +125,17 @@ class Entity:
                 return True
         return False
 
-
-from item import Item, Weapon, WeaponType
-
 class Player(Entity):
     def __init__(self, x = 2, y = 33, health = 10, level = 1, xp = 0):
         super(Player, self).__init__(False, True, Location(x, y), level)
         self.health = health
-        self.inventory = []
+        self.inventory = [Weapon()]
+        self.direction = Direction.UP
+        self.selectedWeapon = self.inventory[0]
         self.xp = xp
         self.levelxp = []
         for val in range(1, 11):
             self.levelxp.append(2 ** val)
-        self.weapon = Weapon()
         self.updateDamage()
 
     def giveHealth(self, health):
@@ -138,6 +150,9 @@ class Player(Entity):
             self.level += 1
             self.levelxp.remove(self.levelxp[0])
 
+    def getSelectedWeapon(self):
+        return self.selectedWeapon
+
     def getHealthSymbols(self):
         return "♥ " * self.health
 
@@ -145,23 +160,39 @@ class Player(Entity):
         return self.xp
 
     def getDamage(self):
-        return int(self.damage * self.weapon.damage)
+        return int(self.damage * self.selectedWeapon.damage)
+
+    def getDirection(self):
+        return self.direction
+
+    def setDirection(self, direction):
+        self.direction = direction
+    
+    def setSelectedWeapon(self, index):
+        if index < len(self.inventory):
+            self.weapon = self.inventory[index]
+        else:
+            print(f"You do not have an item in slot {index + 1}")
+
+    def addItemToInv(self, item):
+        self.inventory.append(item)
+        item.removeFromGround()
 
     def updateDamage(self):
-        self.damage = int(self.level * self.weapon.damage)
+        self.damage = int(self.level * self.selectedWeapon.damage)
 
     def die(self):
         self = Player(level = self.level)
 
     def __str__(self):
-        return f"Health: {self.getHealthSymbols()}| {self.weapon} | Damage: {self.getDamage()} | Level: {self.level} | XP: {self.xp}/{self.levelxp[0]}"
+        return f"Health: {self.getHealthSymbols()}| {self.selectedWeapon} | Damage: {self.getDamage()} | Level: {self.level} | XP: {self.xp}/{self.levelxp[0]}"
 
 
 class Enemy(Entity):
     def __init__(self, x, y, level, isMobile = True):
         super(Enemy, self).__init__(True, isMobile, Location(x, y), level)
 
-    def move(self, player, map, possibleDirections): # TODO: Check map for barriers, i.e walls, doors, etc
+    def move(self, player, map, possibleDirections):
         playerX = player.getX()
         playerY = player.getY()
         selfX = self.getX()
@@ -169,7 +200,7 @@ class Enemy(Entity):
         if (playerX == selfX and (playerY == selfY + 1 or playerY == selfY - 1)):
             player.removeHealth(self.getDamage())
         elif (playerY == selfY and (playerX == selfX + 2 or playerX == selfX - 2)):
-            player.takeHealth(self.getDamage())
+            player.removeHealth(self.getDamage())
 
         if (playerX > selfX - 10 and playerX < selfX + 10) and (playerY > selfY - 5 and playerY < selfY + 5):
             self.moveTowardsPlayer(player, possibleDirections)
@@ -183,18 +214,18 @@ class Enemy(Entity):
         xPercent = abs(xDistance) / total
         rand = random.uniform(0, 1)
 
-        print(f"xPercent: {xPercent}, yPercent: {1 - xPercent}, random number generated: {rand}, x distance from player: {abs(xDistance)}, y distance from player: {abs(yDistance)}")
+        # print(f"xPercent: {xPercent}, yPercent: {1 - xPercent}, random number generated: {rand}, x distance from player: {abs(xDistance)}, y distance from player: {abs(yDistance)}")
 
         if (xDistance >= -10 and xDistance <= 10) and (yDistance >= -5 and yDistance <= 5):
             if rand <= xPercent:
                 if xDistance > 0 and Direction.LEFT in possibleDirections:
                     self.moveLeft()
-                elif Direction.RIGHT in possibleDirections:
+                elif xDistance < 0 and Direction.LEFT and Direction.RIGHT in possibleDirections:
                     self.moveRight()
             else:
                 if yDistance > 0 and Direction.UP in possibleDirections:
                     self.moveUp()
-                elif Direction.DOWN in possibleDirections:
+                elif yDistance < 0 and Direction.DOWN in possibleDirections:
                     self.moveDown()
         else:
             self.randomMove(possibleDirections)
@@ -210,3 +241,10 @@ class Enemy(Entity):
             self.moveLeft()
         elif move == Direction.RIGHT:
             self.moveRight()
+
+    def dropItem(self):
+        rand = random.randint(0, 1)
+        if rand == 0:
+            return Weapon(random.choice(list(WeaponType)), None, self.getX(), self.getY())
+            
+

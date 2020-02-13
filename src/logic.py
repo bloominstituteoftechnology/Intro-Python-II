@@ -33,6 +33,10 @@ def doAction(action):
         game.move(Direction.DOWN)
     elif action == "d" or action == "C":
         game.move(Direction.RIGHT)
+    elif action == " ":
+        game.performAction()
+    elif int(action) in range(1, 10):
+        game.switchWeapon(int(action) - 1)
 
 startScreen = ""
 with open("lambda_ascii_shield.txt", "r") as shield:
@@ -45,12 +49,12 @@ with open("lambda_ascii_shield.txt", "r") as shield:
     startScreen += f"\n{TermColors.OKGREEN}Press 'Enter' start or 'x' to quit{TermColors.ENDC}"
     print(startScreen)
 
-gameActions = ["w", "a", "s", "d", " ", "A", "B", "C", "D"]
+gameActions = ["w", "a", "s", "d", " ", "A", "B", "C", "D", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 play = True
 while(True):
     action = getch()
-
+    print(action)
     if action == '\n':
         break
     elif action == 'x':
