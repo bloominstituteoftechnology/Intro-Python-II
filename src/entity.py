@@ -1,9 +1,10 @@
 from item import Item, Weapon, PotionType
-from location import Location
-from direction import Direction
+from location import Location, Direction
 import random
 
 class Entity:
+    specialChar = ["|", "-", "*", "x", "@", "▲", "▶", "▼", "◀"]
+
     def __init__(self, isHostile, isMobile, location, level):
         self.isHostile = isHostile
         self.isMobile = isMobile
@@ -12,7 +13,7 @@ class Entity:
         self.level = level
         self.health = level * 2 + 5
 
-    def move(self, x = 0, y = 0):
+    def moveTo(self, x = 0, y = 0):
         if self.isMobile:
             self.location.setX(x)
             self.location.setY(y)
@@ -25,6 +26,9 @@ class Entity:
 
     def getPreviousLocation(self):
         return (self.previousLocation.getX()//2 + 1, self.previousLocation.getY())
+
+    def getDamage(self):
+        return self.level * 1.5
     
     def setPreviousLocation(self, x, y):
         self.previousLocation = Location(x, y)
@@ -55,14 +59,57 @@ class Entity:
             self.health += health
 
     def removeHealth(self, health):
-        self.health += health
-
-        if self.health <= 0:
+        self.health -= int(health)
+        if health <= 0:
             self.die()
 
     def die(self):
         print("I died!")
 
+    def move(self, player, map, possibleDirections):
+        pass
+
+    def updateEntity(self, map, player):
+        directionList = []
+        for direction in Direction:
+            if self.entityCanMove(direction, map):
+                directionList.append(direction)
+            
+        prevLoc = self.getPreviousLocation()
+        self.move(player, map, directionList)
+        map[prevLoc[1]][prevLoc[0]] = " "
+        map[self.getY()][self.getX()] = "x"
+
+    def entityCanMove(self, direction, map):
+        x = self.getX()
+        y = self.getY()
+        if direction == Direction.UP:
+            if self.checkForChar(map[y-1][x]):
+                return False
+            else:
+                return True
+        elif direction == Direction.DOWN:
+            if self.checkForChar(map[y+1][x]):
+                return False
+            else:
+                return True
+        elif direction == Direction.LEFT:
+            if self.checkForChar(map[y][x-1]) or self.checkForChar(map[y][x-2]):
+                return False
+            else:
+                return True
+        elif direction == Direction.RIGHT:
+            if self.checkForChar(map[y][x+1]) or self.checkForChar(map[y][x + 2]):
+                return False
+            else:
+                return True
+        return False
+    
+    def checkForChar(self, char):
+        for val in self.specialChar:
+            if val == char:
+                return True
+        return False
 
 
 from item import Item, Weapon, WeaponType
@@ -78,11 +125,6 @@ class Player(Entity):
             self.levelxp.append(2 ** val)
         self.weapon = Weapon()
         self.updateDamage()
-
-    def takeHealth(self, health):
-        self.health -= int(health)
-        if health <= 0:
-            self.die()
 
     def giveHealth(self, health):
         self.health += int(health)
@@ -118,43 +160,44 @@ class Player(Entity):
 class Enemy(Entity):
     def __init__(self, x, y, level, isMobile = True):
         super(Enemy, self).__init__(True, isMobile, Location(x, y), level)
-        self.baseDamage = level * 1.5
 
     def move(self, player, map, possibleDirections): # TODO: Check map for barriers, i.e walls, doors, etc
         playerX = player.getX()
         playerY = player.getY()
         selfX = self.getX()
         selfY = self.getY()
+        if (playerX == selfX and (playerY == selfY + 1 or playerY == selfY - 1)):
+            player.removeHealth(self.getDamage())
+        elif (playerY == selfY and (playerX == selfX + 2 or playerX == selfX - 2)):
+            player.takeHealth(self.getDamage())
+
         if (playerX > selfX - 10 and playerX < selfX + 10) and (playerY > selfY - 5 and playerY < selfY + 5):
             self.moveTowardsPlayer(player, possibleDirections)
         else:
             self.randomMove(possibleDirections)
 
     def moveTowardsPlayer(self, player, possibleDirections):
-        xDistance = self.getX() - player.getPreviousLocation()[1]
-        yDistance = self.getY() - player.getPreviousLocation()[0]
-        if xDistance == 0 and (Direction.DOWN in possibleDirections or Direction.UP in possibleDirections):
-            if player.getY() > self.getY() and Direction.DOWN in possibleDirections:
-                self.moveDown()
-            elif Direction.UP in possibleDirections:
-                self.moveUp()
-        elif yDistance == 0 and (Direction.LEFT in possibleDirections or Direction.RIGHT in possibleDirections):
-            if player.getY() > self.getY() and Direction.DOWN in possibleDirections:
-                self.moveDown()
-            elif Direction.UP in possibleDirections:
-                self.moveUp()
-        elif xDistance > yDistance and (Direction.RIGHT in possibleDirections or Direction.LEFT in possibleDirections):
-            if player.getX() > self.getX() and Direction.RIGHT in possibleDirections:
-                self.moveRight()
-            elif Direction.LEFT in possibleDirections:
-                self.moveLeft()
-        else:
-            if player.getY() > self.getY() and Direction.DOWN in possibleDirections:
-                self.moveDown()
-            elif Direction.UP in possibleDirections:
-                self.moveUp()
+        xDistance = self.getX() - player.getPreviousLocation()[0]
+        yDistance = self.getY() - player.getPreviousLocation()[1]
+        total = abs(xDistance) + abs(yDistance)
+        xPercent = abs(xDistance) / total
+        rand = random.uniform(0, 1)
+
+        print(f"xPercent: {xPercent}, yPercent: {1 - xPercent}, random number generated: {rand}, x distance from player: {abs(xDistance)}, y distance from player: {abs(yDistance)}")
+
+        if (xDistance >= -10 and xDistance <= 10) and (yDistance >= -5 and yDistance <= 5):
+            if rand <= xPercent:
+                if xDistance > 0 and Direction.LEFT in possibleDirections:
+                    self.moveLeft()
+                elif Direction.RIGHT in possibleDirections:
+                    self.moveRight()
             else:
-                self.randomMove(possibleDirections)
+                if yDistance > 0 and Direction.UP in possibleDirections:
+                    self.moveUp()
+                elif Direction.DOWN in possibleDirections:
+                    self.moveDown()
+        else:
+            self.randomMove(possibleDirections)
 
     def randomMove(self, possibleDirections):
         rand = random.randint(0, len(possibleDirections) - 1)

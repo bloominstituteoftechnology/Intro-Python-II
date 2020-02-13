@@ -1,6 +1,6 @@
 # Declare all the rooms
 from game import Game
-from direction import TermColors
+from location import TermColors, Direction
 import os, sys, termios, fcntl
 
 def getch(): # Credit to https://stackoverflow.com/questions/510357/python-read-a-single-character-from-the-user for this solution!
@@ -26,13 +26,13 @@ def getch(): # Credit to https://stackoverflow.com/questions/510357/python-read-
 
 def doAction(action):
     if action == "w" or action == "A":
-        game.moveUp()
+        game.move(Direction.UP)
     elif action == "a" or action == "D":
-        game.moveLeft()
+        game.move(Direction.LEFT)
     elif action == "s" or action == "B":
-        game.moveDown()
+        game.move(Direction.DOWN)
     elif action == "d" or action == "C":
-        game.moveRight()
+        game.move(Direction.RIGHT)
 
 startScreen = ""
 with open("lambda_ascii_shield.txt", "r") as shield:
@@ -58,7 +58,7 @@ while(True):
         break
 
 if play:
-    game = Game()
+    game = Game("map1.txt")
 while(play):
     action = getch()
     
