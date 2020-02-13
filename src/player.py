@@ -8,10 +8,10 @@ class Player:
     def __str__(self):
         x = f"Your Current Location: {self.current_room.name}\n Current Inventory: "
         if len(self.item)<1:
-            x = += f"Nothing"
+            x += f"Nothing"
         else:
             for i in self.item:
-                x= += f"\n {i}"
+                x += f"\n {i}"
         return x
 
     def take(self, item="na"):
