@@ -9,6 +9,7 @@ class Player:
         self.player_name = player_name
         self.current_room = current_room
         self.move_num = move_counter
+        self.inventory = []
 
     def move(self, direction: Direction):
 

@@ -1,6 +1,7 @@
 from src.room import Room
 from src.directions import Direction
 from src.player import Player
+from src.item import Item
 
 # Declare all the rooms
 
@@ -42,6 +43,10 @@ room['narrow'].nearby_rooms[Direction.West] = room['foyer']
 room['narrow'].nearby_rooms[Direction.North] = room['treasure']
 room['treasure'].nearby_rooms[Direction.South] = room['narrow']
 
+# Items
+room['outside'].items.append(Item("Staff", "A cool looking wooden staff. Cracked at the handle"))
+room['outside'].items.append(Item("Rock", "A rock. What is it good for?"))
+
 #
 # Main
 #
@@ -49,6 +54,8 @@ room['treasure'].nearby_rooms[Direction.South] = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 x = str(input("Enter player name: "))
 player = Player(x, room['outside'])
+
+print(f"Hello {player.player_name}. You start outside a cave entrance. Press h for help and commands")
 
 
 # Write a loop that:
@@ -62,9 +69,7 @@ player = Player(x, room['outside'])
 #
 # If the user enters "q", quit the game.
 def switch():
-    print("\n Press n for North \n press s for South \n press e for East \n press w for West \n press q to Quit")
-
-    player_option = str(input("\n where to next?: "))
+    player_option = str(input("\nwhere to next?: "))
 
     def North():
         player.move(Direction.North)
@@ -78,18 +83,70 @@ def switch():
     def West():
         player.move(Direction.West)
 
+    def Help():
+        print("\n Press n for North \n press s for South \n press e for East \n press w for West \n press q to Quit "
+              "\n press l for current location \n p: peer at room\ni: player inventory\ndrop: Drop item from inventory")
+
+    def Location():
+        print(f'\n Current Location: {player.current_room.room_name}')
+
+    def PeerAtRoom():
+
+        if not player.current_room.items:
+            print("No Items in current Room")
+        else:
+            print("\nCurrent items in Room:")
+            for item in player.current_room.items:
+                print(f'{item.name}-- {item.description}')
+
+    def Take():
+        selected_item_name = str(input("\nWhat item would you like to take?: "))
+        for item in player.current_room.items:
+            if item.name == selected_item_name:
+                player.current_room.items.remove(item)
+                player.inventory.append(item)
+                item.on_take()
+                break
+        else:
+            print('Item not in room. Press p to peer through room')
+
+    def Drop():
+        selected_item_name = str(input("\nWhat item would you like to drop?:"))
+        for item in player.inventory:
+            if item.name == selected_item_name:
+                player.inventory.remove(item)
+                player.current_room.items.append(item)
+                item.on_drop(player.current_room.room_name)
+                break
+            else:
+                print("Item not in inventory. Press i to look through inventory")
+
+    def Inventory():
+        if not player.inventory:
+            print("inventory is empty")
+        else:
+            print("Inventory Items:")
+            for item in player.inventory:
+                print(f'{item.name}--{item.description}')
+
     def quit():
         print("thank you for playing! See you again")
         player.current_room = room['treasure']
 
     def default():
-        print("Incorrect option")
+        print("Bad input. Type h for help")
 
-    dict = {
+    player_dict = {
+        "take": Take,
+        "drop": Drop,
         "n": North,
         "s": South,
         "e": East,
         "w": West,
+        "h": Help,
+        "i": Inventory,
+        "p": PeerAtRoom,
+        "l": Location,
         "q": quit
     }.get(player_option, default)()
 
