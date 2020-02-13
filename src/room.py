@@ -7,20 +7,21 @@ from typing import Any, List, Dict, Union, Optional, Type
 # description attributes.
 
 
-class Room:
+class Room():
 
     def __init__(
             self,
-            room_name,
-            description,
-            nearby_rooms: Optional[Dict[Direction, Any]] = None
+            room_name: str,
+            description: str,
+            nearby_rooms: Dict[Direction, Any] = {}
     ):
         self.room_name = room_name
         self.description = description
         self.nearby_rooms = nearby_rooms
 
-    def set_nearby_room(self, room_position: Direction, nearby_room):
-        self.nearby_rooms[room_position] = nearby_room
-
     def get_nearby_room(self, direction: Direction):
-        return self.nearby_rooms.get(direction, None)
+        if direction in self.nearby_rooms:
+            return self.nearby_rooms[direction]
+        else:
+            return None
+
