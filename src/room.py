@@ -7,3 +7,6 @@ class Room:
         self.e_to = e_to
         self.w_to = w_to
         self.items = items
+
+    def __str__(self):
+        return f"You're currently in {self.name}\n{self.description}"

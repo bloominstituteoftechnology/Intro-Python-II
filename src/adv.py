@@ -96,29 +96,33 @@ choice_options = {
 
 while True:
     current_room = player.current_room
-    print(f"You are currently in {current_room.name}")
-    print(f"{current_room.description}")
+    # print(f"You are currently in {current_room.name}")
+    # print(f"{current_room.description}")
     move = input("Select N, S, E, or W to move to the next room!\nType search to search a room!\nType get then the item name to get the item\nType drop then the item name to drop the item >>> ")
-    if move == "n":
-        if current_room.n_to is not None:
-            player.current_room = current_room.n_to
-        else:
-            print("You hit a dead end!  Try again.")
-    elif move == "s":
-        if current_room.s_to is not None:
-            player.current_room = current_room.s_to
-        else:
-            print("You hit a dead end!  Try again.")
-    elif move == "e":
-        if current_room.e_to is not None:
-            player.current_room = current_room.e_to
-        else:
-            print("You hit a dead end!  Try again.")
-    elif move == "w":
-        if current_room.w_to is not None:
-            player.current_room = current_room.w_to
-        else:
-            print("You hit a dead end!  Try again.")
+
+    if move in ["n", "s", "e", "w"]:
+        player.travel(move)
+
+    # if move == "n":
+    #     if current_room.n_to is not None:
+    #         player.current_room = current_room.n_to
+    #     else:
+    #         print("You hit a dead end!  Try again.")
+    # elif move == "s":
+    #     if current_room.s_to is not None:
+    #         player.current_room = current_room.s_to
+    #     else:
+    #         print("You hit a dead end!  Try again.")
+    # elif move == "e":
+    #     if current_room.e_to is not None:
+    #         player.current_room = current_room.e_to
+    #     else:
+    #         print("You hit a dead end!  Try again.")
+    # elif move == "w":
+    #     if current_room.w_to is not None:
+    #         player.current_room = current_room.w_to
+    #     else:
+    #         print("You hit a dead end!  Try again.")
 
     elif "get" in move:
         item = move[4:]
@@ -153,7 +157,7 @@ while True:
 
     elif move == "search":
         for x in range(len(current_room.items)):
-            print(f"{current_room.items}")
+            print(f"You searched and found {current_room.items[x]}")
 
     elif move == "q":
         print("Game has quit")
