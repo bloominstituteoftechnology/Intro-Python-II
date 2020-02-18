@@ -1,10 +1,12 @@
+# from room import Room
+
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("Outside the Cave Entrance", "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -22,7 +24,7 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 
-# Link rooms together
+# # Link rooms together
 
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
@@ -38,7 +40,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+player = Player(input('what is your name? '), room['outside'])
+# print(f'************************, this is player object {player}')
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +52,22 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+welcome = input(
+    f'Welcome {player.player_name}, would you like to play a game? (yes/no): ')
+if welcome.lower().strip() == 'yes':
+    welcome = input(
+        f'{player.player_name},  {player.current_room} please choose a direction: [n] north, [s] south, [e] east, [w] west: ')
+    while True:
+        choice = input('-> ').lower()
+        if choice in ['n', 's', 'e', 'w']:
+            player.movement(choice)
+        elif choice == 'q':
+            print('well that was short lived')
+            exit()
+        else:
+            print('come back when you are ready for riches')
+
+else:
+    print('maybe another time')
