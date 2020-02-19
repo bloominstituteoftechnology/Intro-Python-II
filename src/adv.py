@@ -64,10 +64,11 @@ class Waypoint:
 
         return output
 
-my_Waypoint = Waypoint('Dungeon Room', [Room('North(n)'),
-                                        Room('South(s)'),
-                                        Room('East(e)'),
-                                        Room('West(w)')])
+my_Waypoint = Waypoint('Dungeon Room', [Room('outside', ['foyer']),
+                                        Room('foyer', ['outside', 'overlook', 'narrow']),
+                                        Room('overlook', ['foyer']),
+                                        Room('narrow', ['foyer', 'treasure']),
+                                        Room('treasure', ['narrow'])])
             
 print(my_Waypoint)
 choice = int(input('Please choose a direction (#): '))
@@ -75,7 +76,6 @@ print(choice)
 
 while choice != 0:
     print(my_Waypoint.directions[choice-1])
-    print(my_Waypoint)
     choice = int(input('Please choose a room name: '))
 
 print('Thanks for playing!')
