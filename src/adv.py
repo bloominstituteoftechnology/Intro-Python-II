@@ -56,12 +56,26 @@ class Waypoint:
         self.directions = directions
 
     def __str__(self):
-        output = f'Welcome to game {self.name}, please choose a direction!'
-        
+        output = f'Welcome to {self.name}.'
+        i = 1
         for directions in self.directions:
             output += f'\n{i}. {directions.name}'
             i += 1
 
         return output
 
-my_Waypoint = Waypoint('My Game', [Direction])
+my_Waypoint = Waypoint('Dungeon Room', [Room('North(n)'),
+                                        Room('South(s)'),
+                                        Room('East(e)'),
+                                        Room('West(w)')])
+            
+print(my_Waypoint)
+choice = int(input('Please choose a direction (#): '))
+print(choice)
+
+while choice != 0:
+    print(my_Waypoint.directions[choice-1])
+    print(my_Waypoint)
+    choice = int(input('Please choose a room name: '))
+
+print('Thanks for playing!')
