@@ -1,11 +1,12 @@
 from room import Room
 from player import Player
+import textwrap
 
 # Declare all the rooms
 
 room = {
     'outside':Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                    "North of you, the cave mount beckons"),
     'foyer':Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
@@ -38,14 +39,38 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player_1 = Player("1", room["outside"])
+player_1 = Player("1", room['outside'])
+wrappedDesc = textwrap.wrap(player_1.currentRoom.desc)
 
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
-#
+
+def askUserInput(printArg1=f"Player's current room: {player_1.currentRoom.name}", 
+                printArg2=f"Current room desc: {wrappedDesc}", 
+                printArg3="Select one of the following direction to move the player. \nN (north), S (south), E (east), W (west):\n ---> "):
+    print(printArg1)
+    print(printArg2)
+    userInput = input()
+    return userInput.lower(printArg3)
+
+lowUserInput = askUserInput()
+while lowUserInput:
+    if lowUserInput == "n" or lowUserInput == "s" or lowUserInput == "e" or lowUserInput == "w":
+        lowUserInput = askUserInput()
+    else:
+        printArg1 = ""
+        if len(lowUserInput) == 0:
+            printArg1 = "Please enter a value from N, S, E, W"
+        elif len(lowUserInput) > 1:
+            printArg1 = "You can only select a value from N, S, E, W"
+        else:
+            printArg1 = "This movement is not allowed"
+        lowUserInput = askUserInput(printArg1, "", "")
+
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #

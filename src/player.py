@@ -3,6 +3,9 @@
 
 from room import Room
 class Player:
-    def _init__(self, name, inRoom):
+    def __init__(self, name="", currentRoom=Room()):
         self.name = name
-        self.inRoom = inRoom
+        self.currentRoom = currentRoom
+
+    def __str__(self):
+        return "Player name: {}, in room: {}".format(self.name, self.currentRoom.name)

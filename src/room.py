@@ -2,6 +2,9 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name="", description=""):
+    def __init__(self, name="", desc=""):
         self.name = name
-        self.description = description
+        self.desc = desc
+
+    def __str__(self):
+        return "Room name: {}, desc: {}".format(self.name, self.desc)
