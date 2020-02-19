@@ -49,3 +49,19 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+class Waypoint:
+    def __init__(self, name, directions=[]):
+        self.name = name
+        self.directions = directions
+
+    def __str__(self):
+        output = f'Welcome to game {self.name}, please choose a direction!'
+        
+        for directions in self.directions:
+            output += f'\n{i}. {directions.name}'
+            i += 1
+
+        return output
+
+my_Waypoint = Waypoint('My Game', [Direction])
