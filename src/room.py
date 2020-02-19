@@ -10,6 +10,7 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.basement_to = None
 
     def __str__(self):
         return f'you are {self.room_name} \n {self.room_description}'

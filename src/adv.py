@@ -21,6 +21,66 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+    "basement": Room(
+        "Basement Entry Way",
+        """You've found the secret maze, and have entered the labyrinth
+untold riches await you if you can find your way through. Light gleams from
+the West, North, and East.""",
+    ),
+    "basement_dead_end_one": Room(
+        "Dead End",
+        """You've hit a dead end, 
+        hope you remember where you came from""",
+    ),
+    "basement_room_one": Room("Room One", """Only a million more to go"""),
+    "basement_room_two": Room(
+        "Room Two", """Are you sure you're going the right way?"""
+    ),
+    "basement_dead_end_two": Room(
+        "Dead End",
+        """You hit a dead end,
+        hope you remember where you came from""",
+    ),
+    "basement_room_three": Room(
+        "Room Three",
+        """Wellllll my weary traveller, the rooms get tougher from here
+        let hope you can make it through""",
+    ),
+    "basement_dead_end_three": Room(
+        "Dead End",
+        """You hit a dead end,
+        hope you remember where you came from""",
+    ),
+    "basement_room_four": Room(
+        "Room Four",
+        """well you are over half way to your treasure,
+        think you will actually make it?""",
+    ),
+    "basement_room_five": Room(
+        "Room Five",
+        """Is that treasure that i smell?,
+        no its only you!""",
+    ),
+    "basement_room_six": Room(
+        "Room Six",
+        """well you are almost there, this has been a fun game so far,
+        once you finish, i have a surprise for you""",
+    ),
+    "basement_dead_end_five": Room(
+        "Dead End",
+        """You have reached yet another dead end,
+        maybe a lied when i said you were almost done""",
+    ),
+    "basement_dead_end_six": Room(
+        "Dead End",
+        """You have reached yet another dead end,
+        maybe a lied when i said you were almost done""",
+    ),
+    "basement_dead_end_seven": Room(
+        "Dead End",
+        """You have reached yet another dead end,
+        maybe a lied when i said you were almost done""",
+    ),
 }
 
 
@@ -34,7 +94,31 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-
+room["treasure"].basement_to = room["basement"]
+room["basement"].w_to = room["basement_dead_end_one"]
+room["basement_dead_end_one"].e_to = room["basement"]
+room["basement"].n_to = room["basement_room_one"]
+room["basement_room_one"].s_to = room["basement"]
+room["basement_room_one"].w_to = room["basement_room_three"]
+room["basement_room_one"].n_to = room["basement_dead_end_two"]
+room["basement_room_three"].n_to = room["basement_dead_end_three"]
+room["basement_room_three"].e_to = room["basement_room_one"]
+room["basement_dead_end_three"].s_to = room["basement_room_three"]
+room["basement_room_three"].w_to = room["basement_room_four"]
+room["basement_room_four"].n_to = room["basement_room_five"]
+room["basement_room_four"].e_to = room["basement_room_three"]
+room["basement_room_five"].n_to = room["basement_room_six"]
+room["basement_room_five"].s_to = room["basement_room_four"]
+room["basement_room_six"].n_to = room["basement_dead_end_five"]
+room["basement_room_six"].s_to = room["basement_room_five"]
+room["basement_dead_end_five"].s_to = room["basement_room_six"]
+room["basement_room_six"].e_to = room["basement_dead_end_six"]
+room["basement_dead_end_six"].w_to = room["basement_room_six"]
+room["basement_room_six"].w_to = room["basement_dead_end_seven"]
+room["basement_dead_end_seven"].e_to = room["basement_room_six"]
+room["basement_dead_end_two"].s_to = room["basement_room_one"]
+room["basement"].e_to = room["basement_room_two"]
+room["basement_room_two"].w_to = room["basement"]
 #
 # Main
 #
@@ -60,9 +144,12 @@ if welcome.lower().strip() == 'yes':
     welcome = input(
         f'{player.player_name},  {player.current_room} please choose a direction: [n] north, [s] south, [e] east, [w] west: ')
     while True:
+        options = ["n", "s", "e", "w", "basement"]
         choice = input('-> ').lower()
-        if choice in ['n', 's', 'e', 'w']:
+        if choice in options:
             player.movement(choice)
+        elif choice == 'basement':
+            player.take_secret_passage("choice")
         elif choice == 'q':
             print('well that was short lived')
             exit()

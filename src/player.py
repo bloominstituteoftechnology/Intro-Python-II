@@ -13,5 +13,11 @@ class Player:
             self.current_room = next_room
             print(self.current_room)
 
+    def take_secret_passage(self, basement):
+        next_room = getattr(self.current_room, f"{basement}_to")
+        if next_room is not None:
+            self.current_room = next_room
+            print(self.current_room)
+
     def __str__(self):
         return f'hello, {self.player_name} you are currently in {self.current_room}'
