@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -56,7 +57,7 @@ class Waypoint:
         self.directions = directions
 
     def __str__(self):
-        output = f'Welcome to {self.name}.'
+        output = f'Welcome to {self.name}, Welcome player.'
         i = 1
         for directions in self.directions:
             output += f'\n{i}. {directions.name}'
