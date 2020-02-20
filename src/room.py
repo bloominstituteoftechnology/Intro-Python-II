@@ -3,9 +3,10 @@
 
 
 class Room:
-    def __init__(self, room_name, room_description):
+    def __init__(self, room_name, room_description, room_items=[]):
         self.room_name = room_name
         self.room_description = room_description
+        self.room_items = room_items
         self.n_to = None
         self.s_to = None
         self.e_to = None
@@ -13,4 +14,7 @@ class Room:
         self.basement_to = None
 
     def __str__(self):
-        return f'you are {self.room_name} \n {self.room_description}'
+        output = f"{self.room_name} \n {self.room_description}  "
+        for i in self.room_items:
+            output += f"\n - {i}"
+        return output
