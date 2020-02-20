@@ -3,9 +3,10 @@
 
 from room import Room
 class Player:
-    def __init__(self, name="", currentRoom=Room()):
+    def __init__(self, name="", current_room=Room(), items=[]):
         self.name = name
-        self.currentRoom = currentRoom
+        self.current_room = current_room
+        self.items = items
 
     def __str__(self):
-        return "Player name: {}, in room: {}".format(self.name, self.currentRoom.name)
+        return "Player name: {}, in room: {}".format(self.name, self.current_room.name)

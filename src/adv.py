@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 import textwrap
 
 # Declare all the rooms
@@ -40,7 +41,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 player_1 = Player("1", room['outside'])
-wrappedDesc = textwrap.wrap(player_1.currentRoom.desc)
+wrappedDesc = textwrap.wrap(player_1.current_room.desc)
 
 # Write a loop that:
 #
@@ -48,27 +49,47 @@ wrappedDesc = textwrap.wrap(player_1.currentRoom.desc)
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 
-def askUserInput(printArg1=f"Player's current room: {player_1.currentRoom.name}", 
-                printArg2=f"Current room desc: {wrappedDesc}", 
-                printArg3="Select one of the following direction to move the player. \nN (north), S (south), E (east), W (west):\n ---> "):
-    print(printArg1)
-    print(printArg2)
-    userInput = input()
-    return userInput.lower(printArg3)
+print(f"Player's current room: {player_1.current_room.name}")
+print(f"Current room desc: {wrappedDesc}")
+userInput = input("Select one of the following direction to move the player. \nN (north), S (south), E (east), W (west):\n ---> ").lower()
 
-lowUserInput = askUserInput()
-while lowUserInput:
-    if lowUserInput == "n" or lowUserInput == "s" or lowUserInput == "e" or lowUserInput == "w":
-        lowUserInput = askUserInput()
+while userInput:
+    if userInput == "n":
+        north_room = player_1.current_room.n_to
+        if north_room is not None:
+            player_1.current_room = north_room
+            print(f'You moved to north, room: {north_room.name}')
+        else:
+            userInput = input("You can move to north. Please make another choice").lower()
+    elif userInput == "s":
+        south_room = player_1.current_room.s_to
+        if south_room is not None:
+            player_1.current_room = south_room
+            print(f'You moved to south, room: {south_room.name}')
+        else:
+            userInput = input("You can move to south. Please make another choice").lower()
+    elif userInput == "e":
+        easth_room = player_1.current_room.e_to
+        if easth_room is not None:
+            player_1.current_room = easth_room
+            print(f'You moved to easth, room: {easth_room.name}')
+        else:
+            userInput = input("You can move to easth. Please make another choice").lower()
+    elif userInput == "w":
+        west_room = player_1.current_room.w_to
+        if west_room is not None:
+            player_1.current_room = west_room
+            print(f'You moved to west, room: {west_room.name}')
+        else:
+            userInput = input("You can move to west. Please make another choice").lower()
     else:
         printArg1 = ""
-        if len(lowUserInput) == 0:
-            printArg1 = "Please enter a value from N, S, E, W"
-        elif len(lowUserInput) > 1:
-            printArg1 = "You can only select a value from N, S, E, W"
+        if len(userInput) == 0:
+            userInput = input("Please enter a value from N, S, E, W")
+        elif len(userInput) > 1:
+            userInput = input("You can only select a value from N, S, E, W")
         else:
-            printArg1 = "This movement is not allowed"
-        lowUserInput = askUserInput(printArg1, "", "")
+            userInput = input("This movement is not allowed").lower()
 
 
 # If the user enters a cardinal direction, attempt to move to the room there.
