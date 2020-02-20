@@ -76,13 +76,13 @@ while userInput is not None:
         else:
             userInput = input("You can't move to south. Please make another choice:\n ---> ").lower()
     elif userInput == "e":
-        easth_room = player_1.current_room.e_to
-        if easth_room is not None:
-            player_1.current_room = easth_room
-            print(f'You moved to easth, room: {easth_room.name}')
+        east_room = player_1.current_room.e_to
+        if east_room is not None:
+            player_1.current_room = east_room
+            print(f'You moved to east, room: {east_room.name}')
             userInput = input("What's the next move. Please select a direction:\n ---> ").lower()
         else:
-            userInput = input("You can't move to easth. Please make another choice:\n ---> ").lower()
+            userInput = input("You can't move to east. Please make another choice:\n ---> ").lower()
     elif userInput == "w":
         west_room = player_1.current_room.w_to
         if west_room is not None:
