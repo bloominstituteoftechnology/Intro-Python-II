@@ -90,7 +90,6 @@ while userInput is not None:
         print(f'You exited the game. Sorry to see you go. Bye!')
         break
     else:
-        printArg1 = ""
         if len(userInput) == 0:
             userInput = input("Please enter a value from N, S, E, W. Make a selection:\n ---> ")
         elif len(userInput) > 1:
