@@ -82,6 +82,9 @@ while userInput:
             print(f'You moved to west, room: {west_room.name}')
         else:
             userInput = input("You can move to west. Please make another choice").lower()
+    elif userInput == "q":
+        print(f'Sorry to se you go. Bye!')
+        break
     else:
         printArg1 = ""
         if len(userInput) == 0:
