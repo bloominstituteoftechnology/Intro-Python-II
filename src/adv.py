@@ -53,6 +53,11 @@ print(f"Player's current room: {player_1.current_room.name}")
 print(f"Current room desc: {wrappedDesc}")
 userInput = input("Select one of the following direction to move the player. \nN (north), S (south), E (east), W (west):\n ---> ").lower()
 
+# If the user enters a cardinal direction, attempt to move to the room there.
+# Print an error message if the movement isn't allowed.
+#
+# If the user enters "q", quit the game.
+
 while userInput is not None:
     if userInput == "n":
         north_room = player_1.current_room.n_to
@@ -97,8 +102,3 @@ while userInput is not None:
         else:
             userInput = input("This movement is not allowed. You can only select a value from N, S, E, W:\n ---> ").lower()
 
-
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
