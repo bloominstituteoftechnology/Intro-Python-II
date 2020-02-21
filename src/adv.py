@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -8,14 +9,14 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [Item("Key", "It's shiny")]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", [Item("Torch", "It provides light")]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
@@ -53,20 +54,40 @@ new_player = Player("Player 1", room['outside'])
 #
 # If the user enters "q", quit the game.
 
-chosen_direction = ""
+cmd = ""
 
-while chosen_direction != "q":
-    print(f"You are in {new_player.current_room}")
-    chosen_direction = str(input("Choose a direction (n, s, e, w, or q to quit):"))
+print(f"You are {new_player.current_room}")
+while cmd != "q":
+    cmd = str(input("\nChoose a direction (n, s, e, w, or q to quit): "))
     
-    if chosen_direction == "n":
-        new_player.current_room = new_player.current_room.n_to
-    
-    elif chosen_direction == "s":
-        new_player.current_room = new_player.current_room.s_to
+    if cmd == "n":
+        if new_player.current_room.n_to != None:
+            new_player.current_room = new_player.current_room.n_to
+            print(f"You enter the {new_player.current_room}")
+            new_player.current_room.search()
+        else:
+            print("You cannot continue North from here")
 
-    elif chosen_direction == "w":
-         new_player.current_room = new_player.current_room.w_to
+    elif cmd == "s":
+        if new_player.current_room.s_to != None:
+            new_player.current_room = new_player.current_room.s_to
+            print(f"You enter the {new_player.current_room}")
+            new_player.current_room.search()
+        else:
+            print("You cannot continue South from here")
 
-    elif chosen_direction == "e":
-        new_player.current_room = new_player.current_room.e_to
+    elif cmd == "w":
+        if new_player.current_room.w_to != None:
+            new_player.current_room = new_player.current_room.w_to
+            print(f"You enter the {new_player.current_room}")
+            new_player.current_room.search()
+        else:
+            print("You cannot continue West from here")
+
+    elif cmd == "e":
+        if new_player.current_room.e_to != None:
+            new_player.current_room = new_player.current_room.e_to
+            print(f"You enter the {new_player.current_room}")
+            new_player.current_room.search()
+        else:
+            print("You cannot continue East from here")
