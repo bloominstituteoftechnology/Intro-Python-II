@@ -20,3 +20,7 @@ class Player:
         self.__current_room = new_value
         self.__current_room.printAllItems()
         print(f'You moved to room: {self.__current_room.name}')
+
+    @current_room.deleter
+    def current_room(self):
+        del self.__current_room
