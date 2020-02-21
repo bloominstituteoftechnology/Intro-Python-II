@@ -19,16 +19,22 @@ class Room:
         if len(self.items) > 0:
             output = f"\nYou find:"
             for item in self.items:
-                output += f"\n- {item}"
+                output += f"\n- {item.name}"
             print(output)
         else:
-            print("No items found.")
+            print("\nNothing of interest here.")
+
+    def get_items(self):
+        output = []
+        for item in self.items:
+            output.append(f"{item.name}".lower())
+        return output
 
     def remove_item(self, item):
-        if len(self.items) > 1:
-            self.items.remove(item)
-        else:
-            print("Can't loot that")
+        for i, o in enumerate(self.items):
+            if o.name.lower() == item:
+                del self.items[i]
+                break
     
     def add_item(self, item):
         self.items.append(item)

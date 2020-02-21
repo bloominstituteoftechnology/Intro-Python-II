@@ -7,12 +7,21 @@ class Player:
         self.items = items
 
     def __str__(self):
-        return f"{self.name}\n{self.current_room}"
+        return f"{self.name} is currently in the {self.current_room.name}"
+
+    def check_inventory(self):
+        if len(self.items) > 0:
+            output = f"\nInvetory:\n"
+            for item in self.items:
+                output += f"{item.name}"
+            print(output)
+        else:
+            print("\nYour inventory is empty.")
 
     def take_item(self, item):
         self.items.append(item)
-        return f"You take the {item}"
+        print(f"\nYou take the {item.name}") 
 
     def drop_item(self, item):
         self.items.remove(item)
-        return f"You dropped {item}"
+        print(f"\nYou drop the {item.name}") 

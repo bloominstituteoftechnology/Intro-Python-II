@@ -2,6 +2,12 @@ from room import Room
 from player import Player
 from item import Item
 
+item = {
+    'key': Item("Key", "It's shiny"),
+    'note': Item("Note", "It says 'The treasure is behind a locked door"),
+    'torch': Item("Torch", "It provides light")
+}
+
 # Declare all the rooms
 
 room = {
@@ -9,7 +15,7 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", [Item("Key", "It's shiny")]),
+passages run north and east.""", [Item("Key", "It's shiny"), Item("Note", "It says 'The treasure is behind a locked door")]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -56,38 +62,60 @@ new_player = Player("Player 1", room['outside'])
 
 cmd = ""
 
+print("\nPossible commands:\n>> 'go' + 'north', 'south', 'east', 'west'\n>> 'take' + <item name>\n>> 'drop' + <item name>\n>> 'i' to check inventory\n>> 'q' to quit")
+
 print(f"You are {new_player.current_room}")
-while cmd != "q":
-    cmd = str(input("\nChoose a direction (n, s, e, w, or q to quit): "))
+while cmd != ["q"]:
+    cmd = str(input("\nType a command or 'q' to quit: ")).lower().split()
+
+    # Movement
+    if cmd[0] == "go":
+        if cmd[1] == "north":
+            if new_player.current_room.n_to != None:
+                new_player.current_room = new_player.current_room.n_to
+                print(f"\nYou enter the {new_player.current_room}")
+                new_player.current_room.search()
+            else:
+                print("\nYou cannot continue North from here")
+
+        elif cmd[1] == "south":
+            if new_player.current_room.s_to != None:
+                new_player.current_room = new_player.current_room.s_to
+                print(f"\nYou enter the {new_player.current_room}")
+                new_player.current_room.search()
+            else:
+                print("\nYou cannot continue South from here")
+
+        elif cmd[1] == "west":
+            if new_player.current_room.w_to != None:
+                new_player.current_room = new_player.current_room.w_to
+                print(f"\nYou enter the {new_player.current_room}")
+                new_player.current_room.search()
+            else:
+                print("\nYou cannot continue West from here")
+
+        elif cmd[1] == "east":
+            if new_player.current_room.e_to != None:
+                new_player.current_room = new_player.current_room.e_to
+                print(f"\nYou enter the {new_player.current_room}")
+                new_player.current_room.search()
+            else:
+                print("\nYou cannot continue East from here")
+
+    # Take items            
+    elif cmd[0] == "take":
+        cmd_item = cmd[1].lower()
+        new_player.current_room.remove_item(cmd_item)
+        new_player.take_item(item[f"{cmd_item}"])
+
+    # Drop items
+    elif cmd[0] == "drop":
+        cmd_item = cmd[1].lower()
+        new_player.drop_item(item[f"{cmd_item}"])
+        new_player.current_room.add_item(item[f"{cmd_item}"])
     
-    if cmd == "n":
-        if new_player.current_room.n_to != None:
-            new_player.current_room = new_player.current_room.n_to
-            print(f"You enter the {new_player.current_room}")
-            new_player.current_room.search()
-        else:
-            print("You cannot continue North from here")
+    # Check player inventory
+    elif cmd == ["i"]:
+        new_player.check_inventory()
+    
 
-    elif cmd == "s":
-        if new_player.current_room.s_to != None:
-            new_player.current_room = new_player.current_room.s_to
-            print(f"You enter the {new_player.current_room}")
-            new_player.current_room.search()
-        else:
-            print("You cannot continue South from here")
-
-    elif cmd == "w":
-        if new_player.current_room.w_to != None:
-            new_player.current_room = new_player.current_room.w_to
-            print(f"You enter the {new_player.current_room}")
-            new_player.current_room.search()
-        else:
-            print("You cannot continue West from here")
-
-    elif cmd == "e":
-        if new_player.current_room.e_to != None:
-            new_player.current_room = new_player.current_room.e_to
-            print(f"You enter the {new_player.current_room}")
-            new_player.current_room.search()
-        else:
-            print("You cannot continue East from here")
