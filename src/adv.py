@@ -58,43 +58,52 @@ userInput = input("Select one of the following direction to move the player. \nN
 #
 # If the user enters "q", quit the game.
 
+def movedInRoom(direction, roomName):
+    print(f'You moved to {direction}, room: {roomName}')
+
+def askNextMove():
+    return input("What's the next move. Please select a direction:\n ---> ").lower()
+
+def cantBeInThisRoom(room):
+    return input(f"You can't move to {room}. Please make another choice:\n ---> ").lower()
+
 while userInput is not None:
     if userInput == "n":
         north_room = player_1.current_room.n_to
         if north_room is not None:
             player_1.current_room = north_room
             north_room.printAllItems()
-            print(f'You moved to north, room: {north_room.name}')
-            userInput = input("What's the next move. Please select a direction:\n ---> ").lower()
+            movedInRoom("north", north_room.name)
+            userInput = askNextMove()
         else:
-            userInput = input("You can't move to north. Please make another choice:\n ---> ").lower()
+            userInput = cantBeInThisRoom("north")
     elif userInput == "s":
         south_room = player_1.current_room.s_to
         if south_room is not None:
             player_1.current_room = south_room
             south_room.printAllItems()
-            print(f'You moved to south, room: {south_room.name}')
-            userInput = input("What's the next move. Please select a direction:\n ---> ").lower()
+            movedInRoom("south", south_room.name)
+            userInput = askNextMove()
         else:
-            userInput = input("You can't move to south. Please make another choice:\n ---> ").lower()
+            userInput = cantBeInThisRoom("south")
     elif userInput == "e":
         east_room = player_1.current_room.e_to
         if east_room is not None:
             player_1.current_room = east_room
-            south_room.printAllItems()
-            print(f'You moved to east, room: {east_room.name}')
-            userInput = input("What's the next move. Please select a direction:\n ---> ").lower()
+            east_room.printAllItems()
+            movedInRoom("east", east_room.name)
+            userInput = askNextMove()
         else:
-            userInput = input("You can't move to east. Please make another choice:\n ---> ").lower()
+            userInput = cantBeInThisRoom("east")
     elif userInput == "w":
         west_room = player_1.current_room.w_to
         if west_room is not None:
             player_1.current_room = west_room
-            south_room.printAllItems()
-            print(f'You moved to west, room: {west_room.name}')
-            userInput = input("What's the next move. Please select a direction:\n ---> ").lower()
+            west_room.printAllItems()
+            movedInRoom("west", west_room.name)
+            userInput = askNextMove()
         else:
-            userInput = input("You can't move to west. Please make another choice:\n ---> ").lower()
+            userInput = cantBeInThisRoom("west")
     elif userInput == "q":
         print(f'You exited the game. Sorry to see you go. Bye!')
         break
