@@ -133,7 +133,7 @@ the West, North, and East.""",
     "basement_room_fourteen": Room("Room Fourteen", """Done!"""),
 }
 
-
+# print(room['foyer'].room_items[0])
 # # Link rooms together
 
 room["outside"].n_to = room["foyer"]
@@ -268,6 +268,8 @@ if welcome.lower().strip() == "yes":
             player.take_items()
         elif choice == 'show':
             player.show_items()
+        elif choice == 'drop':
+            player.drop_items()
         elif choice == "q":
             print("well that was short lived")
             exit()
