@@ -44,7 +44,7 @@ player_1 = Player('Robin', room['outside'])
 
 print(room['outside'])
 # print(new_player) ??? Why can't I print new player?
-
+new_player = Player(player_name, room['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
