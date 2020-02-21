@@ -58,9 +58,6 @@ userInput = input("Select one of the following direction to move the player. \nN
 #
 # If the user enters "q", quit the game.
 
-def movedInRoom(direction, roomName):
-    print(f'You moved to {direction}, room: {roomName}')
-
 def askNextMove():
     return input("What's the next move. Please select a direction:\n ---> ").lower()
 
@@ -72,8 +69,6 @@ while userInput is not None:
         north_room = player_1.current_room.n_to
         if north_room is not None:
             player_1.current_room = north_room
-            north_room.printAllItems()
-            movedInRoom("north", north_room.name)
             userInput = askNextMove()
         else:
             userInput = cantBeInThisRoom("north")
@@ -81,8 +76,6 @@ while userInput is not None:
         south_room = player_1.current_room.s_to
         if south_room is not None:
             player_1.current_room = south_room
-            south_room.printAllItems()
-            movedInRoom("south", south_room.name)
             userInput = askNextMove()
         else:
             userInput = cantBeInThisRoom("south")
@@ -90,8 +83,6 @@ while userInput is not None:
         east_room = player_1.current_room.e_to
         if east_room is not None:
             player_1.current_room = east_room
-            east_room.printAllItems()
-            movedInRoom("east", east_room.name)
             userInput = askNextMove()
         else:
             userInput = cantBeInThisRoom("east")
@@ -99,8 +90,6 @@ while userInput is not None:
         west_room = player_1.current_room.w_to
         if west_room is not None:
             player_1.current_room = west_room
-            west_room.printAllItems()
-            movedInRoom("west", west_room.name)
             userInput = askNextMove()
         else:
             userInput = cantBeInThisRoom("west")

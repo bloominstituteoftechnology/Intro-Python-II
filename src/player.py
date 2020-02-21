@@ -10,3 +10,13 @@ class Player:
 
     def __str__(self):
         return "Player name: {}, in room: {}".format(self.name, self.current_room.name)
+
+    @property
+    def current_room(self):
+        return self.__current_room
+
+    @current_room.setter
+    def current_room(self, new_value):
+        self.__current_room = new_value
+        self.__current_room.printAllItems()
+        print(f'You moved to room: {self.__current_room.name}')
