@@ -4,7 +4,6 @@ from item import Item
 import textwrap
 
 # Declare all the rooms
-
 room = {
     'outside':Room("Outside Cave Entrance",
                     "North of you, the cave mount beckons"),
@@ -51,56 +50,60 @@ wrappedDesc = textwrap.wrap(player_1.current_room.desc)
 
 print(f"Player's current room: {player_1.current_room.name}")
 print(f"Current room desc: {wrappedDesc}")
-userInput = input("Select one of the following direction to move the player. \nN (north), S (south), E (east), W (west):\n ---> ").lower()
+user_input = input("Select one of the following direction to move the player. \nN (north), S (south), E (east), W (west):\n ---> ").lower().split(" ")
 
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
 
-def askNextMove():
-    return input("What's the next move. Please select a direction:\n ---> ").lower()
+def prompt_next_move():
+    return input("What's the next move. Please select a direction:\n ---> ").lower().split(" ")
 
-def cantBeInThisRoom(room):
-    return input(f"You can't move to {room}. Please make another choice:\n ---> ").lower()
+def prompt_invalid_room_warning(room):
+    return input(f"You can't move to {room}. Please make another choice:\n ---> ").lower().split(" ")
 
-while userInput is not None:
-    if userInput == "n":
-        north_room = player_1.current_room.n_to
-        if north_room is not None:
-            player_1.current_room = north_room
-            userInput = askNextMove()
-        else:
-            userInput = cantBeInThisRoom("north")
-    elif userInput == "s":
-        south_room = player_1.current_room.s_to
-        if south_room is not None:
-            player_1.current_room = south_room
-            userInput = askNextMove()
-        else:
-            userInput = cantBeInThisRoom("south")
-    elif userInput == "e":
-        east_room = player_1.current_room.e_to
-        if east_room is not None:
-            player_1.current_room = east_room
-            userInput = askNextMove()
-        else:
-            userInput = cantBeInThisRoom("east")
-    elif userInput == "w":
-        west_room = player_1.current_room.w_to
-        if west_room is not None:
-            player_1.current_room = west_room
-            userInput = askNextMove()
-        else:
-            userInput = cantBeInThisRoom("west")
-    elif userInput == "q":
-        print(f'You exited the game. Sorry to see you go. Bye!')
-        break
-    else:
-        if len(userInput) == 0:
-            userInput = input("Please enter a value from N, S, E, W. Make a selection:\n ---> ")
-        elif len(userInput) > 1:
-            userInput = input("You can only select a value from N, S, E, W. Make a selection:\n ---> ")
-        else:
-            userInput = input("This movement is not allowed. You can only select a value from N, S, E, W:\n ---> ").lower()
+while user_input is not None:
+    length = len(user_input)
 
+    if length == 1:
+        if user_input[0] == "n":
+            north_room = player_1.current_room.n_to
+            if north_room is not None:
+                player_1.current_room = north_room
+                user_input = prompt_next_move()
+            else:
+                user_input = prompt_invalid_room_warning("north")
+        elif user_input[0] == "s":
+            south_room = player_1.current_room.s_to
+            if south_room is not None:
+                player_1.current_room = south_room
+                user_input = prompt_next_move()
+            else:
+                user_input = prompt_invalid_room_warning("south")
+        elif user_input[0] == "e":
+            east_room = player_1.current_room.e_to
+            if east_room is not None:
+                player_1.current_room = east_room
+                user_input = prompt_next_move()
+            else:
+                user_input = prompt_invalid_room_warning("east")
+        elif user_input[0] == "w":
+            west_room = player_1.current_room.w_to
+            if west_room is not None:
+                player_1.current_room = west_room
+                user_input = prompt_next_move()
+            else:
+                user_input = prompt_invalid_room_warning("west")
+        elif user_input[0] == "q":
+            print(f'You exited the game. Sorry to see you go. Bye!')
+            break
+        else:
+            if length == 0:
+                user_input = input("Please enter a value from N, S, E, W. Make a selection:\n ---> ")
+            elif length > 1:
+                user_input = input("You can only select a value from N, S, E, W. Make a selection:\n ---> ")
+            else:
+                user_input = input("This movement is not allowed. You can only select a value from N, S, E, W:\n ---> ").lower()
+    elif length == 2:
+        pass
