@@ -6,20 +6,27 @@ import textwrap
 # Declare all the rooms
 room = {
     'outside':Room("Outside Cave Entrance",
-                    "North of you, the cave mount beckons"),
+                    "North of you, the cave mount beckons", 
+                    [Item("coin"), 
+                    Item("gun")]),
     'foyer':Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", 
+                    [Item("pizza")]),
 
     'overlook':Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", 
+                    [Item("sword")]),
 
     'narrow':Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", 
+                    [Item("burger"), 
+                    Item("tank")]),
 
     'treasure':Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", 
+                    [Item("pizza")]),
 }
 
 
@@ -106,4 +113,12 @@ while user_input is not None:
             else:
                 user_input = input("This movement is not allowed. You can only select a value from N, S, E, W:\n ---> ").lower()
     elif length == 2:
-        pass
+        if user_input[0] == "get" or user_input[0] == "take":
+            item = Item(user_input[1])
+            if item in player_1.current_room.items:
+                player_1.current_room.removeItem(user_input[1])
+                player_1.items.append(user_input[1])
+            else:
+                print(f"This room doesn't have item: {user_input[1]}")
+                user_input = input("Please make another choice:\n ---> ")
+

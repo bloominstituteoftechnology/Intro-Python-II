@@ -25,3 +25,15 @@ class Room:
             print(f'This is all items in this room: {items}')
         else:
             print(f"There isn't any item in this room")
+
+    def removeItem(self, item):
+        self.items.remove(item)
+
+    @property
+    def items(self):
+        return self.__items
+
+    @items.setter
+    def items(self, new_value):
+        self.__items = new_value
+        print(f"{self.name} room's items has changed. New items: {self.items}")
