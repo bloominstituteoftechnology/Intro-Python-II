@@ -13,3 +13,15 @@ class Room:
 
     def __str__(self):
         return "Room name: {}, desc: {}".format(self.name, self.desc)
+
+    def printAllItems(self):
+        items = ""
+        length = len(self.items)
+        if length > 0:
+            for (index, item) in enumerate(self.items):
+                items += item.name
+                if index != length - 1:
+                    items += ", "
+            print(f'This is all items in this room: {items}')
+        else:
+            print(f"There isn't any item in this room")
