@@ -3,7 +3,7 @@ import os
 from enum import Enum
 from entity import Player, Enemy
 from location import Direction, TermColors
-from item import Weapon, WeaponType, PotionType
+from item import Weapon, WeaponType, PotionType, WeaponEffect
 
 class Game:
     def __init__(self, mapFile, enemies = [Enemy(10, 10, 1), Enemy(11, 10, 1)]):
@@ -11,7 +11,7 @@ class Game:
         self.enemies = enemies
         self.prevLoc = (self.player.getX(), self.player.getY())
         self.map = [[]]
-        self.items = []
+        self.items = [Weapon(WeaponType.SWORD, 3, 3)]
         with open(mapFile, "r") as mapTxt:
             for line in mapTxt.readlines():
                 self.map.append(self.split(line.rstrip()))
@@ -29,6 +29,7 @@ class Game:
         # 🛡
         if isTick:
             self.updateEntities()
+            self.updateItems()
             print("Tick")
         else:
             print("Not tick")
@@ -63,13 +64,11 @@ class Game:
         elif direction == Direction.RIGHT:
             location = (location[0] + 2, location[1])
         for item in self.items:
-            if item == None:
-                continue
-            else:
-                itemLocation = item.getLocation()
-                if itemLocation[0] == location[0]//2 + 1 and itemLocation[1] == location[1]:
-                    self.player.addItemToInv(item)
-                    self.updatePlayer(self.player.getDirection(), True)
+            itemLocation = item.getLocation()
+            print(f"item x: {itemLocation[0]}, item y: {itemLocation[1]}, statement evaluates to {itemLocation[0] == location[0]//2 + 1 and itemLocation[1] == location[1]}")
+            if itemLocation[0] == location[0] and itemLocation[1] == location[1]:
+                print("We did it")
+                self.getItem(item)
         for index, enemy in enumerate(self.enemies):
             enemyLocation = enemy.getCurrentLocation()
             print(f"Enemy health: {enemy.getHealth()}, enemy location: {enemyLocation}, location in front of player: ({location[0]//2 + 1}, {location[1]})")
@@ -84,6 +83,12 @@ class Game:
 
     def switchWeapon(self, index):
         self.player.setSelectedWeapon(index)
+
+    def getItem(self, item):
+        self.map[item.getX()//2 + 1][item.getY()] = " "
+        self.player.addItemToInv(item)
+        self.items.remove(item)
+        self.updatePlayer(self.player.getDirection(), True)
 
     def updateEntities(self):
         for enemy in self.enemies:

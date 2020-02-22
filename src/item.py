@@ -3,14 +3,11 @@ from enum import Enum
 from location import Location
 
 class Item:
-    def __init__(self, name = "Item", value = 0, x = None, y = None):
+    def __init__(self, name = "Item", value = 0, x = -1, y = -1):
         self.name = name
         self.value = value
         self.damage = 1
-        if x == None or y == None:
-            self.location = None
-        else:
-            self.location = Location(x, y)
+        self.location = Location(x, y)
     
     def getX(self):
         return self.location.getX()
@@ -25,7 +22,7 @@ class Item:
         self.location = Location(x, y)
 
     def removeFromGround(self):
-        self.location = None
+        self.location = Location(-1, -1)
 
 class Effect(Enum):
     HEALING = 0
@@ -51,8 +48,8 @@ class WeaponEffect(Enum):
     HOLY =      ("Holy",      1,  5 )
 
 class Weapon(Item):
-    def __init__(self, weapon = WeaponType.FISTS, effect = None, x = None, y = None):
-        super(Weapon, self).__init__(weapon.value[0], weapon.value[2])
+    def __init__(self, weapon = WeaponType.FISTS, x = -1, y = -1, effect = None):
+        super(Weapon, self).__init__(weapon.value[0], weapon.value[2], x, y)
         self.damage = weapon.value[1]
         self.effect = effect
         self.totalDamage = self.damage
@@ -62,10 +59,14 @@ class Weapon(Item):
     def getRandomAttr(self):
         attrIndex = int(random() * (len(WeaponEffect)))
         self.effect = list(WeaponEffect)[attrIndex]
-        self.name = f"{list(WeaponEffect)[attrIndex]} {self.name}"
+        
+    def getName(self):
+        return f"{self.effect.value[0]} {self.name}"
     
     def getDamage(self):
         return self.totalDamage
 
     def __str__(self):
-        return f"Weapon: {self.name}"
+        if self.effect == None:
+            return f"{self.name}"
+        return f"{self.getName()}"

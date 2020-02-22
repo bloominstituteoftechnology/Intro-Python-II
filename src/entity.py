@@ -1,4 +1,4 @@
-from item import Item, Weapon, PotionType, WeaponType
+from item import Item, Weapon, PotionType, WeaponType, WeaponEffect
 from location import Location, Direction
 import random
 
@@ -170,7 +170,7 @@ class Player(Entity):
     
     def setSelectedWeapon(self, index):
         if index < len(self.inventory):
-            self.weapon = self.inventory[index]
+            self.selectedWeapon = self.inventory[index]
         else:
             print(f"You do not have an item in slot {index + 1}")
 
@@ -245,6 +245,6 @@ class Enemy(Entity):
     def dropItem(self):
         rand = random.randint(0, 1)
         if rand == 0:
-            return Weapon(random.choice(list(WeaponType)), None, self.getX(), self.getY())
+            return Weapon(random.choice(list(WeaponType)), self.getX()//2 + 1, self.getY())
             
 
