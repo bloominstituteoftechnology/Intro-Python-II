@@ -1,8 +1,29 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 class Player:
-    def __init__(self, current_room=None):
+    def __init__(self, name, inventory, current_room=None):
+        self.name = name
+        self.inventory = inventory
         self.current_room = current_room
 
     def __str__(self):
         return self.current_room
+
+    def take_item(self, item):
+        self.inventory.append(item)
+    
+    def drop_item(self, item):
+        self.inventory.remove(item)
+
+    def view_inventory(self):
+        print(f'{self.name} is currently holding: ')
+        for item in self.inventory:
+            print(f'{item.name.capitalize()}')
+
+    def find_item(self, input_item):
+        for item in self.inventory:
+            if item.name.lower() == input_item.lower():
+                return item
+        return None
+
+    

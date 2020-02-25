@@ -33,5 +33,5 @@ class Light_source(Item):
     def __str__(self):
         return self.name
     
-    def light_up(self)
+    def light_up(self):
         print(f'The {self.name} light up the room!')
