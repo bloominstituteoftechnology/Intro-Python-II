@@ -18,3 +18,20 @@ class Treasure(Item):
     def __init__(self, name, description, value):
         super().__init__(name, description)
         self.value = value
+    
+    def __str__(self):
+        return self.name
+
+    def remove_value(self):
+        self.value = 0
+
+class Light_source(Item):
+    def __init__(self, name, description, light=True):
+        super().__init__(name, description)
+        self.light = light
+
+    def __str__(self):
+        return self.name
+    
+    def light_up(self)
+        print(f'The {self.name} light up the room!')
