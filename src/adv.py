@@ -39,6 +39,8 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+from player import Player
+player = Player("You", room['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +51,46 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+play = True
+
+justOnce = True
+
+
+
+def getInput():
+    action = input("What would you like to do? Action: ")
+    print("\n")
+    if action == "q":
+        global play 
+        global justOnce
+        play = False
+        
+    elif action == "n":
+        if player.currentRoom.playerMove("n") == True:
+            player.currentRoom = player.currentRoom.n_to
+    elif action == "e":
+        if player.currentRoom.playerMove("e") == True:
+            player.currentRoom = player.currentRoom.e_to
+    elif action == "s":
+        if player.currentRoom.playerMove("s") == True:
+            player.currentRoom = player.currentRoom.s_to
+    elif action == "w":
+        if player.currentRoom.playerMove("w") == True:
+            player.currentRoom = player.currentRoom.w_to
+    else:
+        print(f"\n'{action}' is not valid input")
+        getInput()
+        
+while play:
+
+    if justOnce:
+
+        justOnce = False
+        print("Use\n" +
+        "'n' 'e' 's' or 'w' to go north, east, south, or west.\n" +
+        "'q' to quit 'c' to show controls again")
+    print("\n" + player.currentRoom.__str__())
+
+    getInput()
