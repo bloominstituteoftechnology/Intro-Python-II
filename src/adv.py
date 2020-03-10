@@ -55,36 +55,25 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-player = Player('malex', room['outside'])
+player = Player(input('Enter your name:'), room['outside'])
+print("Player: ", player.name)
+print("\n---------Current Room---------")
+print(player.current_room.name)
+print(player.current_room.description)
+print("--------------------------")
 
 while True:
-    print("Player: ", player.name)
-    print("\n---------New Room---------")
-    print(player.current_room.name)
-    print(player.current_room.description)
-    print("--------------------------")
 
-
-    move = input("\nEnter your move(s, n, w, e):")
+    move = input("\nEnter your move(s, n, w, e, q):").lower()
 
     try:
-        if move == 's' and player.current_room.s_to != None:
-            player.current_room = player.current_room.s_to
-
-        elif move == 'n' and player.current_room.n_to != None:
-            player.current_room = player.current_room.n_to
-
-        elif move == 'w' and player.current_room.w_to != None:
-            player.current_room = player.current_room.w_to
-
-        elif move == 'e' and player.current_room.e_to != None:
-            player.current_room = player.current_room.e_to
-
-        elif move == 'q':
+        if move == 'q':
             break
+        else:
+            player.travel(move)
 
     except:
-        print("\n--------------------------------\nError: Move not allowed, no room\n--------------------------------\n")
+        print("\n--------------------------------\nError: Wrong Key\n--------------------------------\n")
 
 
 
