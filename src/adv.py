@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -37,7 +37,31 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+game = 1
 # Make a new player object that is currently in the 'outside' room.
+player = Player(input("What is your name, noble adventurer? "), room['outside'])
+print(f'Excellent! Your adventure begins here, {player.name}')
+print(player.current_room.description)
+
+
+while game:
+    command = input('Where would you like to move? Valid options are [n] [s] [e] [w], or q (quit)')
+    if command == 'n':
+        player.move(command)
+    
+    elif command == 's':
+        player.move(command)
+
+    elif command == 'e':
+        player.move(command)
+    
+    elif command == 'w':
+        player.move(command)
+   
+    elif command == 'q':
+        game = False
+    else:
+        print("You can't do that!")
 
 # Write a loop that:
 #
