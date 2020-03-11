@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -19,6 +20,9 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+    'easteregg': Room('Secret Cache', '''HOW DID YOU FIND THIS ROOM! You basically
+beat the game, well done!''')
 }
 
 
@@ -40,7 +44,11 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
-#
+
+def adventure_ish():
+    print('''Welcome to Adventure-Ish Game! The goal is to get to the treasure room...
+Or is it?''')
+
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -49,3 +57,6 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+if __name__ == '__main__':
+    adventure_ish()
