@@ -1,4 +1,6 @@
 from room import Room
+from item import Item
+from player import Player
 
 # Declare all the rooms
 
@@ -33,11 +35,10 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
-
 # Make a new player object that is currently in the 'outside' room.
+
+# player = Player(input('What is your name?\n'), 'outside')
+player = Player('Debugger Steve', room['outside']) # Speed up tests!
 
 # Write a loop that:
 #
@@ -49,3 +50,39 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# possible_commands = {
+#                 'n': 'player.current_room.n_to',
+#                 'e': 'player.current_room.e_to',
+#                 'w': 'player.current_room.w_to',
+#                 's': 'player.current_room.s_to',
+#                 }
+
+possible_commands = ['n','e','w','s']
+cmd = ''
+while cmd != 'q':
+    print(player.current_room.description)
+    cmd = input("What do you do?\n")
+    if cmd.lower() in possible_commands:
+        if cmd == 'n': 
+            try:
+                player.current_room = player.current_room.n_to
+            except: 
+                print('You can\'t go that way!')
+        elif cmd == 'e':
+            try:
+                player.current_room = player.current_room.e_to
+            except: 
+                print('You can\'t go that way!')
+        elif cmd == 'w':
+            try:
+                player.current_room = player.current_room.w_to
+            except: 
+                print('You can\'t go that way!')
+        elif cmd == 's':
+            try:
+                player.current_room = player.current_room.s_to
+            except: 
+                print('You can\'t go that way!')
+
+print('Thanks for playing!')
