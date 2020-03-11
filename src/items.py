@@ -1,7 +1,7 @@
 # Class to hold item information
 
 class Item:
-    def __init__(self, ID, name='', description='', value=0):
+    def __init__(self, ID, name, description, value):
         self.ID = ID
         self.name = name
         self.description = description
@@ -9,20 +9,20 @@ class Item:
 
 
 class Weapon(Item):
-    def __init__(self, name='', description='', value=0, damage=0):
-        super().__init__(name=name, description=description, value=value)
+    def __init__(self, name description value, damage):
+        super().__init__(name, description, value)
         self.damage = damage
 
 
 class Book(Item):
-    def  __init__(self, name='', description='', value=0, author=''):
-        super().__init__(name=name, description=description, value=value)
+    def  __init__(self, name, description, value, author):
+        super().__init__(name, description, value)
         self.author = author
 
 
 class Basic(Item):
-    def __init__(self, name='', description='', value=0, useful=True):
-        super().__init__(name=name, description=description, value=value)
+    def __init__(self, name, description, value, useful):
+        super().__init__(name, description, value)
         self.useful = useful
 
 # dagger = Weapon('Stabby', 'A short dagger.', 5, 2)
