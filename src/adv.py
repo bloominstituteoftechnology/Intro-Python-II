@@ -58,21 +58,11 @@ print(player.current_room.description)
 
 
 while game:
-    command = input(
+    direction = input(
         'Where would you like to move? Valid options are [n] [s] [e] [w], or q (quit)')
-    if command == 'n':
-        player.move(command)
-
-    elif command == 's':
-        player.move(command)
-
-    elif command == 'e':
-        player.move(command)
-
-    elif command == 'w':
-        player.move(command)
-
-    elif command == 'q':
+    if direction in ['n', 's', 'e', 'w']:
+        player.move(direction)
+    elif direction == 'q':
         game = False
     else:
         print("You can't do that!")

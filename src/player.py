@@ -15,6 +15,3 @@ class Player():
             self.current_room = room_entered
             print('Your location: ', self.current_room.name)
             print(self.current_room.description)
-
-    def show_room(self):
-        print(self.current_room.description)
