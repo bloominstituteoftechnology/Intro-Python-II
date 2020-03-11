@@ -15,3 +15,5 @@ class Player:
                 self.current_room = self.current_room.w_to
         elif direction == 's':
                 self.current_room = self.current_room.s_to
+
+                
