@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,7 +39,9 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+name = input('Please choose a name:\n->')
+player = Player(name=name, cur_room=room['outside'])
+print('')
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +52,48 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def use_input(cmd):
+    if cmd == 'north':
+        if player.cur_room.n_to == None:
+            print("You can't go that direction\n")
+        else:
+            player.cur_room = player.cur_room.n_to
+    elif cmd == 'south':
+        if player.cur_room.s_to == None:
+            print("You can't go that direction\n")
+        else:
+            player.cur_room = player.cur_room.s_to
+    elif cmd == 'east':
+        if player.cur_room.e_to == None:
+            print("You can't go that direction\n")
+        else:
+            player.cur_room = player.cur_room.e_to
+    elif cmd == 'west':
+        if player.cur_room.w_to == None:
+            print("You can't go that direction\n")
+        else:
+            player.cur_room = player.cur_room.w_to
+    elif cmd == 'help':
+        print("Type in commands such as 'North' to move north.")
+        print("Type 'q' to quit.\n")
+
+
+print(f'Welcome, {player.name}, to The Adventure Game.')
+print("For instructions type 'help'\n")
+
+
+
+while True:
+    print(f'Current room: {player.cur_room.name}.\n{player.cur_room.description}\n')
+    cmd = input("->")
+    print('')
+    cmd = cmd.lower()
+
+    if cmd == 'q':
+        break
+    else:
+        use_input(cmd)
+
+
+
