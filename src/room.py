@@ -1,8 +1,13 @@
 
-class Room:
+from inventory import Inventory
+
+
+class Room(Inventory):
 	def __init__(self, name, description):
+		super().__init__()
 		self.name = name
 		self.description = description
+
 		self.n_to = None
 		self.e_to = None
 		self.w_to = None
@@ -14,8 +19,6 @@ class Room:
 			'e': self.get_e,
 			'w': self.get_w,
 		}
-
-		self.items = []
 
 	def get_direction(self, direction):
 		return self.directionals[direction]()

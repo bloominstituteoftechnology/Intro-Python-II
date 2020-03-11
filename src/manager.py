@@ -1,6 +1,8 @@
 
 from player import Player
 from room import Room
+from items import Item
+from errors import IllegalMoveError, NotEnoughItemsError, IllegalCountError
 
 
 def create_rooms():
@@ -39,6 +41,9 @@ def create_rooms():
 	room['narrow'].w_to = room['foyer']
 	room['narrow'].n_to = room['treasure']
 	room['treasure'].s_to = room['narrow']
+	room['outside'].add_items(
+		item=Item('rock', 'A fist-sized rock lies on the path.')
+	)
 
 	return room
 
@@ -60,7 +65,7 @@ class AdventureManager:
 			text (str): text to print
 		'''
 
-		print(text)
+		print(text[0].upper() + text[1:])
 
 	def step(self) -> None:
 		'''
@@ -90,13 +95,40 @@ class AdventureManager:
 		if direction_name is None:
 			direction_name = direction
 
-		moved, _ = self.player.move(direction)
-		if moved:
+		try:
+			self.player.move(direction)
+
 			self.print(f'You move {direction_name}...')
 			self.describe_current_room()
 
 			self.step()
 
-		else:
+		except IllegalMoveError:
 			self.print(f'You can\'t move {direction_name}.')
 
+	def player_take(self, item_name, count):
+		try:
+			item = self.player.current_room.get_item_by_name(item_name)
+			self.player.transfer_items_from(self.player.current_room, item, count=count)
+			self.print(f'Picked up {count} of {item_name}.')
+		except KeyError:
+			self.print(f'There\'s not a {item_name} here!')
+		except NotEnoughItemsError:
+			self.print(f'There aren\'t enough of {item_name} here to take {count}.')
+		except IllegalCountError:
+			self.print(f'Can\'t take {count} of an item!')
+
+	def player_drop(self, item_name, count):
+		try:
+			item = self.player.get_item_by_name(item_name)
+			self.player.transfer_items_to(self.player.current_room, item, count=count)
+			self.print(f'Dropped {count} of {item_name}.')
+		except KeyError:
+			self.print(f'You don\'t have a {item_name}!')
+		except NotEnoughItemsError:
+			self.print(f'You don\'t have enough of {item_name} to drop {count}.')
+		except IllegalCountError:
+			self.print(f'Can\'t drop {count} of an item!')
+
+	def print_player_inventory(self):
+		self.print(self.player.print_inventory())

@@ -138,6 +138,8 @@ class Wait(Command):
 			for _ in range(steps):
 				self.adventureManager.step()
 
+			self.adventureManager.print('You do nothing, for a time.')
+
 		except Exception:
 			self.adventureManager.print(
 				self.help(*args)
@@ -228,3 +230,53 @@ class Look(Command):
 		return 'Usage: look\n' + \
 			f'Look around at the room.\n' + \
 			f'Aliases: {", ".join(self.aliases)}'
+
+
+class Take(Command):
+	aliases = ['take', 'get', 'pickup', 'grab']
+
+	def execute(self, *args):
+		try:
+			count = int(args[1])
+			item_name = ' '.join(args[2:])
+		except ValueError:
+			count = 1
+			item_name = ' '.join(args[1:])
+		self.adventureManager.player_take(item_name, count)
+
+	def help(self, *args):
+		return 'Usage: take [count] item\n' + \
+			f'Take one or more of item.\n' + \
+			f'Aliases: {", ".join(self.aliases)}'
+
+
+class Take(Command):
+	aliases = ['drop', ]
+
+	def execute(self, *args):
+		try:
+			count = int(args[1])
+			item_name = ' '.join(args[2:])
+		except ValueError:
+			count = 1
+			item_name = ' '.join(args[1:])
+		self.adventureManager.player_drop(item_name, count)
+
+	def help(self, *args):
+		return 'Usage: drop [count] item\n' + \
+			f'Drop one or more of item.\n' + \
+			f'Aliases: {", ".join(self.aliases)}'
+
+
+class CheckInventory(Command):
+	aliases = ['inventory', 'inv', 'i']
+	# TODO: Make this accept an item name
+
+	def execute(self, *args):
+		self.adventureManager.print_player_inventory()
+
+	def help(self, *args):
+		return 'Usage: inventory [item]\n' + \
+			f'Check how many of [item] you have, or view your full inventory.\n' + \
+			f'Aliases: {", ".join(self.aliases)}'
+
