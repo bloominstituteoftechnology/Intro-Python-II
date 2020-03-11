@@ -33,19 +33,67 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+
+def show_welcome_message():
+    welcome_message = "Welcome to the Cave of Despair!"
+    print(welcome_message)
+
+# Prints the current room name
+# Prints the current description (the textwrap module might be useful here).
+
+
+def current_room(player, room):
+    print(f"{player.name} has entered the {room.name}. {room.description}")
+
+
+# Waits for user input and decides what to do.
+def get_user_input():
+    choice = input(
+        "Pick a direction: [n] North  [e] East  [s] South  [w] West  [q] Give up now!\n")
+    return choice_options[choice]
+
+# If the user enters a cardinal direction, attempt to move to the room there.
+
+
+def switch_rooms():
+    pass
+
+# If the user enters "q", quit the game.
+
+
+def quit_game():
+    print("Lost? Many have tried and failed!  Better luck next time.")
+
+# Print an error message if the movement isn't allowed.
+
+
+def error():
+    pass
+
 
 # Make a new player object that is currently in the 'outside' room.
+new_player = {
+    "name": "Bilbo",
+    "current_room": 'outside'
+}
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+choice_options = {
+    "n": "North",
+    "e": "East",
+    "s": "South",
+    "w": "West",
+    "q": "Give up now!"
+}
+
+# Start of Game
+show_welcome_message()
+
+# Starting choice
+user_input = get_user_input()
+
+while user_input != "q":
+    current_room(new_player, current_room)
+    user_input = get_user_input()
+
+# Quit game if user exits game loop
+quit_game()
