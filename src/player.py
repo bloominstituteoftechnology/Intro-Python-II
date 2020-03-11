@@ -33,5 +33,14 @@ class Player(Inventory):
 		else:
 			raise IllegalMoveError
 
+	def print_inventory(self):
+		inventory_str = f'Your inventory currently contains:'
+		if len(self.items):
+			for item in self.items.values():
+				inventory_str += f'\n- {str(item)}'
+		else:
+			inventory_str += '\n- Nothing but dust bunnies.'
+		return inventory_str
+
 	def __str__(self):
 		return 'you, the player'

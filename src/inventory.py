@@ -12,6 +12,13 @@ class Inventory:
 	def get_item_by_name(self, name: str) -> Item:
 		return self.items[name].item
 
+	def get_item_count_by_name(self, name: str) -> str:
+		item_stack = self.items.get(name, None)
+		if item_stack is None:
+			return f'no {name}.'
+		else:
+			return str(item_stack)
+
 	def add_items(self, item: Item, count: int = 1) -> None:
 		if count < 1:
 			raise IllegalCountError

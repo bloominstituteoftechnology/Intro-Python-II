@@ -236,6 +236,10 @@ class Take(Command):
 	aliases = ['take', 'get', 'pickup', 'grab']
 
 	def execute(self, *args):
+		if len(args) <= 1:
+			self.commandManager.execute('help ' + ' '.join(args))
+			return
+
 		try:
 			count = int(args[1])
 			item_name = ' '.join(args[2:])
@@ -250,10 +254,14 @@ class Take(Command):
 			f'Aliases: {", ".join(self.aliases)}'
 
 
-class Take(Command):
+class Drop(Command):
 	aliases = ['drop', ]
 
 	def execute(self, *args):
+		if len(args) <= 1:
+			self.commandManager.execute('help ' + ' '.join(args))
+			return
+
 		try:
 			count = int(args[1])
 			item_name = ' '.join(args[2:])
@@ -273,10 +281,36 @@ class CheckInventory(Command):
 	# TODO: Make this accept an item name
 
 	def execute(self, *args):
-		self.adventureManager.print_player_inventory()
+		if len(args) <= 1:
+			self.adventureManager.print_player_inventory()
+			return
+
+		else:
+			self.adventureManager.print_player_inventory_count(args[1])
+			return
 
 	def help(self, *args):
 		return 'Usage: inventory [item]\n' + \
 			f'Check how many of [item] you have, or view your full inventory.\n' + \
 			f'Aliases: {", ".join(self.aliases)}'
 
+
+class Examine(Command):
+	aliases = ['examine', 'lookat', 'check']
+
+	def execute(self, *args):
+		if len(args) <= 1:
+			self.commandManager.execute('help ' + ' '.join(args))
+			return
+
+		try:
+			int(args[1])
+			item_name = ' '.join(args[2:])
+		except ValueError:
+			item_name = ' '.join(args[1:])
+		self.adventureManager.examine_item(item_name)
+
+	def help(self, *args):
+		return 'Usage: examine item\n' + \
+			f'Examine an item.\n' + \
+			f'Aliases: {", ".join(self.aliases)}'

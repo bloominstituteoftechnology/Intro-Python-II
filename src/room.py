@@ -34,3 +34,15 @@ class Room(Inventory):
 
 	def get_e(self):
 		return self.e_to
+
+	def print_items(self):
+		items_str = 'On the ground, there is:'
+		if len(self.items):
+			for item in self.items.values():
+				items_str += f'\n- {str(item)}'
+		else:
+			items_str += '\n- Nothing but dust bunnies.'
+		return items_str
+
+
+

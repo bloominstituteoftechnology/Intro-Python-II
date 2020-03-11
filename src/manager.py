@@ -41,8 +41,18 @@ def create_rooms():
 	room['narrow'].w_to = room['foyer']
 	room['narrow'].n_to = room['treasure']
 	room['treasure'].s_to = room['narrow']
+
+	room['foyer'].add_items(
+		item=Item('rock', 'A fist-sized rock. Could be used as a weapon in a pinch.'),
+		count=3,
+	)
 	room['outside'].add_items(
-		item=Item('rock', 'A fist-sized rock lies on the path.')
+		item=Item('stick', 'A fairly thin branch. Not much use on its own.'),
+		count=8,
+	)
+	room['treasure'].add_items(
+		item=Item('coin', 'The scattered remnants of a once-vast hoard.'),
+		count=41,
 	)
 
 	return room
@@ -79,9 +89,25 @@ class AdventureManager:
 	def get_current_room_description(self):
 		return self.player.current_room.description
 
+	def get_current_room_contents(self):
+		return self.player.current_room.print_items()
+
 	def describe_current_room(self):
 		self.print(self.get_current_room_summary())
 		self.print(self.get_current_room_description())
+		if len(self.player.current_room.items):
+			self.print(self.get_current_room_contents())
+
+	def examine_item(self, item_name):
+		try:
+			item = self.player.get_item_by_name(item_name)
+			self.print(item.description)
+		except KeyError:
+			try:
+				item = self.player.current_room.get_item_by_name(item_name)
+				self.print(item.description)
+			except KeyError:
+				self.print(f'There\'s no {item_name} around here.')
 
 	def move_player(self, direction: str, direction_name: str = None) -> None:
 		'''
@@ -132,3 +158,6 @@ class AdventureManager:
 
 	def print_player_inventory(self):
 		self.print(self.player.print_inventory())
+
+	def print_player_inventory_count(self, item_name):
+		self.print(f'You are currently holding {self.player.get_item_count_by_name(item_name)}')
