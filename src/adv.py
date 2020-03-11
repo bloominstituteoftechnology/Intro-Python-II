@@ -77,7 +77,7 @@ def getInput():
         if player.currentRoom.playerMove("s") == True:
             player.currentRoom = player.currentRoom.s_to
     elif action == "w":
-        if player.currentRoom.playerMove("w") == True:
+        if player.currentRoom.playerMovew("w") == True:
             player.currentRoom = player.currentRoom.w_to
     else:
         print(f"\n'{action}' is not valid input")
