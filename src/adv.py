@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -36,6 +37,14 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+player = Player()
+while True:
+    direction =  input("where do you want to go? Pick : n, e, w, s")
+    if direction is 'q':
+        print('it was fun playing with you!')
+        break
+    elif direction is 'n' or 'e' or 'w' or 's':
+        
 
 # Make a new player object that is currently in the 'outside' room.
 
