@@ -9,18 +9,29 @@ class Player:
         self.hp = 10
         self.inventory = []
 
-    def item_interaction(self, cmd, item_id):
+    def item_interaction(self, cmd, item_name):
 # item_cmds = ['get','take','leave','throw','swing','eat','drink']
         if cmd in ['get','take']:
-            print(f'You take the {item_id}')
-            self.inventory.append(item_id)
-            self.current_room.contents.remove(item_id)
+            for item in self.current_room.contents:
+                if item.name == item_name:
+                    self.inventory.append(item)
+                    self.current_room.contents.remove(item)
+                    print(f'You take the {item_name}')
         elif cmd in ['leave', 'drop', 'throw']:
-            print(f'You drop the {item_id}')
-            self.inventory.remove(item_id)
-            self.current_room.contents.append(item_id)
-        
-        
+            for item in self.inventory:
+                if item.name == item_name:
+                    print(f'You drop the {item_name}')
+                    self.inventory.remove(item)
+                    self.current_room.contents.append(item)
+        else: raise Exception
+                
+
+    def room_interaction(self, cmd):
+        if cmd == 'search' and len(self.current_room.contents) > 0:
+            print(f'You find {self.current_room.contents}!')
+        elif cmd == 'search':
+            print('You find nothing!')
+
 
     def change_room(self, direction):     
         # possible_commands = {
