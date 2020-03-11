@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -33,19 +34,70 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+p = Player(room['outside'])
+
+print('Welcome to life. Please make a decision.')
+print(p.current_room.name)
+print(p.current_room.description)
+print('What will you do with yourself?')
+
+# print(room[p.current_room].name)
+
+
+user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
 
 # Write a loop that:
-#
-# * Prints the current room name
+# Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+
+
+#gamplay loop
+while not user == 'q':q
+    if user == 'n':
+        if  p.current_room.n_to != 'wall':
+            p.current_room = p.current_room.n_to
+            print(p.current_room.name)
+            print(p.current_room.description)
+            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
+        else:
+            print('There is nothing for you in this direction. Where-to now?')
+            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
+    elif user == 's':
+        if  p.current_room.s_to != 'wall':
+            print('got inside 2nd if loop')
+            p.current_room = p.current_room.s_to
+            print(p.current_room.name)
+            print(p.current_room.description)
+            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
+        else:
+            print('There is nothing for you in this direction. Where-to now?')
+            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
+    elif user == 'e':
+        if  p.current_room.e_to != 'wall':
+            print('got inside 2nd if loop')
+            p.current_room = p.current_room.e_to
+            print(p.current_room.name)
+            print(p.current_room.description)
+            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
+        else:
+            print('There is nothing for you in this direction. Where-to now?')
+            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
+    elif user == 'w':
+        if  p.current_room.w_to != 'wall':
+            print('got inside 2nd if loop')
+            p.current_room = p.current_room.w_to
+            print(p.current_room.name)
+            print(p.current_room.description)
+            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
+        else:
+            print('There is nothing for you in this direction. Where-to now?')
+            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
+    else:
+        print("You must be confused by the limitations of this world. Try to find your way again.")
+        user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
