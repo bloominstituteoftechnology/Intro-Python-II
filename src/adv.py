@@ -1,9 +1,9 @@
 from room import Room
 from item import Item
 from player import Player
+from monster import Monster
 
-# Declare all the rooms
-
+# Declare and link the rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -23,9 +23,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
-# Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -41,34 +38,34 @@ room['treasure'].s_to = room['narrow']
 player = Player('Debugger Steve', room['outside']) # Speed up tests!
 
 # Write a loop that:
-#
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
-#
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
-#
 # If the user enters "q", quit the game.
 
-# possible_commands = {
-#                 'n': 'player.current_room.n_to',
-#                 'e': 'player.current_room.e_to',
-#                 'w': 'player.current_room.w_to',
-#                 's': 'player.current_room.s_to',
-#                 }
-
-cardinals = ['n','e','w','s']
+item_cmds = ['get','take','leave','throw','swing','eat','drink']
+cardinals = ['n','e','w','s','north', 'east','west','south']
 cmd = ''
 print(f'Welcome {player.name}!\nGood luck on your adventure!\n')
 while cmd != 'q':
-    print(player.current_room.description, '\n')
-    cmd = input("What do you do?\n")
-    if cmd.lower() in cardinals:
+    print('\n', player.current_room.description, '\n')
+    print('Current Inventory:', player.inventory)
+    print('Room Contents', player.current_room.contents)
+    cmd = input("What do you do?\n").lower()
+    split_cmd = cmd.split()
+    if cmd in cardinals:
         try:
             player.change_room(cmd)
         except: 
             print('You cant go that way!\n')
+    elif split_cmd[0] in item_cmds:
+        try:
+            player.item_interaction(split_cmd[0],split_cmd[-1])
+        except:
+            print('Can\'t use item in that way')
     else:
-        print("That's impossible!\n")
+        print('not recognized')
+        print('That\'s not possible!')  
 print('Thanks for playing!')
