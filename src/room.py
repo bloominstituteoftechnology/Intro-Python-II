@@ -5,4 +5,8 @@ class Room:
     def __init__(self, name='Nondescript', description='A very bland room, smells of ozone.'):
         self.name = name
         self.description = description
-        
+        # self.n_to = ''
+        # self.e_to = ''
+        # self.w_to = ''
+        # self.s_to = ''
+

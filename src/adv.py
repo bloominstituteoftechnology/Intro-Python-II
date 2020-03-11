@@ -58,31 +58,17 @@ player = Player('Debugger Steve', room['outside']) # Speed up tests!
 #                 's': 'player.current_room.s_to',
 #                 }
 
-possible_commands = ['n','e','w','s']
+cardinals = ['n','e','w','s']
 cmd = ''
+print(f'Welcome {player.name}!\nGood luck on your adventure!\n')
 while cmd != 'q':
-    print(player.current_room.description)
+    print(player.current_room.description, '\n')
     cmd = input("What do you do?\n")
-    if cmd.lower() in possible_commands:
-        if cmd == 'n': 
-            try:
-                player.current_room = player.current_room.n_to
-            except: 
-                print('You can\'t go that way!')
-        elif cmd == 'e':
-            try:
-                player.current_room = player.current_room.e_to
-            except: 
-                print('You can\'t go that way!')
-        elif cmd == 'w':
-            try:
-                player.current_room = player.current_room.w_to
-            except: 
-                print('You can\'t go that way!')
-        elif cmd == 's':
-            try:
-                player.current_room = player.current_room.s_to
-            except: 
-                print('You can\'t go that way!')
-
+    if cmd.lower() in cardinals:
+        try:
+            player.change_room(cmd)
+        except: 
+            print('You cant go that way!\n')
+    else:
+        print("That's impossible!\n")
 print('Thanks for playing!')
