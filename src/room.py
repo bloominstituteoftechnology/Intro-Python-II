@@ -17,10 +17,6 @@ class Room:
         self.items.append(item)
 
 
-r = Room('ali', 'bedroo', ['book'])
-
-r.add_item('ass')
-print(r)
 
 
 # The `Room` class should be extended with a `list` that holds the `Item`s

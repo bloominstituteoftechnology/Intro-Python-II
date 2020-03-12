@@ -82,15 +82,17 @@ while True:
                 for j in room[i].items:
                     print(f'{i} has the following item: {j}\n\n')
                 
-                cmd = input('Would you like to move? If so press n for north s for south e for east or w for west.  Would you like to pick up or drop an item?  If so type get (or drop) Item, where item is the name of the item you would like to pick up. Press q to quit at any time: \n\n')
+                cmd = input('Would you like to move? If so press n for north s for south e for east or w for west.  Would you like to pick up or drop an item?  If so type get (or drop) Item, where item is the name of the item you would like to pick up. Press q to quit at any time, and hit i to see your inventory of items if you have any: \n\n')
                 cmd_determiner = cmd.split()
                 #break at any time user enters q for quit
                 if cmd == 'q':
                     print('Goodbye!')
                     exit(0)
+                if cmd == 'i':
+                    player.show_items()
                 ##############################################3333correct for get and leave cases
                 #handle improper input
-                if cmd != 'q' and cmd != 'n' and cmd != 'e' and cmd != 's' and cmd != 'w' and len(cmd_determiner) == 1 :
+                if cmd != 'q' and cmd != 'n' and cmd != 'e' and cmd != 's' and cmd != 'w' and cmd != 'i' and len(cmd_determiner) == 1 :
                     print('improper command, please read instructions CAREFULLY!!  BOOLEAN THUNDER ERROR 55-2234cD\n\n')
                 #so long as they don't quit and proper commands: 
 
@@ -109,15 +111,13 @@ while True:
                             room[i].remove_item(cmd_determiner[1])
                             ##onTake
                             
-                            print(f'You have just picked up the {cmd_determiner[1]}\n\n')
+                            
 ######################################################################################################33333
                 if da_length == 2 and cmd_determiner[0] == 'drop':
 
                     for item in player.items:
-                        print(player.items)
-                        if not getattr(item, cmd_determiner[1]):
-                            print("do not try to drop what you don't have")
-
+                        print(item)
+                        # if the cmd_determiner[1] is not in player.items
                                     
                         if item.name == cmd_determiner[1]:
                                     #make a method to call here to pick up the item:
@@ -126,8 +126,8 @@ while True:
                             item.on_drop()
                             room[i].add_item(item)#######################make this
                             ##onTake
+                            print(room[i].items)
                             
-                            print(f'You have just picked up the {cmd_determiner[1]}\n\n')
 ##################################################################################################3333
 
 
@@ -193,7 +193,9 @@ while True:
                 if cmd == 'q':###########3
                     print('Goodbye!')##########
                     exit(0)
-                if cmd != 'q' and cmd != 'n' and cmd != 'e' and cmd != 's' and cmd != 'w':
+                if cmd == 'i':
+                    player.show_items()
+                if cmd != 'q' and cmd != 'n' and cmd != 'e' and cmd != 's' and cmd != 'w' and cmd != 'i':
                     print('improper command, please read instructions CAREFULLY!!  BOOLEAN THUNDER ERROR 55-2234cD')
                 #so long as they don't quit and proper commands: 
                 elif cmd == 's' and player.room == 'outside':
