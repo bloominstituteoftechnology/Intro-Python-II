@@ -1,11 +1,10 @@
 from room import Room
 from item import Item
 
-
-# Declare an item or two
 item = {
     'Flashlight' : Item('Flashlight', 'helps with lighting the way worth 50pts')
 }
+
 
 # Declare all the rooms
 
@@ -46,11 +45,14 @@ room['treasure'].s_to = room['narrow']
 
 
 # Make a new player object that is currently in the 'outside' room.
-
+from item import Item
 from player import Player
 player = Player("You", room['outside'], items=[])
 
-
+# Declare an item or two
+item = {
+    'Flashlight' : Item('Flashlight', 'helps with lighting the way worth 50pts')
+}
 #validator for the item:
 
 if len(player.currentRoom.items) > 0:
@@ -82,16 +84,16 @@ justOnce = True
 # declaring actions for moving 
 
 # 0 represents the word typed in and 1 represents the item name 
-
+i = item.name
 def getInput():
     action = input("What would you like to do? Action: ")
-    print("\n")
+    
     if action[0] == "q":
         global play 
         global justOnce
         play = False
         foundItems = False
-
+        
     elif action[0] == "n":
         if player.currentRoom.playerMove("n") == True:
             player.currentRoom = player.currentRoom.n_to
@@ -130,18 +132,18 @@ def getInput():
         else:
             print("\nThere is nothing there!")
            # trying to pick up an item here
-    elif action[0] == "take" or action[0] == "get":
-        foundItems = False
-        for item in player.currentRoom.items:
-            if action == item.name:
-            # remove from room and add to player
-                player.currentRoom.items.remove(item)
-                player.items.append(item)
-                print(f"{player.name} picked up {action[0]} from {player.currentRoom.name}")
-                foundItems = True
-            if foundItems == False:
-                print(f"could not find {action[0]}")
+       
 
+    # Get/Take command
+    
+    elif action.split(' ')[0] in ["take" or "get"]:
+        if len(player.currentRoom.items) != 0:
+                player.items.append(player.currentRoom.items)
+                print(f'You\'ve picked up the {player.currentRoom.items}.')
+                del player.currentRoom.items
+                print(player.items)
+        else:
+            print(f'nothing to pick up!')
     else:
         print (f"\n'{action}' is not valid input")
         getInput()
