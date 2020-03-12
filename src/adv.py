@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,70 +35,54 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-
-#
-# Main
-#
+item = {
+    'stick': Item('stick', 'It\'s sharp at both ends.')
+}
+# stick = Item('stick', 'It\'s sharp at both ends.')
 
 # Make a new player object that is currently in the 'outside' room.
 p = Player(room['outside'])
 
+p.get_stuff(item['stick'])
+
 print('Welcome to life. Please make a decision.')
-print(p.current_room.name)
-print(p.current_room.description)
-print('What will you do with yourself?')
 
-# print(room[p.current_room].name)
+valid_directions = ('n', 's', 'e', 'w')
+
+def parse(s):
+    l = s.split()
+    if len(l) == 2:
+        try:
+            print(l)
+            print(f'p.{l[0]}_stuff(item[\'{l[1]}\'])')
+            
+            print(a)
+            print('got past 1')
+            p.a(item[l[1]])
+            print('got past 2')
+        except:
+            print('huh?')
+    else: 
+        print('That don\'t make no sense.')
 
 
-user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
-
-# Write a loop that:
-# Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-
-
-#gamplay loop
-while not user == 'q':q
-    if user == 'n':
-        if  p.current_room.n_to != 'wall':
-            p.current_room = p.current_room.n_to
-            print(p.current_room.name)
-            print(p.current_room.description)
-            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
-        else:
-            print('There is nothing for you in this direction. Where-to now?')
-            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
-    elif user == 's':
-        if  p.current_room.s_to != 'wall':
-            print('got inside 2nd if loop')
-            p.current_room = p.current_room.s_to
-            print(p.current_room.name)
-            print(p.current_room.description)
-            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
-        else:
-            print('There is nothing for you in this direction. Where-to now?')
-            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
-    elif user == 'e':
-        if  p.current_room.e_to != 'wall':
-            print('got inside 2nd if loop')
-            p.current_room = p.current_room.e_to
-            print(p.current_room.name)
-            print(p.current_room.description)
-            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
-        else:
-            print('There is nothing for you in this direction. Where-to now?')
-            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
-    elif user == 'w':
-        if  p.current_room.w_to != 'wall':
-            print('got inside 2nd if loop')
-            p.current_room = p.current_room.w_to
-            print(p.current_room.name)
-            print(p.current_room.description)
-            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
-        else:
-            print('There is nothing for you in this direction. Where-to now?')
-            user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
+# Game Play Loop
+while True:
+    print(p.current_room.name)
+    print(p.current_room.description)
+    print('What will you do?')
+    user = input("[n] North  [s] South  [e] East  [w] West  [i] Inventory [q] Quit\n")
+    if user == 'q':
+        print('Goodbye')
+        exit(0)
+    elif user in valid_directions:
+        p.move(user)
+    elif user == 'i':
+        print('You have: ')
+        for obj in p.stuff:
+            print(getattr(obj, 'name'))
+        action = input('Enter verb noun: \n')
+        parse(action)
     else:
         print("You must be confused by the limitations of this world. Try to find your way again.")
-        user = input("[n] North  [s] South  [e] East  [w] West  [q] Quit\n")
+        # user = input("[n] North  [s] South  [e] East  [w] West  [i] Inventory [q] Quit\n")
