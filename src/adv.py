@@ -1,18 +1,20 @@
 from room import *
 from player import *
 from items import *
-from utils import prompt
 
 # Declare items
 
 lint = Basic('Some Lint', 'Just some old lint', 0, False)
 dagger = Weapon('Stabby - ', 'A short dagger. ', 5, 2)
 sword = Weapon('Slash - ', 'A large sword. ', 12, 4)
-needle = Weapon('Pokey - ', 'A long, NEEDLE-like sword. (stick them with the pointy end) ', 25, 9)
+needle = Weapon(
+    'Pokey - ', 'A long, NEEDLE-like sword. (stick them with the pointy end) ', 25, 9)
 rock = Basic('Pet Rock - ', 'Just a rock... ', 1, False)
-shoes = Basic('Shoes - ', 'Pair of Jordans. What are those doing here? ', 20, True)
+shoes = Basic(
+    'Shoes - ', 'Pair of Jordans. What are those doing here? ', 20, True)
 book = Book('Book - ', 'An old book. Most of the pages are faded ', 3, 'Unknown')
-great_book = Book('Cryptonomicon - ', 'A fantastic book, seriously read it! ', 20, 'Neal Stephenson')
+great_book = Book('Cryptonomicon - ',
+                  'A fantastic book, seriously read it! ', 20, 'Neal Stephenson')
 
 # Declare all the rooms
 
@@ -68,14 +70,18 @@ def adventure_ish():
 
     while cmd != 'q':
         key_commands = {
-            'n' : 'Move North',
-            's' : 'Move South',
-            'e' : 'Move East',
-            'w' : 'Move West',
-            'i' : 'Check Inventory'
+            'n': 'Move North',
+            's': 'Move South',
+            'e': 'Move East',
+            'w': 'Move West',
+            'i': 'Check Inventory',
+            'r': 'Describe Room',
+            'c': 'Describe Character'
         }
 
-        cmd = prompt(key_commands)
+        for i in key_commands:
+            print(f'[{i}]: {key_commands[i]}')
+        cmd = input('\nWhat would you like to do?\n')
 #         cmd = input(f'''What do you want to do?
 # {'-' * 125}
 # [n]: Move North [s]: Move South [e]: Move East [w]: Move West [i]: Check Inventory [r]: Describe Room [c]: Describe Character
@@ -83,26 +89,24 @@ def adventure_ish():
 #         ''')
         # Dict for movement
         room_movement = {
-            'n' : player.current_room.n_to,
-            's' : player.current_room.s_to,
-            'e' : player.current_room.e_to,
-            'w' : player.current_room.w_to
+            'n': player.current_room.n_to,
+            's': player.current_room.s_to,
+            'e': player.current_room.e_to,
+            'w': player.current_room.w_to
         }
 
-        #Dict for actions
+        # Dict for actions
         player_actions = {
-            'i' : player.check_inv(),
-            'r' : player.current_room.room_describe(),
-            'c' : player.self_describe()
+            'i': player.check_inv(),
+            'r': player.current_room.room_describe(),
+            'c': player.self_describe()
         }
 
         if cmd in room_movement:
             player.move(room_movement[cmd])
             player.current_room.room_describe()
-        elif cmd in player_actions:
-            player_actions[cmd]
-        else:
-            pass
+        # else:
+        #     player_actions[cmd]
         # if cmd[0][0].lower() == 'n':
         #     if player.current_room.n_to:
         #         player.current_room = player.current_room.n_to
@@ -140,6 +144,7 @@ def adventure_ish():
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
 
 if __name__ == '__main__':
     adventure_ish()
