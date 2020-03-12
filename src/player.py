@@ -6,7 +6,10 @@ class Player:
     inventory = list()
 
     from room import Room
-    def __init__(self, name, currentRoom: Room, items=[]):
+    def __init__(self, name, currentRoom: Room):
         self.name = name
         self.currentRoom = currentRoom
-        self.items = items
+        self.inventory = []
+
+    def pick_item(self, item):
+        self.inventory.append(item)

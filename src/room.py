@@ -2,20 +2,29 @@
 # description attributes.
 
 import room
-
+from item import Item
 
 
 class Room:
 
-    def __init__(self, name, description, items=[]):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.items = items
+        self.items = []
 
     n_to = 0
     e_to = 0
     s_to = 0
     w_to = 0
+
+    def check(self):
+        print(f'Items in this room : {self.items}')
+
+    def add_item(self, item):
+        self.items.append(item)
+
+    def remove_item(self, item):
+        self.items.remove(item)
 
 
 
