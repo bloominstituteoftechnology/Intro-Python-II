@@ -70,7 +70,12 @@ def take(obj):
         print(f'There is no {obj} in this room')
 
 
-
+def drop(obj):
+    if obj in player.inventory:
+        player.drop_item(obj)
+        item[obj].on_drop()
+    else:
+        print(f'There is no {obj} in this room')
 
 
 
@@ -107,43 +112,43 @@ def getInput():
         if player.currentRoom.playerMove("n") == True:
             player.currentRoom = player.currentRoom.n_to
         if len(player.currentRoom.items) > 0:
-            print("\nThere is nothing there!")
+            print("\nThis is your inventory:")
             print(player.inventory)
             for item in player.currentRoom.items:
-                print(rand_item)
+                print(f'\nNew: {rand_item}')
         else:
-            print("\nThere is nothing there!")
+            print("\nThis is your inventory:")
             
     elif action[0] == "e":
         if player.currentRoom.playerMove("e") == True:
             player.currentRoom = player.currentRoom.e_to
         if len(player.currentRoom.items) > 0:
-            print("\nThere is nothing there!")
+            print("\nThis is your inventory:")
             print(player.inventory)
             for item in player.currentRoom.items:
-                print(rand_item)
+                print(f'\nNew: {rand_item}')
         else:
-            print("\nThere is nothing there!")
+            print("\nThis is your inventory:")
     elif action == "s":
         if player.currentRoom.playerMove("s") == True:
             player.currentRoom = player.currentRoom.s_to
         if len(player.currentRoom.items) >= 0:
-            print("\nThere is nothing there!")
+            print("\nThis is your inventory:")
             print(player.inventory)
             for item in player.currentRoom.items:
-               print(rand_item)
+               print(f'\nNew: {rand_item}')
         else:
-            print("\nThere is nothing there!")
+            print("\nThis is your inventory:")
     elif action[0] == "w":
         if player.currentRoom.playerMove("w") == True:
             player.currentRoom = player.currentRoom.w_to
         if len(player.currentRoom.items) > 0:
-            print("\nThere is nothing there!")
+            print("\nThis is your inventory:")
             print(player.inventory)
             for item in player.currentRoom.items:
-                print(rand_item)
+                print(f'\nNew: {rand_item}')
         else:
-            print("\nThere is nothing there!")
+            print("\nThis is your inventory:")
            # trying to pick up an item here
        
 
@@ -155,6 +160,22 @@ def getInput():
         else:
             print(f'nothing to pick up!')
             print(player.inventory)
+    
+    # drop
+    elif action.split(' ')[0] in ["drop" or "d"]:
+        if len(player.inventory) > 0:
+                drop(rand_item)
+        else:
+            print(f'nothing to drop!')
+            print(player.inventory)
+    # inventory
+    elif action.split(' ')[0] in ["inventory" or "i"]:
+        if len(player.inventory) > 0:
+            print(player.inventory)
+        else:
+            print("no items in inventory")
+            
+
     else:
         print (f"\n'{action}' is not valid input")
         getInput()
