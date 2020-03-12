@@ -4,40 +4,41 @@ from items import *
 
 # Declare items
 
-lint = Basic('Some Lint', 'Just some old lint', 0, False)
-dagger = Weapon('Stabby - ', 'A short dagger. ', 5, 2)
-sword = Weapon('Slash - ', 'A large sword. ', 12, 4)
-needle = Weapon(
-    'Pokey - ', 'A long, NEEDLE-like sword. (stick them with the pointy end) ', 25, 9)
-rock = Basic('Pet Rock - ', 'Just a rock... ', 1, False)
-shoes = Basic(
-    'Shoes - ', 'Pair of Jordans. What are those doing here? ', 20, True)
-book = Book('Book - ', 'An old book. Most of the pages are faded ', 3, 'Unknown')
-great_book = Book('Cryptonomicon - ',
-                  'A fantastic book, seriously read it! ', 20, 'Neal Stephenson')
+items = {
+    'lint': Basic('Some Lint', 'Just some old lint', 0, False),
+    'backpack': Basic('Back-Pack', 'To hold your treasures', 0, True),
+    'dagger': Weapon('Stabby', 'A short dagger.', 5, 2),
+    'sword': Weapon('Slash', 'A large sword.', 12, 4),
+    'needle': Weapon('Pokey', 'A long, NEEDLE-like sword. (stick them with the pointy end)', 25, 9),
+    'rock': Basic('Pet Rock', 'Just a rock...', 1, False),
+    'shoes': Basic('Shoes', 'Pair of Jordans. What are those doing here?', 20, True),
+    'book': Book('Book', 'An old book. Most of the pages are faded', 3, 'Unknown'),
+    'great_book': Book('Cryptonomicon',
+                       'A fantastic book, seriously read it!', 20, 'Neal Stephenson')
+}
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", [rock.name, rock.description]),
+                     "North of you, the cave mount beckons", [items['rock'].name]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", [dagger.name, dagger.description, book.name, book.description]),
+passages run north and east.""", [items['dagger'].name, items['book'].name]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", [rock.name, rock.description, dagger.name, dagger.description]),
+the distance, but there is no way across the chasm.""", [items['rock'].name, items['dagger'].name]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", [rock.name, rock.description]),
+to north. The smell of gold permeates the air.""", [items['rock'].name]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", [sword.name, sword.description, shoes.name, shoes.description]),
+earlier adventurers. The only exit is to the south.""", [items['sword'].name, items['shoes'].name]),
 
     'easteregg': Room('Secret Cache', '''HOW DID YOU FIND THIS ROOM! You basically
-beat the game, well done!''', [needle.name, needle.description, great_book.name, great_book.description])
+beat the game, well done!''', [items['needle'].name, items['great_book'].name])
 }
 
 
@@ -53,40 +54,18 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 
-# Make a new player object that is currently in the 'outside' room.
-
-# Write a loop that:
-
 def adventure_ish():
     print(f'''\nWelcome to Adventure-Ish Game! The goal is to get to the treasure room...\n
-{'*' * 30} Or is it? {'*' * 30}''')
+{'*' * 31} Or is it? {'*' * 31}''')
 
-    name = input(f'''\nWhat do they call you?\n{'-'*20} \n''')
-    rp = input(f'''\nAnd what are you famous for {name}?\n''')
-    player = Player(name, rp, room['outside'], inventory=[lint.name])
+    player = Player(input(f'''\nWhat do they call you?\n{'-'*22} \n'''), room['outside'], [
+                    items['lint'].name, items['backpack'].name])
     player.welcome_player()
 
     cmd = ''
 
     while cmd != 'q':
-        key_commands = {
-            'n': 'Move North',
-            's': 'Move South',
-            'e': 'Move East',
-            'w': 'Move West',
-            'i': 'Check Inventory',
-            'r': 'Describe Room',
-            'c': 'Describe Character'
-        }
 
-        for i in key_commands:
-            print(f'[{i}]: {key_commands[i]}')
-        cmd = input('\nWhat would you like to do?\n')
-#         cmd = input(f'''What do you want to do?
-# {'-' * 125}
-# [n]: Move North [s]: Move South [e]: Move East [w]: Move West [i]: Check Inventory [r]: Describe Room [c]: Describe Character
-# {'-' * 125}
-#         ''')
         # Dict for movement
         room_movement = {
             'n': player.current_room.n_to,
@@ -97,53 +76,63 @@ def adventure_ish():
 
         # Dict for actions
         player_actions = {
-            'i': player.check_inv(),
-            'r': player.current_room.room_describe(),
-            'c': player.self_describe()
+            'i': player.check_inv,
+            'r': player.current_room.room_describe,
+            'c': player.self_describe
         }
 
-        if cmd in room_movement:
-            player.move(room_movement[cmd])
+        # Dict for all commands, except hidden commands
+        key_commands = {
+            'n': 'Move North',
+            's': 'Move South',
+            'e': 'Move East',
+            'w': 'Move West',
+            'i': 'Check Inventory',
+            'r': 'Describe Room',
+            'c': 'Describe Character',
+            'p': 'Pickup Item (p stabby)',
+            'd': 'Drop Item (d some lint)'
+        }
+
+        for i in key_commands:
+            print(f'[{i}]: {key_commands[i]}')
+        cmd = input('\nWhat would you like to do?\n')
+
+        if cmd.split()[0] in room_movement.keys():
+            if room_movement[cmd.split()[0]]:
+                player.move(room_movement[cmd.split()[0]])
+                player.current_room.room_describe()
+            else:
+                print('-'*28)
+                print(f"You can't go that direction!")
+                print('-'*28)
+        elif cmd.split()[0] in player_actions.keys():
+            player_actions[cmd.split()[0]]()
+        elif cmd.split()[0] == 'p':
+            if ' '.join(cmd.split()[1:]) in [i.lower() for i in player.current_room.item_names]:
+                player.pickup(' '.join(cmd.split()[1:]))
+            else:
+                print('-'*25)
+                print('That item is not present!')
+                print('-'*25)
+        elif cmd.split()[0] == 'd':
+            if ' '.join(cmd.split()[1:]) in [i.lower() for i in player.inventory]:
+                player.drop_item(' '.join(cmd.split()[1:]))
+            else:
+                print('-'*30)
+                print(f"You aren't carrying that item!")
+                print('-'*30)
+        elif cmd == 'take me to the secret room!':
+            player.current_room = room['easteregg']
             player.current_room.room_describe()
-        # else:
-        #     player_actions[cmd]
-        # if cmd[0][0].lower() == 'n':
-        #     if player.current_room.n_to:
-        #         player.current_room = player.current_room.n_to
-        #         player.looper_info()
-        # elif cmd.lower() == 'take me to the secret underground layer!':
-        #     player.current_room = room['easteregg']
-        #     player.looper_info()
-        # elif cmd.lower() == 'take me back':
-        #     player.current_room = room['outside']
-        #     player.looper_info()
-        # elif cmd[0][0].lower() == 's':
-        #     if player.current_room.s_to:
-        #         player.current_room = player.current_room.s_to
-        #         player.looper_info()
-        # elif cmd[0][0].lower() == 'e':
-        #     if player.current_room.e_to:
-        #         player.current_room = player.current_room.e_to
-        #         player.looper_info()
-        # elif cmd[0][0].lower() == 'w':
-        #     if player.current_room.w_to:
-        #         player.current_room = player.current_room.w_to
-        #         player.looper_info()
-        # elif cmd[0][0].lower() == 'i':
-        #     if player.inventory:
-        #         player.check_inv()
-        # elif cmd[0][0].lower() == 'r':
-        #     player.current_room.room_describe()
-        # elif cmd[0][0].lower() == 'c':
-        #     player.self_describe()
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+        elif cmd == 'take me back!':
+            player.current_room = room['overlook']
+            player.current_room.room_describe()
+        elif cmd != 'q':
+            print('-'*28)
+            print('That is not a valid command!')
+            print('-'*28)
+    print('Goodbye!')
 
 
 if __name__ == '__main__':

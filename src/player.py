@@ -1,42 +1,64 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
+import adv
+from adv import *
 
 class Player:
-    def __init__(self, name, description, current_room, inventory=[]):
+    def __init__(self, name, current_room, inventory=[]):
         self.name = name
-        self.description = description
         self.current_room = current_room
         self.inventory = inventory
-    
-    def interact(self, interaction, item):
-        pickup = ['Take', 'Pick up', 'Grab', 'Get']
-        throwout = ['Toss', 'Remove', 'Drop', 'Trash']
 
-
-        if interaction.lower() in pickup:
-            print(f'You pickup {item.name}!')
-            print(f'It can be described as: {item.description}')
-            self.inventory.append(item)
-            self.current_room['items'].remove(item)
-        elif interaction.lower() in throwout:
-            print(f'You get rid of {item.name}!')
-            self.inventory.remove(item)
-            self.current_room['items'].append(item)
+    def pickup(self, itemname):
+        for i in adv.items:
+            if items[i].name.lower() == itemname.lower():
+                item = items[i]
+        lengther = len('You pick up !' + item.name)
+        desc_length = len('It can be described as: ' + item.description)
+        print(f'\nYou pick up {item.name}!')
+        print(f'''{'-'*lengther}''')
+        print(f'It can be described as: {item.description}')
+        print('-'*desc_length)
+        self.inventory.append(item.name)
+        self.current_room.item_names.remove(item.name)
+        self.check_inv()
     
+    def drop_item(self, itemname):
+        for i in adv.items:
+            if items[i].name.lower() == itemname.lower():
+                item = items[i]
+        lengther = len('You get rid of: ' + item.name + '!')
+        print('-'*lengther)
+        print(f'You get rid of: {item.name}!')
+        print('-'*lengther)
+        self.inventory.remove(item.name)
+        self.current_room.item_names.append(item.name)
+        self.check_inv()
+
     def move(self, direction):
         self.current_room = direction
-        print(f'Moving to the {self.current_room.name}\n')
+        print(f'\nMoving to the {self.current_room.name}\n')
     
     def welcome_player(self):
-        print(f'\nWelcome {self.name}! You are currently in the {self.current_room.name}')
-
-    def looper_info(self):
-        print(f'\nYou are now in the {self.current_room.name}')
+        lengther = len('You are currently in the ' + self.current_room.name)
+        print(f'\nWelcome {self.name}!\n\n')
+        print(f'''You are currently in the {self.current_room.name}\n{'-'*lengther}''')
 
     def self_describe(self):
-        print(f'''Name: {self.name}
-        Current Room: {self.current_room.name}
-        Inventory: {self.inventory}''')
+        stats_len = len('Character Stats')
+        name_len = len('Name: ' + self.name)
+        room_len = len('Current Room: ' + self.current_room.name)
+        inv_len = len(', '.join(self.inventory))
+        print('Character Stats')
+        print(f'''{'-'*stats_len}
+Name: {self.name}\n{'-'*name_len}
+Current Room: {self.current_room.name}\n{'-'*room_len}
+Inventory: ''')
+        print(*self.inventory, sep=', ')
+        print('-'*inv_len)
 
     def check_inv(self):
-        print(f'''You have: {', '.join(self.inventory)} on you''')
+        lengther = len(', '.join(self.inventory))
+        print('Inventory:')
+        print(*self.inventory, sep=', ')
+        print('-'*lengther)

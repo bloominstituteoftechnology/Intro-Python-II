@@ -43,3 +43,4 @@ class Basic(Item):
         Item Description: {self.description}
         Item Value: {self.value} copper
         Useful Item: {self.useful}''')
+
