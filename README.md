@@ -50,27 +50,27 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
   * Players should have a `name` and `current_room` attributes
 
 
-* Create a file called `item.py` and add an `Item` class in there.
+* Create a file called `item.py` and add an `Item` class in there.////////
 
-  * The item should have `name` and `description` attributes.
+  * The item should have `name` and `description` attributes.///////////
 
-     * Hint: the name should be one word for ease in parsing later.
+     * Hint: the name should be one word for ease in parsing later.???????????????????
 
   * This will be the _base class_ for specialized item types to be declared
-    later.
+    later.////////////////////////
 
 * Add the ability to add items to rooms.
 
   * The `Room` class should be extended with a `list` that holds the `Item`s
-    that are currently in that room.
+    that are currently in that room.///////////////////////
 
   * Add functionality to the main loop that prints out all the items that are
-    visible to the player when they are in that room.
+    visible to the player when they are in that room.///////
 
 * Add capability to add `Item`s to the player's inventory. The inventory can
   also be a `list` of items "in" the player, similar to how `Item`s can be in a
-  `Room`.
-
+  `Room`.//////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 * Add a new type of sentence the parser can understand: two words.
 
   * Until now, the parser could just understand one sentence form:
@@ -87,18 +87,19 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
 
   * Split the entered command and see if it has 1 or 2 words in it to determine
     if it's the first or second form.
-
+////////////////////////////////////////////////////////////
 * Implement support for the verb `get` followed by an `Item` name. This will be
   used to pick up `Item`s.
-
+///////////////////////////////////////////////////////////////
   * If the user enters `get` or `take` followed by an `Item` name, look at the
     contents of the current `Room` to see if the item is there.
-
+///////////////////////////////////////////////////////////////
      * If it is there, remove it from the `Room` contents, and add it to the
        `Player` contents.
-
+////////////////////////////////////////////////////////////////////////
      * If it's not there, print an error message telling the user so.
-
+////////////////rs/////////////////////////////////////////////////////
+printing 2 errors and wont loop back to the command asking to pick up???
      * Add an `on_take` method to `Item`.
 
         * Call this method when the `Item` is picked up by the player.
