@@ -19,9 +19,7 @@ class Controller:
 			while True:
 				command_string = input(self.prompt)
 				self.commandManager.execute(command_string)
-		except Exception:
-			self.adventureManager.print('\nExiting the game...')
-		except KeyboardInterrupt:
+		except (Exception, KeyboardInterrupt):
 			self.adventureManager.print('\nExiting the game...')
 
 

@@ -171,7 +171,7 @@ class Move(Command):
 	def execute(self, *args) -> None:
 		try:
 			self.direction_commands[args[1]].execute(*args[1:])
-		except Exception:
+		except (KeyError, IndexError):
 			self.adventureManager.print(
 				self.help(*args)
 			)
@@ -296,7 +296,7 @@ class CheckInventory(Command):
 
 
 class Examine(Command):
-	aliases = ['examine', 'lookat', 'check']
+	aliases = ['examine', 'ex', 'check']
 
 	def execute(self, *args):
 		if len(args) <= 1:

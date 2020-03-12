@@ -33,14 +33,10 @@ def create_rooms():
 
 	# Link rooms together
 
-	room['outside'].n_to = room['foyer']
-	room['foyer'].s_to = room['outside']
-	room['foyer'].n_to = room['overlook']
-	room['foyer'].e_to = room['narrow']
-	room['overlook'].s_to = room['foyer']
-	room['narrow'].w_to = room['foyer']
-	room['narrow'].n_to = room['treasure']
-	room['treasure'].s_to = room['narrow']
+	room['outside'].connect_to(room['foyer'], 'n')
+	room['foyer'].connect_to(room['overlook'], 'n')
+	room['foyer'].connect_to(room['narrow'], 'e')
+	room['narrow'].connect_to(room['treasure'], 'n')
 
 	room['foyer'].add_items(
 		item=Item('rock', 'A fist-sized rock. Could be used as a weapon in a pinch.'),
@@ -63,7 +59,7 @@ class AdventureManager:
 
 	def __init__(self):
 		self.rooms = create_rooms()
-		self.player = Player(self.rooms['foyer'])
+		self.player = Player(self.rooms['outside'])
 		self.describe_current_room()
 
 	def print(self, text: str) -> None:

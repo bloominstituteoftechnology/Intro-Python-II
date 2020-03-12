@@ -3,6 +3,13 @@ from inventory import Inventory
 
 
 class Room(Inventory):
+	direction_inverses = {
+		'n': 's',
+		's': 'n',
+		'w': 'e',
+		'e': 'w',
+	}
+
 	def __init__(self, name, description):
 		super().__init__()
 		self.name = name
@@ -14,26 +21,20 @@ class Room(Inventory):
 		self.s_to = None
 
 		self.directionals = {
-			'n': self.get_n,
-			's': self.get_s,
-			'e': self.get_e,
-			'w': self.get_w,
+			'n': self.n_to,
+			's': self.s_to,
+			'e': self.e_to,
+			'w': self.w_to,
 		}
 
 	def get_direction(self, direction):
-		return self.directionals[direction]()
+		return self.directionals[direction]
 
-	def get_n(self):
-		return self.n_to
-
-	def get_s(self):
-		return self.s_to
-
-	def get_w(self):
-		return self.w_to
-
-	def get_e(self):
-		return self.e_to
+	def connect_to(self, other, outgoing_direction, incoming_direction=None):
+		if incoming_direction is None:
+			incoming_direction = self.direction_inverses[outgoing_direction]
+		self.directionals[outgoing_direction] = other
+		other.directionals[incoming_direction] = self
 
 	def print_items(self):
 		items_str = 'On the ground, there is:'
