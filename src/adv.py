@@ -1,6 +1,7 @@
 from room import *
 from player import *
 from items import *
+from utils import prompt
 
 # Declare items
 
@@ -56,58 +57,81 @@ room['treasure'].s_to = room['narrow']
 
 def adventure_ish():
     print(f'''\nWelcome to Adventure-Ish Game! The goal is to get to the treasure room...\n
-{'-' * 20} Or is it? {'-' * 20}''')
+{'*' * 30} Or is it? {'*' * 30}''')
 
-    name = input('\nWhat do they call you?\n')
-    rp = input(f'\nAnd what are you famous for {name}?\n')
+    name = input(f'''\nWhat do they call you?\n{'-'*20} \n''')
+    rp = input(f'''\nAnd what are you famous for {name}?\n''')
     player = Player(name, rp, room['outside'], inventory=[lint.name])
     player.welcome_player()
 
     cmd = ''
 
     while cmd != 'q':
-        #do stuff
-        cmd = input(f'''
-What do you want to do?
-{'-' * 20}
-[n]: Move North
-[s]: Move South
-[e]: Move East
-[w]: Move West
-[i]: Check Inventory
-[r]: Describe Room
-[c]: Describe Character
-{'-' * 20}
-        ''')
-        if cmd[0][0].lower() == 'n':
-            if player.current_room.n_to:
-                player.current_room = player.current_room.n_to
-                player.looper_info()
-        elif cmd.lower() == 'take me to the secret underground layer!':
-            player.current_room = room['easteregg']
-            player.looper_info()
-        elif cmd.lower() == 'take me back':
-            player.current_room = room['outside']
-            player.looper_info()
-        elif cmd[0][0].lower() == 's':
-            if player.current_room.s_to:
-                player.current_room = player.current_room.s_to
-                player.looper_info()
-        elif cmd[0][0].lower() == 'e':
-            if player.current_room.e_to:
-                player.current_room = player.current_room.e_to
-                player.looper_info()
-        elif cmd[0][0].lower() == 'w':
-            if player.current_room.w_to:
-                player.current_room = player.current_room.w_to
-                player.looper_info()
-        elif cmd[0][0].lower() == 'i':
-            if player.inventory:
-                player.check_inv()
-        elif cmd[0][0].lower() == 'r':
+        key_commands = {
+            'n' : 'Move North',
+            's' : 'Move South',
+            'e' : 'Move East',
+            'w' : 'Move West',
+            'i' : 'Check Inventory'
+        }
+
+        cmd = prompt(key_commands)
+#         cmd = input(f'''What do you want to do?
+# {'-' * 125}
+# [n]: Move North [s]: Move South [e]: Move East [w]: Move West [i]: Check Inventory [r]: Describe Room [c]: Describe Character
+# {'-' * 125}
+#         ''')
+        # Dict for movement
+        room_movement = {
+            'n' : player.current_room.n_to,
+            's' : player.current_room.s_to,
+            'e' : player.current_room.e_to,
+            'w' : player.current_room.w_to
+        }
+
+        #Dict for actions
+        player_actions = {
+            'i' : player.check_inv(),
+            'r' : player.current_room.room_describe(),
+            'c' : player.self_describe()
+        }
+
+        if cmd in room_movement:
+            player.move(room_movement[cmd])
             player.current_room.room_describe()
-        elif cmd[0][0].lower() == 'c':
-            player.self_describe()
+        elif cmd in player_actions:
+            player_actions[cmd]
+        else:
+            pass
+        # if cmd[0][0].lower() == 'n':
+        #     if player.current_room.n_to:
+        #         player.current_room = player.current_room.n_to
+        #         player.looper_info()
+        # elif cmd.lower() == 'take me to the secret underground layer!':
+        #     player.current_room = room['easteregg']
+        #     player.looper_info()
+        # elif cmd.lower() == 'take me back':
+        #     player.current_room = room['outside']
+        #     player.looper_info()
+        # elif cmd[0][0].lower() == 's':
+        #     if player.current_room.s_to:
+        #         player.current_room = player.current_room.s_to
+        #         player.looper_info()
+        # elif cmd[0][0].lower() == 'e':
+        #     if player.current_room.e_to:
+        #         player.current_room = player.current_room.e_to
+        #         player.looper_info()
+        # elif cmd[0][0].lower() == 'w':
+        #     if player.current_room.w_to:
+        #         player.current_room = player.current_room.w_to
+        #         player.looper_info()
+        # elif cmd[0][0].lower() == 'i':
+        #     if player.inventory:
+        #         player.check_inv()
+        # elif cmd[0][0].lower() == 'r':
+        #     player.current_room.room_describe()
+        # elif cmd[0][0].lower() == 'c':
+        #     player.self_describe()
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.

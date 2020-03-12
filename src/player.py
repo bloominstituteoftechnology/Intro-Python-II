@@ -23,6 +23,10 @@ class Player:
             self.inventory.remove(item)
             self.current_room['items'].append(item)
     
+    def move(self, direction):
+        self.current_room = direction
+        print(f'Moving to the {self.current_room.name}\n')
+    
     def welcome_player(self):
         print(f'\nWelcome {self.name}! You are currently in the {self.current_room.name}')
 
@@ -33,10 +37,6 @@ class Player:
         print(f'''Name: {self.name}
         Current Room: {self.current_room.name}
         Inventory: {self.inventory}''')
-    
-    def room_describe(self):
-        print(f'''You are currently in the {self.current_room}
-        {self.description}''')
 
     def check_inv(self):
         print(f'''You have: {', '.join(self.inventory)} on you''')
