@@ -20,7 +20,8 @@ class Room:
 You are in the {self.name}
 {self.description}\n{'-'*lengther}''')
         if self.item_names:
-            print(f'''Items in the room include:\n{', '.join(self.item_names)}''')
+            print(f'''Items in the room include: \
+{', '.join(self.item_names)}''')
             print('-'*item_lengther)
         else:
             print('There are no items in the room!')

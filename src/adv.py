@@ -30,18 +30,18 @@ seriously read it!''', 20, 'Neal Stephenson')
 room = {
     'outside':  Room("Outside Cave Entrance", '''North of you, \
 the cave mount beckons''',
-                    [items['rock'].name]),
+                     [items['rock'].name]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. \
 Dusty passages run north and east.""",
                      [items['dagger'].name, items['book'].name]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, \
-falling into the darkness. Ahead to the north, 
+falling into the darkness. Ahead to the north,
 a light flickers in the distance, but there is no
 way across the chasm.""",
                      [items['rock'].name, items['dagger'].name,
-                     items['secret'].name]),
+                      items['secret'].name]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends \
 here from west to north. The smell of gold \
@@ -54,9 +54,9 @@ completely emptied by earlier adventurers. \
 The only exit is to the south.""",
                      [items['sword'].name, items['shoes'].name]),
 
-    'easteregg': Room('Secret Cache', '''HOW DID YOU FIND THIS ROOM! 
+    'easteregg': Room('Secret Cache', '''HOW DID YOU FIND THIS ROOM!
 You basically beat the game, well done!''',
-                       [items['needle'].name, items['great_book'].name,
+                      [items['needle'].name, items['great_book'].name,
                        items['secret2'].name])
 }
 
@@ -83,11 +83,13 @@ def clear():
 
 def adventure_ish():
     clear()
-    print(f'''\nWelcome to Adventure-Ish Game! The goal is to get to the treasure room...\n
+    print(f'''\nWelcome to Adventure-Ish Game! \
+The goal is to get to the treasure room...\n
 {'*' * 31} Or is it? {'*' * 31}''')
 
-    player = Player(input(f'''\nWhat do they call you?\n{'-'*22} \n'''), room['outside'], [
-                    items['lint'].name, items['backpack'].name])
+    player = Player(input(f'''\nWhat do they call you? \
+{'-'*22} \n'''), room['outside'],
+                    [items['lint'].name, items['backpack'].name])
     player.welcome_player()
 
     cmd = ''
@@ -148,7 +150,8 @@ def adventure_ish():
             player_actions[cmd.split()[0]]()
         elif cmd.split()[0] == 'p':
             clear()
-            if ' '.join(cmd.lower().split()[1:]) in [i.lower() for i in player.current_room.item_names]:
+            if ' '.join(cmd.lower().split()[1:]) in
+            [i.lower() for i in player.current_room.item_names]:
                 player.pickup(' '.join(cmd.split()[1:]))
             else:
                 print('-'*25)
@@ -156,7 +159,8 @@ def adventure_ish():
                 print('-'*25)
         elif cmd.split()[0] == 'd':
             clear()
-            if ' '.join(cmd.lower().split()[1:]) in [i.lower() for i in player.inventory]:
+            if ' '.join(cmd.lower().split()[1:]) in
+            [i.lower() for i in player.inventory]:
                 player.drop_item(' '.join(cmd.split()[1:]))
             else:
                 print('-'*30)
@@ -164,7 +168,8 @@ def adventure_ish():
                 print('-'*30)
         elif cmd.split()[0] == 'x':
             clear()
-            if ' '.join(cmd.lower().split()[1:]) in [i.lower() for i in player.inventory]:
+            if ' '.join(cmd.lower().split()[1:]) in
+            [i.lower() for i in player.inventory]:
                 player.inspect_item(' '.join(cmd.split()[1:]))
             else:
                 print('-'*28)

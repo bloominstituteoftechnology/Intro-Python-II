@@ -33,7 +33,7 @@ class Player:
         self.inventory.remove(item.name)
         self.current_room.item_names.append(item.name)
         self.check_inv()
-    
+
     def inspect_item(self, itemname):
         for i in adv.items:
             if items[i].name.lower() == itemname.lower():
@@ -49,7 +49,8 @@ class Player:
         lengther = len('You are currently in the ' + self.current_room.name)
         print(f'\nWelcome {self.name}!\n')
         print(
-            f'''You are currently in the {self.current_room.name}\n{'-'*lengther}''')
+            f'''You are currently in the \
+{self.current_room.name}\n{'-'*lengther}''')
 
     def self_describe(self):
         stats_len = len('Character Stats')
