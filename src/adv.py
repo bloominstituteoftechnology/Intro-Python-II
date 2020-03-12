@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,6 +40,8 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player('Max',room['outside'])
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +52,42 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+    current_room = player.current_room
+    print(f"Your location: {current_room.name_of_room}")
+    print(f"{current_room.description}")
+    move = input("Enter your next move (n, s, e, w, or q for quit): ")
+
+    # A four-channel if tree (cardinal directions), with a fifth option out ("q")
+    if move == "n":
+        if current_room.n_to is not None:
+            player.current_room = current_room.n_to
+            print("You chose north!")
+        else:
+            print("\nThere is no room that way! Try again.")
+    elif move == "s":
+        if current_room.s_to is not None:
+            player.current_room = current_room.s_to
+            print("You chose south!")
+        else:
+            print("\nThere is no room that way! Try again.")
+    elif move == "e":
+        if current_room.e_to is not None:
+            player.current_room = current_room.e_to
+            print("You chose east!")
+        else:
+            print("\nThere is no room that way! Try again.")
+    elif move == "w":
+        if current_room.w_to is not None:
+            player.current_room = current_room.w_to
+            print("You chose west!")
+        else:
+            print("\nThere is no room that way! Try again.")
+        # Quitting the game
+    elif move == "q":
+        print("Thank you for playing! Farewell!")
+        exit()
+    else:
+        # Error message
+        print("Please enter: n, s, e, w or q")
