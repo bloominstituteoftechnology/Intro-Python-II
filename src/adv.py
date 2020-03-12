@@ -84,7 +84,7 @@ def clear():
 def adventure_ish():
     clear()
     print(f'''\nWelcome to Adventure-Ish Game! \
-The goal is to get to the treasure room...\n
+The goal is to get to the treasure room... \n
 {'*' * 31} Or is it? {'*' * 31}''')
 
     player = Player(input(f'''\nWhat do they call you? \
@@ -150,8 +150,8 @@ The goal is to get to the treasure room...\n
             player_actions[cmd.split()[0]]()
         elif cmd.split()[0] == 'p':
             clear()
-            if ' '.join(cmd.lower().split()[1:]) in
-            [i.lower() for i in player.current_room.item_names]:
+            if ' '.join(cmd.lower().split()[1:]) in \
+                [i.lower() for i in player.current_room.item_names]:
                 player.pickup(' '.join(cmd.split()[1:]))
             else:
                 print('-'*25)
@@ -159,7 +159,7 @@ The goal is to get to the treasure room...\n
                 print('-'*25)
         elif cmd.split()[0] == 'd':
             clear()
-            if ' '.join(cmd.lower().split()[1:]) in
+            if ' '.join(cmd.lower().split()[1:]) in \
             [i.lower() for i in player.inventory]:
                 player.drop_item(' '.join(cmd.split()[1:]))
             else:
@@ -168,7 +168,7 @@ The goal is to get to the treasure room...\n
                 print('-'*30)
         elif cmd.split()[0] == 'x':
             clear()
-            if ' '.join(cmd.lower().split()[1:]) in
+            if ' '.join(cmd.lower().split()[1:]) in \
             [i.lower() for i in player.inventory]:
                 player.inspect_item(' '.join(cmd.split()[1:]))
             else:
