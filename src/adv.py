@@ -137,7 +137,7 @@ def getInput():
     # Get/Take command
     
     elif action.split(' ')[0] in ["take" or "get"]:
-        if len(player.currentRoom.items) != 0:
+        if len(player.currentRoom.items) > 0:
                 player.items.append(player.currentRoom.items)
                 print(f'You\'ve picked up the {player.currentRoom.items}.')
                 del player.currentRoom.items
