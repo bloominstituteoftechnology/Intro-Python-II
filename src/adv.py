@@ -154,7 +154,7 @@ def getInput():
 
     # Get/Take command
     
-    elif action.split(' ')[0] in ["take" or "get"]:
+    elif action.split(' ')[0] in ["take" , "get"]:
         if len(player.currentRoom.items) > 0:
                 take(rand_item)
         else:
@@ -162,14 +162,14 @@ def getInput():
             print(player.inventory)
     
     # drop
-    elif action.split(' ')[0] in ["drop" or "d"]:
+    elif action.split(' ')[0] in ["drop" , "d"]:
         if len(player.inventory) > 0:
                 drop(rand_item)
         else:
             print(f'nothing to drop!')
             print(player.inventory)
     # inventory
-    elif action.split(' ')[0] in ["inventory" or "i"]:
+    elif action.split(' ')[0] in ["inventory" , "i"]:
         if len(player.inventory) > 0:
             print(player.inventory)
         else:
