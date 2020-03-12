@@ -11,18 +11,9 @@ link_rooms(room)
 stock_rooms(room)
 populate_rooms(room)
 
-# Make a new player object that is currently in the 'outside' room.
 
 # player = Player(input('What is your name?\n'), 'outside')
 player = Player('Debugger Steve', room['outside']) # Speed up tests!
-
-# Write a loop that:
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-# If the user enters "q", quit the game.
 
 item_cmds = ['get','take','drop','leave','throw','swing','eat','drink']
 cardinals = ['n','e','w','s','north', 'east','west','south']
@@ -48,7 +39,7 @@ while cmd != 'q':
             print('Can\'t use item in that way')
     elif split_cmd[0] in room_cmds:
         try:
-            player.room_interaction(cmd)
+            player.room_interaction(split_cmd[0])
         except AttributeError:
             print('Nothing in the room to do that with!')    
     else:

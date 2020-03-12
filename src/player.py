@@ -1,5 +1,3 @@
-# Write a class to hold player information, e.g. what room they are in
-# currently.
 
 class Player:
 
@@ -14,16 +12,18 @@ class Player:
         if cmd in ['get','take']:
             for item in self.current_room.contents:
                 if item.name == item_name:
+                    item.on_take()
                     self.inventory.append(item)
                     self.current_room.contents.remove(item)
-                    print(f'You take the {item_name}')
+                else: print("That item isn't here!")
         elif cmd in ['leave', 'drop', 'throw']:
             for item in self.inventory:
                 if item.name == item_name:
-                    print(f'You drop the {item_name}')
+                    item.on_drop()
                     self.inventory.remove(item)
                     self.current_room.contents.append(item)
-        else: raise Exception
+                else: print("You don't have that item!")
+        
                 
 
     def room_interaction(self, cmd):
@@ -34,19 +34,14 @@ class Player:
 
 
     def change_room(self, direction):     
-        # possible_commands = {
-        #                 'n': 'player.current_room.n_to',
-        #                 'e': 'player.current_room.e_to',
-        #                 'w': 'player.current_room.w_to',
-        #                 's': 'player.current_room.s_to',}
         if direction == 'n': 
-                self.current_room = self.current_room.n_to
+            self.current_room = self.current_room.n_to
         elif direction == 'e':
-                self.current_room = self.current_room.e_to
+            self.current_room = self.current_room.e_to
         elif direction == 'w':
-                self.current_room = self.current_room.w_to
+            self.current_room = self.current_room.w_to
         elif direction == 's':
-                self.current_room = self.current_room.s_to
+            self.current_room = self.current_room.s_to
 
 
     def __str__(self):
