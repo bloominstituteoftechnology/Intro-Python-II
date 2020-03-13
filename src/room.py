@@ -7,7 +7,8 @@ A class to hold room information - name and description attributes.
 from __future__ import annotations
 import textwrap
 
-from utils import justify_center
+from adv_utils import justify_center, table_maker
+from item import Item
 
 
 class Room:
@@ -40,11 +41,20 @@ class Room:
 
         # Set up the description to print nicely
         self.description = description
-        # self.display_width = 40
-        # self.justified_name = justify_center(self.name, self.display_width, "-")
+
+        # List to hold items in room
+        self.items = []
+
+    def add_item(self, item: Item):
+        self.items.append(item)
 
     def __str__(self):
-        return f"{self.name}\n{self.description}"
+        print_string = f"{self.name}\n{self.description}\n\n"
+        # Create dictionary of item names and descriptions
+        item_dict = {item.name: item.description for item in self.items}
+        # Use that dictionary to generate a table
+        print_string += table_maker(item_dict, "Available items", 20, 20)
+        return print_string
 
     def __repr__(self):
-        return f"{self.name}\n{self.description}"
+        return f"{self.name}"
