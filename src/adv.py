@@ -12,18 +12,18 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", Item("Chair", "throw it")),
+passages run north and east.""", [Item("Chair", "throw it"), Item("table", "throw it")]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", Item("Gems", "bag of gems")),
+the distance, but there is no way across the chasm.""", [Item("Gems", "bag of gems")]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", Item("Coat", "keep the coat")),
+to north. The smell of gold permeates the air.""", [Item("Coat", "keep the coat")]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", Item("Water", "Drink water for power")),
+earlier adventurers. The only exit is to the south.""", [Item("Water", "Drink water for power")]),
 }
 
 
@@ -63,8 +63,15 @@ while True:
         player.item_inventory()
     elif cmd == 'l':
         player.current_room.room_inventory()
+    elif cmd == 'p':
+        item_to_add=input('Please enter item to add to your inventory ')
+        player.add_item(item_to_add)
+    elif cmd == 'd':
+        player.item_inventory()
+        remove_item=input('please enter item to remove ')
+        player.drop_item(remove_item)
     elif cmd == 'q':
-        print('Laterz')
+        print('goodbye come again')
         exit()  
     else:
         print('Command not valid!')
