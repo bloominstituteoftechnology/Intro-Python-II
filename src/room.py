@@ -43,17 +43,17 @@ class Room:
         self.description = description
 
         # List to hold items in room
-        self.items = []
+        self.items = {}
 
     def add_item(self, item: Item):
-        self.items.append(item)
+        self.items[item.name.lower()] = item
 
     def __str__(self):
         print_string = f"{self.name}\n{self.description}\n\n"
         # Create dictionary of item names and descriptions
-        item_dict = {item.name: item.description for item in self.items}
+        item_dict = {item.name: item.description for key, item in self.items.items()}
         # Use that dictionary to generate a table
-        print_string += table_maker(item_dict, "Available items", 20, 20)
+        print_string += table_maker(item_dict, "Available items")
         return print_string
 
     def __repr__(self):

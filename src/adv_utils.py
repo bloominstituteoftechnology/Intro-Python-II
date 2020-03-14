@@ -2,6 +2,10 @@
 BeWilder Utilities :: Misc utility functions
 """
 
+# === Formatting variables === #
+table_size = 56
+table_side = table_size // 2
+
 
 def justify_center(content: str, width: int, symbol: str):
     """Centers string in symbol - width chars wide.
@@ -20,7 +24,12 @@ def justify_center(content: str, width: int, symbol: str):
     return text
 
 
-def table_printer(array: dict, title: str, left_width: int, right_width: int):
+def table_printer(
+    array: dict,
+    title: str,
+    left_width: int = table_side,
+    right_width: int = table_side,
+):
     """Formats dict or list - table of contents style.
     
     :param array (dict or list) : Dict or list to format into table.
@@ -41,7 +50,12 @@ def table_printer(array: dict, title: str, left_width: int, right_width: int):
         print("Unrecognized array type.")
 
 
-def table_maker(array: dict, title: str, left_width: int, right_width: int):
+def table_maker(
+    array: dict,
+    title: str,
+    left_width: int = table_side,
+    right_width: int = table_side,
+):
     """Formats dict or list - table of contents style.
     
     :param array (dict or list) : Dict or list to format into table.
@@ -65,7 +79,7 @@ def prompt(key_cmds, prompt: str = "What do you want to do?"):
     width = len(prompt)  # Width of the table is width of prompt
     # Prints out the available commands, table of contents style
     print()  # Blank line for visual separation
-    table_printer(key_cmds, prompt, 20, 20)
+    table_printer(key_cmds, prompt, table_side, table_side)
     return input("> ")
 
 

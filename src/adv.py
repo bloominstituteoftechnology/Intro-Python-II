@@ -17,7 +17,7 @@ Write a loop that:
 import sys
 
 from adv_utils import justify_center, table_printer, prompt, link_rooms
-from item import Item, Food, Artifact, Weapon, Armor
+from item import Food, Medicine, Artifact, Weapon, Armor
 from room import Room
 from player import Player
 
@@ -61,29 +61,49 @@ room["narrow"].n_to = room["treasure"]
 room["treasure"].s_to = room["narrow"]
 
 # %%
+# === Instantiate items === #
+helmet = Armor("Helmet", "Protects the noggin", effect=9)
+gauntlets = Armor("Gauntlets", "Protects the hands/wrists", effect=3)
+boots = Armor("Boots", "Protects the feet/ankles", effect=4)
+shield = Armor("Shield", "All around protection", effect=5)
+sword = Weapon("Sword", "Good for close combat encounters", effect=6)
+bow = Weapon("Bow", "Good for long-range attacks", effect=3, requires="Arrow")
+arrow = Weapon("Arrow", "Missile shot by bow", effect=4, requires="Bow")
+dagger = Weapon("Dagger", "Good for close quarters", effect=2)
+potion1 = Medicine("Potion", "May help, may hurt", effect=-12)
+potion2 = Medicine("Potion", "May help, may hurt", effect=-2)
+potion3 = Medicine("Potion", "May help, may hurt", effect=20)
+jerky = Food("Jerky", "A nice slab of jerky", effect=2)
+gem1 = Artifact("Gem", "A sparkling gem", ability="confidence", effect=1)
+gem2 = Artifact("Gem", "A sparkling gem", ability="confidence", effect=1)
+
+# === Add items to rooms === #
+room["outside"].add_item(helmet)
+room["foyer"].add_item(gauntlets)
+room["foyer"].add_item(arrow)
+room["foyer"].add_item(potion2)
+room["narrow"].add_item(sword)
+room["narrow"].add_item(potion1)
+room["overlook"].add_item(bow)
+room["overlook"].add_item(jerky)
+room["overlook"].add_item(potion3)
+room["treasure"].add_item(shield)
+room["treasure"].add_item(gem1)
+room["treasure"].add_item(gem2)
+
+# %%
 # === Define the key commands === #
 verbs = {
-    "n": "north",
-    "s": "south",
-    "e": "east",
-    "w": "west",
+    "n": "move north",
+    "s": "move south",
+    "e": "move east",
+    "w": "move west",
+    "inv": "display inventory",
+    "get": "add item to inventory",
+    "take": "add item to inventory",
+    "drop": "remove item from inventory",
     "q": "quit",
 }
-
-# %%
-# === Add items to rooms === #
-item1 = Item("Thing1", "This is one thing")
-item2 = Item("Thing2", "This is two thing")
-item3 = Item("Thing3", "This is three thing")
-item4 = Item("Thing4", "Another thing")
-room["outside"].add_item(item1)
-room["foyer"].add_item(item2)
-room["foyer"].add_item(item3)
-room["foyer"].add_item(item4)
-
-# %%
-player = Player("jeopard", room["outside"])
-player.get_item(item1)
 
 # %%
 # ====== Main ====== #
@@ -94,14 +114,40 @@ def initiate_game(player_name: str, rooms: dict = room):
     player = Player(player_name, rooms["outside"])
 
     while True:
-        cmd = prompt(verbs).lower()
-        if cmd not in verbs:  # Filter out incorrect key commands
+        cmd = prompt(verbs).lower()  # Make lowercase
+        cmd = cmd.split()  # Convert to list
+        verb = cmd[0]  # Extract the verb
+        if cmd[0] not in verbs:  # Filter out incorrect key commands
             print("Command not available...\nTry again.")
-        elif cmd == "q":  # Quit game upon pressing "q"
+        elif cmd[0] == "q":  # Quit game upon pressing "q"
             print("Exiting game...")
             sys.exit(0)
         else:  # If command is valid, player takes action on it
-            player.take_action(cmd)
+            if len(cmd) == 1:  # Single commands
+                if verb == "inv":  # Display inventory
+                    player.inventory()
+                else:  # Move player
+                    # Look up destination room and move the player into it
+                    verb = getattr(player.current_room, f"{verb}_to")
+                    player.move(verb) if verb else print("No room in that direction!")
+            else:
+                # Allow for multiple items to be acted upon
+                for obj in cmd[1:]:
+                    if verb in ["get", "take"]:  # Pick up item
+                        # Try to get the item object from the current_room's item dict
+                        try:
+                            item = player.current_room.items[obj]
+                        except KeyError:
+                            print("Item not available.")
+                        finally:
+                            player.add_item(item)
+                    else:  # Drop item
+                        try:
+                            item = player.items[obj]
+                        except KeyError:
+                            print("Item not available to drop.")
+                        finally:
+                            player.rm_item(item)
 
 
 # %%

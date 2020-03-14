@@ -22,7 +22,7 @@ class Player:
         # Set the initial room by "moving" into it, thus printing the room info
         self.move(current_room)
         # Set up items attributes
-        self.items = []
+        self.items = {}
         self.hp = 100
         self.defense = 0
         self.offense = 0
@@ -36,40 +36,41 @@ class Player:
         # Print room data: name, description, and items
         print(f"\n{self.current_room}")
 
-    def take_action(self, cmd: str):
-        """Take action by key command.
-        
-        :param cmd (str) : Key command from user.
-        :param player (Player) : Instance of Player which will take the action.
-        :return (None) : Calls the appropriate function.
-        """
-        # Look up destination room and move the player into it
-        dst = getattr(self.current_room, f"{cmd}_to")
-        self.move(dst) if dst else print("No room exists in that direction!")
-
-    def get_item(self, item: Item):
+    def add_item(self, item: Item):
         if isinstance(item, Item):
-            if item in self.current_room.items:
-                self.items.append(item)
+            # Make sure it's in the current room's dict
+            if item.name.lower() in self.current_room.items:
+                self.items[item.name.lower()] = item
                 print(f"\n{item.name} added to inventory.")
+                # After adding, remove from current room's dict
+                del self.current_room.items[item.name.lower()]
             else:
                 print("Item unavailable.")
         else:
             print("\nItem acquisition failed!")
             print("You can only add items to your inventory.")
 
+    def rm_item(self, item: Item):
+        try:
+            del self.items[item.name.lower()]
+            print("Item dropped.")
+            print(f"\n{item.name} is no longer in inventory.")
+        except ValueError:
+            print("That item cannot be dropped.")
+            print("Looks like you're stuck with it!")
+
     def inventory(self):
         title = f"{self.name}'s current inventory"
         # Create dictionary of item names and descriptions
-        item_dict = {item.name: item.description for item in self.items}
+        item_dict = {item.name: item.description for key, item in self.items.items()}
         # Use that dictionary to generate a table
-        print_string = table_maker(item_dict, title, 20, 20)
+        print_string = table_maker(item_dict, title)
         print(print_string)
 
     def use_item(self, item: Item):
         if isinstance(item, Food):
             self.hp += item.calories
             print(f"You consumed {item.name}, your hp is now {self.hp}")
-            self.items.remove(item)
+            del self.items[item.name.lower()]
         # TODO: Armor adds defense
         # TODO: Weapon adds offense
