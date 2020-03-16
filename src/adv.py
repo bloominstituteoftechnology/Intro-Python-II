@@ -21,6 +21,9 @@ the distance, but there is no way across the chasm."""),
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
+    'secret':   Room("Secret Passage", """Secret passage leading to new adventures and 
+treasures."""),
+
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
@@ -37,7 +40,8 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-
+room['secret'].s_to = room['narrow']
+room['secret'].e_to = room['narrow']
 #
 # Main
 #
@@ -50,11 +54,13 @@ player = Player("You", room['outside'])
 
 # Declare an item or two
 item = {
-'flashlight' : Item('Flashlight', 'helps with lighting the way worth 50pts')
+'flashlight' : Item('Flashlight', 'helps with lighting the way worth 50pts'),
+'matches' : Item('matches', 'Careful not to start the fire! worth 10pts'),
+'sword' : Item('sword', 'sharp weapon')
 }
 
 # Place items in rooms randomly
-for _ in range(0, 4):
+for _ in range(0, 6):
     rand_room = random.choice(list(room.keys()))
     rand_item = random.choice(list(item.keys()))
     room[rand_room].add_item(rand_item)
@@ -107,7 +113,7 @@ def getInput():
         global justOnce
         play = False
         foundItems = False
-        
+        global rand_item
     elif action[0] == "n":
         if player.currentRoom.playerMove("n") == True:
             player.currentRoom = player.currentRoom.n_to
@@ -154,9 +160,11 @@ def getInput():
 
     # Get/Take command
     
-    elif action.split(' ')[0] in ["take" , "get"]:
+    elif action.split(' ')[0] in [f"take", "t"]:
+        item_name = action[1]
         if len(player.currentRoom.items) > 0:
-                take(rand_item)
+            picked_item = player.currentRoom.add_item(item_name)
+            take(rand_item)
         else:
             print(f'nothing to pick up!')
             print(player.inventory)

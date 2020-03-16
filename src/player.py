@@ -3,8 +3,8 @@
 # note that room and player has items 
 class Player:
 
-    inventory = list()
 
+    from item import Item
     from room import Room
     def __init__(self, name, currentRoom: Room):
         self.name = name
@@ -13,6 +13,12 @@ class Player:
 
     def pick_item(self, item):
         self.inventory.append(item)
+
+        
+    def pickup_item(self, item):
+        if item is not None:
+            self.inventory.append(item)
+            item.on_take()
 
     def drop_item(self, item):
         self.inventory.remove(item)
