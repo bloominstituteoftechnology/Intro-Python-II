@@ -36,7 +36,7 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Initialize items
-ammo9mm = Item("9mm", "ammunition for 9mm guns")
+ammo9mm = Item("ammo9mm", "ammunition for 9mm guns")
 
 # Food
 ramen = Food("ramen", "a cup of instant noodles", 250)
@@ -58,27 +58,21 @@ room['treasure'].addItems(pizza, pizza, ramen)
 # Main
 #
 
-username = input("What is your name? :: ")
+username = input("What is your name? ")
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(username, room['outside'])
 
 # Write a loop that:
 while True:
-
-	print("##################################################################")
-# * Prints the current room name
-	print(f"# Current Room: {player.current_room.name}")
-# * Prints the current description (the textwrap module might be useful here).
-	print("##################################################################")
-	print(f"# {player.current_room.description}")
-	print("#####################################################")
-	user = input("[n] North  [s] South  [e] East  [w] West    [q] Quit\n[take item]    [drop item]:\n").lower()
+	player.displayRoom()
+	
+	user = input("[n] North\t[s] South\t[e] East\t[w] West\n[i] Inventory\n[take item]\t[drop item]\n[q] Quit: ").lower()
 
 	inputs = user.split()
 
 	directions = ('n', 's', 'e', 'w')
-# If the user enters "q", quit the game.#############\n")
+# If the user enters "q", quit the game.
 # * Waits for user input and decides what to do
 	if len(inputs) == 1:
 		if inputs[0] == 'q':
@@ -86,6 +80,8 @@ while True:
 	# If the user enters a cardinal direction, attempt to move to the room there.
 		elif inputs[0] in directions:
 			player.moveTo(inputs[0])
+		elif inputs[0] == 'i':
+			player.displayInventory()
 
 	elif len(inputs) == 2:
 		if inputs[0] == "get" or inputs[0] == "take":

@@ -12,12 +12,16 @@ class Room:
 		self.w_to = None
 		self.items = []
 
-	def addItems(self, *items):
-		for item in items:
+	def addItems(self, *newItems):
+		for item in newItems:
 			self.items.append(item)
 			
 	def removeItem(self, item):
-		if item in items:
+		if item in self.items:
 			self.items.remove(item)
 		else:
 			print(f"{item} does not exist in this room.")
+
+	def displayItems(self):
+		for item in self.items:
+			print(item)

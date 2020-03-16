@@ -29,19 +29,45 @@ class Player:
 				self.current_room = self.current_room.w_to
 			else:
 				print("Can't go to the North...")
+
+	def displayRoom(self):
+		print("##################################################################")
+		print(f"Current Room: {self.current_room.name}")
+		print("##################################################################")
+		print(f"{self.current_room.description}")
+		print("##################################################################")
+		print("Items in this room:")
+		self.current_room.displayItems()
+		print("##################################################################")
+
+	def displayInventory(self):
+		print("##################################################################")
+		print(f"{self.name}'s inventory:")
+		for item in self.items:
+			print(item)
+		print("##################################################################")
 		
-	def addItem(item):
-		# BUG: have to pass in an item not string value
-		if item in self.current_room.items:
-			self.items.append(item)
-			item.onTake()
-			self.current_room.removeItem(item)
-		else:
+	def addItem(self, item):
+		exists = False
+		for roomItem in self.current_room.items:
+			if item == roomItem.name:
+				self.items.append(roomItem)
+				roomItem.onTake()
+				self.current_room.removeItem(roomItem)
+				exists = True
+				break
+		if not exists:
 			print(f"{item} does not exist in the room.")
 
-	def dropItem(item):
-		if item in self.items:
-			self.items.remove(item)
-			self.current_room.addItems(item)
-		else:
-			print(f"{self.name} do not hold {item}.")
+	def dropItem(self, item):
+		exists = False
+		for invenItem in self.items:
+			if item == invenItem.name:
+				self.items.remove(invenItem)
+				invenItem.onDrop()
+				self.current_room.addItems(invenItem)
+				exists = True
+				break
+		if not exists:
+			print(f"{self.name} does not hold {item}.")
+
