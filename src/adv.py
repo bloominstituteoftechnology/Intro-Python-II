@@ -1,5 +1,6 @@
 from room import Room
 from item import Item
+from light_source import LightSource
 import sys
 import random
 
@@ -21,12 +22,16 @@ the distance, but there is no way across the chasm."""),
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
-    'secret':   Room("Secret Passage", """Secret passage leading to new adventures and 
-treasures."""),
+
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+    'secret':   Room("Secret Passage", """Secret passage leading to new adventures
+     and treasures."""),
+     
+    'new':   Room("New Adventure", """Are you sure you re ready for a new adventure!?"""),
 }
 
 
@@ -40,8 +45,7 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-room['secret'].s_to = room['narrow']
-room['secret'].e_to = room['narrow']
+room['secret'].n_to = room['treasure']
 #
 # Main
 #
@@ -54,7 +58,7 @@ player = Player("You", room['outside'])
 
 # Declare an item or two
 item = {
-'flashlight' : Item('Flashlight', 'helps with lighting the way worth 50pts'),
+'flashlight' : LightSource('Flashlight', 'helps with lighting the way worth 50pts'),
 'matches' : Item('matches', 'Careful not to start the fire! worth 10pts'),
 'sword' : Item('sword', 'sharp weapon')
 }

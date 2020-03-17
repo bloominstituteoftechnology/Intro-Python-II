@@ -11,11 +11,10 @@ class Room:
         self.name = name
         self.description = description
         self.items = []
-
-    n_to = 0
-    e_to = 0
-    s_to = 0
-    w_to = 0
+        self.n_to = 0
+        self.e_to = 0
+        self.s_to = 0
+        self.w_to = 0
 
     def check(self):
         print(f'Items in this room : {self.items}')
