@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -33,12 +33,18 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+"""
+  | V | T
+  | F _ N
+  | O |
+"""
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+player_1 = Player(room["outside"])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +55,23 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def get_room_choice(player):
+    print(player.current_room)
+    direction_choice = input("Which direction would you like to go? (n, s, e, w or q to quit) ").lower()
+    if direction_choice == "n":
+        player.try_north()
+        get_room_choice(player)
+    elif direction_choice == "s":
+        player.try_south()
+        get_room_choice(player)
+    elif direction_choice == "e":
+        player.try_east()
+        get_room_choice(player)
+    elif direction_choice == "w":
+        player.try_west()
+        get_room_choice(player)
+    elif direction_choice == "q":
+        print("Bye!")
+
+get_room_choice(player_1)
