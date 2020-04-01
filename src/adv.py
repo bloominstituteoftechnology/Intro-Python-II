@@ -87,3 +87,4 @@ def get_room_choice(player):
         print("Bye!")
 
 get_room_choice(player_1)
+

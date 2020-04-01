@@ -30,3 +30,13 @@ class Player:
             self.current_room = self.current_room.w_to
         else:
             print("**You can't go west from this room. Please enter a different direction.**")
+
+    def get_item(self, item):
+        if item in self.current_room.items:
+            self.current_room.items.remove(item)
+            self.items.append(item)
+
+    def drop_item(self, item):
+        if item in self.items:
+            self.items.remove(item)
+            self.current_room.items.append(item)
