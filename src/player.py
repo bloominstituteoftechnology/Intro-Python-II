@@ -3,8 +3,9 @@
 from room import Room
 
 class Player:
-    def __init__(self, current_room):
+    def __init__(self, current_room, items=[]):
         self.current_room = current_room
+        self.items = items
 
     def try_north(self):
         if self.current_room.n_to != None:
