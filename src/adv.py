@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -38,6 +39,17 @@ room['treasure'].s_to = room['narrow']
   | F _ N
   | O |
 """
+
+fork = Item("Fork", "An eating utensil")
+axe = Item("Axe", "A beat up old battle axe")
+torch = Item("Torch", "An unlit torch")
+match = Item("Match", "A match for starting a fire")
+
+room['outside'].items = []
+room['foyer'].items = [torch]
+room['overlook'].items = [match]
+room['narrow'].items = [axe, fork]
+room['treasure'].items = []
 
 #
 # Main
