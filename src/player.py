@@ -35,8 +35,23 @@ class Player:
         if item in self.current_room.items:
             self.current_room.items.remove(item)
             self.items.append(item)
+            item.on_take()
+        else:
+            print(f"There is no {item.name.lower()}")
 
     def drop_item(self, item):
         if item in self.items:
             self.items.remove(item)
             self.current_room.items.append(item)
+            item.on_drop()
+        else:
+            print(f"{item.name} is not in your inventory.")
+
+    def print_items(self):
+        if len(self.items) > 0:
+            item_list = "You are holding the following items:"
+            for item in self.items:
+                item_list += f"\n\t-{item}"
+        else:
+            item_list = "You are not holding anything"
+        print(item_list)
