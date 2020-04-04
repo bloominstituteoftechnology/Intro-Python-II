@@ -84,38 +84,38 @@ def swap_item(name, cont1, cont2):
 endQ = False
 
 while not endQ:
-  print(player.room.name)
-  print(player.room.description)
+  print(player.current_room.name)
+  print(player.current_room.description)
   inp = input("What do you want to do?: ").split(" ")
 
   if inp[0] == "q":
     endQ = True
 
   elif inp[0] in ["n", "N"]:
-    dest = player.room.n_to
+    dest = player.current_room.n_to
     if dest:
-      player.room = dest
+      player.current_room = dest
     else:
       print("There is no way to go north from here.")
 
   elif inp[0] in ["s", "S"]:
-    dest = player.room.s_to
+    dest = player.current_room.s_to
     if dest:
-      player.room = dest
+      player.current_room = dest
     else:
       print("There is no way to go south from here.")
 
   elif inp[0] in ["e", "E"]:
-    dest = player.room.e_to
+    dest = player.current_room.e_to
     if dest:
-      player.room = dest
+      player.current_room = dest
     else:
       print("There is no way to go east from here.")
 
   elif inp[0] in ["w", "W"]:
-    dest = player.room.w_to
+    dest = player.current_room.w_to
     if dest:
-      player.room = dest
+      player.current_room = dest
     else:
       print("There is no way to go west from here.")
 
@@ -125,7 +125,7 @@ while not endQ:
       print("You are holding no items.")
 
   elif inp[0] in ["l", "look", "Look"]:
-    inv = [ print(i.name + ":\n  ", i.description) for i in player.room.items ]
+    inv = [ print(i.name + ":\n  ", i.description) for i in player.current_room.items ]
     if len(inv) == 0:
       print("There are no items in this room.")
 
@@ -134,7 +134,8 @@ while not endQ:
       print("What to drop?")
     else:
       name = " ".join(inp[1:])
-      if swap_item(name, player, player.room):
+      if swap_item(name, player, player.current_room):
+        # I'm not going to use the on_drop method here because it would be immoral.
         print(f"Dropped the \"{name}\".")
       else:
         print(f"You don't have \"{name}\".")
@@ -144,7 +145,8 @@ while not endQ:
       print("What to get?")
     else:
       name = " ".join(inp[1:])
-      if swap_item(name, player.room, player):
+      if swap_item(name, player.current_room, player): 
+        # I'm not going to use the on_take method here because it would be immoral.
         print(f"Got the \"{name}\".")
       else:
         print(f"There aren't any \"{name}\" in this room")
