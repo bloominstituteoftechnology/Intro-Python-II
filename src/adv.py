@@ -70,8 +70,8 @@ def swap_item(name, cont1, cont2):
   while not found and index < len(cont1.items):
     if cont1.items[index].name == name:
       found = True
-    index += 1
-  index -= 1
+    else:
+      index += 1
 
   if not found:
     return False 
