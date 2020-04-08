@@ -2,7 +2,6 @@ from room import Room
 from player import Player
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -39,7 +38,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(input("Please tell me your name"), room['outside'])
+player = Player(input("Please tell me your name:"), room['outside'])
 print(f'Thank you are you ready to begin, {player.name}')
 print(player.current_room.description)
 
@@ -53,3 +52,24 @@ print(player.current_room.description)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+game = 1
+
+while game:
+    command = input('Where would you like to move? choose from the following n for north, e for east s for south w for west, or q (quit)')
+    if command == 'n':
+        player.move(command)
+
+    elif command == 's':
+        player.move(command)
+
+    elif command == 'e':
+        player.move(command)
+
+    elif command == 'w':
+        player.move(command)
+
+    elif command == 'q':
+        game = False
+    else:
+        print("You can't do that!")
