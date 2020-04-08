@@ -38,12 +38,6 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-command = input("[n] north  [s] south  [e] east  [w] west   [q] Quit\n")
-
-player = Player()
-running = True
-
-
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
@@ -57,37 +51,45 @@ running = True
 #
 # If the user enters "q", quit the game.
 
-while running == True:
-    print(player.current_room.name, player.current_room.description)
-    if player.current_room == "outside":
+
+player = Player(room['outside'])
+print("You are currently outside of the cave")
+command = input("[n] north  [s] south  [e] east  [w] west   [q] Quit\n")
+running = True
+
+while not command == "q":
+    # print(f"You are currently {player.current_room.name}\n{player.current_room.description}\nChoose your next direction")
+    if player.current_room == room["outside"]:
         if command == "n":
-            player.current_room == "foyer"
+            player.update_room(room["foyer"])
         else:
             print("You cannot go that way!")
-    elif player.current_room == "foyer":
+    elif player.current_room == room["foyer"]:
         if command == "n":
-            player.current_room == "overlook"
+            player.update_room(room["overlook"])
         elif command == "e":
-            player.current_room == "narrow"
+            player.update_room(room["narrow"])
         elif command == "s":
-            player.current_room = "outside"
+            player.update_room(room["outside"])
         else:
             print("You cannot go that way!")
-    elif player.current_room == "overlook":
+    elif player.current_room == room["overlook"]:
         if command == "s":
-            player.current_room == foyer
+            player.update_room(room["foyer"])
         else:
             print("You cannot go that way!")
-    elif player.current_room == "narrow":
+    elif player.current_room == room["narrow"]:
         if command == "w":
-            player.current_room == "foyer"
+            player.update_room(room["foyer"])
         elif command == "n":
-            player.current_room == "treasure"
+            player.update_room(room["treasure"])
         else:
             print("You cannot go that way!")
-    elif player.current_room == "treasure":
+    elif player.current_room == room["treasure"]:
         if command == "s":
-            player.current_room == "narrow"
+            player.update_room(room["narrow"])
         else:
             print("You cannot go that way!")
+    print(f"You are currently in the {player.current_room.name}\n{player.current_room.description}\nChoose your next direction")
+    command = input("[n] north  [s] south  [e] east  [w] west   [q] Quit\n")
 
