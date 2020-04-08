@@ -1,4 +1,7 @@
+from exceptions import MoveError
 from room import Room
+from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -21,6 +24,7 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+wrapper = textwrap.TextWrapper(width=70)
 
 # Link rooms together
 
@@ -33,11 +37,30 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Establish items in rooms
+room['foyer'].items = ['Bronze Sword', 'Giraffe Statuette']
+
 #
 # Main
 #
 
+# Helper method to check whether a player can enter a new room
+def verify_move(current_room, move_dir):
+    if(current_room.__dict__['{}_to'.format(move_dir)] is None):
+        raise MoveError(current_room, move_dir)
+
+# Helper function to check current room's items and return a string 
+# which can be printed based on what it finds
+def check_items(current_room):
+    items = current_room.items
+    if(items is None):
+        return 'No items in this room'
+    else:
+        return ', '.join(items)
+
 # Make a new player object that is currently in the 'outside' room.
+player_name = input('Enter a name for your character: ')
+p1 = Player(player_name, room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +72,34 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while(True):
+    # Determine current room
+    c_room = p1.current_room
+
+    # Print Buffer space to make it easier to read
+    print('')
+    print('-'*70)
+
+    # Print current Location and location description/items
+    print('Current Room: {}'.format(c_room.name))
+    [print(line) for line in wrapper.wrap(text=c_room.description)]
+    item_str = 'Items in room:\t{}'.format(check_items(c_room))
+    [print(line) for line in wrapper.wrap(text=item_str)]
+
+    # Input from user
+    inp = input('What would you like to do? ')
+
+    # Print buffer to make it easier to read
+    print('-'*70)
+
+    # Process Input
+    if(inp == 'q'):
+        break
+    elif(inp in ['n','e','s','w']):
+        try:
+            verify_move(c_room, inp)
+            p1.current_room = c_room.__dict__['{}_to'.format(inp)]
+        except MoveError as e:
+            print('You cannot move in that direction!')
+    else:
+        print('Invalid Input')
