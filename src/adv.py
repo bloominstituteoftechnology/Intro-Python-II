@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+import textwrap
 # Declare all the rooms
 
 room = {
@@ -39,6 +40,8 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+dournbrood = Player(room["outside"])
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +52,18 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while 1:
+    print(dournbrood.room.name)
+    print(dournbrood.room.description)
+    command = input()
+    if command == "q":
+        quit()
+    currentRoom = dournbrood.room
+
+    if currentRoom.canMoveTo(str(command)):
+        currentRoom = currentRoom.getRoom(str(command))
+    else:
+        print("Cannot move in that direction.")
+
+    dournbrood.room = currentRoom
