@@ -8,31 +8,31 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 
 ## Goals
 
-*   Put your Python basics into practice by implementing a text adventure game
+*   Put your Python basics into practice by implementing a text adventure game.
 
-*   Practice writing code that conforms to a specification
+*   Practice writing code that conforms to a specification.
 
 ## MVP
 
 ### Day 1 MVP
 
 *   Create the REPL command parser in `adv.py` which allows the player to move to rooms in the four cardinal directions.
-*   Fill out Player and Room classes in `player.py` and `room.py`
+*   Fill out Player and Room classes in `player.py` and `room.py`.
 
 ### Day 2 MVP
 
-*   Make rooms able to hold multiple items
-*   Make the player able to carry multiple items
-*   Add items to the game that the user can carry around
-*   Add `get [ITEM_NAME]` and `drop [ITEM_NAME]` commands to the parser
+*   Make rooms able to hold multiple items.
+*   Make the player able to carry multiple items.
+*   Add items to the game that the user can carry around.
+*   Add `get [ITEM_NAME]` and `drop [ITEM_NAME]` commands to the parser.
 
 ## Specification
 
 The `/src` directory contains the files `adv.py`, which is where the main logic for the game should live, `room.py`, which will contain the definition of the Room class, and `player.py`, which will contain the definition of the Player class.
 
-*   Add a REPL parser to `adv.py` that accepts directional commands to move the player
-    *   After each move, the REPL should print the name and description of the player's current room
-    *   Valid commands are `n`, `s`, `e` and `w` which move the player North, South, East or West
+*   Add a REPL parser to `adv.py` that accepts directional commands to move the player.
+    *   After each move, the REPL should print the name and description of the player's current room.
+    *   Valid commands are `n`, `s`, `e` and `w` which move the player North, South, East or West.
     *   The parser should print an error if the player tries to move where there is no room.
 
 *   Put the Room class in `room.py` based on what you see in `adv.py`.
@@ -42,7 +42,7 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
     *   The room should also have `n_to`, `s_to`, `e_to`, and `w_to` attributes which point to the room in that respective direction.
 
 *   Put the Player class in `player.py`.
-    *   Players should have a `name` and `current_room` attributes
+    *   Players should have a `name` and `current_room` attributes.
 
 *   Create a file called `item.py` and add an `Item` class in there.
 
@@ -64,15 +64,15 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
 
     *   Until now, the parser could just understand one sentence form:
 
-    `verb`
+        `verb`
 
-    such as "n" or "q".
+        such as "n" or "q".
 
     *   But now we want to add the form:
 
-    `verb` `object`
+        `verb` `object`
 
-    such as "take coins" or "drop sword".
+        such as "take coins" or "drop sword".
 
     *   Split the entered command and see if it has 1 or 2 words in it to determine if it's the first or second form.
 
@@ -102,11 +102,11 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
 
 In arbitrary order:
 
-*   Add more rooms
+*   Add more rooms.
 
-*   Add scoring
+*   Add scoring.
 
-*   Subclass items into treasures
+*   Subclass items into treasures.
 
 *   Add a subclass to `Item` called `LightSource`.
 
@@ -126,9 +126,9 @@ In arbitrary order:
 
     *   Modify the `get`/`take` code to print "Good luck finding that in the dark!" if the user tries to pick up an `Item` in the dark.
 
-*   Add methods to notify items when they are picked up or dropped
+*   Add methods to notify items when they are picked up or dropped.
 
-*   Add light and darkness to the game
+*   Add light and darkness to the game.
 
 *   Add more items to the game.
 
