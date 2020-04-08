@@ -16,7 +16,7 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 
 ### Day 1 MVP
 
-*   [ ] Create the REPL command parser in `adv.py` which allows the player to move to rooms in the four cardinal directions.
+*   [ ] Create the REPL command parser in `adventure.py` which allows the player to move to rooms in the four cardinal directions.
 *   [ ] Fill out Player and Room classes in `player.py` and `room.py`.
 
 ### Day 2 MVP
@@ -28,9 +28,9 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 
 ## Specification
 
-The `/src` directory contains the files `adv.py`, which is where the main logic for the game should live, `room.py`, which will contain the definition of the Room class, and `player.py`, which will contain the definition of the Player class.
+The `/src` directory contains the files `adventure.py`, which is where the main logic for the game should live, `room.py`, which will contain the definition of the Room class, and `player.py`, which will contain the definition of the Player class.
 
-*   [ ] Add a REPL parser to `adv.py` that accepts directional commands to move the player.
+*   [ ] Add a REPL parser to `adventure.py` that accepts directional commands to move the player.
 
     *   [ ] After each move, the REPL should print the name and description of the player's current room.
 
@@ -38,7 +38,7 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
 
     *   [ ] The parser should print an error if the player tries to move where there is no room.
 
-*   [ ] Put the Room class in `room.py` based on what you see in `adv.py`.
+*   [ ] Put the Room class in `room.py` based on what you see in `adventure.py`.
 
     *   [ ] The room should have `name` and `description` attributes.
 
