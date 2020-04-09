@@ -3,11 +3,11 @@
 
 
 class Room():
-    def __init__(self, name, description, unlocked=True, n_to=None, s_to=None, w_to=None, e_to=None, items=[]):
+    def __init__(self, name, description, unlocked=True, n_to=None, s_to=None, w_to=None, e_to=None, items=None):
         self.name = name
         self.description = description
         self.unlocked = unlocked
-        self.items = items
+        self.items = [] if items is None else items
 
     def __str__(self):
         return f'This is the {self.name}'

@@ -4,10 +4,11 @@ from colors import print_color
 
 
 class Player():
-    def __init__(self, name, current_room, inventory=[]):
+    def __init__(self, name, current_room, inventory=None):
         self.name = name
         self.current_room = current_room
-        self.inventory = inventory
+
+        self.inventory = [] if inventory is None else inventory
 
     directions = {
         'n': 'North',
@@ -27,7 +28,7 @@ class Player():
     def grab_item(self, item):
         if item in self.inventory:
             print_color(
-                'yellow', f'You already have item {item.name} in your inventory.\n')
+                'yellow', f'\n\nYou already have item {item.name} in your inventory.\n')
         else:
             self.inventory.append(item)
-            print_color('green', f'You picked up the {item.name}\n')
+            print_color('green', f'\n\nYou picked up the {item.name}\n')
