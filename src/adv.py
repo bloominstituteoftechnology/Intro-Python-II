@@ -1,4 +1,9 @@
+
 from room import Room
+from player import Player
+from item import Item
+import csv
+import textwrap
 
 # Declare all the rooms
 
@@ -21,6 +26,7 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+wrapper = textwrap.TextWrapper(width=70)
 
 # Link rooms together
 
@@ -33,11 +39,37 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Define items from the item_src list
+item_list = {}
+
+with open('item_src.txt', 'r') as f:
+    for line in f:
+        data = eval(line)
+        item_list[data['id']] = Item(data['name'], data['description'])
+
+# Establish items in rooms
+foyer_items = [item_list['bronzesword'], item_list['giraffestatuette']]
+room['foyer'].add_items(foyer_items)
+
 #
 # Main
 #
 
+# Takes in a list of item names and returns a list of the associated ids
+def name_to_id(names):
+    split = names.split(',')
+    base = ''
+    for item in split:
+        base = base + "'"+item.replace(' ','').lower()+"',"
+    return eval("["+base+"]")
+
+# Helper function to check current room's items and return a string 
+# which can be printed based on what it finds
+
+        
 # Make a new player object that is currently in the 'outside' room.
+player_name = input('Enter a name for your character: ')
+p1 = Player(player_name, room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +81,69 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while(True):
+    # Determine current room
+    c_room = p1.current_room
+
+    # Print Buffer space to make it easier to read
+    print('')
+    print('-'*70)
+
+    # Print current Location and location description/items
+    print('Current Room: {}'.format(c_room.name))
+    [print(line) for line in wrapper.wrap(text=c_room.description)]
+    item_str = 'Items in room:\t{}'.format(c_room.check_items())
+    [print(line) for line in wrapper.wrap(text=item_str)]
+
+    # Input from user
+    inp = input('What would you like to do? ')
+
+    # Print buffer to make it easier to read
+    print('-'*70)
+    
+    # Preprocess input
+    inputs = inp.split(maxsplit=1)
+
+    # Process Input
+    if(len(inputs) == 1):
+        inp = inputs[0]
+        if(inp in ['q', 'quit', 'exit']):
+            break
+        elif(inp in ['n','e','s','w']):
+            p1.move_player(inp)
+        if(inp in ['i', 'inventory']):
+            print('Inventory:')
+            [print(line) for line in p1.get_items()]
+        if(inp == 'DebugMode'):
+            if(input('password: ') == 'Giraffe'):
+                while(True):
+                    try:
+                        code = input('>>>')
+                        if(code == 'exit'):
+                            break
+                        else:
+                            exec(code)
+                    except Exception as e:
+                        print(e)
+
+    elif(len(inputs) == 2):
+        verb, obj = inputs[0], inputs[1]
+        if(verb in ['take', 'grab', 'get']):
+            # Generate list of target item's id's from input
+            targ_items = name_to_id(obj)
+            # Attempt to remove target items from room
+            removed_items_ids, removed_items = c_room.remove_items(targ_items)
+            # Add items to player inventory
+            p1.add_items(removed_items)
+
+        if(verb in ['remove', 'drop', 'toss']):
+            # Generate list of target item's id's from input
+            targ_items = name_to_id(obj)
+            # Attempt to remove target items from room
+            removed_item_ids, removed_items = p1.remove_items(targ_items)
+            # Add items to room 
+            items = {id:item for id,item in zip(removed_item_ids,removed_items)}
+            c_room.add_items(removed_items)
+
+    else:
+        print('Invalid Input')
