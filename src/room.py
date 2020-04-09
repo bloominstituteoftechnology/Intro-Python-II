@@ -17,3 +17,6 @@ class Room():
             if i.name == item:
                 return True
         return False
+
+    def remove_item(self, item):
+        self.items.remove(item)

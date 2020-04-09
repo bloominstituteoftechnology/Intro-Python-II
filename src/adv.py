@@ -1,6 +1,8 @@
 from room import Room
 from player import Player
 from item import Item
+from book import Book
+from treasure import Treasure
 from colors import print_color
 import time
 
@@ -21,8 +23,7 @@ the distance, but there is no way across the chasm."""),
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+chamber! Look around to see what's inside."""),
 
     # add another room
     'library': Room("Library", """The room appears a mess. As though someone left 
@@ -53,11 +54,18 @@ room['treasure'].s_to = room['narrow']
 # complete password will unlock "Treasure"
 
 items = {
-    'key': Item("key", "A heavy, bronze key.")
+    'key': Item("key", "A heavy, bronze key."),
+    'book1': Book("book1", "A dusty, old book. Try reading it.", "a8qr"),
+    'book2': Book("book2", "A thick, leather book. Try reading it.", "f02g"),
+    'book3': Book("book3", "A thin, fragile book. Try reading it.", "2h5n"),
+    'treasure': Treasure("treasure", "One-thousand gold bars and a lifetime supply of burritos!")
 }
 
 # add the items to the rooms
 room['foyer'].items = [items['key']]
+room['library'].items = [items['book1'], items['book2'], items['book3']]
+room['treasure'].items = [items['treasure']]
+
 
 player_name = input('\nWhat is your name? ')
 
@@ -85,7 +93,9 @@ while True:
     elif player.current_room == room['library']:
         # make if and else statements based on whether the player has the key in inventory
         if len(player.inventory) > 0 and items['key'] in player.inventory:
-            print_color('green', "\n\nYou've unlocked the Library!")
+            if room['library'].unlocked == False:
+                print_color('green', "\n\nYou've unlocked the Library!")
+            room['library'].unlocked = True
             location_print('yellow')
         else:
             print_color('red', f'\n\nThis room is locked')
@@ -112,9 +122,17 @@ while True:
     # printing player inventory
     elif player_move == 'i':
         if len(player.inventory) > 0:
+            print_color('yellow', '\n\nInventory:')
             for item in player.inventory:
-                print_color('yellow', '\n\nInventory:')
                 print_color('yellow', f'{item.name}')
+            print_instructions = input("\nView item descriptions? (y/n): ")
+            if print_instructions == 'y':
+                for item in player.inventory:
+                    print_color('yellow', f'\n{item.name}: {item.description}')
+            elif print_instructions == 'n':
+                pass
+            else:
+                print_color('red', '\n\nInvalid input')
         else:
             print_color('red', '\n\nNo items in your inventory')
     # printing list of items in the room
@@ -132,11 +150,41 @@ while True:
         query = player_move.split()
         item = query[1].lower()
         # if the specified item is in the room, put in player inventory
-        if len(player.current_room.items) > 0 and player.current_room.has_item(item):
+        if len(player.current_room.items) > 0 and player.current_room.has_item(item) and item != 'treasure':
             player.grab_item(items[item])
+            player.current_room.remove_item(items[item])
+        elif item == 'treasure' and items[item].is_locked == True:
+            if len(player.knowledge) > 0:
+                knowledge = []
+                for i in player.knowledge:
+                    knowledge.append(i)
+                if len(knowledge) == 1:
+                    print_color(
+                        'yellow', f'You only have one piece of the password: {knowledge[0]}')
+                elif len(knowledge) == 2:
+                    print_color(
+                        'yellow', f'You only have two pieces of the password: {knowledge[0]}-{knowledge[1]}')
+                elif len(knowledge) == 3:
+                    print_color(
+                        'green', f'You have all three pieces of the password: {knowledge[0]}-{knowledge[1]}-{knowledge[2]}')
+            password_input = input(
+                "The treasure is locked! What's the password? ")
+            password = password_input.split('-')
+            if 'a8qr' in password and 'f02g' in password and '2h5n' in password:
+                print_color('green', "\n\nYou unlocked the treasure!!! :D")
+                player.grab_item(items[item])
+                player.current_room.remove_item(items[item])
+            else:
+                print_color('red', "\n\nIncorrect password :(")
         # if the specified item is not in the room, print this
         else:
-            print_color('red', f'This room does not contain item {query[1]}')
+            print_color(
+                'red', f'\n\nThis room does not contain item {query[1]}')
+    # reading a book
+    elif player_move.startswith('read'):
+        query = player_move.split()
+        book = items[query[1].lower()]
+        player.read_book(book)
     # quit the game
     elif player_move == 'q':
         exit()
