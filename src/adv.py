@@ -1,6 +1,11 @@
 from room import Room
 from player import Player
+from colors import print_color
+import time
+
+
 # Declare all the rooms
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -51,8 +56,39 @@ room['treasure'].s_to = room['narrow']
 # If the user enters "q", quit the game.
 
 
-player_name = input("What is your name? ")
+player_name = input('\nWhat is your name? ')
 
 player = Player(player_name, room['outside'])
 
-print(f'Welcome {player.name}!')
+print_color('cyan', f'\nWelcome {player.name}!\n\n')
+
+time.sleep(1)
+
+
+def location_print(color):
+    print_color(color, f'\n\nYour location: {player.current_room.name}')
+    time.sleep(1.5)
+    print_color(color, f'{player.current_room.description} \n')
+    time.sleep(1.5)
+
+
+while True:
+    if player.current_room == room['outside']:
+        location_print('green')
+    elif player.current_room == room['foyer']:
+        location_print('purple')
+    elif player.current_room == room['overlook']:
+        location_print('light_purple')
+    elif player.current_room == room['narrow']:
+        location_print('light_grey')
+    elif player.current_room == room['treasure']:
+        location_print('yellow')
+
+    player_move = input("Enter 'n', 's', 'e', or 'w' to move rooms. ").lower()
+
+    if player_move in ['n', 's', 'e', 'w']:
+        player.move(player_move)
+    elif player_move == 'q':
+        exit()
+    else:
+        print_color('red', '\n\n\nInvalid input. Please try again.\n\n')
