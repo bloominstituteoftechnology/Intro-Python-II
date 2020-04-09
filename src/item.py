@@ -12,7 +12,7 @@ class Item:
             pass
 
     def on_remove(self, action=None):
-        print('You have dropped up {}'.format(self.name))
+        print('You have dropped {}'.format(self.name))
         if(action is None):
             pass
         else:

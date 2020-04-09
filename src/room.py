@@ -57,7 +57,6 @@ class Room:
                     # Attempt to delete key 
                     item = self.items.pop(id)
 
-                    item.on_remove()
                     removed_items.append(item)
                     # If successful, the item will be deleted and append True to status
                     status.append(True)

@@ -29,7 +29,7 @@ class Player:
         try:
             # Verify the chosen input direction is a valid input
             # (there is a room in that direction)
-            target_room = self.current_room.__dict__['{}_to'.format(target_dir)]
+            target_room = getattr(self.current_room, '{}_to'.format(target_dir))
             if(target_room is None):
                 raise MoveError(self.current_room, target_dir)
 
@@ -41,7 +41,6 @@ class Player:
             print('You cannot move in that direction!')
 
     def add_items(self, item_list):
-        print(item_list)
         for item in item_list:
             item.on_take()
             self.items[item.id] = item
@@ -81,3 +80,12 @@ class Player:
             return (removed_item_ids, removed_items)
         else:
             return ([],[])
+
+    def __repr__(self):
+        return self.__dict__
+
+    def __str__(self):
+        s = ''
+        l = ['{}:{}'.format(key,value) for key,value in self.__dict__.items()]
+        s= '\n'.join(l)
+        return s

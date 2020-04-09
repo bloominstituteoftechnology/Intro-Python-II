@@ -114,6 +114,17 @@ while(True):
         if(inp in ['i', 'inventory']):
             print('Inventory:')
             [print(line) for line in p1.get_items()]
+        if(inp == 'DebugMode'):
+            if(input('password: ') == 'Giraffe'):
+                while(True):
+                    try:
+                        code = input('>>>')
+                        if(code == 'exit'):
+                            break
+                        else:
+                            exec(code)
+                    except Exception as e:
+                        print(e)
 
     elif(len(inputs) == 2):
         verb, obj = inputs[0], inputs[1]
@@ -124,21 +135,15 @@ while(True):
             removed_items_ids, removed_items = c_room.remove_items(targ_items)
             # Add items to player inventory
             p1.add_items(removed_items)
-            # Print items that were actually given to player
-            added_items = [item.name for item in removed_items]
-            print('Items added: {}'.format(added_items))
 
-        elif(verb in ['remove', 'drop', 'toss']):
+        if(verb in ['remove', 'drop', 'toss']):
             # Generate list of target item's id's from input
             targ_items = name_to_id(obj)
             # Attempt to remove target items from room
-            removed_items = p1.remove_items(targ_items)
-            # Add items to player inventory
-            items = {id:item for id in removed_items}
+            removed_item_ids, removed_items = p1.remove_items(targ_items)
+            # Add items to room 
+            items = {id:item for id,item in zip(removed_item_ids,removed_items)}
             c_room.add_items(removed_items)
-            # Print items that were removed from the player
-            added_items = [item.name for item in removed_items]
-            print('Items removed: {}'.format(added_items))
 
     else:
         print('Invalid Input')
