@@ -4,7 +4,6 @@
 class Player:
     
     def __init__(self, current_room, name):
-        print("Player called")
         self.name = name
         self.current_room = current_room
         
