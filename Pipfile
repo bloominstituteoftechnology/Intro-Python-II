@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 
 [dev-packages]
+pylint = "*"
+jupyter = "*"
+notebook = "*"
 
 [requires]
 python_version = "3"
