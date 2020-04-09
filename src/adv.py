@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -36,10 +36,22 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+new_room = Room( "name", room['outside'])
+new_Player = Player(new_room.name , "name")
+print([(k, room[k]) for k in room])
 
+direction = (input("[E] East  [N] North   [W] West    [S] South     [Q] Quit\n")).upper()
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
+while not direction == "Q":
+    
+    if direction == "N":
+        print(room["outside"])
+
+
+#    print("newplayer",new_Player)
+    direction = (input("[E] East  [N] North   [W] West    [S] South     [Q] Quit\n")).upper()
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
