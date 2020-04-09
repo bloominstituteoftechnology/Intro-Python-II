@@ -17,7 +17,7 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 ### Day 1 MVP
 
 *   [ ] Create the REPL command parser in `adventure.py` which allows the player to move to rooms in the four cardinal directions.
-*   [ ] Fill out Player and Room classes in `player.py` and `room.py`.
+*   [x] Fill out Player and Room classes in `player.py` and `room.py`.
 
 ### Day 2 MVP
 
@@ -38,11 +38,11 @@ The `/src` directory contains the files `adventure.py`, which is where the main 
 
     *   [ ] The parser should print an error if the player tries to move where there is no room.
 
-*   [ ] Put the Room class in `room.py` based on what you see in `adventure.py`.
+*   [x] Put the Room class in `room.py` based on what you see in `adventure.py`.
 
     *   [x] The room should have `name` and `description` attributes.
 
-    *   [ ] The room should also have `n_to`, `s_to`, `e_to`, and `w_to` attributes which point to the room in that respective direction.
+    *   [x] The room should also have `n_to`, `s_to`, `e_to`, and `w_to` attributes which point to the room in that respective direction.
 
 *   [x] Put the Player class in `player.py`.
 
