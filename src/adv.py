@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -38,7 +38,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+player1 = Player('JmFatal', room['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +49,45 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+command = None
+
+def possibleCommands(room):
+    acceptableCommands = ['q']
+    if room.n_to != None:
+        acceptableCommands.append('n')
+    if room.s_to != None:
+        acceptableCommands.append('s')
+    if room.e_to != None:
+        acceptableCommands.append('e')
+    if room.w_to != None:
+        acceptableCommands.append('w')
+    return acceptableCommands
+
+def filterCommand(command,room):
+    acceptableCommands = possibleCommands(room)
+    for aCommand in acceptableCommands:
+        if aCommand == command:
+            global valid
+            valid = True
+    if valid == False:
+        print('Please enter a valid command')
+        print(f'Commands: {acceptableCommands}')
+
+
+while command != 'q':
+    print(f'\nCurrent Location: {player1.current_room.name}')
+    print(f'Direction: \n{player1.current_room.description}\n')
+    print(f'\nAvailable Commands: {possibleCommands(player1.current_room)}')
+    command = input("Awaiting your command:").lower()
+    print('----------')
+    valid = False
+    filterCommand(command, player1.current_room)
+    if valid:
+        if command == 'n':
+            player1.current_room = player1.current_room.n_to
+        if command == 's':
+            player1.current_room = player1.current_room.s_to
+        if command == 'e':
+            player1.current_room = player1.current_room.e_to
+        if command == 'w':
+            player1.current_room = player1.current_room.w_to
