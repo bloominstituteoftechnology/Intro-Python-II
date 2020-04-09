@@ -6,14 +6,12 @@ import time
 
 
 # Declare all the rooms
-
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east. You see a door to the west."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -33,7 +31,6 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -60,25 +57,7 @@ items = {
 }
 
 # add the items to the rooms
-
 room['foyer'].items = [items['key']]
-
-# Main
-
-
-# Make a new player object that is currently in the 'outside' room.
-
-# Write a loop that:
-
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-
-# If the user enters "q", quit the game.
-
 
 player_name = input('\nWhat is your name? ')
 
@@ -97,6 +76,7 @@ def location_print(color):
     # time.sleep(1)
 
 
+# loop that prints the current room name and description
 while True:
     if player.current_room == room['outside']:
         location_print('green')
@@ -104,8 +84,13 @@ while True:
         location_print('purple')
     elif player.current_room == room['library']:
         # make if and else statements based on whether the player has the key in inventory
-        print(f'This room is locked')
-        player.current_room = room['foyer']
+        if len(player.inventory) > 0 and items['key'] in player.inventory:
+            print_color('green', "\n\nYou've unlocked the Library!")
+            location_print('yellow')
+        else:
+            print_color('red', f'\n\nThis room is locked')
+            player.current_room = room['foyer']
+            location_print('purple')
     elif player.current_room == room['overlook']:
         location_print('light_purple')
     elif player.current_room == room['narrow']:
