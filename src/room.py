@@ -7,8 +7,40 @@ from printable import printable
 
 class Room:
 
+    ########################################
+    #   properties
+    ########################################
+
     directions = ('n', 'e', 's', 'w')
     connections = tuple(f'{dir}_to' for dir in directions)
+
+    @property
+    def n_to(self): return self.__n_to
+
+    @n_to.setter
+    def n_to(self, value): self.__n_to = value
+
+    @property
+    def e_to(self): return self.__e_to
+
+    @e_to.setter
+    def e_to(self, value): self.__e_to = value
+
+    @property
+    def s_to(self): return self.__s_to
+
+    @s_to.setter
+    def s_to(self, value): self.__s_to = value
+
+    @property
+    def w_to(self): return self.__w_to
+
+    @w_to.setter
+    def w_to(self, value): self.__w_to = value
+
+    ########################################
+    #   dunders
+    ########################################
 
     def __init__(self, name, description=None, **kwargs):
 
