@@ -4,14 +4,14 @@ In the diagram below, there are only 2 `Room` objects, total. (There are more in
 
 There are 5 variables. 3 of them point to the one Room object that is the foyer:
 
-* room['foyer']
-* room['outside'].n_to
-* player.location
+* `room['foyer']`
+* `room['outside'].n_to`
+* `player.location`
 
 The remaining 2 point to the one Room object that is the outside:
 
-* room['outside']
-* room['foyer'].s_to
+* `room['outside']`
+* `room['foyer'].s_to`
 
 ```
 room['outside'] -> Room("Outside Cave Entrance")
