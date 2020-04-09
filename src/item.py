@@ -2,34 +2,24 @@
 #   ITEM
 ############################################################
 
+from printable import printable
+
 
 class Item:
 
-    def __init__(self, name, description):
+    def __init__(self, name, description=None):
 
         self.name = name
         self.description = description
 
     def __str__(self):
 
-        class_name = self.__class__.__name__
-        name = str(self.name)
-        description = str(self.description)
+        attr_keys = ('name', 'description')
 
-        return ('\n'.join((
-            f'{class_name} {{',
-            f'    name: {name}',
-            f'    description: {description}',
-            f'}}',
-        )))
-        # -- I really don't like the hanging non-indentation in multi-line strings...
+        return printable.to_str(self, attr_keys)
 
     def __repr__(self):
 
-        class_name = self.__class__.__name__
-        name = repr(self.name)
-        description = repr(self.description)
+        attr_keys = ('name', 'description')
 
-        return (
-            f'{class_name}({name}, {description})'
-        )
+        return printable.to_repr(self, attr_keys)
