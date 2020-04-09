@@ -1,7 +1,7 @@
 from container import Container
 
 class Player(Container):
-  def __init__(self, name, current_room, items = None):
+  def __init__(self, current_room, name = None, items = None):
     super().__init__(items)
 
     self.name = name
