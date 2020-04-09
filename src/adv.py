@@ -29,11 +29,15 @@ earlier adventurers. The only exit is to the south.""", {'s': 'narrow'}, ['mushr
 
 items = {
     'sword': Item("Stone Sword", "A heavy and primitive stone sword"),
+
     'potion': Item("Potion Bottle", """A effervescent bottle of glowing green liquid
     with a "Drink Me" label"""),
+
     'feather': Item("Eagle Feather", """The tail feather of a golden eagle split nearly
     in half."""),
+
     'nuts': Item("Mixed Nuts", "A pouch full of mixed nuts still in their shell"),
+
     'mushroom': Item("Miracle Cap", """A phosphorescent mushroom, beautiful but smells like 
     rotten fish.""")
 }
@@ -72,10 +76,12 @@ while user_input != "q":
     else:
         print("The room contains the following items:", ", ".join(current_room.inventory))
 
-    prompt_txt = """You may take/drop an item by entering take [item name] or drop [item name].
+    prompt_txt = """
+    You may take/drop an item by entering take [item name] or drop [item name].
     Enter i to get a list of items you are carrying. 
     Enter a direction n/s/e/w to move to another room.
-    Enter q to quit: """
+    Enter q to quit: 
+    """
     user_input = input(prompt_txt).lower()
     split_txt = user_input.split()
     
@@ -110,8 +116,6 @@ while user_input != "q":
                 items[split_txt[1]].on_drop()
             else:
                 print("You are not carrying this item.")
-        else: 
-            pritn
 
             
 
