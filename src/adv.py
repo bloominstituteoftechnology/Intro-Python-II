@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+from os import system, name
 # Declare all the rooms
 
 room = {
@@ -37,6 +38,92 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+def clear(): 
+    # for windows 
+    _ = system('cls' if name == 'nt' else 'clear') 
+
+# def start_game():
+#     print(f'\n***** Welcome to Adventure Quest! *****')
+#     print(f'\n[Q] -- Quit \n ')
+# start_game()    
+print("")
+print("*************Adventure Quest!**********************")
+print('---- Lets get started! -----')
+player = Player(input('What is your name?'), room["outside"])    
+cin = 'p'
+    
+
+while cin != 'q':     
+    
+    print(player)
+    #1 create options to move
+    #2 if correct option selected, move in that direction
+    #3 if incorrect option, re prompt
+    cin = input('''\n Which direction do you want to go? 
+             \n           [N] - North 
+             \nWest - [W]  O  [E] - East 
+             \n           [S] - South 
+             \n     ''')
+    
+    
+    if cin == 'n':
+        player.move(cin)
+        # player.current_room = room['outside'].n_to
+        # print(player)
+        # print('''\n Which direction do you want to go? 
+        #     \n           [N] - North 
+        #     \nWest - [W]  O  [E] - East 
+        #     \n           [S] - South 
+        #     \n ''')
+        
+        
+    elif cin == 'e':
+        player.move(cin)
+            # player.current_room = room['outside'].n_to
+            # print(player)
+        # print('''\n Which direction do you want to go? 
+        #     \n           [N] - North 
+        #     \nWest - [W]  O  [E] - East 
+        #     \n           [S] - South 
+        #     \n ''')
+        
+        
+    elif cin == 's':
+        player.move(cin)
+            # player.current_room = room['outside'].n_to
+            # print(player)
+        # print('''\n Which direction do you want to go? 
+        #     \n           [N] - North 
+        #     \nWest - [W]  O  [E] - East 
+        #     \n           [S] - South 
+        #     \n ''')
+        
+        
+    elif cin == 'w':
+        
+        player.move(cin)
+            # player.current_room = room['outside'].n_to
+            # print(player)
+        # print('''\n Which direction do you want to go? 
+        #     \n           [N] - North 
+        #     \nWest - [W]  O  [E] - East 
+        #     \n           [S] - South 
+        #     \n ''')
+        
+        
+    # elif cin != 'g' or 'G':
+    #         print('')
+    #         print('Please press [S] to start the game or [Q] to quit the game.')   
+    #         print(f'\n[G] -- Start Game \
+    #                 \n[Q] -- Quit \n ')
+    #         cin = input('') 
+            
+
+    else:
+        clear()
+        print('You have quit the game')
+
+        
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
@@ -49,3 +136,5 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
