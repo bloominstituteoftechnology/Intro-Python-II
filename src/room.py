@@ -2,16 +2,20 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description, exits):
+    def __init__(self, name, description, exits, items=None):
         self.name = name
         self.description = description
         self.exits = exits
+        self.items = [] if items is None else items
 
-    def get_room(self):
-        return self.name
+    def drop_item(self, item):
+        self.items.append(item)
+    
+    def take_item(self, item):
+        self.items.remove(item)
 
-    def get_description(self):
-        return self.description
-
+    @property
+    def inventory(self):
+        return self.items
 
        
