@@ -100,14 +100,14 @@ while user_input != "q":
             if split_txt[1] in current_room.inventory:
                 current_room.take_item(split_txt[1])
                 player.take_item(split_txt[1])
-                print(f"You have picked up the {split_txt[1]}")
+                items[split_txt[1]].on_take()
             else:
                 print("That item is not located in this room.")
         elif split_txt[0] == "drop":
             if split_txt[1] in player.inventory:
                 current_room.drop_item(split_txt[1])
                 player.drop_item(split_txt[1])
-                print(f"You have dropped the {split_txt[1]}")
+                items[split_txt[1]].on_drop()
             else:
                 print("You are not carrying this item.")
         else: 
