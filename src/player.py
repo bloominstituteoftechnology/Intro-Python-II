@@ -2,5 +2,5 @@
 # currently.
 
 class Player():
-  def __init__(self):
-    self.location = 'starting location'
+  def __init__(self, start):
+    self.location = start
