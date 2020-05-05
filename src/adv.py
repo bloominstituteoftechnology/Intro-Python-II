@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -38,7 +38,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+player = Player(room['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +49,33 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+over = False
+while not over:
+    print(player.location.name)
+    print(player.location.description)
+    inp = input("Which cardinal direction will you attempt to travel? (Input Q to quit)").lower()
+    if inp == 'q':
+        over = True
+    elif inp not in ['north', 'east', 'south', 'west']:
+        print("Please choose from North, South, East or West as a direction of travel."
+    else:
+        if inp == north:
+              try:
+                player.location = player.location.n_to
+              except:
+                print("You are unable to travel in that direction from this room.")
+        if inp == south:
+              try:
+                player.location = player.location.s_to
+              except:
+                print("You are unable to travel in that direction from this room.")
+        if inp == east:
+              try:
+                player.location = player.location.e_to
+              except:
+                print("You are unable to travel in that direction from this room.")
+        if inp == west:
+              try:
+                player.location = player.location.w_to
+              except:
+                print("You are unable to travel in that direction from this room.")
