@@ -4,7 +4,11 @@ from textwrap import wrap
 
 
 class Player:
+    """
+    < Player > interacts with adventure REPL
+    """
     information = {"name": "", "room": "", "map": ""}
+    items = []
 
     def __init__(self, **kwargs):
         self.information = kwargs
@@ -14,7 +18,7 @@ class Player:
 
     def status(self):
         """
-        the players name & the current room name
+        [< Player > name]  [< Room > name]
         """
         name = self.name()
         room = self.room()
@@ -23,13 +27,13 @@ class Player:
 
     def name(self):
         """
-        the players name
+        name of < Player >
         """
         return self.information["name"]
 
     def room(self):
         """
-        room that the player currently occupies
+        < Room > that < Player > currently occupies
         """
         try:
             ret = self.information["room"].name
@@ -39,20 +43,21 @@ class Player:
 
     def look(self):
         """
-        the current description
+        < Player > looks around < Room >
         """
         desc = "\n".join(wrap(self.information["room"].description, 42))
         return f'{desc}\n' + '*'*42
 
     def path(self, thisway, fromHere):
         """
-        find path
+        < Player > scouts the path from
+        < Room > leading [thisway]
         """
         return getattr(fromHere, thisway[0] + '_to', "blocked!")
 
     def walk(self, thisway):
         """
-        move the player
+        < Player > walks [thisway]
         """
         room = self.information["room"]
         next_room = self.path(thisway, room)
@@ -62,15 +67,40 @@ class Player:
         else:
             print(f'\nERROR, you cannot go {thisway}')
 
+    def getItem(self, itemName):
+        """
+        < Player > takes < Item: [itemName] > from < Room >
+        """
+        room = self.information["room"]
+        item = room.takeItem(itemName)
+        if item:
+            self.items.append(item)
+            print(f'INVENTORY : {self.items}')
+        else:
+            print(f'cannot take {itemName}')
+
     def evaluate(self, cmd):
         """
-        If the user enters a cardinal direction, 
-        attempt to move to the room there.
-
-        Print an error message if the movement isn't allowed.
+        process user input
         """
-        if cmd in ["north", "n", "south", "s", "east", "e", "west", "w"]:
-            self.walk(cmd)
-        elif cmd == "start":
-            hr = "*" * 42
-            print(f"{hr}\n   The Adventure of 𝝺\n{hr}")
+        # * Split the entered command and see if it has 1 or 2 words in it to determine
+        #  if it's the first or second form.
+        actions = cmd.split(" ")
+        if len(actions) == 1:
+            # single word actions
+            if cmd in ["north", "n", "south", "s", "east", "e", "west", "w"]:
+                self.walk(cmd)
+            elif cmd == "start":
+                hr = "*" * 42
+                print(f"{hr}\n   The Adventure of 𝝺\n{hr}")
+        elif len(actions) == 2:
+            # double word actions
+            verb, noun = actions
+            if verb.lower() == "get":
+                self.getItem(noun)
+
+
+if __name__ == "__main__":
+    print('creating a Player')
+    newPlayer = Player(name="Player Test")
+    print(newPlayer)
