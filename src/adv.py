@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item, Food, Egg
 
 # Declare all the rooms
 
@@ -33,12 +35,28 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+rock = Item("rock", "This is a rock.")
+sandwich = Item("sandwich", "This is a delicious sandwich.")
+egg = Egg()
+
+#print(room['outside'].n_to.name)
+#print(room['outside'].n_to.description)
 #
 # Main
+
+
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(input("Please enter your name: "), room['outside'])
+player.items.append(rock)
+player.items.append(sandwich)
+print(player.current_room)
 
+
+player.eat(rock)
+player.eat(sandwich)
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +67,21 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+valid_directions = ("n", "s", "e", "w")
+
+#loop
+while True:
+    print(player.current_room.name)
+    print("")
+    print(player.current_room.description)
+    #READ
+    cmd = input('~~>')
+    #EVAL
+    if cmd == "q":
+        print("ADIOS!!!")
+        exit(0)
+    elif cmd in valid_directions:
+        player.travel(cmd)
+    elif player.print_inventory():
+    else:
+        print("I did not Understand that command")
