@@ -9,7 +9,9 @@ class Item:
     """
     Contained in some < Room >'s,
     the player may interact with an < Item >
-    to unlock mysteries throught the adventure.
+    to unlock mysteries throughout the adventure.
+
+    __base class__ for specialized item types
     """
     name = None
     description = None
