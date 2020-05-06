@@ -31,12 +31,18 @@ class Player:
         """
         return self.information["name"]
 
+    def __environment(self):
+        return self.information["room"]
+
+    def getRoom(self):
+        return self.__environment()
+
     def room(self):
         """
         < Room > that < Player > currently occupies
         """
         try:
-            ret = self.information["room"].name
+            ret = self.__environment().name
         except AttributeError as e:
             ret = e
         return ret
@@ -45,7 +51,14 @@ class Player:
         """
         < Player > looks around < Room >
         """
-        desc = "\n".join(wrap(self.information["room"].description, 42))
+        desc = "\n".join(wrap(self.__environment().description, 42))
+        contains = self.__environment().items
+        if len(contains) > 0:
+            itemNames = [x.name for x in self.__environment().items]
+            itemNames[0] = f'you see a {contains[0].name}'
+            csv = ", ".join(itemNames)
+            items = "\n".join(wrap(csv, 42))
+            desc += f"\n{items}"
         return f'{desc}\n' + '*'*42
 
     def path(self, thisway, fromHere):
@@ -55,15 +68,21 @@ class Player:
         """
         return getattr(fromHere, thisway[0] + '_to', "blocked!")
 
+    def enter(self, room):
+        """
+        < Player > enters < Room >
+        """
+        self.information["room"] = room
+
     def walk(self, thisway):
         """
         < Player > walks [thisway]
         """
-        room = self.information["room"]
+        room = self.__environment()
         next_room = self.path(thisway, room)
         if next_room != "blocked!":
             print(f'\nOK, you travel {thisway}')
-            self.information["room"] = next_room
+            self.enter(next_room)
         else:
             print(f'\nERROR, you cannot go {thisway}')
 
@@ -71,20 +90,46 @@ class Player:
         """
         < Player > takes < Item: [itemName] > from < Room >
         """
-        room = self.information["room"]
-        item = room.takeItem(itemName)
+        container = self.__environment()
+        item = container.takeItem(itemName)
         if item:
             self.items.append(item)
             print(f'INVENTORY : {self.items}')
         else:
-            print(f'cannot take {itemName}')
+            print(f'you cannot take {itemName} from {container}')
+
+    def dropItem(self, itemName):
+        """
+        < Player > drops < Item: [itemName] > in < Room >
+        """
+        room = self.__environment()
+        dropped = self.inventory(itemName, dropping=True)
+        result = '\n'.join([room.dropItem(item) for item in dropped])
+        print(result)
+
+    def inventory(self, itemName=None, dropping=False):
+        if itemName is None:
+            # select every element of Player.items
+            selected = self.items
+        else:
+            # only select item(s) with the name given by "itemName"
+            selected = list(filter(lambda i: i.name == itemName, self.items))
+        if not dropping:  # without dropping anything,
+            return selected  # return the selected item(s) for consideration;
+        # otherwise...
+        dropped = []  # make a *new list to hold item(s) we want dropped.
+        while len(selected) > 0:  # continue if we have items to remove.
+            item = selected.pop()  # pop from selected.
+            self.items.remove(item)  # remove from Player.items
+            dropped.append(item)  # & add to our *new list
+        return dropped  # finally, we return the *new list of dropped items
 
     def evaluate(self, cmd):
         """
         process user input
         """
-        # * Split the entered command and see if it has 1 or 2 words in it to determine
-        #  if it's the first or second form.
+        # * Split the entered command and see if it has 1 or 2 words
+        #  to determine if it's the first or second form.
         actions = cmd.split(" ")
         if len(actions) == 1:
             # single word actions
@@ -96,8 +141,11 @@ class Player:
         elif len(actions) == 2:
             # double word actions
             verb, noun = actions
-            if verb.lower() == "get":
+            v = verb.lower()
+            if v == "get":
                 self.getItem(noun)
+            elif v == "drop":
+                self.dropItem(noun)
 
 
 if __name__ == "__main__":
