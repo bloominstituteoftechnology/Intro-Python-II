@@ -1,24 +1,25 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("outside", "Outside Cave Entrance",
+                     "North of you, the cave mount beckons \n"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    Room("foyer", "Foyer", """Dim light filters in from the south. Dusty
+passages run north and east. \n"""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
+    'overlook': Room("overlook", "Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm. \n"""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'narrow':   Room("narrow", "Narrow Passage", """The narrow passage bends here from west
+to north. The smell of gold permeates the air. \n"""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
+    'treasure': Room("treasure", "Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south. \n"""),
 }
 
 
@@ -35,9 +36,74 @@ room['treasure'].s_to = room['narrow']
 
 #
 # Main
-#
+# test = room['outside'].s_to
+# print(test)
 
+name = input("\n Enter a name, adventurer: ")
+
+playerStart = Player(name, room['outside'])
+print(playerStart)
 # Make a new player object that is currently in the 'outside' room.
+directionInput = input("What direction would you like to go? n,e,s,w (q to quit): ")
+
+currentRoom = 'outside'
+while not directionInput == "q":
+
+    ##User chose North
+    if directionInput == "n":
+        roomID = room[currentRoom].refID
+        
+        try:
+            print(room[roomID].n_to)
+
+            currentRoom = room[roomID].n_to.refID
+            
+        except AttributeError:
+            print("That direction isn't available")
+
+    ##User chose East
+    elif directionInput == "e":
+        roomID = room[currentRoom].refID
+
+        try: 
+            print(room[roomID].e_to)
+
+            currentRoom = room[roomID].e_to.refID
+
+        except AttributeError:
+            print("That direction isn't available")
+
+    ##User chose South
+    elif directionInput == "s":
+        roomID = room[currentRoom].refID
+    
+        try: 
+            print(room[roomID].s_to)
+
+            currentRoom = room[roomID].s_to.refID
+
+        except AttributeError:
+            print("That direction isn't available")
+
+    ##User chose West
+    elif directionInput == "w":
+        roomID = room[currentRoom].refID
+
+        try:
+            print(room[roomID].w_to)
+
+            currentRoom = room[roomID].w_to.refID
+
+        except AttributeError:
+            print("That direction isn't available")
+    
+    else:
+        print("Invalid selection")
+
+    ##Reselect promt
+    directionInput = input("What direction would you like to go? n,e,s,w (q to quit): ")
+
+print("Good job adventurer! See you next time \n")
 
 # Write a loop that:
 #
