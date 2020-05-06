@@ -61,21 +61,20 @@ def repl(name):
 
     If the user enters "q", the game will quit.
     """
+    cmd = "start"  # the first command for < Player > to evaluate.
     startAt = rooms['outside']  # < Player > starts here
     player1 = Player(room=startAt, name=name)  # create new < Player >
-    cmd = "start"  # the first command for < Player > to evaluate.
 
     while not (cmd in ["q", "quit"]):
         # EVALUATE
         player1.evaluate(cmd)
         # PRINT
-        print(player1.status())
-        print(player1.look())
+        print(player1.status())  # show our < Player >'s current status.
+        print(player1.look())  # scene from perspective of our < Player >
         # READ
-        # next command to be evaluated by < Player >
-        cmd = input("what now ? ").lower()
+        cmd = input("what now ? ").lower()  # ask user for the next command
 
-    print(f'\nThanks for playing, goodbye')
+    print(f'\nThanks for playing, goodbye')  # user has exited the REPL
 
 
 if __name__ == "__main__":

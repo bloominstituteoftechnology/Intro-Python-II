@@ -94,7 +94,6 @@ class Player:
         item = container.takeItem(itemName)
         if item:
             self.items.append(item)
-            print(f'INVENTORY : {self.items}')
         else:
             print(f'you cannot take {itemName} from {container}')
 
@@ -115,7 +114,8 @@ class Player:
             # only select item(s) with the name given by "itemName"
             selected = list(filter(lambda i: i.name == itemName, self.items))
         if not dropping:  # without dropping anything,
-            return selected  # return the selected item(s) for consideration;
+            # return the selected item(s) for consideration;
+            return list(enumerate(map(lambda i: i.name, selected)))
         # otherwise...
         dropped = []  # make a *new list to hold item(s) we want dropped.
         while len(selected) > 0:  # continue if we have items to remove.
@@ -138,6 +138,8 @@ class Player:
             elif cmd == "start":
                 hr = "*" * 42
                 print(f"{hr}\n   The Adventure of 𝝺\n{hr}")
+            elif cmd in ["inventory", "i"]:
+                print(f"{self.inventory()}")
         elif len(actions) == 2:
             # double word actions
             verb, noun = actions
@@ -146,6 +148,16 @@ class Player:
                 self.getItem(noun)
             elif v == "drop":
                 self.dropItem(noun)
+            elif v in ["inventory", "i"]:
+                try:
+                    idx = int(noun)  # try reading by index number
+                    i = self.items[idx]
+                    print(f"\n***{i.description}***\n")
+                except ValueError:
+                    i = self.inventory(noun)  # try reading by name
+                    print(f"\n***{i}***\n")
+                except Exception:
+                    print(f"I cannot understand '{cmd}'")
 
 
 if __name__ == "__main__":
