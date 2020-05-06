@@ -17,12 +17,13 @@ class Room:
     """
     name = None
     description = None
-    items = None
+    items = []
 
-    def __init__(self, name, description, items=[]):
+    def __init__(self, name, description, containing=[]):
         self.name = name
         self.description = description
-        self.items = items
+        for i in containing:
+            self.items.append(i)
 
     def __str__(self):
         return f'<Room: {self.name}>'
@@ -53,6 +54,7 @@ class Room:
         drop < Item > in this room
         """
         self.items.append(item)
+        return f"dropped {item.name}"
 
 
 if __name__ == "__main__":
