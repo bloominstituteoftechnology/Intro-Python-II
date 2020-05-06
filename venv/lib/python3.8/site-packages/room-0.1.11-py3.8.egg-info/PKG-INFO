@@ -1,0 +1,21 @@
+Metadata-Version: 1.1
+Name: room
+Version: 0.1.11
+Summary: A framework of stream data maining for smart home
+Home-page: https://github.com/takatori
+Author: takatorino
+Author-email: tktr3w5e0@gmail.com
+License: MIT
+Description: UNKNOWN
+Keywords: data mining,smart home,api
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries
+Classifier: Topic :: Utilities
+Classifier: License :: OSI Approved :: MIT License
