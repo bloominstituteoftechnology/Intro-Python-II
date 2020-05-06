@@ -1,0 +1,14 @@
+[plaster.loader_factory]
+egg = plaster_pastedeploy:Loader
+file+ini = plaster_pastedeploy:Loader
+pastedeploy = plaster_pastedeploy:Loader
+pastedeploy+egg = plaster_pastedeploy:Loader
+pastedeploy+ini = plaster_pastedeploy:Loader
+
+[plaster.wsgi_loader_factory]
+egg = plaster_pastedeploy:Loader
+file+ini = plaster_pastedeploy:Loader
+pastedeploy = plaster_pastedeploy:Loader
+pastedeploy+egg = plaster_pastedeploy:Loader
+pastedeploy+ini = plaster_pastedeploy:Loader
+
