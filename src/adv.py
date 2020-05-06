@@ -42,13 +42,63 @@ room['treasure'].s_to = room['narrow']
 player = Player(
     input('Greetings Adventurer! What is your name?\n'), room['outside'])
 
+print(player)
 # Write a loop that:
-
-# * Prints the current room name
+while True:
+    # * Prints the current room name
+    print(player.current_room.name)
 # * Prints the current description (the textwrap module might be useful here).
+    print(player.current_room.description)
 # * Waits for user input and decides what to do.
-#
+    user_input = input('Choose a direction that calls you...\n\n')
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
-#
+
+    def update_player_room(direction_to):
+        global player
+        print(player.current_room.__getattribute__(
+            direction_to))
+        print('\n\nPlayerINFO: ', player)
+        player.current_room = player.current_room.__getattribute__(
+            direction_to)
+
+    movement_error_message = 'That direction does not lead to anything.'
+
+    print('user_input: ', user_input)
+
+    if player.current_room.name == "Outside Cave Entrance":
+        if user_input == 'n':
+            update_player_room('n_to')
+        else:
+            print(movement_error_message)
+    elif player.current_room.name == "Foyer":
+        if user_input == 'w':
+            print(movement_error_message)
+        elif user_input == 'n':
+            update_player_room('n_to')
+        elif user_input == 's':
+            update_player_room('s_to')
+        elif user_input == 'e':
+            update_player_room('e_to')
+    elif player.current_room.name == "Grand Overlook":
+        if user_input == 'n' or 'e' or 'w':
+            print(movement_error_message)
+        elif user_input == 's':
+            update_player_room('s_to')
+    elif player.current_room.name == "Narrow Passage":
+        if user_input == 's' or 'e':
+            print(movement_error_message)
+        elif user_input == 'w':
+            update_player_room('w_to')
+        elif user_input == 'n':
+            update_player_room('n_to')
+    elif player.current_room.name == "Treasure Chamber":
+        if user_input == 'n' or 'e' or 'w':
+            print(movement_error_message)
+        elif user_input == 's':
+            update_player_room('s_to')
+
 # If the user enters "q", quit the game.
+    if user_input == 'q':
+        print('\n\nThanks for playing! Goodbye.\n\n')
+        exit(0)
