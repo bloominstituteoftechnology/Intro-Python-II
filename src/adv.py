@@ -10,21 +10,21 @@ room = {
 
     'foyer':    Room("Foyer", "Dim light filters in from the south.\n"
                               "Dusty passages run north and east.",
-                     [Item('Map', 'Map to another treasure chest in a different location')]),
+                     [Item('map', 'Map to another treasure chest in a different location')]),
 
     'overlook': Room("Grand Overlook", "A steep cliff appears before you, falling into the darkness.\n"
                                        "Ahead to the north, a light flickers in the distance,\n"
                                        "but there is no way across the chasm.",
-                     [Item('Sword', "And old rusty blade, it's been here a while")]),
+                     [Item('sword', "And old rusty blade, it's been here a while")]),
 
     'narrow':   Room("Narrow Passage", "The narrow passage bends here from west to north.\n"
                                        "The smell of gold permeates the air.",
-                     [Item('Key', "Old rusty key, it has an inscription on it but it's worn off")]),
+                     [Item('key', "Old rusty key, it has an inscription on it but it's worn off")]),
 
     'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber!\n"
                                          "Sadly, it has already been completely emptied by earlier adventurers.\n"
                                          "The only exit is to the south.",
-                     [Item('Skeleton', "Only dusty bones remain in this room.")]),
+                     [Item('skeleton', "Only dusty bones remain in this room.")]),
 }
 
 
@@ -58,6 +58,37 @@ player = Player('Chad', room['outside'])
 #
 # If the user enters "q", quit the game.
 
+
+def perform_move(command):
+    if command in ['q', 'quit', 'exit']:
+        print("\nThanks for playing!\n")
+        global running
+        running = False
+    elif command in ['?', 'help']:
+        print("\nValid commands: ['n': North, 's': South, 'e': East,\n"
+              "'w': West, 'q, quit, exit': Quit, '?, help': Help]\n")
+    else:
+        next_room = player.move_to(command)
+        if next_room is None:
+            print("\nNo room in this direction.\n")
+        elif next_room is room['treasure']:
+            list = [i.name for i in player.items]
+            if 'key' not in list:
+                print("You're missing the key to get in. Please look for a key and come back.")
+            else:
+                player.current_room = next_room
+        else:
+            player.current_room = next_room
+
+
+def perform_action(command):
+    if command[0] in ['get', 'take', 'pickup']:
+        for item in player.current_room.items:
+            if item.name == command[1]:
+                player.items.append(item)
+                player.current_room.items.remove(item)
+
+
 running = True
 
 while running:
@@ -67,16 +98,9 @@ while running:
         for item in player.current_room.items:
             print(f"Items: {item.name}, {item.description}")
 
-    command = input('\nWhere do you want to go? Enter (n, s, e, or w; q to quit): ')
-    if command in ['q', 'quit', 'exit']:
-        print("\nThanks for playing!\n")
-        running = False
-    elif command in ['?', 'help']:
-        print("\nValid commands: ['n': North, 's': South, 'e': East,\n"
-              "'w': West, 'q, quit, exit': Quit, '?, help': Help]\n")
+    command = input('\nWhere do you want to go? Enter (n, s, e, or w; q to quit): ').split(' ')
+    if len(command) > 1:
+        perform_action(command)
+        continue
     else:
-        next_room = player.move_to(command)
-        if next_room is None:
-            print("\nNo room in this direction.\n")
-        else:
-            player.current_room = next_room
+        perform_move(command[0])
