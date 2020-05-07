@@ -1,4 +1,5 @@
 from room import Room
+from item import Item
 from player import Player
 
 # Declare all the rooms
@@ -8,18 +9,22 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", "Dim light filters in from the south.\n"
-                              "Dusty passages run north and east."),
+                              "Dusty passages run north and east.",
+                     [Item('Map', 'Map to another treasure chest in a different location')]),
 
     'overlook': Room("Grand Overlook", "A steep cliff appears before you, falling into the darkness.\n"
                                        "Ahead to the north, a light flickers in the distance,\n"
-                                       "but there is no way across the chasm."),
+                                       "but there is no way across the chasm.",
+                     [Item('Sword', "And old rusty blade, it's been here a while")]),
 
     'narrow':   Room("Narrow Passage", "The narrow passage bends here from west to north.\n"
-                                       "The smell of gold permeates the air."),
+                                       "The smell of gold permeates the air.",
+                     [Item('Key', "Old rusty key, it has an inscription on it but it's worn off")]),
 
     'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber!\n"
                                          "Sadly, it has already been completely emptied by earlier adventurers.\n"
-                                         "The only exit is to the south."),
+                                         "The only exit is to the south.",
+                     [Item('Skeleton', "Only dusty bones remain in this room.")]),
 }
 
 
@@ -33,6 +38,7 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
 
 #
 # Main
@@ -56,7 +62,10 @@ running = True
 
 while running:
     print(f"\n{player.current_room.name}\n")
-    print(player.current_room.description)
+    print(f"{player.current_room.description}\n")
+    if len(player.current_room.items) > 0:
+        for item in player.current_room.items:
+            print(f"Items: {item.name}, {item.description}")
 
     command = input('\nWhere do you want to go? Enter (n, s, e, or w; q to quit): ')
     if command in ['q', 'quit', 'exit']:

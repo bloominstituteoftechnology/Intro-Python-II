@@ -1,0 +1,2 @@
+class SelectionRuntimeError(Exception):
+    pass
