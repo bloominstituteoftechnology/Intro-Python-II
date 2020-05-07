@@ -1,5 +1,6 @@
+from colors import Colors
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -21,7 +22,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -38,6 +38,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = None
 
 # Write a loop that:
 #
@@ -49,3 +50,87 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# get key with value function
+
+
+def get_key(val):
+    for key, value in room.items():
+        if val == value:
+            return key
+
+    return "key doesn't exist"
+# player approaches function
+
+
+def player_approaches(player):
+    print(f'{Colors.OKBLUE}Player approaches {player.location.name}...\n{player.location.description}{Colors.ENDC}')
+
+
+while True:
+    # prompts user to create new player
+    if not player:
+        prompt = input(
+            f'\n{Colors.WARNING}*** WELCOME TO THE ADVENTURE GAME ***\n \nCreate a new character by typing in a name:{Colors.ENDC} ')
+        if prompt == "q":
+            print("Goodbye! Thanks for playing!")
+            break
+        else:
+            player = Player(prompt, room['outside'])
+            print(
+                f'\n{Colors.OKGREEN}*** Created New Player ***\n\n{player}\n\n{Colors.ENDC}')
+            currentRoom = get_key(player.location)
+            print(
+                f'{Colors.UNDERLINE}{Colors.WARNING}Current Location: {room[currentRoom].name}{Colors.ENDC}')
+    # adventure game starts
+    else:
+        try:
+            # initial prompt
+            prompt = input(
+                f'\nEnter Command or type "help" for a list of commands: ')
+            # exit prompt
+            if prompt.lower() == "q":
+                print("Goodbye! Thanks for playing!")
+                break
+            # returns player info
+            elif prompt.lower() == "player":
+                print(
+                    f'\n*** Player Info ***\n\n{player}\n\n\n*** Player Info End ***\n')
+            # handles north navigation
+            elif prompt.lower() == "n":
+                print(f'\n{Colors.HEADER}Navigating......\n{Colors.ENDC}')
+                if not player.location.n_to:
+                    print('You see nothing interesting northward..')
+                else:
+                    player.setLocation(player.location.n_to)
+                    player_approaches(player)
+            # handles east navigation
+            elif prompt.lower() == "e":
+                print(f'{Colors.HEADER}Navigating...... {Colors.ENDC}')
+                if not player.location.e_to:
+                    print('You see nothing interesting eastward..')
+                else:
+                    player.setLocation(player.location.e_to)
+                    player_approaches(player)
+            # handles south navigation
+            elif prompt.lower() == "s":
+                print(f'{Colors.HEADER}Navigating...... {Colors.ENDC}')
+                if not player.location.s_to:
+                    print('You see nothing interesting eastward..')
+                else:
+                    player.setLocation(player.location.s_to)
+                    player_approaches(player)
+            # handles west navigation
+            elif prompt.lower() == "w":
+                print(f'{Colors.HEADER}Navigating...... {Colors.ENDC}')
+                if not player.location.w_to:
+                    print('You see nothing interesting eastward..')
+                else:
+                    player.setLocation(player.location.w_to)
+                    player_approaches(player)
+            else:
+                print(
+                    f'\n{Colors.FAIL}Command not recognized. Please try again{Colors.ENDC}\n')
+
+        except ValueError:
+            print('error')
