@@ -1,0 +1,1 @@
+class Inventory_Holder

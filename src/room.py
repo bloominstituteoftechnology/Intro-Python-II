@@ -12,4 +12,4 @@ class Room:
         return f"{self.name}"
 
     def print_description(self):
-        return f"{self.subtext}"
+        return f"{self.description}"

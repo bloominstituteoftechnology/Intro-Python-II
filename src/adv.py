@@ -1,6 +1,7 @@
 import textwrap
 from room import Room
 from player import Player
+import sys 
 
 # Declare all the rooms
 
@@ -23,7 +24,11 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+direction_commands = ['n', 's', 'e', 'w']
+exit_commands = ['q', 'quit', 'exit']
+help_commands = ['?', 'help']
 
+valid_commands = direction_commands + exit_commands + help_commands
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -61,7 +66,6 @@ def print_help_text():
 
 # Write a loop that:
 while not done:
-    #
     # * Prints the current room name
     print(player.location)
     # * Prints the current description (the textwrap module might be useful here).
@@ -69,15 +73,14 @@ while not done:
         print(line)
     print("\n")
     # * Waits for user input and decides what to do.
-
     command = input("What do you want to do? ")
 
     # check that the command is properly formatted
-    if len(command) > 2 or len(command) < 1:
+    if command not in valid_commands:
         skip_input()
         continue
     
-    if command in ['n', 's', 'e', 'w']:
+    if command in direction_commands:
         player.location = player.move_to(command, player.location)
         continue
     #
@@ -85,10 +88,12 @@ while not done:
     # Print an error message if the movement isn't allowed.
     #
     # If the user enters "q", quit the game.
-    if command in ['q', 'quit', 'exit']:
+    if command in exit_commands:
         done = True
+        print("Exiting game!")
+        sys.exit(0)
 
-    if command in ['?', 'help']:
+    if command in help_commands:
         print_help_text()
         continue
 
