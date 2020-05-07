@@ -21,6 +21,10 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+   
+    'secret': Room("Secret", """You've found the long-lost treasure
+chamber! Sadly, it has already been completely emptied by
+earlier adventurers. The only exit is to the south."""),
 }
 
 
@@ -34,19 +38,21 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['secret'].n_to = room['outside']
 
 
-sword = Item("Sword", "cutting through flesh")
-axe = Item("Axe", "battle axe")
-torch = Item("Torch", "torch")
-dagger = Item("Dagger", "hunting")
-gold = Item("Gold", "Yea Buddy")
+sword = Item("sword", "cutting through flesh")
+axe = Item("axe", "battle axe")
+torch = Item("torch", "torch")
+dagger = Item("dagger", "hunting")
+gold = Item("gold", "Yea Buddy")
 
 room['outside'].items = []
 room['foyer'].items = [torch]
 room['overlook'].items = [dagger]
 room['narrow'].items = [axe, sword]
 room['treasure'].items = [gold]
+room['secret'].items =[map]
 
 #
 # Main
@@ -65,9 +71,19 @@ newPlayer =Player('Dave', room['outside'])
 #
 # If the user enters "q", quit the game.
 
+print("\033[1;32;40m \n")
+
 while True:
-    action = input('Enter an action: ')
-    if action == 'start':
+    action = input('Enter an action: ⚔🤩').split(" ")
+    if len(action) == 1 :
+        action = action[0]
+    
+    elif len(action) == 2 :
+        new_item = action[1]
+        action = action[0]
+        
+
+    if action == 'start😎':
         if newPlayer.current_room:
             print(f'{newPlayer.current_room}')
         else:
@@ -105,3 +121,26 @@ while True:
                 print(obj.name)
         else:
             print('no items in your room')
+
+    if action == 'inv':
+        newPlayer.print_inventory()
+    
+    if action in ["take", "get"]:
+        for inv in newPlayer.current_room.items:
+            if inv.name == new_item:
+                newPlayer.add(inv)
+                newPlayer.current_room.on_take(inv)
+            else:
+                print('item is not in the room')
+
+    if action in ["drop", "d"]:
+        for inv in newPlayer.inventory:
+            if inv.name == new_item:
+                newPlayer.remove(inv)
+                newPlayer.current_room.on_drop(inv)
+            else:
+                print('item is not in inventory')
+
+               
+
+

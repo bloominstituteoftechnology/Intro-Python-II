@@ -11,16 +11,14 @@ class Room:
         self.w_to = None
         self.items = items
 
-    def add_items(self, item):
+    def on_drop(self, item):
         self.items.append(item)
+        print(f'{item} has been dropped into room ')
+
+    def on_take(self, item):
+        self.items.remove(item)
+        print(f'{item} has been taken from room ')
 
     def __str__(self):
         return f"you are in the {self.name}, {self.description} "
 
-
-outside = Room('outside', 'the caves forward the cliff is backward', ['sword', 'dagger', 'axe'])
-sword = Item('sword', 'longsilver')
-
-outside.add_items(sword)
-
-print(outside.items)
