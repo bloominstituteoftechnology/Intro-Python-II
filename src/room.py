@@ -22,3 +22,4 @@ class Room():
             print("This room has: ")
             for item in self.items:
                 print(item.name)
+                print(item.description)

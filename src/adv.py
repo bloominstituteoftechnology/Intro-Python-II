@@ -79,8 +79,8 @@ while True:
         if user_selection[0] in ["take", "get", "pickup"]:
             if items[user_selection[1]]:
                 new_player.pickup_item(items[user_selection[1]])
+                
                 print("\n\nYou have added a new item to inventory!\n")
-                print(new_player.print_items())
                 print(f"{new_player.player_name} is {new_player.current_room} \n")
                 print(new_player.current_room.list_items())
             else:

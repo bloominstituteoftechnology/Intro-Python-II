@@ -19,7 +19,7 @@ class Player():
         if self.current_room.items.count(item) > 0:
             self.items.append(item)
             self.current_room.items.remove(item)
-            item.pick_up
+            item.pick_up()
         else:
             print(f"A {item.name} is not in this room.")
 
@@ -27,7 +27,7 @@ class Player():
         if self.items.count(item) > 0:
             self.current_room.items.append(item)
             self.items.remove(item)
-            item.drop
+            item.drop()
         else:
             print(f"You do not have a {item.name} to drop.")
 
