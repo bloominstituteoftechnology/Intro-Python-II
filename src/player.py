@@ -1,10 +1,12 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
+from inventory_holder import Inventory_Holder
 
-class Player:
+class Player(Inventory_Holder):
     def __init__(self, name, location):
         self.name = name
         self.location = location
+        self.inventory = inventory 
 
     def move_to(self, direction, current_loc):
         # try to move in the specified direction 

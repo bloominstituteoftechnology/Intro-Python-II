@@ -3,8 +3,14 @@ from room import Room
 from player import Player
 import sys 
 
-# Declare all the rooms
+# create all valid user inputs 
+direction_commands = ['n', 's', 'e', 'w']
+exit_commands = ['q', 'quit', 'exit']
+help_commands = ['?', 'help']
+item_commands = ['get', 'drop', 'i']
 
+valid_commands = direction_commands + exit_commands + help_commands + item_commands
+# Declare all the rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"), 
@@ -24,11 +30,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-direction_commands = ['n', 's', 'e', 'w']
-exit_commands = ['q', 'quit', 'exit']
-help_commands = ['?', 'help']
-
-valid_commands = direction_commands + exit_commands + help_commands
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -40,18 +41,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
-
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Sean", room['outside'])
+player = Player("Mike", room['outside'])
 
 done = False
 
 # helper function to skip invalid inputs
 def skip_input():
-    print("I don't understand that\n")
+    print("I don't understand that!\n")
 
 def print_help_text():
     print("""
@@ -85,6 +82,9 @@ while not done:
         player.location = player.move_to(command, player.location)
         continue
     #
+    if command == 'i':
+       player.show_inventory()
+        
     # If the user enters a cardinal direction, attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
     #

@@ -2,8 +2,9 @@
 # description attributes.
 from typing import List
 from item import Item 
+from inventory_holder import Inventory_Holder
 
-class Room:
+class Room(Inventory_Holder):
     def __init__(self, name: str, description: str, inventory: List[Item] = []):
         self.name = name
         self.description = description
