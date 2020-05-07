@@ -1,6 +1,6 @@
 from room import Room
 from player import Player 
-
+from item import Item
 
 # Declare all the rooms
 
@@ -34,6 +34,19 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+
+sword = Item("Sword", "cutting through flesh")
+axe = Item("Axe", "battle axe")
+torch = Item("Torch", "torch")
+dagger = Item("Dagger", "hunting")
+gold = Item("Gold", "Yea Buddy")
+
+room['outside'].items = []
+room['foyer'].items = [torch]
+room['overlook'].items = [dagger]
+room['narrow'].items = [axe, sword]
+room['treasure'].items = [gold]
 
 #
 # Main
@@ -85,3 +98,10 @@ while True:
             print('no path in that direction')
     if action == 'q':
        exit()
+
+    if action == 'look':
+        if newPlayer.current_room.items:
+            for obj in newPlayer.current_room.items:    
+                print(obj.name)
+        else:
+            print('no items in your room')
