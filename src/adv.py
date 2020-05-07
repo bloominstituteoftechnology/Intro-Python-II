@@ -72,8 +72,8 @@ def perform_move(command):
         if next_room is None:
             print("\nNo room in this direction.\n")
         elif next_room is room['treasure']:
-            list = [i.name for i in player.items]
-            if 'key' not in list:
+            item_list = [i.name for i in player.items]
+            if 'key' not in item_list:
                 print("You're missing the key to get in. Please look for a key and come back.")
             else:
                 player.current_room = next_room
@@ -85,8 +85,13 @@ def perform_action(command):
     if command[0] in ['get', 'take', 'pickup']:
         for item in player.current_room.items:
             if item.name == command[1]:
-                player.items.append(item)
-                player.current_room.items.remove(item)
+                item.on_take(player)
+            else:
+                print(f"{command[1]} cannot be found in this room")
+    elif command[0] in ['drop', 'putdown', 'place']:
+        for item in player.items:
+            if item.name == command[1]:
+                item.on_drop(player)
 
 
 running = True
