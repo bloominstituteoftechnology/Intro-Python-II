@@ -1,11 +1,9 @@
+import textwrap
 from room import Room
 from player import Player
 
-def exit(message: str):
-    print(message)
-    exit(0)
-
 # Declare all the rooms
+
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -27,6 +25,7 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
+
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -36,20 +35,63 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-player = Player(name="Mike", location=room['outside'])
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Sean", room['outside'])
+
+done = False
+
+# helper function to skip input we don't understand
+def skip_input():
+    print("I don't understand that\n")
+
+def print_help_text():
+    print("""
+    Valid commands:
+        -[n]: move north
+        -[s]: move south
+        -[e]: move east
+        -[w]: move west
+        -[q]: quit
+        -[help]: help text
+    """)
 
 # Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+while not done:
+    #
+    # * Prints the current room name
+    print(player.location)
+    # * Prints the current description (the textwrap module might be useful here).
+    for line in textwrap.wrap(player.location.print_description()):
+        print(line)
+    print("\n")
+    # * Waits for user input and decides what to do.
+
+    command = input("What do you want to do? ")
+
+    # check that the command is properly formatted
+    if len(command) > 2 or len(command) < 1:
+        skip_input()
+        continue
+    
+    if command in ['n', 's', 'e', 'w']:
+        player.location = player.move_to(command, player.location)
+        continue
+    #
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    # Print an error message if the movement isn't allowed.
+    #
+    # If the user enters "q", quit the game.
+    if command in ['q', 'quit', 'exit']:
+        done = True
+
+    if command in ['?', 'help']:
+        print_help_text()
+        continue
+
+    else:
+        skip_input()
+        continue 
