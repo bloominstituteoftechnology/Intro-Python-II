@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -38,6 +40,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player('John', 'outside')
 
 # Write a loop that:
 #
@@ -49,3 +52,53 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def find_key(value, my_dict):
+    key_list = list(my_dict.keys())
+    value_list = list(my_dict.values())
+    return key_list[value_list.index(value)]
+
+while True:
+    print('\n','I am in the room {}'.format(player.current_room), '\n')
+    # text = f'I am in the room of {player.current_room}. I do not know where to go now However. I will explore around to find a room for treasure.'
+    # print(textwrap.wrap(text)[0])
+    user_input = input('Please enter the direction to go (for exit, enter "q"): ')
+
+    if user_input == 'q':
+        break
+    # print('user_input',user_input)
+    if user_input == 'n':
+        print('\n', 'going north')
+        if  room[player.current_room].s_to != None:
+            player.current_room = find_key(room[player.current_room].s_to, room)
+            print('\n',f'now I am in {player.current_room}')
+        else: 
+            print('\n', 'no room is in the direction, please choose others')
+            
+    elif user_input == 's':
+        print('\n', 'going south')
+        if room[player.current_room].n_to != None:
+            player.current_room = find_key(room[player.current_room].n_to, room)
+            print('\n',f'now I am in {player.current_room}')
+        else:
+             print('\n', 'no room is in the direction, please choose others')
+
+    elif user_input == 'e':
+        print('\n', 'going east')
+        if room[player.current_room].w_to != None:
+            player.current_room = find_key(room[player.current_room].w_to, room)
+            print('\n',f'now I am in {player.current_room}')
+        else:
+             print('\n', 'no room is in the direction, please choose others')
+            
+    elif user_input == 'w':
+        print('\n', 'going west')
+        if room[player.current_room].e_to != None:
+            player.current_room = find_key(room[player.current_room].e_to, room)
+            print('\n',f'now I am in {player.current_room}')
+        else:
+             print('\n', 'no room is in the direction, please choose others')
+    else:
+        print('Wrong key is entered, please try again')      
+
+
