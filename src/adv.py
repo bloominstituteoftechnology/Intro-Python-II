@@ -49,7 +49,7 @@ player = Player("Sean", room['outside'])
 
 done = False
 
-# helper function to skip input we don't understand
+# helper function to skip invalid inputs
 def skip_input():
     print("I don't understand that\n")
 
@@ -78,6 +78,7 @@ while not done:
     # check that the command is properly formatted
     if command not in valid_commands:
         skip_input()
+        print_help_text()
         continue
     
     if command in direction_commands:
