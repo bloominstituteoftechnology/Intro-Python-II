@@ -6,3 +6,4 @@ class Player:
     def __init_(self, name, room):
         self.name = name
         self.room = room
+        sle
