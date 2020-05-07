@@ -3,7 +3,7 @@
 from inventory_holder import Inventory_Holder
 
 class Player(Inventory_Holder):
-    def __init__(self, name, location):
+    def __init__(self, name, location, inventory):
         self.name = name
         self.location = location
         self.inventory = inventory 
