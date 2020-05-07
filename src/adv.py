@@ -7,19 +7,19 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    Room("Foyer", "Dim light filters in from the south.\n"
+                              "Dusty passages run north and east."),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'overlook': Room("Grand Overlook", "A steep cliff appears before you, falling into the darkness.\n"
+                                       "Ahead to the north, a light flickers in the distance,\n"
+                                       "but there is no way across the chasm."),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'narrow':   Room("Narrow Passage", "The narrow passage bends here from west to north.\n"
+                                       "The smell of gold permeates the air."),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+    'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber!\n"
+                                         "Sadly, it has already been completely emptied by earlier adventurers.\n"
+                                         "The only exit is to the south."),
 }
 
 
@@ -55,16 +55,19 @@ player = Player('Chad', room['outside'])
 running = True
 
 while running:
-    print(player.current_room.name)
+    print(f"\n{player.current_room.name}\n")
     print(player.current_room.description)
 
-    user_input = input('Where do you want to go? Enter (n, s, e, or w; q to quit): ')
-    if user_input == 'q':
-        print('Thanks for playing!')
+    command = input('\nWhere do you want to go? Enter (n, s, e, or w; q to quit): ')
+    if command in ['q', 'quit', 'exit']:
+        print("\nThanks for playing!\n")
         running = False
+    elif command in ['?', 'help']:
+        print("\nValid commands: ['n': North, 's': South, 'e': East,\n"
+              "'w': West, 'q, quit, exit': Quit, '?, help': Help]\n")
     else:
-        next_room = player.current_room.get_next_room_for_direction(user_input)
+        next_room = player.move_to(command)
         if next_room is None:
-            print("No room in this direction.")
+            print("\nNo room in this direction.\n")
         else:
             player.current_room = next_room
