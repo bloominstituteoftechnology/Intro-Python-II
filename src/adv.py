@@ -71,7 +71,7 @@ newPlayer =Player('Dave', room['outside'])
 #
 # If the user enters "q", quit the game.
 
-print("\033[1;32;40m \n")
+print("\033[1;31;40m \n")
 
 while True:
     action = input('Enter an action: ⚔🤩').split(" ")
