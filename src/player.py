@@ -1,9 +1,12 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
+
+from typing import List, Generic
+from item import Item
 from inventory_holder import Inventory_Holder
 
 class Player(Inventory_Holder):
-    def __init__(self, name, location, inventory):
+    def __init__(self, name, location, inventory: List[Item]=[]):
         self.name = name
         self.location = location
         self.inventory = inventory 
