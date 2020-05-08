@@ -13,21 +13,22 @@ class Room:
 
     def show_inventory(self):
         print("This is what's in our inventory: \n")
+        # this is how to check for empty list in Python
+
         for item in self.inventory:
             print(item)
 
     def item_transfer(self, item: Item, other):
         self.inventory.remove(item)
-        print("{item.name} has been removed from {self.name}'s inventory")
+        print(f"{item.name} has been removed from {self.name}'s inventory")
         other.inventory.append(item)
-        print("{item.name} has been added to {self.name}'s inventory")
+        print(f"{item.name} has been added to {other.name}'s inventory")
 
     # spawn item in inventory
     def item_spawn(self, item: Item):
         self.inventory.append(item)
-        print("{item.name} has been spawned and added to {self.name}'s inventory")
-    def __str__(self):
-        return f"{self.name}"
-
+      #  print(f"{item.name} has been spawned and added to {self.name}'s inventory")
+        print(item.name, "has been spawned to", self.name, "and added to their inventory")
+    
     def print_description(self):
         return f"{self.description}"

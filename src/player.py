@@ -5,7 +5,7 @@ from typing import List, Generic
 from item import Item
 from inventory_holder import Inventory_Holder
 
-class Player(Inventory_Holder):
+class Player:
     def __init__(self, name, location, inventory: List[Item]=[]):
         self.name = name
         self.location = location
@@ -14,13 +14,13 @@ class Player(Inventory_Holder):
     def show_inventory(self):
         print("This is what's in our inventory: \n")
         for item in self.inventory:
-            print(item)
+            print(item.name)
 
     def item_transfer(self, item: Item, other):
         self.inventory.remove(item)
-        print("{item.name} has been removed from {self.name}'s inventory")
+        print(f"{item.name} has been removed from {self.name}'s inventory")
         other.inventory.append(item)
-        print("{item.name} has been added to {self.name}'s inventory")
+        print(f"{item.name} has been added to {other.name}'s inventory")
 
     # spawn item in inventory
     def item_spawn(self, item: Item):

@@ -10,7 +10,7 @@ import os
 direction_commands = ['n', 's', 'e', 'w']
 exit_commands = ['q', 'quit', 'exit']
 help_commands = ['?', 'help']
-item_commands = ['get', 'drop', 'i']
+item_commands = ['get', 'drop', 'inv']
 
 valid_commands = direction_commands + exit_commands + help_commands + item_commands
 # Declare all the rooms
@@ -64,9 +64,10 @@ room['foyer'].w_to = room['graveyard']
 room['lava'].e_to = room['graveyard']
 room['graveyard'].w_to = room['lava']
 
-
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Mike", room['outside'])
+test_item = Item("Talisman", "A worn silver pendant believed to guard travelers on dangerous journeys.")
+player.item_spawn(test_item)
 
 done = False
 
@@ -88,20 +89,24 @@ def print_help_text():
 # puts one copy of each item into a random room
 # re-write later to take arguments if bored
 def seed_items():
-    for i in item:
-        random_room = random.sample(room, 1)
-        room[random_room].spawn_item(i)
-
-
+    print("SEEDING ITEMS IN WORLD \n")
+    for key in room:
+        # print(key)
+        #import ipdb; ipdb.set_trace()
+        room[key].item_spawn(random.choice(list(item.values())))
+    print("\n")
+print("STARTING GAME \n")
+seed_items()
 
 # Write a loop that runs the game until quit command 
 while not done:
     # * Prints the current room name
-    print(player.location)
+    print("You are currently at", player.location.name)
     # * Prints the current description (the textwrap module might be useful here).
     for line in textwrap.wrap(player.location.print_description()):
         print(line)
     print("\n")
+    # print(player.location.show_inventory())
     # * Waits for user input and decides what to do.
     command = input("What do you want to do? ")
 
@@ -115,20 +120,31 @@ while not done:
         player.location = player.move_to(command, player.location)
         continue
     #
-    elif command == 'i':
-       player.show_inventory()
-       continue
-        
+    elif command in ['inv']:
+        print("SHOWING INVENTORY")
+        player.show_inventory()
+        continue
+    # these are hacky and the entire thing should be done with arg parse :(
+    # this just loots all
+    elif command in ['get']:
+        for item in player.location.inventory:
+            player.location.item_transfer(item, player)
+        continue
+    # and this just drops all 
+    elif command in ['drop']:
+        for item in player.inventory:
+            player.item_transfer(item, player.location)
+        continue
     # If the user enters a cardinal direction, attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
     #
     # If the user enters "q", quit the game.
-    if command in exit_commands:
+    elif command in exit_commands:
         done = True
         print("Exiting game!")
         sys.exit(0)
 
-    if command in help_commands:
+    elif command in help_commands:
         print_help_text()
         continue
 
