@@ -11,6 +11,22 @@ class Player(Inventory_Holder):
         self.location = location
         self.inventory = inventory 
 
+    def show_inventory(self):
+        print("This is what's in our inventory: \n")
+        for item in self.inventory:
+            print(item)
+
+    def item_transfer(self, item: Item, other):
+        self.inventory.remove(item)
+        print("{item.name} has been removed from {self.name}'s inventory")
+        other.inventory.append(item)
+        print("{item.name} has been added to {self.name}'s inventory")
+
+    # spawn item in inventory
+    def item_spawn(self, item: Item):
+        self.inventory.append(item)
+        print("{item.name} has been spawned and added to {self.name}'s inventory")
+
     def move_to(self, direction, current_loc):
         # try to move in the specified direction 
         attribute = direction + '_to'

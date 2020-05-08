@@ -6,8 +6,9 @@ from typing import List, Generic
 from item import Item
 
 class Inventory_Holder:
-    def __init__(self, name:str, inventory: List[Item] = []):
+    def __init__(self, name:str, location, inventory: List[Item] = []):
         self.name = name
+        self.location = location
         self.inventory = inventory
 
     def show_inventory(self):

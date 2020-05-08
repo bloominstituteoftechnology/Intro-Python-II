@@ -3,6 +3,8 @@ from room import Room
 from player import Player
 from item import Item 
 import sys 
+import random 
+import os
 
 # create all valid user inputs 
 direction_commands = ['n', 's', 'e', 'w']
@@ -83,7 +85,16 @@ def print_help_text():
         -[help]: help text
     """)
 
-# Write a loop that:
+# puts one copy of each item into a random room
+# re-write later to take arguments if bored
+def seed_items():
+    for i in item:
+        random_room = random.sample(room, 1)
+        room[random_room].spawn_item(i)
+
+
+
+# Write a loop that runs the game until quit command 
 while not done:
     # * Prints the current room name
     print(player.location)
@@ -100,12 +111,13 @@ while not done:
         print_help_text()
         continue
     
-    if command in direction_commands:
+    elif command in direction_commands:
         player.location = player.move_to(command, player.location)
         continue
     #
-    if command == 'i':
+    elif command == 'i':
        player.show_inventory()
+       continue
         
     # If the user enters a cardinal direction, attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
