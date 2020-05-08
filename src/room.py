@@ -19,4 +19,8 @@ class Room:
         for item in self.items:
             print(f'{item.name}')
         print('\n')
-            
+    
+    def delete_items(self, item):
+
+        self.items = [item1 for item1 in self.items if item1['name'] != item]
+        print(f'item deleted in the room: {item}')

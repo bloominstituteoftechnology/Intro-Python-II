@@ -10,8 +10,11 @@ class Player:
     def __str__(self):
         return f"<Player name: {self.name}, current_room: {self.current_room}, invenotry: {self.inventory}>"
 
-    def pickup_items(*items):
-        print('Player picked up items...')
+    def pickup_items(self, *items):
+        print('\nPlayer picked up items...\n')
+   
         for item in items:
             self.inventory.append(item)
             print(f'{item}')
+        print('\n')
+        print('self.inventory', self.inventory)

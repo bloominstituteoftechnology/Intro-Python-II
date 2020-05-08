@@ -49,11 +49,11 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 player = Player('John', 'outside')
 
-knife = Item('knife', 'small knife')
-map = Item('map', 'map for navigation to room')
-sword = Item('sword', ' long sward for battle')
-bike = Item('bike', 'bike for fast navigation')
-shoe = Item('shoe', 'magic shoe')
+# knife = Item('knife', 'small knife')
+# map = Item('map', 'map for navigation to room')
+# sword = Item('sword', ' long sward for battle')
+# bike = Item('bike', 'bike for fast navigation')
+# shoe = Item('shoe', 'magic shoe')
 
 # Write a loop that:
 #
@@ -74,6 +74,17 @@ def find_key(value, my_dict):
 while True:
     print('\n','I am in the room called {}'.format(player.current_room), '\n')
     room[player.current_room].get_items()
+    user_item = input('Please enter "take item1 item2" or drop item":  ')
+    item_arr = user_item.split(' ')
+    
+    action = item_arr[0]
+    items = item_arr[1:]
+    print('item_arr', items)
+    if item_arr[0] == 'take':
+        player.pickup_items(*items)
+        for item in items:
+            room[player.current_room].delete_items(item)
+
     # text = f'I am in the room of {player.current_room}. I do not know where to go now However. I will explore around to find a room for treasure.'
     # print(textwrap.wrap(text)[0])
     user_input = input('Please enter the direction to go (for exit, enter "q"): ')
@@ -86,7 +97,6 @@ while True:
         if  room[player.current_room].s_to != None:
             player.current_room = find_key(room[player.current_room].s_to, room)
             print('\n',f'now I am in {player.current_room}')
-            room[player.current_room].get_items()
         else: 
             print('\n', 'no room is in the direction, please choose others')
             
