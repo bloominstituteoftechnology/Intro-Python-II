@@ -1,6 +1,7 @@
 import textwrap
 from room import Room
 from player import Player
+from item import Item 
 import sys 
 
 # create all valid user inputs 
@@ -28,6 +29,19 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+    'graveyard': Room("Graveyard", """ A dark mist prevents you from seeing more 
+    than a few feet in front of you. The floor is littered with tiny bones."""),
+}
+
+# Declare all items
+
+item = {
+    'ring':     Item("Ring", "This old rusty ring has what looks to be a dragon wrestling a lion."),
+
+    'box':      Item("Blossom", "An immaculately preserved flower from another age."),
+
+    'fang':     Item("Fang", "A massive tooth from an unknown predator." ),
 }
 
 # Link rooms together
