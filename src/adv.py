@@ -1,3 +1,4 @@
+from item import Item
 from room import Room
 from player import Player
 
@@ -5,9 +6,81 @@ from player import Player
 
 prompt = '> '
 
+# Define commands.
+
+
+def drop(player, item_names):
+    for name in item_names:
+        try:
+            if items[name] in player.inventory.keys():
+                player.room.contents[items[name]] += 1
+                player.inventory[items[name]] -= 1
+                if player.inventory[items[name]] == 0:
+                    player.inventory.pop(items[name])
+                print(f'You dropped {items[name].short}.')
+            else:
+                print(f'The {name} doesn\'t seem to be something you can drop '
+                      'at the moment.')
+        except KeyError:
+            print(f'The {name} doesn\'t seem to be something you can drop at '
+                  'the moment.')
+
+
+def get(player, item_names):
+    for name in item_names:
+        try:
+            if items[name] in player.room.contents:
+                player.inventory[items[name]] += 1
+                player.room.contents[items[name]] -= 1
+                if player.room.contents[items[name]] == 0:
+                    player.room.contents.pop(items[name])
+                    print(f'You have picked up {items[name].short}.')
+            else:
+                print(f'The {name} doesn\'t seem to be something you can get, '
+                      'at least not here and now.')
+        except KeyError:
+            print(f'The {name} doesn\'t seem to be something you can get, '
+                  'at least not here and now.')
+
+
+def inv(player, filter):
+    if len(player.inventory) == 0:
+        print('You are empty-handed.')
+    else:
+        print('You are carrying:')
+        for item, count in player.inventory.items():
+            if ' '.join(filter) in item.short:
+                if count == 1:
+                    print(item.short)
+                else:
+                    print(f'{count} of {item.short}')
+
+
+def look(player, item_names):
+    if len(item_names) == 0:
+        print(player.room)
+    else:
+        for name in item_names:
+            try:
+                if items[name] in player.inventory or \
+                 items[name] in player.room.contents:
+                    print(items[name].full)
+            except KeyError:
+                print(f'The {name} doesn\'t appear to be visible at the '
+                      'moment.')
+
+
+# Define aliases.
+aliases = {'i': 'inv',
+           'inventory': 'inv',
+           'l': 'look',
+           'take': 'get',
+           }
+
+
 # Declare all the rooms
 
-room = {
+rooms = {
     'outside':  Room('Outside Cave Entrance',
                      'North of you, the cave mouth beckons.'),
 
@@ -30,24 +103,46 @@ room = {
                      'adventurers. The only exit is to the south.'),
 }
 
-
 # Link rooms together
 
-room['outside'].exits['n'] = room['foyer']
-room['foyer'].exits['s'] = room['outside']
-room['foyer'].exits['n'] = room['overlook']
-room['foyer'].exits['e'] = room['narrow']
-room['overlook'].exits['s'] = room['foyer']
-room['narrow'].exits['w'] = room['foyer']
-room['narrow'].exits['n'] = room['treasure']
-room['treasure'].exits['s'] = room['narrow']
+rooms['outside'].exits['n'] = rooms['foyer']
+rooms['foyer'].exits['s'] = rooms['outside']
+rooms['foyer'].exits['n'] = rooms['overlook']
+rooms['foyer'].exits['e'] = rooms['narrow']
+rooms['overlook'].exits['s'] = rooms['foyer']
+rooms['narrow'].exits['w'] = rooms['foyer']
+rooms['narrow'].exits['n'] = rooms['treasure']
+rooms['treasure'].exits['s'] = rooms['narrow']
+
+
+# Define items, if any.
+
+items = {
+        'lantern': Item('lantern',
+                        'a battered brass lantern',
+                        'A battered brass lantern rests on the ground here.',
+                        'It\'s worn and dented, but still holds oil.'),
+        'flyer': Item('flyer',
+                      'a tattered flyer',
+                      'A tattered flyer lies nearby.',
+                      'It\'s an advertisement for a lantern company: "Do you '
+                      'sweat when you adventure? Can you really trust a mere '
+                      'spray to keep GRUES from smelling YOU? Acme Lanterns '
+                      'has the answer!"'
+                      )
+        }
+
+# Place item(s) in rooms.
+
+rooms['outside'].contents[items['lantern']] = 1
+rooms['narrow'].contents[items['flyer']] = 1
 
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(room['outside'])
+player = Player(rooms['outside'])
 
 # Write a loop that:
 #
@@ -59,10 +154,25 @@ player = Player(room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-move = input(f'{player.room}\n\n{prompt}')
-while move != 'q':
+action = input(f'{player.room}\n\n{prompt}')
+while action not in ['q', 'quit']:
     try:
-        player.room = player.room.exits[move]
-        move = input(f'{player.room}\n\n{prompt}')
-    except KeyError:
-        move = input(f'There\'s no obvious way to do that.\n\n{prompt}')
+        action = action.lower().split()
+        if action[0] in aliases:
+            action[0] = aliases[action[0]]
+        elif action[0] == 'go':
+            if len(action) == 1:
+                print('Go where?')
+            else:
+                action = action[1:]
+        try:
+            player.room = player.room.exits[action[0]]
+            print(player.room)
+        except (TypeError, KeyError):
+            eval(f'{action[0]}(player, {action[1:]})')
+    except NameError:
+        print(f'There\'s no obvious way to do that.')
+    except Exception as e:
+        print(e)
+    finally:
+        action = input(f'\n{prompt}')
