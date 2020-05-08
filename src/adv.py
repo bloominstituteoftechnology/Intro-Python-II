@@ -30,8 +30,11 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 
-    'graveyard': Room("Graveyard", """ A dark mist prevents you from seeing more 
+    'graveyard': Room("Graveyard", """A dark mist prevents you from seeing more 
     than a few feet in front of you. The floor is littered with tiny bones."""),
+
+    'lava':      Room("Lava", """A room filled with lava that will be harmful to 
+    the player when the developers find time to make it so soon(TM)""")
 }
 
 # Declare all items
@@ -54,6 +57,11 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['graveyard'].e_to = room['foyer']
+room['foyer'].w_to = room['graveyard']
+room['lava'].e_to = room['graveyard']
+room['graveyard'].w_to = room['lava']
+
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Mike", room['outside'])
