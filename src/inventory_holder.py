@@ -1,4 +1,8 @@
-from typing import List
+# this class be be defined as a generic class
+# for doing type annotations
+
+
+from typing import List, Generic
 from item import Item
 
 class Inventory_Holder:
@@ -7,13 +11,14 @@ class Inventory_Holder:
         self.inventory = inventory
 
     def show_inventory(self):
+        print("This is what's in the inventory: \n")
         for item in self.inventory:
             print(item)
 
-    def item_transfer(self, item: Item, target: Inventory_Holder):
+    def item_transfer(self, item: Item, other):
         self.inventory.remove(item)
         print("{item.name} has been removed from {self.name}'s inventory")
-        target.inventory.append(item)
+        other.inventory.append(item)
         print("{item.name} has been added to {self.name}'s inventory")
 
     # spawn item in inventory
