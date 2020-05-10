@@ -51,17 +51,6 @@ room['foyer'].rm_items = [boots]
 
 # Make a new player object that is currently in the 'outside' room.
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
-
 def check_direction(direction, curr_room):
     rm - direction + ' _to'
     if hasattr(curr_room, rm):
@@ -93,4 +82,38 @@ def take_rm_item(player, curr_rm):
         return player.get_inventory()
     
     
+name_of_player = input("Please enter your name: ")
+new_player = Player(name_of_player, room['outside'], items_found=[])
+
+# Write a loop that:
+while True:
+#
+# * Prints the current room name
+print(f'{new_player.player_name}, you are in {new_player.curr_location.name}. {new_player.curr_location.room_desc}')
+print(check_room_items(new_player.curr_location))
+print(new_player.get_inventory())
+print(check_room_items(new_player.curr_location))
+
+# * Prints the current description (the textwrap module might be useful here).
+# * Waits for user input and decides what to do.
+
+move_to_new_room = input (
+    "Please select a direction\n, s, e, w, get Or q: ").lower()
+
+new_player.curr_location = check_direction(
+    move_to_new_room, new_player.curr_location)
+
+new_player.items_found = take_rm_item(
+    new_player, new_player.curr_location)
+
+items_in_room = check_room_items(new_player.curr_location)
+
+#
+# If the user enters a cardinal direction, attempt to move to the room there.
+# Print an error message if the movement isn't allowed.
+#
+# If the user enters "q", quit the game.
+
+
+
         
