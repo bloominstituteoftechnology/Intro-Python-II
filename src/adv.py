@@ -49,3 +49,14 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+from room import Room
+from player import Player
+from item import Item
+
+# Declare items 
+sword = Item("Sword", "An ancient samurai sword.") 
+helmet = Item("Helmet", "Helmet created by demons.")
+armor = Item("Armor", "Special armor made from dragon scales.")
+boots = ("Boots", "Boots with power of flight and super speed.")
+
