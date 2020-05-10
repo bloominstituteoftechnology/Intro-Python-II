@@ -1,4 +1,12 @@
 from room import Room
+from player import Player
+from item import Item
+
+# Declare items 
+sword = Item("Sword", "An ancient samurai sword.") 
+helmet = Item("Helmet", "Helmet created by demons.")
+armor = Item("Armor", "Special armor made from dragon scales.")
+boots = ("Boots", "Boots with power of flight and super speed.")
 
 # Declare all the rooms
 
@@ -19,8 +27,7 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
-}
-
+} 
 
 # Link rooms together
 
@@ -32,6 +39,11 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+# Place items in Room
+room['treasure'].rm_items = [armor, sword]
+room['narrow'].rm_items = [helmet]
+room['foyer'].rm_items = [boots]
 
 #
 # Main
@@ -50,13 +62,35 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-from room import Room
-from player import Player
-from item import Item
-
-# Declare items 
-sword = Item("Sword", "An ancient samurai sword.") 
-helmet = Item("Helmet", "Helmet created by demons.")
-armor = Item("Armor", "Special armor made from dragon scales.")
-boots = ("Boots", "Boots with power of flight and super speed.")
-
+def check_direction(direction, curr_room):
+    rm - direction + ' _to'
+    if hasattr(curr_room, rm):
+        return getattr(curr_room, rm)
+    
+    elif direction == "q":
+        # if the user enters "q", quit the game.
+        print("Thanks for playing!")
+        exit() 
+        
+    # elif direction == "get":
+    # take_rm_item(new_player, curr_room)            
+    
+    else:
+        print('Cannot proceed in that direction')
+        return curr_room 
+    
+    
+def check_room_items(curr_rm):
+    if len(curr_rm.rm_items) > 0:
+        return f'Items in room: {[itm.item_name for itm in curr_rm.rm_items]}'
+    else:
+        return f'No Items in room.' 
+    
+def take_rm_item(player, curr_rm):
+    for itm in curr_rm.rm_items:
+        player.items_found.append(itm.item_name)
+        curr_rm.rm_items.clear()
+        return player.get_inventory()
+    
+    
+        
