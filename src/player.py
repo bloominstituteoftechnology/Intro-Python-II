@@ -3,6 +3,7 @@
 
 from typing import List, Generic
 from item import Item
+from room import Room 
 from inventory_holder import Inventory_Holder
 
 class Player:
@@ -16,11 +17,19 @@ class Player:
         for item in self.inventory:
             print(item.name)
 
-    def item_transfer(self, item: Item, other):
+    def item_take(self, item: Item):
+        self.inventory.append(item)
+        print(f"{item.name} has been removed from {self.location.name}'s inventory")
+        self.location.remove_item(item)
+        print(f"{item.name} has been added to {self.name}'s inventory")
+
+    def item_give(self, item: Item):
         self.inventory.remove(item)
         print(f"{item.name} has been removed from {self.name}'s inventory")
-        other.inventory.append(item)
-        print(f"{item.name} has been added to {other.name}'s inventory")
+        self.location.inventory.append(item)
+        print(f"{item.name} has been added to {self.location.name}'s inventory")
+
+       
 
     # spawn item in inventory
     def item_spawn(self, item: Item):

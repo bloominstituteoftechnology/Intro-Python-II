@@ -7,3 +7,4 @@ class Item:
     # variables are public so don't need getters 
     # def get_name(self):
     #     return self.name
+ #   import ipdb; ipdb.set_trace()

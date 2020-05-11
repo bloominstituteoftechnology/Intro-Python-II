@@ -18,11 +18,10 @@ class Room:
         for item in self.inventory:
             print(item)
 
-    def item_transfer(self, item: Item, other):
-        self.inventory.remove(item)
-        print(f"{item.name} has been removed from {self.name}'s inventory")
-        other.inventory.append(item)
-        print(f"{item.name} has been added to {other.name}'s inventory")
+    def remove_item(self, inventory):
+        for i in self.inventory:
+            if inventory.name == i.name:
+                self.inventory.remove(i)    
 
     # spawn item in inventory
     def item_spawn(self, item: Item):

@@ -128,12 +128,12 @@ while not done:
     # this just loots all
     elif command in ['get']:
         for item in player.location.inventory:
-            player.location.item_transfer(item, player)
+            player.item_take(item)
         continue
     # and this just drops all 
     elif command in ['drop']:
         for item in player.inventory:
-            player.item_transfer(item, player.location)
+            player.item_give(item)
         continue
     # If the user enters a cardinal direction, attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
