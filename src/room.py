@@ -3,13 +3,13 @@
 
 from typing import List
 from item import Item 
-from inventory_holder import Inventory_Holder
+# from inventory_holder import Inventory_Holder
 
 class Room:
     def __init__(self, name: str, description: str, inventory: List[Item] = []):
         self.name = name
         self.description = description
-        self.inventory = inventory
+        self.inventory = []
 
     def show_inventory(self):
         print("This is what's in our inventory: \n")

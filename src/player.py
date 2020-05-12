@@ -34,7 +34,7 @@ class Player:
     # spawn item in inventory
     def item_spawn(self, item: Item):
         self.inventory.append(item)
-        print("{item.name} has been spawned and added to {self.name}'s inventory")
+        print("{item.name} has been spawned and added to Player {self.name}'s inventory")
 
     def move_to(self, direction, current_loc):
         # try to move in the specified direction 

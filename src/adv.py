@@ -86,17 +86,20 @@ def print_help_text():
         -[help]: help text
     """)
 
-# puts one copy of each item into a random room
-# re-write later to take arguments if bored
+# for each room, adds a random item from item list to its inventory 
+
+# instead, there's a bug where each subsequent room has 1 more item than the previous room 
 def seed_items():
     print("SEEDING ITEMS IN WORLD \n")
     for key in room:
         # print(key)
-        #import ipdb; ipdb.set_trace()
-        room[key].item_spawn(random.choice(list(item.values())))
-    print("\n")
-print("STARTING GAME \n")
+        # import ipdb; ipdb.set_trace()
+        room[key].item_spawn(test_item)
+      #  room[key].show_inventory()
+        print(room[key].name, room[key].inventory)
+
 seed_items()
+import ipdb; ipdb.set_trace()
 
 # Write a loop that runs the game until quit command 
 while not done:
