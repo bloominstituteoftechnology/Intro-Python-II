@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,59 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+name = input('What is your name, adventurer? ')
+
+player = Player(name, room['outside'])
+
+print(f'Welcome, {player.name}! Your current location is: {player.room_info()}')
+
+def gameplay(player):
+    direction = input('Which direction would you like to go? (N for north, S for south, E for east, W for west, Q to quit) ')
+    direction = direction.lower()
+
+    if direction == 'n':
+        location = player.current_room.n_to
+        if location != None:
+            player = Player(name, location)
+            print(player.room_info())
+            gameplay(player)
+        else:
+            print('There is nothing to the north. Please choose a different direction.')
+            gameplay(player)
+    elif direction == 's':
+        location = player.current_room.s_to
+        if location != None:
+            player = Player(name, location)
+            print(player.room_info())
+            gameplay(player)
+        else:
+            print('There is nothing to the north. Please choose a different direction.')
+            gameplay(player)
+    elif direction == 'e':
+        location = player.current_room.e_to
+        if location != None:
+            player = Player(name, location)
+            print(player.room_info())
+            gameplay(player)
+        else:
+            print('There is nothing to the north. Please choose a different direction.')
+            gameplay(player)
+    elif direction == 'w':
+        location = player.current_room.w_to
+        if location != None:
+            player = Player(name, location)
+            print(player.room_info())
+            gameplay(player)
+        else:
+            print('There is nothing to the north. Please choose a different direction.')
+            gameplay(player)
+    elif direction == 'q':
+        print('Farewell, adventurer!')
+    else:
+        print('FAILURE')
+
+if __name__ == '__main__':
+    gameplay(player)
 
 # Write a loop that:
 #
