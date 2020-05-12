@@ -61,7 +61,7 @@ def gameplay(player):
             print(player.room_info())
             gameplay(player)
         else:
-            print('There is nothing to the north. Please choose a different direction.')
+            print('There is nothing to the south. Please choose a different direction.')
             gameplay(player)
     elif direction == 'e':
         location = player.current_room.e_to
@@ -70,7 +70,7 @@ def gameplay(player):
             print(player.room_info())
             gameplay(player)
         else:
-            print('There is nothing to the north. Please choose a different direction.')
+            print('There is nothing to the east. Please choose a different direction.')
             gameplay(player)
     elif direction == 'w':
         location = player.current_room.w_to
@@ -79,7 +79,7 @@ def gameplay(player):
             print(player.room_info())
             gameplay(player)
         else:
-            print('There is nothing to the north. Please choose a different direction.')
+            print('There is nothing to the west. Please choose a different direction.')
             gameplay(player)
     elif direction == 'q':
         print('Farewell, adventurer!')
