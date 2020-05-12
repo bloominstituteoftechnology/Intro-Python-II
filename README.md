@@ -6,6 +6,12 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 ## What We're Building
 [What's an Adventure Game? ![vid](https://tk-assets.lambdaschool.com/7928cdb4-b8a3-45a6-b231-5b9d1fc1e002_ScreenShot2019-03-22at5.47.28PM.png)](https://youtu.be/WaZccFqJUT8)
 
+## Examples
+
+* Dunnet, one of the first mass distributed text based games included in every version of the emacs editor 
+(emacs is no longer included by default with MacOS Catalina+)
+[link](https://ifdb.tads.org/viewgame?id=ig3zbeoqfv4v1xl8)
+* Links to 5 text based adventure games that can be played in browser
 
 ## Goals
 
