@@ -6,6 +6,6 @@ class Player:
     self.name = name
     self.currentroom = room
 
-  def move_to(self, room)
+  def move_to(self, room):
     self.currentroom = room
-    print(f'{self.name} moved to {room}.)
+    print(f'\n{self.name} moved to {room.name}.\n')
