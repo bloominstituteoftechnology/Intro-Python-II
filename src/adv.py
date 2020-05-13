@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import re
 
 # Declare all the rooms
 
@@ -38,6 +40,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player('Noob', room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +52,62 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+while True:
+    print(player)
+    advance = input(
+        '''Please select direction that you would like to go in
+        n - North
+        e - East
+        s - South
+        w - West
+        q - Quit
+        ''')
+    if advance.lower() == 'n' or advance.lower() == 'north':
+        if player.current_room.n_to != None:
+            player.current_room = player.current_room.n_to
+        else:
+            print('''
+            ----------------------------------------------
+
+            there is no available room to the north
+            ----------------------------------------------
+            ''')
+
+    if advance.lower() == 'e' or advance.lower() == 'east':
+        if player.current_room.e_to != None:
+            player.current_room = player.current_room.e_to
+        else:
+            print('''
+            ----------------------------------------------
+
+            there is no available room to the east
+            ----------------------------------------------
+            ''')
+
+    if advance.lower() == 's' or advance.lower() == 'south':
+        if player.current_room.s_to != None:
+            player.current_room = player.current_room.s_to
+        else:
+            print('''
+            ----------------------------------------------
+
+            there is no available room to the south
+            ----------------------------------------------
+            ''')
+
+    if advance.lower() == 'w' or advance.lower() == 'west':
+        if player.current_room.w_to != None:
+            player.current_room = player.current_room.w_to
+        else:
+            print('''
+            ----------------------------------------------
+
+            there is no available room to the west
+            ----------------------------------------------
+            ''')
+
+    if advance.lower() == 'q' or advance.lower() == 'quit':
+        break
+
