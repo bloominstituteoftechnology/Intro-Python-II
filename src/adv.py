@@ -38,6 +38,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+from player import Player
+bash = Player("Bash", room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +51,39 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+selection =  ""
+
+directions = """
+    The path splits ahead. Choose a direction:\n
+        n. North\n
+        e. East\n
+        s. South\n
+        w. West\n
+"""
+
+def move_player(player, room):
+    try:
+        player.move_to(room)
+    except ValueError:
+        print('There is no path in that direction')
+
+while selection != "q":
+    currentroom = bash.currentroom
+    print(currentroom)
+    selection = input(directions)
+    try:
+        if selection == "n":
+            move_player(bash, currentroom.n_to)
+        elif selection == "e":
+            move_player(bash, currentroom.e_to)
+        elif selection == "s":
+            move_player(bash, currentroom.s_to)
+        elif selection == "w":
+            move_player(bash, currentroom.w_to)
+        else:
+            print('Choose a valid direction.')
+    except ValueError:
+        print("Please make a valid selection.")
+
+print("Thanks for playing!")
