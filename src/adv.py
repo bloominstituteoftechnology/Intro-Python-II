@@ -45,7 +45,7 @@ player = Player(name, room['outside'])
 
 playerInput = ''
 while playerInput != 'Q' or 'q':
-    print(player1)
+    print(player)
     print('Choose your next move: [N] North [S] South [E] East [W] West [Q] Quit')
     playerInput = input('>>').upper()
 
