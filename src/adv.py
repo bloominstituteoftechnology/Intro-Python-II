@@ -55,18 +55,15 @@ bash = Player("Bash", room['outside'])
 selection =  ""
 
 directions = """
-    The path splits ahead. Choose a direction:\n
-        n. North\n
-        e. East\n
-        s. South\n
-        w. West\n
+The path splits ahead. Choose a direction:
+    n. North
+    e. East
+    s. South
+    w. West
 """
 
 def move_player(player, room):
-    try:
-        player.move_to(room)
-    except ValueError:
-        print('There is no path in that direction')
+    player.move_to(room)
 
 while selection != "q":
     currentroom = bash.currentroom
@@ -83,7 +80,7 @@ while selection != "q":
             move_player(bash, currentroom.w_to)
         else:
             print('Choose a valid direction.')
-    except ValueError:
-        print("Please make a valid selection.")
+    except AttributeError:
+        print('There is no path in that direction')
 
 print("Thanks for playing!")
