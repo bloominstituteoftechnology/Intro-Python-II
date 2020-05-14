@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,6 +40,9 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+sage = Player('sage', 'outside')
+print(sage)
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +53,25 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+user = str(input("[w] North [d] East [s] South [a] West [q] Quit"))
+
+
+while not user == 'q':
+    currentRoom = sage.location
+    print(currentRoom)
+    description = room[currentRoom].description
+    print("Current Room: {currentRoom}\nDescription: {description}".format(
+        currentRoom=currentRoom, description=description))
+    if user == 'w':
+        sage.location = room[currentRoom].n_to
+    elif user == 'd':
+        sage.location = room[currentRoom].e_to
+    elif user == 's':
+        sage.location = room[currentRoom].s_to
+    elif user == 'a':
+        sage.location = room[currentRoom].w_to
+    else:
+        print("Invalid selection. Please try again.")
+print("Thanks for playing!")
