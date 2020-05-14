@@ -117,62 +117,67 @@ def gameplay(player):
             gameplay(player)
 
     elif direction == 'in':
-        print(f'--- You currently have {player.inventory} in your inventory.')
-        command = input('You can "drop" an item or "use" an item. Please name the item. (Example: "use pebble") ')
-        command = command.lower()
-        action, thing = command.split(' ')[0], command.split(' ')[1]
-        if action == 'drop':
-            player.inventory.remove(thing)
-            player.current_room.add_item(thing)
+        if player.inventory != []:
             print(f'--- You currently have {player.inventory} in your inventory.')
-            gameplay(player)
-        elif action == 'use':
-            if thing == "rope":
-                if player.current_room.name == "--- Grand Overlook":
-                    print('--- Success! You fashion a swing and lauch yourself across the chasm, landing safely on the other side.')
-                    player.current_room = room['sphinx']
-                    print(player.room_info())
-                    gameplay(player)
-                else:
-                    print(f'The {thing} does not do anything here.')
-                    gameplay(player)
-            elif thing == "sword":
-                if player.current_room.name == "--- Sphinx Chamber":
-                    print('--- You draw your sword and manage to slay the sphinx with one quick slash.')
-                    print('--- You leave the cave dirty and tired, but alive.')
-                    print('--- Thanks for playing!')
-                else:
-                    print(f'--- The {thing} does not do anything here.')
-                    gameplay(player)
-            elif thing == "coin":
-                if player.current_room.name == "--- Sphinx Chamber":
-                    print('--- The sphinx contemplates your offering for a moment, then chuckles. "Congratulations, Adventurer." It gets to its feet and steps to the right, revealing a massive pile of treasure.')
-                    print('--- You leave the cave richer than when you started, and solved the mystery of the long-lost treasure. Congratulations!')
-                    print('--- Thanks for playing!')
-                else:
-                    print(f'--- The {thing} does not do anything here.')
-                    gameplay(player)
-            elif thing == "key":
-                if player.current_room.name == "--- Sphinx Chamber":
-                    print('--- The sphinx seems to smile as it silently stands and steps to the left, revealing a door. "You are truly worthy," it says. You step forward, unlock the door, and see a shimmering fountain.')
-                    print('--- Congratulations, you have discovered the Fountain of Youth! You now have the ability to live forever.')
-                    print('--- Thanks for playing!')
-                else:
-                    print(f'--- The {thing} does not do anything here.')
-                    gameplay(player)
-            elif thing == "pebble":
-                if player.current_room.name == "--- Sphinx Chamber":
-                    print('--- The laughter of the sphinx is the last thing you hear. It snaps you up in one bite.')
-                    print('--- Oh no, you died! Please try again.')
+            command = input('You can "drop" an item or "use" an item. Please name the item. (Example: "use pebble") ')
+            command = command.lower()
+            action, thing = command.split(' ')[0], command.split(' ')[1]
+            if action == 'drop':
+                player.inventory.remove(thing)
+                player.current_room.add_item(thing)
+                print(f'--- You currently have {player.inventory} in your inventory.')
+                gameplay(player)
+            elif action == 'use':
+                if thing == "rope":
+                    if player.current_room.name == "--- Grand Overlook":
+                        print('--- Success! You fashion a swing and lauch yourself across the chasm, landing safely on the other side.')
+                        player.current_room = room['sphinx']
+                        print(player.room_info())
+                        gameplay(player)
+                    else:
+                        print(f'The {thing} does not do anything here.')
+                        gameplay(player)
+                elif thing == "sword":
+                    if player.current_room.name == "--- Sphinx Chamber":
+                        print('--- You draw your sword and manage to slay the sphinx with one quick slash.')
+                        print('--- You leave the cave dirty and tired, but alive.')
+                        print('--- Thanks for playing!')
+                    else:
+                        print(f'--- The {thing} does not do anything here.')
+                        gameplay(player)
+                elif thing == "coin":
+                    if player.current_room.name == "--- Sphinx Chamber":
+                        print('--- The sphinx contemplates your offering for a moment, then chuckles. "Congratulations, Adventurer." It gets to its feet and steps to the right, revealing a massive pile of treasure.')
+                        print('--- You leave the cave richer than when you started, and solved the mystery of the long-lost treasure. Congratulations!')
+                        print('--- Thanks for playing!')
+                    else:
+                        print(f'--- The {thing} does not do anything here.')
+                        gameplay(player)
+                elif thing == "key":
+                    if player.current_room.name == "--- Sphinx Chamber":
+                        print('--- The sphinx seems to smile as it silently stands and steps to the left, revealing a door. "You are truly worthy," it says. You step forward, unlock the door, and see a shimmering fountain.')
+                        print('--- Congratulations, you have discovered the Fountain of Youth! You now have the ability to live forever.')
+                        print('--- Thanks for playing!')
+                    else:
+                        print(f'--- The {thing} does not do anything here.')
+                        gameplay(player)
+                elif thing == "pebble":
+                    if player.current_room.name == "--- Sphinx Chamber":
+                        print('--- The laughter of the sphinx is the last thing you hear. It snaps you up in one bite.')
+                        print('--- Oh no, you died! Please try again.')
+                    else:
+                        print(f'--- The {thing} does not do anything here.')
+                        gameplay(player)
                 else:
                     print(f'--- The {thing} does not do anything here.')
                     gameplay(player)
             else:
-                print(f'--- The {thing} does not do anything here.')
+                print('--- There seems to have been an error. Please try again.')
                 gameplay(player)
         else:
-            print('--- There seems to have been an error. Please try again.')
+            print('You have nothing in your inventory.')
             gameplay(player)
+
 
     elif direction == 'q':
         print('--- Farewell, adventurer!')
