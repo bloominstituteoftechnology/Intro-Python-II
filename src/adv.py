@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -36,8 +37,10 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+# print(room['outside'].n_to)
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player('guy', room['outside'])
 
 # Write a loop that:
 #
@@ -47,5 +50,47 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
+print('The player is in the:',player.current_room.name)
+direction = []
+while not direction == 'q':
+    direction = str(input("In what direction do you wish to travel?\n 'n', 's', 'e', 'w', 'q to quit'\n"))
+    if direction == 'n':
+        if player.current_room.n_to != []:
+            player.current_room = player.current_room.n_to
+            print('The player is now in the', player.current_room.name)
+        else: print('Sorry, cannot travel in this direction. Please make a different choice')
+
+    elif direction == 's':
+        if player.current_room.s_to != []:
+            player.current_room = player.current_room.s_to
+            print('The player is now in the', player.current_room.name)
+        else: print('Sorry, cannot travel in this direction. Please make a different choice')
+
+    elif direction == 'e':
+        if player.current_room.e_to != []:
+            player.current_room = player.current_room.e_to
+            print('The player is now in the', player.current_room.name)
+        else: print('Sorry, cannot travel in this direction. Please make a different choice')
+
+    elif direction == 'w':
+        if player.current_room.w_to != []:
+            player.current_room = player.current_room.w_to
+            print('The player is now in the', player.current_room.name)
+        else: print('Sorry, cannot travel in this direction. Please make a different choice')
+
+    elif direction == 'q': 
+        break
+
+    else:
+        print("Invalid choice, please choose again")
+
+    print('Do you wish to continue?')
+    # direction = str(input("In what direction do you wish to travel?\n'n', 's', 'e', 'w', 'q to quit''\n"))
+
+print('Thanks for playing')
+        
+
+
+
 #
 # If the user enters "q", quit the game.
