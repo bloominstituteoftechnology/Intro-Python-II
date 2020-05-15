@@ -31,7 +31,8 @@ treasure.connect(room=narrow, direction='s')
 
 # Make some items
 
-chalice = Item(id=100, name='Golden Chalice', desccription='Actually an adult toy.')
+chalice = Item(id=100, name='Golden Chalice', description='Actually an adult toy.')
+adult_toy = Item(id=200, name='GoldenPrice', description='One of those.')
 
 # Create Item Handler
 
@@ -40,6 +41,8 @@ item_handler = ItemHandler()
 # Have item_handler place chalice
 
 item_handler.place_item(chalice, outside)
+item_handler.place_item(chalice, treasure)
+item_handler.place_item(adult_toy, treasure)
 
 
 ### Helper Functions ###
@@ -72,7 +75,6 @@ if __name__ == "__main__":
 
         elif command == 'i':
             print('Your Inventory: ', player_1.scan_items())
-
 
         elif 'grab' in command:
             item = select_item(command=command, inventory=player_1.current_room.items)

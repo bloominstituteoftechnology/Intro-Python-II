@@ -10,7 +10,7 @@ class Player():
         print(self.current_room.name)
         print(self.current_room.description, "\n")
         print('In The Room: ', self.scan_items(self.current_room.items))
-        print('Inventory: ', self.items.keys())
+        print('Inventory: ', self.scan_items())
 
     def scan_items(self, inventory=None):
         scan_list = []
