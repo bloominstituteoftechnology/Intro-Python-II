@@ -7,5 +7,7 @@ class Player():
         self.current_room=current_room
 
     def __str__(self):
-        print (f'{self.name -- self.current_room}')
+        return '{0} is at {1}'.format(self.name,self.current_room)
+
+    
 

@@ -39,13 +39,13 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-name = input('Stay thy name adventurer!')
+name = input ('State thy name adventurer! : ')
 player = Player(name,room['outside'])
 
 # Write a loop that:
 #
 # * Prints the current room name
-print(f'###### Welcome {player.name}, your are at {player.room}')
+print(f"###### Welcome {player.name}, your are at {player.current_room}######")
 
 def gameplay(player):
     direction = input('Which do want to do? (Press N for North, E for east , W for West , S for South. Q for quit game')
@@ -54,21 +54,32 @@ def gameplay(player):
         if direction == 'N':
             player.current_room = player.current_room.n_to
             print('The player is now in the', player.current_room.name)
+            gameplay(player)
         elif direction == 'S':
             player.current_room = player.current_room.s_to
             print('The player is now in the', player.current_room.name)
+            gameplay(player)
         elif direction == 'E':
             player.current_room = player.current_room.e_to
             print('The player is now in the', player.current_room.name)
+            gameplay(player)
         elif direction == 'W':
             player.current_room = player.current_room.w_to
             print('The player is now in the', player.current_room.name)
+            gameplay(player)
         elif direction == 'Q':
+            print ('Farewell adventurer, come back again!')
             break
         else:
             print("Invalid choice,choose again")
+            gameplay(player)
 
-    print(f'Thanks for Playing!')
+    print('Thanks for Playing!')
+
+if __name__ == '__main__':
+    gameplay(player)
+
+
 
 
 

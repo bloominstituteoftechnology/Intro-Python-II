@@ -10,8 +10,8 @@ class Room():
         self.e_to = e_to
         self.w_to = w_to
 
-    def __str__(self):
-        print(self.name, self.description)
+    # def __str__(self):
+    #     return ''
         
 
     
