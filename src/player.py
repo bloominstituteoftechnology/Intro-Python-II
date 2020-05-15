@@ -15,6 +15,6 @@ class Player():
     def investigate(self):
         items = self.current_room.items
         if items != None:
-            return f'You see a {items}.'
+            return f'--- You see a {items}.'
         else:
-            return "There is nothing here."
+            return "--- There is nothing here."

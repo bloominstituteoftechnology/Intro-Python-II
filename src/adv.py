@@ -109,7 +109,7 @@ def gameplay(player):
 
     elif direction == 'i':
         print(player.investigate())
-        object = player.investigate()[10:-1]
+        object = player.investigate()[14:-1]
 
         if player.investigate() != "--- There is nothing here.":
             item(player, object)
@@ -123,10 +123,14 @@ def gameplay(player):
             command = command.lower()
             action, thing = command.split(' ')[0], command.split(' ')[1]
             if action == 'drop':
-                player.inventory.remove(thing)
-                player.current_room.add_item(thing)
-                print(f'--- You currently have {player.inventory} in your inventory.')
-                gameplay(player)
+                if thing in player.inventory:
+                    player.inventory.remove(thing)
+                    player.current_room.add_item(thing)
+                    print(f'--- You currently have {player.inventory} in your inventory.')
+                    gameplay(player)
+                else:
+                    print('--- There seems to have been an error. Please try again.')
+                    gameplay(player)
             elif action == 'use':
                 if thing == "rope":
                     if player.current_room.name == "--- Grand Overlook":
