@@ -57,7 +57,7 @@ while True:
     selection = input("\nEnter a direction or q to escape:\n")
 
     user_selection = selection.lower().split(" ")
-    print(user_selection)
+    # print(user_selection)
 
     if len(user_selection) == 1 and selection == "q":
         print("We shall meet again...")
