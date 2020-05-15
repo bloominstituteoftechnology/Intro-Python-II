@@ -57,19 +57,25 @@ def inv(player, filter):
 
 
 def look(player, item_names):
+    player_has_light = False
+    for item in player.inventory.keys():
+        player_has_light = player_has_light or item.light
     if len(item_names) == 0:
-        print(player.room)
+        print(player.room.__str__(player_has_light))
     else:
-        for name in item_names:
-            try:
-                if items[name] in player.inventory or \
-                 items[name] in player.room.contents:
-                    print(items[name].full)
-                else:
-                    print(f'That doesn\'t appear to be visible at the '
-                          'moment.')
-            except KeyError:
-                print(f'That doesn\'t appear to be visible at the mloment.')
+        if player_has_light or player.room.has_light():
+            for name in item_names:
+                try:
+                    if items[name] in player.inventory or \
+                        items[name] in player.room.contents:
+                        print(items[name].full)
+                    else:
+                        print(f'That doesn\'t appear to be visible at the '
+                              'moment.')
+                except KeyError:
+                    print(f'That doesn\'t appear to be visible at the moment.')
+        else:
+            print('It\'s a bit dark here for that.')
 
 
 # Define aliases.
@@ -84,20 +90,26 @@ aliases = {'i': 'inv',
 
 rooms = {
     'outside':  Room('Outside Cave Entrance',
-                     'North of you, the cave mouth beckons.'),
+                     'North of you, the cave mouth beckons.',
+                     lit=True),
 
     'foyer':    Room('Foyer',
                      ('Dim light filters in from the south. Dusty passages '
-                      'run north and east.')),
+                      'run north and east.'),
+                     lit=True),
 
     'overlook': Room('Grand Overlook',
                      ('A steep cliff appears before you, falling into the '
                       'darkness. Ahead to the north, a light flickers in the '
-                      'distance, but there is no way across the chasm.')),
+                      'distance, but there is no way across the chasm.'),
+                     dark_desc='Ahead to the north, a light flickers in the '
+                     'distance.'),
 
     'narrow':   Room('Narrow Passage',
                      ('The narrow passage bends here from west to north. The '
-                      'smell of gold permeates the air.')),
+                      'smell of gold permeates the air.'),
+                     dark_desc='It\'s pitch black. You can\'t see a thing, '
+                     'but the air is thick with the smell of gold.'),
 
     'treasure': Room('Treasure Chamber',
                      'You\'ve found the long-lost treasure chamber! Sadly, it '
@@ -123,7 +135,8 @@ items = {
         'lantern': Item('lantern',
                         'a battered brass lantern',
                         'A battered brass lantern rests on the ground here.',
-                        'It\'s worn and dented, but still holds oil.'),
+                        'It\'s worn and dented, but still holds oil.',
+                        light=True),
         'flyer': Item('flyer',
                       'a tattered flyer',
                       'A tattered flyer lies nearby.',
@@ -169,7 +182,10 @@ while action not in ['q', 'quit']:
                 action = action[1:]
         try:
             player.room = player.room.exits[action[0]]
-            print(player.room)
+            player_has_light = False
+            for item in player.inventory.keys():
+                player_has_light = player_has_light or item.light
+            print(player.room.__str__(player_has_light))
         except (TypeError, KeyError):
             eval(f'{action[0]}(player, {action[1:]})')
     except NameError:
