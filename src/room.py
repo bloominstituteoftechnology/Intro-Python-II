@@ -3,7 +3,7 @@
 
 
 class Room:
-    """Base class for Items"""
+    
     def __init__ (self, name, description, items):
         self.name = name
         self.description = description
