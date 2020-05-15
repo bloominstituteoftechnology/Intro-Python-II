@@ -56,31 +56,25 @@ selection =  ""
 
 directions = """
 The path splits ahead. Choose a direction:
-    n. North
-    e. East
-    s. South
-    w. West
+    n. North    e. East    s. South    w. West
 """
+
+options = {'n': 'n_to', 's': 's_to', 'e': 'e_to', 'w': 'w_to'}
 
 def move_player(player, room):
     player.move_to(room)
 
 while selection != "q":
-    currentroom = bash.currentroom
-    print(currentroom)
+    current_room = bash.current_room
+    print(current_room)
     selection = input(directions)
     try:
-        if selection == "n":
-            move_player(bash, currentroom.n_to)
-        elif selection == "e":
-            move_player(bash, currentroom.e_to)
-        elif selection == "s":
-            move_player(bash, currentroom.s_to)
-        elif selection == "w":
-            move_player(bash, currentroom.w_to)
-        else:
-            print('Choose a valid direction.')
-    except AttributeError:
-        print('There is no path in that direction')
+        selection = options[selection]
+        try:
+            bash.move_to(getattr(current_room, selection))
+        except AttributeError:
+            print('\nThere is no path in that direction\n')
+    except KeyError:
+        print('\nThat is not a valid selection\n')
 
 print("Thanks for playing!")

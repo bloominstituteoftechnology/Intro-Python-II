@@ -4,8 +4,8 @@
 class Player:
   def __init__(self, name, room):
     self.name = name
-    self.currentroom = room
+    self.current_room = room
 
   def move_to(self, room):
-    self.currentroom = room
+    self.current_room = room
     print(f'\n{self.name} moved to {room.name}.\n')

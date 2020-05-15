@@ -9,5 +9,5 @@ class Room:
   def __str__(self):
     wrap = textwrap.TextWrapper(width = 40)
     output = f'{self.name}:\n'
-    output += wrap.fill(text = self.description)
+    output += wrap.fill(text = '    ' + self.description)
     return output
