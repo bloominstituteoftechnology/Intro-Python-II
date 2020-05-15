@@ -65,9 +65,11 @@ def look(player, item_names):
                 if items[name] in player.inventory or \
                  items[name] in player.room.contents:
                     print(items[name].full)
+                else:
+                    print(f'That doesn\'t appear to be visible at the '
+                          'moment.')
             except KeyError:
-                print(f'The {name} doesn\'t appear to be visible at the '
-                      'moment.')
+                print(f'That doesn\'t appear to be visible at the mloment.')
 
 
 # Define aliases.
