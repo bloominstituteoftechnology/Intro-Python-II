@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -33,6 +34,16 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# items
+sword = Item("sword", "The sword radiates with bright energy")
+shield = Item("shield", "The shield blocks any attack")
+armor = Item("armor", "Inpenetrable armor forged by dragon steel")
+
+# items in room
+room['foyer'].items = sword
+room['narrow'].items = shield
+room['overlook'].items = armor
+
 #
 # Main
 #
@@ -54,8 +65,11 @@ print(f"Your name is {player.name} and you are starting {player.current_room}")
 #
 # If the user enters "q", quit the game.
 while True:
+    print("\n----------------------------------------------------------")
     print("Enter a direction to travel in (west, north, east, south).")
+    print("Enter 'search' to search the room for items.")
     print("Type 'quit' or 'exit' or 'q' to exit.")
+    print("----------------------------------------------------------\n")
 
     selection = input("command: ")
 
@@ -63,7 +77,7 @@ while True:
         print("Thanks for playing!")
         break
     elif selection == 'west' or selection == 'north' or selection == 'east' or selection == 'south':
-        print(f"you selected {selection}")
+        print(f"\nMoving {player.name} {selection}\n")
         player.move_to(selection)
     else:
-        print("That is not an allowed command.")
+        print("That is not an allowed command.\n")
