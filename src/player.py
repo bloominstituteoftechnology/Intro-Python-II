@@ -7,6 +7,7 @@ class Player():
         self.items = {}
 
     def look(self):
+        # TODO: change to single string or map encoding
         print(self.current_room.name)
         print(self.current_room.description, "\n")
         print('In The Room: ', self.scan_items(self.current_room.items))

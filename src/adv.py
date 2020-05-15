@@ -31,8 +31,8 @@ treasure.connect(room=narrow, direction='s')
 
 # Make some items
 
-chalice = Item(id=100, name='Golden Chalice', description='Actually an adult toy.')
-adult_toy = Item(id=200, name='GoldenPrice', description='One of those.')
+chalice = Item(id=100, name='Golden Chalice', description='Actually an artifact.')
+new_treasure = Item(id=200, name='GoldenPrice', description='One of those.')
 
 # Create Item Handler
 
@@ -42,7 +42,7 @@ item_handler = ItemHandler()
 
 item_handler.place_item(chalice, outside)
 item_handler.place_item(chalice, treasure)
-item_handler.place_item(adult_toy, treasure)
+item_handler.place_item(new_treasure, treasure)
 
 
 ### Helper Functions ###
