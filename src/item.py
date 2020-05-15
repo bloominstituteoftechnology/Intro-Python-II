@@ -3,11 +3,10 @@ Generic Item Class
 """
 
 class Item():
-    def __init__(self, id, name, desccription=None):
+    def __init__(self, id, name, description=None):
         self.id = id
         self.name = name
-        self.description = desccription
-
+        self.description = description
 
 class ItemHandler():
     def __init__(self):
