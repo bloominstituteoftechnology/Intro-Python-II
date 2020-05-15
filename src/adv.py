@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -21,7 +22,6 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
 
 # Link rooms together
 
@@ -46,54 +46,85 @@ room['treasure'].s_to = room['narrow']
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
-# If the user enters a cardinal direction, attempt to move to the room there.
+# If the user enters a cardinal action, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
 
 
+
+items = {'coin': Item('Coin', 'Gold coin worth 1.'),
+'lantern': Item('Lantern', 'A lantern that can light up the room.')}
+room['outside'].add_items(items['coin'])
+room['foyer'].add_items(items['coin'])
+room['overlook'].add_items(items['lantern'])
+
 name = input('What is your name, Adventurer? ')
 player = Player(name, room['outside'])
 
-print(f'Welcome {name}. Begin your adventure from {player.current_room}')
-# print(room['outside'].n_to)
+
+
+
+print(f'Welcome {name}. Begin your adventure from {player.current_room} \n')
+print(room['outside'].show_items())
 
 while True:
-    direction = input('Choose your next direction. (n for North, s for South, e for East, w for West, q to Quit) ')
+    action = input(f'Choose an action. (n for North, s for South, e for East, w for West, take to Pickup item, d to Drop, q to Quit) \n')
 
-    if direction == 'n' or direction == 'N':
+    if action == 'n' or action == 'N':
         next_move = player.current_room.n_to
         if next_move == None:
             print("Can't go that way. Try a different direction.")
         else:
             player = Player(name, next_move)
+           
             print(player)
-
-    elif direction == 's' or direction == 'S':
+            print( player.current_room.show_items())
+       
+    elif action == 's' or action == 'S':
         next_move = player.current_room.s_to
         if next_move == None:
             print("Can't go that way. Try a different direction.")
         else:
             player = Player(name, next_move)
             print(player)
+            print(player.current_room.show_items())
     
-    elif direction == 'e' or direction == 'E':
+    elif action == 'e' or action == 'E':
         next_move = player.current_room.e_to
         if next_move == None:
             print("Can't go that way. Try a different direction.")
         else:
             player = Player(name, next_move)
             print(player)
+            print(player.current_room.show_items())
     
-    elif direction == 'w' or direction == 'W':
+    elif action == 'w' or action == 'W':
         next_move = player.current_room.w_to
         if next_move == None:
             print("Can't go that way. Try a different direction.")
         else:
             player = Player(name, next_move)
             print(player)
+            print(player.current_room.show_items())
+
+
+    elif action == 'take' or action == 'get':
+        for item in player.current_room.items:
+            print(player.pickup_item(item))
+
+        print(player.inventory)
+
+    elif action == 'drop' or action == 'discard':
+        for i in player.inventory:
+            if i.name == item:
+                player.drop_item()
     
-    elif direction == 'q' or direction == 'Q':
+    
+    elif action == 'i':
+        print(player.show_inventory())
+
+    elif action == 'q' or action == 'Q':
         print('Goodbye Adventurer!')
         break
         
