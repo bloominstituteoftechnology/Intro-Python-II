@@ -16,6 +16,6 @@ class Room:
             room_string += ('\n\n' + \
                             '\n'.join([key.long for key in \
                                        self.contents.keys()]))
-            room_string += ('\n\nVisible exits: ' + \
-                            ' '.join(list(self.exits.keys())))
+        room_string += ('\n\nVisible exits: ' + \
+                        ' '.join(list(self.exits.keys())))
         return room_string
