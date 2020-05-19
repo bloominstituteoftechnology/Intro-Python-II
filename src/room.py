@@ -10,6 +10,16 @@ class Room():
         self.s_to = s_to
         self.e_to = e_to
         self.w_to = w_to
+        self.items = []
 
     def __str__(self):
         return f'{self.name}, {self.description}'
+
+
+    def list_items(self):
+        if not self.items:
+            print('There are no items in this room.')
+        else:
+            print('This room has: \n')
+            for item in self.items:
+                print(item.name, item.description)

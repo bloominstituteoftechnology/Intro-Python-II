@@ -31,7 +31,7 @@ class Player():
 
     def print_items(self):
         if not self.items:
-            print('You do not have any items.)
+            print('You do not have any items.')
         else:
             print('You have the following items:\n ')
             for item in self.items:
