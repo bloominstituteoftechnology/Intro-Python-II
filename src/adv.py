@@ -45,15 +45,33 @@ player = Player('Michael', room['outside'])
 # If the user enters "q", quit the game.
 
 directions = {'n': 'n_to', 's': 's_to', 'e': 'e_to', 'w': 'w_to'}
+actions = ['get', 'take', 'drop']
 
 while True:
 	print(str(player.current_room))
-	choice = input("Which way, Gandalf? ")
+	result = input("Which way, Gandalf? ")
+	choices = result.split( )
 
-	direction = directions[choice]
+	if len(choices) == 1:
+		choice = choices[0]
+		if choice == 'q':
+			exit(0)
+		direction = directions[choice]
+		try:
+			player.current_room = getattr(player.current_room, direction)
+		except AttributeError:
+			print("Sorry, you can't go that way!")
 
-	try:
-		player.current_room = getattr(player.current_room, direction)
-
-	except AttributeError:
-		print("Sorry, you can't go that way!")
+	elif len(choices) == 2:
+		action = choices[0]
+		if action in actions:
+			item = choices[1]
+			if item in player.current_room.items:
+				# The item is in the room, we can take it or leave it
+				print(f"The item: {item} is in this room.")
+			else:
+				print("Sorry, that item is not in this room!")
+		else:
+			print("Sorry, that action is not allowed!")
+	else:
+		print("You entered too many options, please be more specific!")
