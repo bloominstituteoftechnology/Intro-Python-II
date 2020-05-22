@@ -38,7 +38,7 @@ room['treasure'].s_to = room['narrow']
 item = {
     'torch': Item("Torch", "This is perfect to light the dark cave!"),
     'shield': Item("Shield", "You can defend yourself with this."),
-    'sword': Item("Sword", "Legend says it wields great power."),
+    'sword': Item("Sword", "Legend says it wields great npower."),
     'bottle': Item("Bottle", "Great to hold things in.")
 }
 
