@@ -1,6 +1,7 @@
 import textwrap
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -35,6 +36,17 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# items
+
+sword = Item("sword", "Xcalibar")
+shield = Item("shield", "The Shield of Achilles")
+armor = Item("armor", "Cloth armor")
+
+# items in room
+room['foyer'].items = sword
+room['narrow'].items = shield
+room['overlook'].items = armor
+
 #
 # Main
 #
@@ -49,10 +61,6 @@ done = False
 
 def skip_input():
     print("I don't understand that\n")
-
-
-def print_help_text():
-    print("Valid commands:\n -n: move north\n -s")
 
 
     # Write a loop that:
