@@ -14,6 +14,7 @@ class Room:
             'e': None,
             'w': None
         }
+        self.items_list = []
 
     def get_room_in_direction(self, direction):
         '''Returns room (or `None`) in provided cardinal direction string'''
@@ -41,3 +42,8 @@ class Room:
         lambda self: self.get_room_in_direction('w'),
         lambda self, value: self.__set_room_in_direction('w', value)
     )
+
+    @property
+    def item_names(self):
+        '''A comma-separated string of the names of all items in room'''
+        return ', '.join([item.name for item in self.items_list])
