@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -33,11 +34,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+print(room['outside'].n_to.name)
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +52,24 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+print("\n\n-- ADVENTURE GAME --\n\n\n")
+
+print("(Enter 'q' at any time to quit.)")
+
+while True:
+    print("\n" + player.current_room.name)
+    print(player.current_room.description)
+
+    move = input("<Move the player (enter 'n', 's', 'e', or 'w')>: ")
+
+    if move == 'q':
+        break
+
+    new_room = player.current_room.get_room_in_direction(move)
+
+    if new_room is None:
+        print("<Please select a valid direction.>")
+    else:
+        print(f"new room: {new_room.name}")
+        player.enter_room(new_room)
