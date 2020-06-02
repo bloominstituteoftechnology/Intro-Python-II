@@ -24,19 +24,19 @@ class Room:
     def __set_room_in_direction(self, direction, room):
         self.__adjacent_rooms[direction] = room
 
-    to_n = property(
+    n_to = property(
         lambda self: self.get_room_in_direction('n'),
-        lambda self, value: self.__set_room_in_direction('n', value)
+        lambda self,value: self.__set_room_in_direction('n', value)
     )
-    to_s = property(
+    s_to = property(
         lambda self: self.get_room_in_direction('s'),
-        lambda self, value: self.__set_room_in_direction('s', value)
+        lambda self,value: self.__set_room_in_direction('s', value)
     )
-    to_e = property(
+    e_to = property(
         lambda self: self.get_room_in_direction('e'),
-        lambda self, value: self.__set_room_in_direction('e', value)
+        lambda self,value: self.__set_room_in_direction('e', value)
     )
-    to_w = property(
+    w_to = property(
         lambda self: self.get_room_in_direction('w'),
-        lambda self, value: self.__set_room_in_direction('w', value)
+        lambda self,value: self.__set_room_in_direction('w', value)
     )
