@@ -7,4 +7,5 @@ class Player:
         self.current_room = initial_room
 
     def enter_room(self, room):
+        '''Change player's current room to the one provided'''
         self.current_room = room

@@ -16,6 +16,7 @@ class Room:
         }
 
     def get_room_in_direction(self, direction):
+        '''Returns room (or `None`) in provided cardinal direction string'''
         try:
             return self.__adjacent_rooms[direction]
         except KeyError:
@@ -26,17 +27,17 @@ class Room:
 
     n_to = property(
         lambda self: self.get_room_in_direction('n'),
-        lambda self,value: self.__set_room_in_direction('n', value)
+        lambda self, value: self.__set_room_in_direction('n', value)
     )
     s_to = property(
         lambda self: self.get_room_in_direction('s'),
-        lambda self,value: self.__set_room_in_direction('s', value)
+        lambda self, value: self.__set_room_in_direction('s', value)
     )
     e_to = property(
         lambda self: self.get_room_in_direction('e'),
-        lambda self,value: self.__set_room_in_direction('e', value)
+        lambda self, value: self.__set_room_in_direction('e', value)
     )
     w_to = property(
         lambda self: self.get_room_in_direction('w'),
-        lambda self,value: self.__set_room_in_direction('w', value)
+        lambda self, value: self.__set_room_in_direction('w', value)
     )

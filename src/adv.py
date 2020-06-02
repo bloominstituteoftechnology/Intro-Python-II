@@ -70,5 +70,4 @@ while True:
     if new_room is None:
         print("<Please select a valid direction.>")
     else:
-        print(f"new room: {new_room.name}")
         player.enter_room(new_room)
