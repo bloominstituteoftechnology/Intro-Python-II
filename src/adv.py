@@ -1,5 +1,6 @@
+from game import Game
 from room import Room
-from player import Player
+from Player import Player
 
 # Declare all the rooms
 
@@ -52,22 +53,5 @@ player = Player(room['outside'])
 #
 # If the user enters "q", quit the game.
 
-print("\n\n-- ADVENTURE GAME --\n\n\n")
-
-print("(Enter 'q' at any time to quit.)")
-
-while True:
-    print("\n" + player.current_room.name)
-    print(player.current_room.description)
-
-    move = input("<Move the player (enter 'n', 's', 'e', or 'w')>: ")
-
-    if move == 'q':
-        break
-
-    new_room = player.current_room.get_room_in_direction(move)
-
-    if new_room is None:
-        print("<Please select a valid direction.>")
-    else:
-        player.enter_room(new_room)
+game = Game(player, room)
+game.start()
