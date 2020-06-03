@@ -94,21 +94,38 @@ while True:
     player1.current_room.items_in_room()
     print(br)
 
-    choice = get_input().strip()
+    choice = get_input().lower()
 
-    if choice.lower().strip() == "n":
+    if choice == "n":
         player1.current_room = player1.current_room.n_to
-    elif choice.lower().strip() == "e":
+
+    elif choice == "e":
         player1.current_room = player1.current_room.e_to
-    elif choice.lower().strip() == "s":
+
+    elif choice == "s":
         player1.current_room = player1.current_room.s_to
-    elif choice.lower().strip() == "w":
+
+    elif choice == "w":
         player1.current_room = player1.current_room.w_to
-    elif choice.lower().strip() == "m":
+
+    elif choice == "m":
         showDirections(player1.current_room)
-        if input("[Enter] to close map\t"): continue
-    elif choice.lower().strip() == "q":
+        if input("[Enter] to close map\t"): break
+
+    elif choice == "q":
         break
+
+    elif choice.startswith("get") or choice.startswith("take"):
+        picked = int(choice[3:])
+        length = len(player1.current_room.items)
+        if picked > 0 and picked <= len(player1.current_room.items):
+            player1.take(player1.current_room.pickup_item(picked))
+            print()
+            player1.show_inventory()
+            if input("\n[Enter] to close Inventory\t"): continue
+        else:
+            continue
+
     else:
         input("Invalid input... Enter to continue")
 

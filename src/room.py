@@ -26,7 +26,7 @@ class Room():
         self.items.append(item)
 
     def pickup_item(self, i):
-        if i - 1 < 0 or i - 1 > len(self.items): return print('Wrong input')
-        return self.items.pop(i)
+        if i - 1 < 0 or i - 1 >= len(self.items): return print('Wrong input')
+        return self.items.pop(i-1)
 
     name = property(get_name, set_name)

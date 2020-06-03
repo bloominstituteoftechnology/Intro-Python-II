@@ -8,13 +8,26 @@ class Player():
         self.__inventory = []
         self.__current_room = current_room
 
-    def take(self, item):
-        if item: self.__inventory.append(item)
+    # Methods
 
-    def drop(self, i):
+    def show_inventory(self):
+        print("Inventory:")
+        for item in self.__inventory:
+            print(item.description)
+
+    # Getter and Setter method
+
+    def take(self, item):
+        if item:
+            self.__inventory.append(item)
+            item.on_take()
+
+    def drop(self, inv):
+        i = inv - 1
         if not self.__inventory:
             print("Inventory is empty")
             return None
+        self.__inventory[i].on_drop()
         return self.__inventory.pop(i)
 
     def get_current_room(self):
