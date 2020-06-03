@@ -73,8 +73,8 @@ def get_input():
         return "-1"
     else:
         s1 = f"{str(pick[0]).lower()}"
-        s2 = " " if len(pick) < 2 else str(pick[1]).lower()
-        return s1 + "," + s2
+        s2 = ", " if len(pick) < 2 else "," + str(pick[1]).lower()
+        return s1 + s2
 
 # Define new player
 player1 = Player("Hector", room[out])
@@ -94,7 +94,8 @@ while True:
     player1.current_room.items_in_room()
     print(br)
 
-    choice = get_input().lower()
+    userSaid = get_input()
+    choice = userSaid.split(',')[0].lower()
 
     if choice == "n":
         player1.current_room = player1.current_room.n_to
@@ -112,11 +113,14 @@ while True:
         showDirections(player1.current_room)
         if input("[Enter] to close map\t"): break
 
+    elif choice == "i":
+        player1.show_inventory()
+
     elif choice == "q":
         break
 
     elif choice.startswith("get") or choice.startswith("take"):
-        picked = int(choice.split(',')[1]) if choice.split(',')[1].isdigit() else 0
+        picked = int(userSaid.split(',')[1]) if userSaid.split(',')[1].isdigit() else 0
         length = len(player1.current_room.items)
         if picked > 0 and picked <= len(player1.current_room.items):
             player1.take(player1.current_room.pickup_item(picked))
