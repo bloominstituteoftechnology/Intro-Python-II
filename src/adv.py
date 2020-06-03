@@ -115,15 +115,28 @@ while True:
 
     elif choice == "i":
         player1.show_inventory()
+        if input("[Enter] to close inventory\t"): break
 
     elif choice == "q":
         break
 
     elif choice.startswith("get") or choice.startswith("take"):
-        picked = int(userSaid.split(',')[1]) if userSaid.split(',')[1].isdigit() else 0
+        dropped = int(userSaid.split(',')[1]) if userSaid.split(',')[1].isdigit() else 0
         length = len(player1.current_room.items)
-        if picked > 0 and picked <= len(player1.current_room.items):
-            player1.take(player1.current_room.pickup_item(picked))
+        if dropped > 0 and dropped <= length:
+            player1.take(player1.current_room.pickup_item(dropped))
+            print()
+            player1.show_inventory()
+            if input("\n[Enter] to close Inventory\t"): continue
+        else:
+            input('Invalid Input... Enter to continue ')
+            continue
+
+    elif choice.startswith("drop"):
+        dropped = int(userSaid.split(',')[1]) if userSaid.split(',')[1].isdigit() else 0
+        length = len(player1.inventory)
+        if dropped > 0 and dropped <= length:
+            player1.take(player1.current_room.add_item(player1.drop(dropped)))
             print()
             player1.show_inventory()
             if input("\n[Enter] to close Inventory\t"): continue
