@@ -11,3 +11,5 @@ class Room:
         self.s_to = s_to
         self.w_to = w_to
         self.items = items
+    def __str__(self):
+        return f"{self.desc}"
