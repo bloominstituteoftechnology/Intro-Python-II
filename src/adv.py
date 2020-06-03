@@ -1,4 +1,6 @@
 from room import Room
+import textwrap
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +40,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Wyatt", room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +52,49 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+print(f"---Current Location:---\n{player.location.get_name()}")
+for line in textwrap.wrap(player.location.get_description()):
+    print(line)
+
+while True:
+    choice = input("\nDirection (n, s, e, w): ")
+    if choice.lower() == "n":
+        if player.location.n_to == None:
+            print("Nothing in this direction.")
+        else:
+            player.location = player.location.n_to
+            print(f"---Current Location:---\n{player.location.get_name()}")
+            for line in textwrap.wrap(player.location.get_description()):
+                print(line)
+    elif choice.lower() == "e":
+        if player.location.e_to == None:
+            print("Nothing in this direction.")
+        else:
+            player.location = player.location.e_to
+            print(f"---Current Location:---\n{player.location.get_name()}")
+            for line in textwrap.wrap(player.location.get_description()):
+                print(line)
+    elif choice.lower() == "s":
+        if player.location.s_to == None:
+            print("Nothing in this direction.")
+        else:
+            player.location = player.location.s_to
+            print(f"---Current Location:---\n{player.location.get_name()}")
+            for line in textwrap.wrap(player.location.get_description()):
+                print(line)
+    elif choice.lower() == "w":
+        if player.location.w_to == None:
+            print("Nothing in this direction.")
+        else:
+            player.location = player.location.w_to
+            print(f"---Current Location:---\n{player.location.get_name()}")
+            for line in textwrap.wrap(player.location.get_description()):
+                print(line)
+    elif choice.lower() == "q":
+        print("quit")
+        break
+    else:
+        print("Invalid direction. Please try again.")
+
+
