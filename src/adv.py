@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import getpass
 
 # Declare all the rooms
 
@@ -38,9 +40,13 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+playerName = getpass.getuser().title()
+
+print("\nAncient prophecies have fortold your arrival...\n\nWelcome {}!".format(playerName))
+player = Player(playerName, room["outside"])
 
 # Write a loop that:
-#
+#e
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -49,3 +55,53 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+intro = """
+The Forsaken Dungeon is full of terrors and treasure.
+Search each room for the untold bounties of this realm 
+using the four cardinal directions (n, s, w, e).
+
+If you wish to return to safety, simply quit the game (q).
+Your treasure will be lost as everything is temporary...even your inevitable suffering.
+
+Beware the creatures and dark magic lurking around every corner."""
+
+print(intro)
+
+print("\nStarting location: " + player.location.name)
+
+user_prompt = "\nMove or quit, the choice is yours... "
+
+directions = ["n", "s", "e", "w"]
+
+# Next part of game
+response = ""
+while response not in directions:
+    
+    response = input(user_prompt)
+
+    if response == "n":
+        player.move(response)
+        print("Current location: " + player.location.name, "\nPrevious direction input: ", response)
+        response = ""
+
+    elif response == "s":
+        player.move(response)
+        print("Location: " + player.location.name, "\nPrevious direction input: ", response)
+        response = ""
+
+    elif response == "w":
+        player.move(response)
+        print("Location: " + player.location.name, "\nPrevious direction input: ", response)
+        response = ""
+
+    elif response == "e":
+        player.move(response)
+        print("Location: " + player.location.name, "\nPrevious direction input: ", response)
+        response = ""
+
+    elif response == "q":
+        quit()
+
+    else:
+        print("I didn't understand that.\n")
