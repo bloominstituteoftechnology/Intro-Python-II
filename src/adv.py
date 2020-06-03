@@ -66,10 +66,23 @@ def clear():
     else:
         system('clear')
 
+# Method to allow for however many inputs the user may want to provide
+def get_input():
+    pick = input("Action to take:").split()
+    if len(pick) <= 0 or len(pick) > 2:
+        return "-1"
+    else:
+        s1 = f"{str(pick[0]).lower()}"
+        s2 = "" if len(pick) < 2 else str(pick[1]).lower()
+        return s1 + s2
+
+# Define new player
 player1 = Player("Hector", room[out])
 
+# Add item to entrance
 pot = Item('HPPOT', 'HP Potion')
 room[out].add_item(pot)
+
 
 while True:
     # print(br)
@@ -81,8 +94,7 @@ while True:
     player1.current_room.items_in_room()
     print(br)
 
-    choice = str(input("\nWhere do you want to go?\t"))
-
+    choice = get_input().strip()
 
     if choice.lower().strip() == "n":
         player1.current_room = player1.current_room.n_to
