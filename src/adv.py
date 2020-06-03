@@ -42,18 +42,36 @@ player_name = input('what is your name? ')
 player1 = Player(player_name, room['outside'])
 print(f'welcome {player1.name}!')
 
+# create items and add these items to rooms.
+bat = Item("Bat", "Barry Bonds home run bat")
+bow = Item('Bow', "Robin Hoods bow!")
+skateboard = Item('Skateboard', "Could be nice for transportation!")
+yoyo = Item('YoYo', "Looks like a toy...")
+guitar = Item('Guitar', 'Good for a Jam Session!')
+
+room['outside'].items.append(bat)
+room['foyer'].items.append(yoyo)
+room['overlook'].items.append(bow)
+room['narrow'].items.append(skateboard)
+room['treasure'].items.append(guitar)
+
+
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
+# If the user enters a cardinal direction, attempt to move to the room there.
+# Print an error message if the movement isn't allowed.
+#
+# If the user enters "q", quit the game.
 quiting = False
 
 while not quiting:
 
     
     print(f'You are standing inside the {player1.current_room.name}. You look around and see {player1.current_room.description}\n')
-    print(f'near by you also see {player1.current_room.items}')
+    print(f"nearby you also see {player1.current_room.items}")
     
     # what are the accepted commands for movement of quitting? If the user doesnt enter then we will
     # prompt for an accepted command. 
@@ -68,25 +86,25 @@ while not quiting:
         if command == 'n':
             if player1.current_room.n_to == None:
                 print("That way is blocked! Pick another direction!\n")
-                # player1.current_room
+                player1.current_room
             else:
                 player1.current_room = player1.current_room.n_to
         if command == 's':
             if player1.current_room.s_to == None:
                 print("That way is blocked! Pick another direction!\n")
-                # player1.current_room
+                player1.current_room
             else:
                 player1.current_room = player1.current_room.s_to
         if command == 'e':
             if player1.current_room.e_to == None:
                 print("That way is blocked! Pick another direction!\n")
-                # player1.current_room
+                player1.current_room
             else:
                 player1.current_room = player1.current_room.e_to
         if command == 'w':
             if player1.current_room.w_to == None:
                 print("That way is blocked! Pick another direction!\n")
-                # player1.current_room
+                player1.current_room
             else:
                 player1.current_room = player1.current_room.w_to
         if command == 'q':
@@ -95,7 +113,4 @@ while not quiting:
     else:
         command = input('That isnt a valid command! You can move n, s, e, or w. or you can quit, q? ')
 
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+

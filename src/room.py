@@ -10,6 +10,6 @@ class Room:
         self.e_to = None
         self.w_to = None
         self.items = []
-        
-    def __str__(self):
-        return f"{self.name}; {self.description}"
+
+    # def __str__(self):
+    #     return f"{self.name}; {self.description}; {self.items}"
