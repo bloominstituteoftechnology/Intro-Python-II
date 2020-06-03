@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -58,3 +59,22 @@ player1 = Player('Player 1', room['outside'])
 # // if user input is cardinal direction, move-if allowed (error state)
 # // Else quit
 
+user_input = ''
+while user_input != 'Q':
+    print(player1)
+    prompt = f'{player1.player_name}, what would you like to do? Move N, S, E, W, or Quit?'
+    print("\n".join(textwrap.wrap(prompt, 38)))
+    user_input = input('>>').capitalize
+    if user_input = 'N':
+        pass # move North
+    elif user_input = 'S':
+        pass # move South
+    elif user_input = 'E':
+        pass # move East
+    elif user_input = 'W':
+        pass # move West
+    else:
+        print('Input not recognized.')
+
+if user_input = 'Q':
+    print('You have decided to end your quest. Game Over.')

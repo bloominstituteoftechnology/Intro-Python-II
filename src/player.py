@@ -7,4 +7,4 @@ class Player():
         self.in_room = in_room
     
     def __str__(self):
-        return f'{self.player_name} is in {self.in_room}'
+        return f'{self.player_name}, you are at the {self.in_room}'
