@@ -52,3 +52,9 @@ player1 = Player('Player 1', room['outside'])
 #
 # If the user enters "q", quit the game.
 
+# // print current state
+# // need user input
+# // while stuff is going on, do something
+# // if user input is cardinal direction, move-if allowed (error state)
+# // Else quit
+
