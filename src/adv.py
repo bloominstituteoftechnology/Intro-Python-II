@@ -1,5 +1,10 @@
+import sys
 from room import Room
 from player import Player
+from item import Item
+
+# Todo:
+# create a way to save your game.
 
 # Declare all the rooms
 
@@ -34,9 +39,28 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+# Declare items
+items = {
+    'pen': Item('pen', 'a plain blue pen'),
+    'treasure': Item('treasure', 'your favourite chapstick'),
+    'notebook': Item('notebook', 'just a red notebook'),
+    'hat': Item('hat', 'a fancy straw hat')
+}
+
+room['outside'].items.append(items['pen'])
+room['foyer'].items.append(items['notebook'])
+room['overlook'].items.append(items['treasure'])
+room['overlook'].items.append(items['hat'])
+
+
+# avalible commands:
+command = {
+    'moves': ['n', 's', 'e', 'w'],
+    'quit': ['q', 'quit', 'exit'],
+    'options': ['o', 'help'],
+    'actions': ['grab', 'drop']
+}
+
 
 '''Runs the game when called from main'''
 
@@ -49,7 +73,8 @@ def _run_game():
 
     # Make a new player object that is currently in the 'outside' room.
     player1 = Player(user_input, room['outside'])  # todo, verify string??
-
+    print(
+        f'Welcome {player1.name}!\nGood luck finding the treasure!\nMove with [n] [s] [e] [w]')
     # game logic
     # Write a loop that:
     while (running is not False):
@@ -61,21 +86,17 @@ def _run_game():
         user_input = input(
             'What would like to do next? [o] for options.\n >> ')
 
-        # cardinal directions
-        cardinal_directions = ['n', 's', 'e', 'w']
+        if user_input in command['options']:
+            player1._print_options()
 
-        # If the user enters a cardinal direction, attempt to move to the room there.
-        if user_input in cardinal_directions:
-            try:
-                player1._move(user_input)
-        # Print an error message if the movement isn't allowed.
-            except ValueError:
-                print('Sorry.')  # Todo: create real errors
+        # If the user enters a cardinal direction, attmpet to move
+        if user_input in command['moves']:
+            player1._move(user_input)
 
         # If the user enters "q", quit the game.
-        if user_input is 'q':
+        if user_input in command['quit']:
             running = False
-            print('Goodbye!')
+            print('You have quit the game. Goodbye!')
 
 
 if __name__ == "__main__":
