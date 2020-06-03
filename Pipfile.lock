@@ -1,0 +1,20 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "4876c985123cc8fdde34d11b57fec336d9007a62132243cfeb6c8dd3800d40d6"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.8.0a4"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {},
+    "develop": {}
+}
