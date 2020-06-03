@@ -9,10 +9,16 @@ class Player:
         self.name = name
         self.current_room = current_room
 
+    def _print_current_location(self):
+        print(
+            f'\n{self.name}, you are currently in {self.current_room.name}.\n{self.current_room.description}')
+
+    def _move(self, direction_input):
+        self.current_room = self.current_room.__getattribute__(
+            f'{direction_input}_to')
+
     def __str__(self):
-        if self.current_room.description is not None:
-            description = self.current_room.description
-        return 'You currently in' + self.current_room + '.\n' + description
+        return f'Your name is: {self.name}\nThe current room you are in: {self.current_room}'
 
     def __repr__(self):
-        return 'Player({self.name}, {self.current_room})'.format(self=self)
+        return f'Player({self.name}, {self.current_room})'
