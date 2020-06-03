@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from direction import Direction
+from item import Item
 
 # Declare all the rooms
 
@@ -35,6 +36,9 @@ rooms['narrow'].w_to = rooms['foyer']
 rooms['narrow'].n_to = rooms['treasure']
 rooms['treasure'].s_to = rooms['narrow']
 
+
+rooms['foyer'].items.append(Item("Sword", "A sharp length of metal"))
+
 #
 # Main
 #
@@ -55,15 +59,52 @@ player_one = Player("Player One", rooms['outside'])
 
 print('')
 
+
+
+# Parsing
+
+def parse_word(verb: str):
+    for direction in Direction:
+        if verb== direction.value:
+            player_one.move(direction)
+            break
+    
+    if verb == 'q':
+        print("Thanks for playing!")
+        exit()
+
+def parse_words(verb: str, obj: str):
+    if verb == 'get' or verb == 'take':
+        for item in player_one.current_room.items:
+            if obj == item.name:
+                player_one.take(item)
+                break
+    elif verb == 'drop':
+        for item in player_one.inventory:
+            if obj == item.name:
+                player_one.drop(item)
+                break
+    else:
+        print("You must enter a valid command! Accepted verbs are 'get' 'take' and 'drop'")
+
+
+# REPL
+
 while True:
     print(player_one.current_room.name)
     print(player_one.current_room.description)
+    if len(player_one.current_room.items) > 0:
+        print("Items in the room:")
+        for item in player_one.current_room.items:
+            print(f"{item.name}: {item.description}")
+
     command = input("\nEnter a command: ")
     print('')
-    for direction in Direction:
-        if command == direction.value:
-            player_one.move(direction)
+
+    words = command.split()
     
-    if command == 'q':
-        print("Thanks for playing!")
-        break
+    if len(words) == 1:
+        parse_word(words[0])
+    elif len(words) == 2:
+        parse_words(words[0], words[1])
+    
