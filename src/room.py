@@ -1,6 +1,7 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
-
+# also add direction_to for each direction. Set to None and we will declare those when linking room in 
+# the adv.py
 class Room:
     def __init__(self, name, description):
         self.name = name
