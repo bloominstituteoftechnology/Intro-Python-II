@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -21,6 +22,13 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# This allows me to 1. Make use of auto complete and 2. Avoid potential typo-related bugs
+out = 'outside'
+foy = 'foyer'
+over = 'overlook'
+nar = 'narrow'
+trea = 'treasure'
+
 
 # Link rooms together
 
@@ -33,11 +41,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+player1 = Player("Hector", out)
 
 # Write a loop that:
 #
