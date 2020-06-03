@@ -18,7 +18,7 @@ class Room():
         self.__name = n
 
     def items_in_room(self):
-        print(f"\tThere {'are' if len(self.items) > 1 else 'is'} {len(self.items)} in this room:")
+        print(f"\n\tItems in the room: {len(self.items)}")
         for i, item in enumerate(self.items, 1):
             print(f"\t\t{i}.) {item.description}")
 

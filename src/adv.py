@@ -30,6 +30,7 @@ over = 'overlook'
 nar = 'narrow'
 trea = 'treasure'
 
+# Easy formatting
 br = '----------------------------'
 
 # Link rooms together
@@ -43,6 +44,7 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# One easy function to display a "Map" to the user
 def showDirections(current):
     north = "North: " + current.n_to.name if current.n_to != None else "There's no path North"
     east = "East: " + current.e_to.name if current.e_to != None else "There's no path East"
@@ -55,34 +57,29 @@ def showDirections(current):
     print(west)
     print()
 
+# This method will clear the terminal so the game remains legible
 def clear():
+    # For Windows
     if name == 'nt':
         system('cls')
+    # For Mac
     else:
         system('clear')
-# Main
-#
-# Make a new player object that is currently in the 'outside' room.
 
 player1 = Player("Hector", room[out])
 
 pot = Item('HPPOT', 'HP Potion')
 room[out].add_item(pot)
 
-
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-
 while True:
     # print(br)
     clear()
-    print("Info:" + br)
+    print(br)
+    print(f"Info:")
     print(f"\tCurrent room: \t{player1.current_room.name}")
     print(f"\t\t{player1.current_room.description}")
     player1.current_room.items_in_room()
+    print(br)
 
     choice = str(input("\nWhere do you want to go?\t"))
 
@@ -100,10 +97,5 @@ while True:
         if input("[Enter] to close map\t"): continue
     elif choice.lower().strip() == "q":
         break
-
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
 
 
