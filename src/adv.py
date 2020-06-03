@@ -38,8 +38,14 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+player ={
+    room
+}
 # Write a loop that:
+
+def current_room():
+    return room
+    print(room)
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
