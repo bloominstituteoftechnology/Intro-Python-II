@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -61,32 +62,38 @@ def showDirections(current):
 
 player1 = Player("Hector", room[out])
 
+pot = Item('HPPOT', 'HP Potion')
+room[out].add_item(pot)
+
+room[out].items_in_room()
+player1.current_room.items_in_room()
+
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 
-while True:
-    print(br)
-    print(f"Current room: \t{player1.current_room.name}")
-    print(f"\t{player1.current_room.description}")
-
-    choice = str(input("Where do you want to go?\t"))
-
-
-    if choice.lower().strip() == "n":
-        print("helloworld")
-    elif choice.lower().strip() == "e":
-        print("helloworld")
-    elif choice.lower().strip() == "s":
-        print("helloworld")
-    elif choice.lower().strip() == "w":
-        print("helloworld")
-    elif choice.lower().strip() == "m":
-        showDirections(player1.current_room)
-    elif choice.lower().strip() == "q":
-        break
+# while True:
+#     print(br)
+#     print(f"Current room: \t{player1.current_room.name}")
+#     print(f"\t{player1.current_room.description}")
+#
+#     choice = str(input("Where do you want to go?\t"))
+#
+#
+#     if choice.lower().strip() == "n":
+#         print("helloworld")
+#     elif choice.lower().strip() == "e":
+#         print("helloworld")
+#     elif choice.lower().strip() == "s":
+#         print("helloworld")
+#     elif choice.lower().strip() == "w":
+#         print("helloworld")
+#     elif choice.lower().strip() == "m":
+#         showDirections(player1.current_room)
+#     elif choice.lower().strip() == "q":
+#         break
 
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.

@@ -18,15 +18,15 @@ class Room():
         self.__name = n
 
     def items_in_room(self):
-        print(f"There are {self.items.count()} in this room:")
+        print(f"There {'are' if len(self.items) > 1 else 'is'} {len(self.items)} in this room:")
         for i, item in enumerate(self.items, 1):
-            print(f"\t{i}.) {item}")
+            print(f"\t{i}.) {item.description}")
 
     def add_item(self, item):
         self.items.append(item)
 
     def pickup_item(self, i):
-        if i - 1 < 0 or i - 1 > self.items.count(): return print('Wrong input')
+        if i - 1 < 0 or i - 1 > len(self.items): return print('Wrong input')
         return self.items.pop(i)
 
     name = property(get_name, set_name)
