@@ -57,51 +57,64 @@ player_one = Player("Player One", rooms['outside'])
 #
 # If the user enters "q", quit the game.
 
-print('')
-
-
 
 # Parsing
 
 def parse_word(verb: str):
+    verb = verb.lower()
     for direction in Direction:
-        if verb== direction.value:
+        if verb == direction.value:
             player_one.move(direction)
-            break
+            return
     
     if verb == 'q':
-        print("Thanks for playing!")
+        print("\nThanks for playing!")
         exit()
+    elif verb == 'i' or verb == 'inventory':
+        if len(player_one.inventory) > 0:
+            print("\nInventory:")
+            for item in player_one.inventory:
+                print(f"* {item.name}")
+        else:
+            print("\nYou don't have any items in your inventory!")
+    else:
+        print("""\nYou must enter a valid command! 
+Use 'n', 's', 'e', or 'w' to navigate.
+Use 'i' to show your inventory. 
+Type 'q' to quit the game """)
 
 def parse_words(verb: str, obj: str):
+    verb = verb.lower()
+    obj = obj.lower()
+
     if verb == 'get' or verb == 'take':
         for item in player_one.current_room.items:
-            if obj.lower() == item.name.lower():
+            if obj == item.name.lower():
                 player_one.take(item)
                 return
-        print("There are no items in the room by that name")
+        print("\nThere are no items in the room by that name")
     elif verb == 'drop':
         for item in player_one.inventory:
-            if obj.lower() == item.name.lower():
+            if obj == item.name.lower():
                 player_one.drop(item)
                 return
-        print("You don't have any items in your inventory by that name")
+        print("\nYou don't have any items in your inventory by that name")
     else:
-        print("You must enter a valid command! Accepted verbs are 'get' 'take' and 'drop'")
+        print("\nYou must enter a valid command! Accepted verbs are 'get', 'take', and 'drop'")
 
 
 # REPL
 
 while True:
+    print('')
     print(player_one.current_room.name)
     print(player_one.current_room.description)
     if len(player_one.current_room.items) > 0:
-        print("Items in the room:")
+        print("\nItems in the room:")
         for item in player_one.current_room.items:
-            print(f"{item.name}: {item.description}")
+            print(f"* {item.name}: {item.description}")
 
     command = input("\nEnter a command: ")
-    print('')
 
     words = command.split()
     
