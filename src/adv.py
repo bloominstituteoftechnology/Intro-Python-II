@@ -43,6 +43,9 @@ room['entrance'].exits['e'] = room['crag']
 room['overlook'].exits['s'] = room['entrance']
 room['overlook'].exits['e'] = room['grotto']
 
+room['crag'].exits['w'] = room['entrance']
+room['crag'].exits['n'] = room['treasure']
+
 room['treasure'].exits['s'] = room['crag']
 
 
