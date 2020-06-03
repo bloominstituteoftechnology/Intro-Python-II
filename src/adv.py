@@ -68,14 +68,14 @@ while player_choice != 'q':
             print("Cannot move in that direction.")
     elif player_choice == 's':
         if  (player1.current_room, 's_to'):
-            player1.current_room = player1.current_room.s_to
+            # player1.current_room = player1.current_room.s_to
             print(f"Current location: { player1.current_room.name }")
             print(player1.current_room.description)
         else:
             print("Cannot move in that direction.")
     elif player_choice == 'e':
         if  (player1.current_room, 'e_to'):
-            player1.current_room = player1.current_room.e_to
+            # player1.current_room = player1.current_room.e_to
             print(f"Current location: { player1.current_room.name }")
             print(player1.current_room.description)
         else:
@@ -83,8 +83,8 @@ while player_choice != 'q':
     elif player_choice == 'w':
         if  (player1.current_room, 'w_to'):
             player1.current_room = player1.current_room.w_to
-            print(f"Current location: { player1.current_room.name }")
-            print(player1.current_room.description)
+            # print(f"Current location: { player1.current_room.name }")
+            # print(player1.current_room.description)
         else:
             print("Cannot move in that direction.")
     elif player_choice == 'q':
