@@ -73,8 +73,8 @@ def get_input():
         return "-1"
     else:
         s1 = f"{str(pick[0]).lower()}"
-        s2 = "" if len(pick) < 2 else str(pick[1]).lower()
-        return s1 + s2
+        s2 = " " if len(pick) < 2 else str(pick[1]).lower()
+        return s1 + "," + s2
 
 # Define new player
 player1 = Player("Hector", room[out])
@@ -116,7 +116,7 @@ while True:
         break
 
     elif choice.startswith("get") or choice.startswith("take"):
-        picked = int(choice[3:])
+        picked = int(choice.split(',')[1]) if choice.split(',')[1].isdigit() else 0
         length = len(player1.current_room.items)
         if picked > 0 and picked <= len(player1.current_room.items):
             player1.take(player1.current_room.pickup_item(picked))
@@ -124,6 +124,7 @@ while True:
             player1.show_inventory()
             if input("\n[Enter] to close Inventory\t"): continue
         else:
+            input('Invalid Input... Enter to continue ')
             continue
 
     else:
