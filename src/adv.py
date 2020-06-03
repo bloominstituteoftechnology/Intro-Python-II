@@ -55,7 +55,10 @@ player1 = Player("Hector", out)
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
-#
+
+while True:
+    print(f"Current room: \t{player1.current_room}")
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
