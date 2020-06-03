@@ -4,14 +4,6 @@ from player import Player
 INVALID_INPUT_WARNING = "<Invalid input; please try again>"
 
 
-def __bad_get(item):
-    print(f"<There's no '{item}' in the room>")
-
-
-def __bad_drop(item):
-    print(f"<There's no '{item}' in your inventory>")
-
-
 class Game:
     '''The game'''
     def __init__(self, player: Player, rooms: dict):
@@ -34,6 +26,11 @@ class Game:
     def stop(self):
         '''End the game'''
         self.__playing = False
+
+    @property
+    def playing(self):
+        '''True if the game is running, false if not'''
+        return self.__playing
 
     def __update(self):
         print("\n" + self.player.current_room.name)
@@ -58,7 +55,7 @@ class Game:
         verb = split_txt.pop(0)
         if verb in ("get", "take"):
             self.__parse_get(" ".join(split_txt))
-        if verb == "drop":
+        elif verb == "drop":
             self.__parse_drop(" ".join(split_txt))
         else:
             print(INVALID_INPUT_WARNING)
@@ -75,16 +72,11 @@ class Game:
             if item.name == item_name:
                 self.player.take_item(item)
                 return
-        __bad_get(item_name)
+        print(f"<There's no '{item_name}' in the room>")
 
     def __parse_drop(self, item_name: str):
         for item in self.player.items_list:
             if item.name == item_name:
                 self.player.drop_item(item)
                 return
-        __bad_drop(item_name)
-
-    @property
-    def playing(self):
-        '''True if the game is running, false if not'''
-        return self.__playing
+        print(f"<There's no '{item_name}' in your inventory>")
