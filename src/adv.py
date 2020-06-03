@@ -37,16 +37,16 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
+name_player = input("Welcome player. Select your favorite name:")
 # Make a new player object that is currently in the 'outside' room.
-player1 = Player('Emperor', room['outside'])
+player = Player('name_player', room['outside'])
 
 # Write a loop that:
 #
 # * Prints the current room name
-print(f"Current location:{player1.current_room.name}")
+print(f"Current Location:{player.current_room.name}")
 # * Prints the current description (the textwrap module might be useful here).
-print(player1.current_room.description)
+print(player.current_room.description)
 # * Waits for user input and decides what to do.
 #
 player_choice = ''
@@ -56,4 +56,37 @@ while player_choice != 'q':
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+if player_choice == 'n':
+    if (player.current_room, 'n_to'):
+        player.current_room = player.current_room.s_to
+        print(f"Current Location: {player.current_room.name}")
+        print(player.current_room.description)
+    else:
+        print("Invalid movement in that direction")
+elif player_choice == 's':
+    if(player.current_room, 's_to'):
+        player.current_room = player.current_room.s_to
+        print(f"Current Location: {player.current_room.name}")
+        print(player.current_room.description)
+    else:
+        print("Invalid movement in that direction")
+elif player_choice == 'e':
+    if(player.current_room, 'e_to'):
+        player.current_room = player.current_room.e_to
+        print(f"Current Location: {player.current_room.name}")
+        print(player.current_room.description)
+    else:
+        print("Invalid movement in that direction")
+elif player_choice == 'w':
+    if(player.current_room, 'w_to'):
+        player.current_room = player.current_room.e_to
+        print(f"Current Location: {player.current_room.name}")
+        print(player.current_room.description)
+    else:
+        print("Invalid movement in that direction")
+elif player_choice == 'q':
+    print("Thanks for playing. Exit the game")
+else:
+    print("Invalid direction")
+
 
