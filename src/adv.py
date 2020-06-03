@@ -71,7 +71,10 @@ while not quiting:
 
     
     print(f'You are standing inside the {player1.current_room.name}. You look around and see {player1.current_room.description}\n')
-    print(f"nearby you also see {player1.current_room.items}")
+    if len(player1.current_room.items) != 0:
+        print('It looks like there is some item in the room!')
+        for i in player1.current_room.items:
+            print(f'{i.name}, {i.description}')
     
     # what are the accepted commands for movement of quitting? If the user doesnt enter then we will
     # prompt for an accepted command. 
