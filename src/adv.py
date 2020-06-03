@@ -19,19 +19,19 @@ room = {
 
 
 # Link rooms together
-room['outside'].n_to = room['entrance']
+# room['outside'].n_to = room['entrance']
 
-room['entrance'].s_to = room['outside']
-room['entrance'].n_to = room['overlook']
-room['entrance'].e_to = room['crag']
+# room['entrance'].s_to = room['outside']
+# room['entrance'].n_to = room['overlook']
+# room['entrance'].e_to = room['crag']
 
-room['overlook'].s_to = room['entrance']
-room['overlook'].e_to = room['grotto']
+# room['overlook'].s_to = room['entrance']
+# room['overlook'].e_to = room['grotto']
 
-room['crag'].w_to = room['entrance']
-room['crag'].n_to = room['treasure']
+# room['crag'].w_to = room['entrance']
+# room['crag'].n_to = room['treasure']
 
-room['treasure'].s_to = room['crag']
+# room['treasure'].s_to = room['crag']
 
 # add exits
 room['outside'].exits['n'] = room['entrance']
@@ -42,6 +42,8 @@ room['entrance'].exits['e'] = room['crag']
 
 room['overlook'].exits['s'] = room['entrance']
 room['overlook'].exits['e'] = room['grotto']
+
+room['grotto'].exits['w'] = room['overlook']
 
 room['crag'].exits['w'] = room['entrance']
 room['crag'].exits['n'] = room['treasure']
@@ -55,7 +57,7 @@ room['treasure'].exits['s'] = room['crag']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-adventurer = Adventurer(rooms['outside'])
+adventurer = Adventurer(room['outside'])
 
 # Write a loop that:
 #
@@ -69,11 +71,12 @@ adventurer = Adventurer(rooms['outside'])
 # If the user enters "q", quit the game.
 
 print("Greetings Adventurer! You can move around the world using:")
-print("\n n-> North \n s -> South \n e -> East \n w -> West")
-print("you are currently at {adventurer.room}")
+print("\n n -> North \n s -> South \n e -> East \n w -> West")
+print("\nYou may end your adventure at anytime with 'q'")
+print("current location:")
 
 directions = ['n','s','e','w']
-start = True
+prompt = '> '
 
 action = input(f'{adventurer.room} \n which way would you like to go? \n{prompt}')
 
