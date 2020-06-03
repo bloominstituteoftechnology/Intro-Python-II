@@ -22,4 +22,11 @@ class Room():
         for i, item in enumerate(self.items, 1):
             print(f"\t{i}.) {item}")
 
+    def add_item(self, item):
+        self.items.append(item)
+
+    def pickup_item(self, i):
+        if i - 1 < 0 or i - 1 > self.items.count(): return print('Wrong input')
+        return self.items.pop(i)
+
     name = property(get_name, set_name)
