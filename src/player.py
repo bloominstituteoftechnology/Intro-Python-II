@@ -14,6 +14,7 @@ class Player():
         if room != None:
             self.__current_room = room
         else:
+            print("\nThere's nothing in this direction! (Use m to open your map\n")
             self.__current_room = self.__current_room
 
     current_room = property(get_current_room, set_current_room)

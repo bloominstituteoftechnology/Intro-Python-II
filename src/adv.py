@@ -1,7 +1,7 @@
 from room import Room
 from player import Player
 from item import Item
-
+from os import system, name
 # Declare all the rooms
 
 room = {
@@ -55,7 +55,11 @@ def showDirections(current):
     print(west)
     print()
 
-#
+def clear():
+    if name == 'nt':
+        system('cls')
+    else:
+        system('clear')
 # Main
 #
 # Make a new player object that is currently in the 'outside' room.
@@ -74,6 +78,7 @@ room[out].add_item(pot)
 
 while True:
     # print(br)
+    clear()
     print("Info:" + br)
     print(f"\tCurrent room: \t{player1.current_room.name}")
     print(f"\t\t{player1.current_room.description}")
@@ -92,6 +97,7 @@ while True:
         player1.current_room = player1.current_room.w_to
     elif choice.lower().strip() == "m":
         showDirections(player1.current_room)
+        if input("[Enter] to close map\t"): continue
     elif choice.lower().strip() == "q":
         break
 
