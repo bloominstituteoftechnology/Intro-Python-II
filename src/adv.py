@@ -64,17 +64,44 @@ while user_input != 'Q':
     print(player1)
     prompt = f'{player1.player_name}, what would you like to do? Move N, S, E, W, or Quit?'
     print("\n".join(textwrap.wrap(prompt, 38)))
-    user_input = input('>>').capitalize
-    if user_input = 'N':
-        pass # move North
-    elif user_input = 'S':
-        pass # move South
-    elif user_input = 'E':
-        pass # move East
-    elif user_input = 'W':
-        pass # move West
+    user_input = input().capitalize()
+    if user_input == 'N':
+        if player1.in_room == room['outside']:
+            print('Moving North')
+            player1.in_room = room['foyer']
+        elif player1.in_room == room['foyer']:
+            print('Moving North')
+            player1.in_room = room['overlook']
+        elif player1.in_room == room['narrow']:
+            print('Moving North')
+            player1.in_room = room['treasure']
+        else:
+            print('Invalid move')
+    elif user_input == 'S':
+        if player1.in_room == room['foyer']:
+            print('Moving South')
+            player1.in_room = room['outside']
+        elif player1.in_room == room['overlook']:
+            print('Moving South')
+            player1.in_room = room['foyer']
+        elif player1.in_room == room['treasure']:
+            print('Moving South')
+            player1.in_room = room['narrow']
+        else:
+            print('Invalid move')
+    elif user_input == 'E':
+        if player1.in_room == room['foyer']:
+            print('Moving East')
+            player1.in_room = room['narrow']
+        else:
+            print('Invalid move')
+    elif user_input == 'W':
+        if player1.in_room == room['narrow']:
+            print('Moving West')
+            player1.in_room = room['foyer']
+        else:
+            print('Invalid move')
+    elif user_input == 'Q':
+        print('You have decided to end your quest. Game Over.')
     else:
         print('Input not recognized.')
-
-if user_input = 'Q':
-    print('You have decided to end your quest. Game Over.')
