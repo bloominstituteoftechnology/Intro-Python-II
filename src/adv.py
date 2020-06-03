@@ -49,10 +49,11 @@ print(f"Current location:{player1.current_room.name}")
 print(player1.current_room.description)
 # * Waits for user input and decides what to do.
 #
-player1_choice = ''
-while player1_choice != 'q':
-    player1_choice = input("Select a direction to move. Enter n, s, e, or w:")
+player_choice = ''
+while player_choice != 'q':
+    player_choice = input("Select a direction to move. Enter n, s, e, or w:")
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
