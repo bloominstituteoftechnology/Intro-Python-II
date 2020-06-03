@@ -76,14 +76,16 @@ def parse_word(verb: str):
 def parse_words(verb: str, obj: str):
     if verb == 'get' or verb == 'take':
         for item in player_one.current_room.items:
-            if obj == item.name:
+            if obj.lower() == item.name.lower():
                 player_one.take(item)
-                break
+                return
+        print("There are no items in the room by that name")
     elif verb == 'drop':
         for item in player_one.inventory:
-            if obj == item.name:
+            if obj.lower() == item.name.lower():
                 player_one.drop(item)
-                break
+                return
+        print("You don't have any items in your inventory by that name")
     else:
         print("You must enter a valid command! Accepted verbs are 'get' 'take' and 'drop'")
 
