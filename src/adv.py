@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -49,3 +50,74 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# set up variables
+wants_to_quit = False
+player = Player(room['outside'])
+
+# Move command, will handle move attempts
+def go(dir):
+    """
+    dir values:
+    0: north
+    1: east
+    2: south
+    3: west
+    """
+    # print('Moving in direction',dir)
+
+    # grab current room connections
+    conns = [
+        player.cur_room.n_to,
+        player.cur_room.e_to,
+        player.cur_room.s_to,
+        player.cur_room.w_to
+    ]
+
+    if conns[dir] is not None:
+        player.cur_room = conns[dir]
+    else:
+        print("You can't go that way.")
+
+def ph():
+    print(
+        """n, e, s, w: travel north, east, south, and west respectively.
+q: quit the game
+?: prints the controls. (you are here)"""
+    )
+
+# action table, deals with 
+def act(command):
+    if   command == 'n': # go north
+        go(0)
+    elif command == 'e': # go east
+        go(1)
+    elif command == 's': # go south
+        go(2)
+    elif command == 'w': # go west
+        go(3)
+    elif command == '?': # get help
+        ph()
+    elif command == 'q': # quit game
+        global wants_to_quit
+        wants_to_quit = True
+    else:
+        print("You don't know how to do that.")
+
+
+# Initial printing
+ph()
+print()
+
+# REPL game loop
+while not wants_to_quit:
+    # print("quitting:",~wants_to_quit)
+    print(player.cur_room.name)
+    print(player.cur_room.desc)
+
+    comm = input("Command: ")
+
+    act(comm)
+
+    # spacing
+    print()
