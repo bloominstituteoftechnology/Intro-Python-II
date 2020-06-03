@@ -38,9 +38,9 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 # Make a new player object that is currently in the 'outside' room.
-player_name = input('what is your name? ')
+player_name = input('\nwhat is your name? \n')
 player1 = Player(player_name, room['outside'])
-print(f'welcome {player1.name}!')
+print(f'\nwelcome {player1.name}!\n')
 
 # create items and add these items to rooms.
 bat = Item("Bat", "Barry Bonds home run bat")
@@ -82,38 +82,47 @@ while not quiting:
     accepted_commands = ['q', 'n', 'e', 's', 'w']
     
     # get the user command for the direction that they want to move, or if they want to quit. 
-    command = input('What do you want to do? You can move n, s, e, or w. or you can quit, q? ')
-    command = command.strip() # add the strip() in case the user accidently puts a space after their choice.
+    command = input('\nWhat do you want to do? You can move n, s, e, or w. or you can quit, q? ')
+    command_split = command.split() # add the strip() in case the user accidently puts a space after their choice.
      
-    if command in accepted_commands:
+    if len(command_split) == 1 and command in accepted_commands:
         if command == 'n':
             if player1.current_room.n_to == None:
-                print("That way is blocked! Pick another direction!\n")
+                print("\nThat way is blocked! Pick another direction!\n")
                 player1.current_room
             else:
                 player1.current_room = player1.current_room.n_to
-        if command == 's':
+        elif command == 's':
             if player1.current_room.s_to == None:
-                print("That way is blocked! Pick another direction!\n")
+                print("\nThat way is blocked! Pick another direction!\n")
                 player1.current_room
             else:
                 player1.current_room = player1.current_room.s_to
-        if command == 'e':
+        elif command == 'e':
             if player1.current_room.e_to == None:
-                print("That way is blocked! Pick another direction!\n")
+                print("\nThat way is blocked! Pick another direction!\n")
                 player1.current_room
             else:
                 player1.current_room = player1.current_room.e_to
-        if command == 'w':
+        elif command == 'w':
             if player1.current_room.w_to == None:
-                print("That way is blocked! Pick another direction!\n")
+                print("\nThat way is blocked! Pick another direction!\n")
                 player1.current_room
             else:
                 player1.current_room = player1.current_room.w_to
-        if command == 'q':
+        elif command == 'q':
             quiting = True
-            print('Thanks for playing!')
+            print('\nThanks for playing!')
+    elif len(command_split) == 2:
+        if command_split[0] == 'get' or command_split[1] == 'take':
+            print('\nYou picked up the item\n')
+             
     else:
-        command = input('That isnt a valid command! You can move n, s, e, or w. or you can quit, q? ')
+        command = input('\nThat isnt a valid command! You can move n, s, e, or w. or you can quit, q? \n')
 
-
+# TODO 
+# Make it so when command is pick up the item list will remove that item from the Item list in room
+# WHen command is to pick up item the inventory will be updated with the item in Player class. 
+# add logic to show what a player is carrying. 
+# When the command is to Drop and item, it will be the opposite logic of the Pickup item logic. 
+# i.e. item list will be appended in the Room Class, and the player inventory will be appended. 
