@@ -1,14 +1,20 @@
-import sys
 from player import Player
-from room import Room
 
 
 INVALID_INPUT_WARNING = "<Invalid input; please try again>"
 
 
+def __bad_get(item):
+    print(f"<There's no '{item}' in the room>")
+
+
+def __bad_drop(item):
+    print(f"<There's no '{item}' in your inventory>")
+
+
 class Game:
     '''The game'''
-    def __init__(self, player: Player, rooms: list(Room)):
+    def __init__(self, player: Player, rooms: dict):
         self.player = player
         self.rooms = rooms
         self.__playing = False
@@ -18,7 +24,10 @@ class Game:
         self.__playing = True
         print("\n\n-- ADVENTURE GAME --\n\n\n")
 
-        print("(Enter 'q' at any time to quit.)")
+        print("Enter 'n', 's', 'e', or 'w' to move in a cardinal direction.")
+        print("Enter 'i' or 'inventory' to show your items in hand.")
+        print("Enter 'q' at any time to quit.")
+
         while self.__playing:
             self.__update()
 
@@ -30,40 +39,45 @@ class Game:
         print("\n" + self.player.current_room.name)
         print(self.player.current_room.description)
 
-        txt = input("<Move the player (enter 'n', 's', 'e', or 'w')>: ")
+        txt = input("<Move the player>: ")
         self.__parse_input(txt)
 
-    def __parse_input(self, txt):
+    def __parse_input(self, txt: str):
         if txt == 'q':
-            sys.exit()
+            self.__playing = False
+            print("Quitting...")
+        elif txt in ('i', 'inventory'):
+            print(f"Inventory: {self.player.inventory}")
         elif len(txt) == 1:
             self.__parse_move(txt)
         else:
             self.__parse_action(txt)
 
-    def __parse_action(self, txt):
+    def __parse_action(self, txt: str):
         split_txt = txt.split()
         verb = split_txt.pop(0)
         if verb in ("get", "take"):
             self.__parse_get(" ".join(split_txt))
         if verb == "drop":
             self.__parse_drop(" ".join(split_txt))
+        else:
+            print(INVALID_INPUT_WARNING)
 
-    def __parse_move(self, txt):
+    def __parse_move(self, txt: str):
         possible_room = self.player.current_room.get_room_in_direction(txt)
         if possible_room is None:
             print(INVALID_INPUT_WARNING)
         else:
-            self.player.current_room = possible_room
+            self.player.enter_room(possible_room)
 
-    def __parse_get(self, item_name):
+    def __parse_get(self, item_name: str):
         for item in self.player.current_room.items_list:
             if item.name == item_name:
                 self.player.take_item(item)
                 return
         __bad_get(item_name)
 
-    def __parse_drop(self, item_name):
+    def __parse_drop(self, item_name: str):
         for item in self.player.items_list:
             if item.name == item_name:
                 self.player.drop_item(item)
@@ -74,11 +88,3 @@ class Game:
     def playing(self):
         '''True if the game is running, false if not'''
         return self.__playing
-
-
-def __bad_get(item):
-    print(f"<There's no '{item}' in the room>")
-
-
-def __bad_drop(item):
-    print(f"<There's no '{item}' in your inventory>")
