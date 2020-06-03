@@ -49,3 +49,7 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+if __name__ == "__main__":
+    user = input('What is your name?')
