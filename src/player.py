@@ -2,9 +2,9 @@
 # currently.
 
 class Player():
-    def __init__(self, player_name, in_room):
-        self.player_name = player_name
-        self.in_room = in_room
+    def __init__(self, name, current_room):
+        self.name = name
+        self.current_room = current_room
     
     def __str__(self):
-        return f'{self.player_name}, you are at the {self.in_room}'
+        return f'{self.name}, you are at the {self.current_room}'

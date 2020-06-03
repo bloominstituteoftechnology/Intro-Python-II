@@ -41,7 +41,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 print("Welcome foolish mortal, please state your name.")
-player_name_input = input()
+player_name_input = input("> ")
 player1 = Player(f'{player_name_input}', room['outside'])
 
 # Write a loop that:
@@ -64,43 +64,42 @@ player1 = Player(f'{player_name_input}', room['outside'])
 user_input = ''
 while user_input != 'Q':
     print(player1)
-    prompt = f'{player1.player_name}, what would you like to do? Move N, S, E, W, or Quit?'
-    print("\n".join(textwrap.wrap(prompt, 38)))
-    user_input = input().capitalize()
+    print(f'{player1.name}, what would you like to do? Move N, S, E, W, or Quit?')
+    user_input = input("> ").capitalize()
     if user_input == 'N':
-        if player1.in_room == room['outside']:
+        if player1.current_room == room['outside']:
             print('Moving North')
-            player1.in_room = room['foyer']
-        elif player1.in_room == room['foyer']:
+            player1.current_room = room['outside'].n_to
+        elif player1.current_room == room['foyer']:
             print('Moving North')
-            player1.in_room = room['overlook']
-        elif player1.in_room == room['narrow']:
+            player1.current_room = room['foyer'].n_to
+        elif player1.current_room == room['narrow']:
             print('Moving North')
-            player1.in_room = room['treasure']
+            player1.current_room = room['narrow'].n_to
         else:
             print('Invalid move')
     elif user_input == 'S':
-        if player1.in_room == room['foyer']:
+        if player1.current_room == room['foyer']:
             print('Moving South')
-            player1.in_room = room['outside']
-        elif player1.in_room == room['overlook']:
+            player1.current_room = room['foyer'].s_to
+        elif player1.current_room == room['overlook']:
             print('Moving South')
-            player1.in_room = room['foyer']
-        elif player1.in_room == room['treasure']:
+            player1.current_room = room['overlook'].s_to
+        elif player1.current_room == room['treasure']:
             print('Moving South')
-            player1.in_room = room['narrow']
+            player1.current_room = room['treasure'].s_to
         else:
             print('Invalid move')
     elif user_input == 'E':
-        if player1.in_room == room['foyer']:
+        if player1.current_room == room['foyer']:
             print('Moving East')
-            player1.in_room = room['narrow']
+            player1.current_room = room['foyer'].e_to
         else:
             print('Invalid move')
     elif user_input == 'W':
-        if player1.in_room == room['narrow']:
+        if player1.current_room == room['narrow']:
             print('Moving West')
-            player1.in_room = room['foyer']
+            player1.current_room = room['narrow'].w_to
         else:
             print('Invalid move')
     elif user_input == 'Q':
