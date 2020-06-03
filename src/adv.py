@@ -4,17 +4,17 @@ from player import Player
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside': Room("Outside Cave Entrance",
+                    "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
+    'foyer': Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
+    'narrow': Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
@@ -29,6 +29,7 @@ over = 'overlook'
 nar = 'narrow'
 trea = 'treasure'
 
+br = '----------------------------'
 
 # Link rooms together
 
@@ -41,14 +42,24 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+def showDirections(current):
+    north = "North: " + current.n_to.name if current.n_to != None else "There's no path North"
+    east = "East: " + current.e_to.name if current.e_to != None else "There's no path East"
+    sout = "South: " + current.s_to.name if current.s_to != None else "There's no path South"
+    west = "West: " + current.w_to.name if current.w_to != None else "There's no path West"
+    print()
+    print(north)
+    print(east)
+    print(sout)
+    print(west)
+    print()
 
 #
 # Main
 #
-
 # Make a new player object that is currently in the 'outside' room.
 
-player1 = Player("Hector", out)
+player1 = Player("Hector", room[out])
 
 # Write a loop that:
 #
@@ -57,9 +68,29 @@ player1 = Player("Hector", out)
 # * Waits for user input and decides what to do.
 
 while True:
-    print(f"Current room: \t{player1.current_room}")
+    print(br)
+    print(f"Current room: \t{player1.current_room.name}")
+    print(f"\t{player1.current_room.description}")
+
+    choice = str(input("Where do you want to go?\t"))
+
+
+    if choice.lower().strip() == "n":
+        print("helloworld")
+    elif choice.lower().strip() == "e":
+        print("helloworld")
+    elif choice.lower().strip() == "s":
+        print("helloworld")
+    elif choice.lower().strip() == "w":
+        print("helloworld")
+    elif choice.lower().strip() == "m":
+        showDirections(player1.current_room)
+    elif choice.lower().strip() == "q":
+        break
 
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
