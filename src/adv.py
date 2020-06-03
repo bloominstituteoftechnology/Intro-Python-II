@@ -33,6 +33,20 @@ room['crag'].n_to = room['treasure']
 
 room['treasure'].s_to = room['crag']
 
+# add exits
+room['outside'].exits['n'] = room['entrance']
+
+room['entrance'].exits['s'] = room['outside']
+room['entrance'].exits['n'] = room['overlook']
+room['entrance'].exits['e'] = room['crag']
+
+room['overlook'].exits['s'] = room['entrance']
+room['overlook'].exits['e'] = room['grotto']
+
+room['treasure'].exits['s'] = room['crag']
+
+
+
 #
 # Main
 #
@@ -62,7 +76,7 @@ action = input(f'{adventurer.room} \n which way would you like to go? \n{prompt}
 
 while action != 'q':
     try:
-        adventurer.room = adventurer.room.exits[move]
-        move = input(f'{adventurer.room}\n\n{prompt}')
+        adventurer.room = adventurer.room.exits[action]
+        action = input(f'{adventurer.room}\n\n{prompt}')
     except KeyError:
-        move = input(f'Hmm.. It seems like there is no obvious way to do that.\n\n{prompt}')
+        action = input(f'Hmm.. It seems like there is no obvious way to do that.\n\n{prompt}')
