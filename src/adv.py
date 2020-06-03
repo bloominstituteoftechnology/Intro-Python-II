@@ -83,13 +83,13 @@ while True:
 
 
     if choice.lower().strip() == "n":
-        player1.current_room = player1.current_room.n_to if player1.current_room.n_to != None else player1.current_room
+        player1.current_room = player1.current_room.n_to
     elif choice.lower().strip() == "e":
-        player1.current_room = player1.current_room.e_to if player1.current_room.e_to != None else player1.current_room
+        player1.current_room = player1.current_room.e_to
     elif choice.lower().strip() == "s":
-        player1.current_room = player1.current_room.s_to if player1.current_room.s_to != None else player1.current_room
+        player1.current_room = player1.current_room.s_to
     elif choice.lower().strip() == "w":
-        player1.current_room = player1.current_room.w_to if player1.current_room.w_to != None else player1.current_room
+        player1.current_room = player1.current_room.w_to
     elif choice.lower().strip() == "m":
         showDirections(player1.current_room)
     elif choice.lower().strip() == "q":
