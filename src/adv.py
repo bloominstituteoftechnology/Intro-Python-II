@@ -97,5 +97,7 @@ while True:
         if input("[Enter] to close map\t"): continue
     elif choice.lower().strip() == "q":
         break
+    else:
+        input("Invalid input... Enter to continue")
 
 
