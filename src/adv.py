@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -38,7 +40,10 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Pete", room['outside'])
+print(player)
 
+d = input("Where do you want to go (Only way is north):")
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +54,42 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+
+
+
+
+
+
+
+
+
+# if player:
+#     # print(player)
+#     print(f"{player.room}")
+#     d = input("Where do you want to go (Only way is north):")
+#     print(f"You go {d}")
+#     if d == 'n':
+#         player.room = room['foyer']
+#         print(f"{player.room}")
+#         d = input("Where do you want to go (Choose: north, south or east):")
+#         print(f"You go {d}")
+#         if d == 'n':
+#             player.room = room['overlook']
+#             print(f"{player.room}")
+#             d = input("Where do you want to go (Only way is south):")
+#             print(f"You go {d}")
+#         elif d == 's':
+#             player.room = room['outside']
+#             print(f"{player.room}")
+#             d = input("Where do you want to go (Only way is north):")
+#             print(f"You go {d}")
+#         elif d == 'e':
+#             player.room = room['narrow']
+#             print(f"{player.room}")
+#             d = input("Where do you want to go (Choose: north or west):")
+#             print(f"You go {d}")
+#     else:
+#         print('You can only go north')
+#         d = input("Where do you want to go (n, s, e, w):")
