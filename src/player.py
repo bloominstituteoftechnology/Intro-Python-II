@@ -7,10 +7,11 @@ class Player:
         self. current_room = current_room
         self.inventory = []
 
-    def __str__(self):
-       plain = f"name: {self.name}\nInventory :"
+   def __str__(self):
+        plain = f"{self.name}\nInventory: "
+
         for i in self.items:
-            plain += f"{i}"
+            plain += f"{i} "
         return plain
 
    
