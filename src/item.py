@@ -6,10 +6,10 @@ class Item:
         self.description = description
 
     def get_item(self):
-        return f'you have picked up {self.name}'
+        print(f'you have picked up {self.name}')
     
     def drop_item(self):
-        return f'you have dropped {self.name}'
+        print(f'you have dropped {self.name}')
 
     def __rpr__(self):
         return f'Item Name is: {self.name}, Description: {self.description}'
