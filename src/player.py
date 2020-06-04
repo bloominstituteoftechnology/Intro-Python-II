@@ -19,3 +19,9 @@ class Player:
     
     def add_item(self, item):
         self.items.append(item)
+
+    def take_item(self, item):
+        if item in self.items:
+            item.on_take()
+            self.items.remove(item)
+            self.add_item(item)

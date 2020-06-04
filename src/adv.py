@@ -60,6 +60,7 @@ print(f"\nWelcome {player.name}.\n\nYou are currently in the {player.room.name}.
 
 while True:
     command = input(f"\nWhere would you like to go next? (N, S, E, W or Q to quit the game): ").lower()
+    answer = command.split(" ")
 
     if command in valid_directions:
         player.move(command)
