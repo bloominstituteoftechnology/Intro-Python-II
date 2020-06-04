@@ -3,4 +3,4 @@
 class Player:
     def __init__(self, name, room):
         self.name = name
-        self.room = room.player = self
+        self.room = room
