@@ -5,6 +5,7 @@ class Room:
     def __init__(self, name, description):
         self.name = name
         self.description = description
+        self.items = []
         self.n_to = None
         self.s_to = None
         self.w_to = None
@@ -15,3 +16,10 @@ class Room:
 
     def get_description(self):
         return f"{self.description}"
+
+    def get_items(self):
+        if self.items == []:
+            return f"This room contains no items."
+        else:
+            return f"Room items: {self.items}"
+

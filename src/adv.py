@@ -1,6 +1,7 @@
 from room import Room
 import textwrap
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -25,7 +26,6 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -35,30 +35,43 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Items
+room['treasure'].items = Item("Treasure Chest", 50)
+room['overlook'].items = Item("Key", 1)
+room['foyer'].items = Item("Gold", 20)
+room['narrow'].items = Item("Sword", 15)
+
 #
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
 player = Player("Wyatt", room['outside'])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
 
-print(f"---Current Location:---\n{player.location.get_name()}")
-for line in textwrap.wrap(player.location.get_description()):
-    print(line)
+def print_menu():
+    print(f"----MENU----")
+    print("N: Travel north")
+    print("S: Travel south")
+    print("E: Travel east")
+    print("W: Travel west")
+    print("I: Check the room for items")
+    print("Take [item]: Pick up an item from the room")
+    print("Drop [item]: Drop an item from your inventory")
+    print("M: Print current location")
+    print("L: Print menu")
+    print("Q: Quit the game")
+
+def print_location():
+    print(f"---Current Location---\n{player.location.get_name()}")
+    for line in textwrap.wrap(player.location.get_description()):
+        print(f"{line}")
+
+print_menu()
+print()
+print_location()
 
 while True:
-    choice = input("\nDirection (n, s, e, w): ")
+    choice = input("\nAction > ")
     if choice.lower() == "n":
         if player.location.n_to == None:
             print("Nothing in this direction.")
@@ -91,10 +104,25 @@ while True:
             print(f"---Current Location:---\n{player.location.get_name()}")
             for line in textwrap.wrap(player.location.get_description()):
                 print(line)
+    elif choice.lower() == "take gold":
+    elif choice.lower() == "take key":
+    elif choice.lower() == "take sword":
+    elif choice.lower() == "take treasure chest":
+    elif choice.lower() == "drop gold":
+    elif choice.lower() == "drop key":
+    elif choice.lower() == "drop sword":
+    elif choice.lower() == "drop treasure chest":
+
+    elif choice.lower() == "i":
+        print(player.location.get_items())
+    elif choice.lower() == "l":
+        print_location()
+    elif choice.lower() == "m":
+        print_menu()
     elif choice.lower() == "q":
-        print("quit")
+        print("Game Over.")
         break
     else:
-        print("Invalid direction. Please try again.")
+        print("Invalid action. Please try again.")
 
 
