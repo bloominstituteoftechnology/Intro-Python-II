@@ -36,10 +36,10 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Items
-room['treasure'].items = Item("Treasure Chest", 50)
-room['overlook'].items = Item("Key", 1)
-room['foyer'].items = Item("Gold", 20)
-room['narrow'].items = Item("Sword", 15)
+room['treasure'].add_item(Item("Treasure Chest", 50))
+room['overlook'].add_item(Item("Key", 1))
+room['foyer'].add_item(Item("Gold", 20))
+room['narrow'].add_item(Item("Sword", 15))
 
 #
 # Main
@@ -104,15 +104,36 @@ while True:
             print(f"---Current Location:---\n{player.location.get_name()}")
             for line in textwrap.wrap(player.location.get_description()):
                 print(line)
-    elif choice.lower() == "take gold":
-    elif choice.lower() == "take key":
-    elif choice.lower() == "take sword":
     elif choice.lower() == "take treasure chest":
-    elif choice.lower() == "drop gold":
+        hasKey = False
+        for item in player.inventory:
+            if item.name == "Key":
+                item = player.location.take_item("Treasure Chest")
+                player.add_item(item)
+                hasKey = True
+        if hasKey == False:
+            print("You need a key in your inventory to pick up the treasure chest.")
+        else:
+            print("Congratulations, you win. Game Over.")
+            break
+    elif choice.lower() == "take key":
+        item = player.location.take_item("Key")
+        player.add_item(item)
+    elif choice.lower() == "take sword":
+        item = player.location.take_item("Sword")
+        player.add_item(item)
+    elif choice.lower() == "take gold":
+        item = player.location.take_item("Gold")
+        player.add_item(item)
     elif choice.lower() == "drop key":
+        item = player.drop_item("Key")
+        player.location.add_item(item)
     elif choice.lower() == "drop sword":
-    elif choice.lower() == "drop treasure chest":
-
+        item = player.drop_item("Sword")
+        player.location.add_item(item)
+    elif choice.lower() == "drop gold":
+        item = player.drop_item("Gold")
+        player.location.add_item(item)
     elif choice.lower() == "i":
         print(player.location.get_items())
     elif choice.lower() == "l":
@@ -124,5 +145,3 @@ while True:
         break
     else:
         print("Invalid action. Please try again.")
-
-

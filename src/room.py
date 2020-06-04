@@ -21,5 +21,20 @@ class Room:
         if self.items == []:
             return f"This room contains no items."
         else:
-            return f"Room items: {self.items}"
+            stuff = "Room items:\n"
+            for item in self.items:
+                stuff += f"{item}\n"
+            return stuff
+
+    def take_item(self, stri):
+        for obj in self.items:
+            if obj.name == stri:
+                self.items.remove(obj)
+                return obj
+        else:
+            return "Invalid item in room."
+
+    def add_item(self, item):
+        self.items.append(item)
+
 
