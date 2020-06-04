@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -38,14 +40,34 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+player1 = Player('Josh', room['outside'])
+print(player1)
 # Write a loop that:
-#
-# * Prints the current room name
+# # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
-#
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+answer = input("would you like to play an adventure game(y/n): ")
+
+if answer.lower().strip() == 'y':
+    print("--Welcome to Tresure Hunt! You are in the outside room,\n--to find your way to the treasure,\n--you need to go to the foyer.")
+    north = input("Type 'up' to go to foyer: ")
+    if north.lower().strip() == 'up':
+        """
+        I have to move my player from current room to the next room based on connections
+        """
+        player1.current_room = player1.current_room.n_to
+        print(f'Welcome to {player1.current_room}')
+        north_2 = input("Type 'up' to go to overlook: ")
+        if
+        
+
+elif answer.lower().strip() == 'n':
+    print('the game will now quit')
+    exit(0)
+
+
