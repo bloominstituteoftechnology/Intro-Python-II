@@ -5,8 +5,8 @@ from item import Item
 # Declare all the rooms
 
 item = {
-    'magic mirror': Item('magic mirror', """hmmm, this looks VERY interesting; take it back to the entrance for a better look!"""),
-    'sword': Item('sword', 'Just an old sword. Take it to the blacksmith to have it tempered!'),
+    'magic mirror': Item('magic mirror', """hmmm, this looks VERY interesting; take it back to the entrance and see what happens!"""),
+    'sword': Item('sword', 'This sword looks beat up. Take it to the blacksmith to have it tempered!'),
     'rupees': Item('rupees', 'Save these for later to buy bombs and other items!'),
     'magic powder': Item('magic powder', 'Sprinkle this on enemies and see how they transform!'),
     'bug catching net': Item('bug catching net', 'Use this to catch magic fairies that heal your wounds!'),
@@ -77,7 +77,7 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-playerName = input('Please enter a name for your hero: ')
+playerName = input('What is your name: ')
 hero = Player(playerName, room['outside'])
 hero.victory = False
 victory_message = """As you look into the mirror, you are transported to another world for a new adventure!"""
