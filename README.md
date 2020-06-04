@@ -18,7 +18,7 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 
 ### Day 1 MVP
 
-* Create the REPL command parser in `adv.py` which allows the player to move to rooms
+* Create the input command parser in `adv.py` which allows the program to receive player input and commands to move to rooms
   in the four cardinal directions.
 * Fill out Player and Room classes in `player.py` and `room.py`
 
