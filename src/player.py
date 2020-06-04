@@ -4,12 +4,14 @@
 from room import Room
 
 class Player:
-    def __init__(self, name, current_room)
+    def __init__(self, name, current_room):
         self.name = name
         self.current_room = current_room
 
     def move(self, direction):
-        if self.currect_room.connections [direction] is not None:
-            self.currect_room = self.current_room.connections[direction]
+        next_room = getattr(self.current_room, f"{direction}_to")
+        if next_room is not None:
+            self.currect_room = next_room
+            print(f"*************************You entered {next_room}*************************")
         else:
-            print("You cannot move in that direction.")
+            print("*************************You cannot move in that direction.*************************")
