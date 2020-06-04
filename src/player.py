@@ -11,7 +11,7 @@ class Player():
         __init__: Initialize Player Class
         move: Move to new location, a different Room"""
 
-    def __init__(self, playerName, location):
+    def __init__(self, playerName, location, items=[]):
         """Initialize Player class
         
         Args:
@@ -37,6 +37,17 @@ class Player():
         self.location = location
         self.health = 100
         self.experience = 0
+        self.items = items
+    
+    @property
+    def browse_room_contents(self):
+        return self.location.loot
+
+    def loot(self):
+        self.items.append(self.location.loot)
+        print("Your treasure grows! Here is your updated inventory:\n\n")
+        self.location.empty_room_contents()
+        return self.items
 
     def move(self, cardinal_direction):
         """Move to new location, a different Room in the adventure game

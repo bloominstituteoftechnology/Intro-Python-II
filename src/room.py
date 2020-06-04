@@ -8,7 +8,7 @@ class Room:
         __init__: Initialize Room class
         get_neighbor: Return neighboring room at input direction"""
 
-    def __init__(self, name, description):
+    def __init__(self, name, description, items=None):
         """Initialize Room class
         
         Args:
@@ -37,10 +37,25 @@ class Room:
 
         self.name = name
         self.description = description
+        self.items = [{"Name":item.name, 
+                      "Description":item.description, 
+                      "Damage":item.damage, 
+                      "Durability":item.durability, 
+                      "Mana":item.mana} for item in items]
+
+
         self.n_to = None
         self.s_to = None
         self.w_to = None
         self.e_to = None
+
+    @property
+    def loot(self):
+        return self.items
+
+    def empty_room_contents(self):
+        self.items = []
+
 
     def get_neighbor(self, direction):
         """Return neighboring room at input direction
