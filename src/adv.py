@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -55,11 +56,15 @@ player = Player("Tom", room['outside'])
 
 valid_directions = ("n", "s", "e", "w")
 
+print(f"\nWelcome {player.name}.\n\nYou are currently in the {player.room.name}. {player.room.description}.")
+
 while True:
     command = input(f"\nWhere would you like to go next? (N, S, E, W or Q to quit the game): ").lower()
 
     if command in valid_directions:
         player.move(command)
+    elif command == "i":
+        print(f"\n{item for item in player.room.items}")
     elif command == "q":
         print("See you next time")
         break
