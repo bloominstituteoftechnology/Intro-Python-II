@@ -38,13 +38,42 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+def try_direction(player, direction):
+    attribute = direction + '_to'
+    if hasattr(player.location, attribute):
+        player.location = getattr(player.location, attribute)
+    else:
+        print("There's nothing in that direction!")
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Pete", room['outside'])
-print(player)
 
-d = input("Where do you want to go (Only way is north):")
+player = Player('Pete', room['outside'])
+
 # Write a loop that:
+while True:
+    print("\n")
+    print(player.location)
+
+    first_char = input("\nChoose direction: ").strip().lower().split()
+    
+    first_first_char = first_char[0]
+
+    first_char = first_first_char[0]
+
+    if first_char[0] =='q':
+        break
+
+    if first_char[0] == 'n':
+        try_direction(player, first_char)
+    elif first_char[0] == 's':
+        try_direction(player, first_char)
+    elif first_char[0] == 'w':
+        try_direction(player, first_char)
+    elif first_char[0] == 'e':
+        try_direction(player, first_char) 
+
+
+
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
@@ -55,39 +84,34 @@ d = input("Where do you want to go (Only way is north):")
 #
 # If the user enters "q", quit the game.
 
+# player = Player('Pete', room['outside'])
+# print(player)
 
+# d = input("Where do you want to go (Only way is north):")
 
-
-
-
-
-
-
-
-
-# if player:
+# while True:
 #     # print(player)
-#     print(f"{player.room}")
+#     print(f"{player.location}")
 #     d = input("Where do you want to go (Only way is north):")
 #     print(f"You go {d}")
 #     if d == 'n':
-#         player.room = room['foyer']
-#         print(f"{player.room}")
+#         player.location = room['foyer']
+#         print(f"{player.location}")
 #         d = input("Where do you want to go (Choose: north, south or east):")
 #         print(f"You go {d}")
 #         if d == 'n':
-#             player.room = room['overlook']
-#             print(f"{player.room}")
+#             player.location = room['overlook']
+#             print(f"{player.location}")
 #             d = input("Where do you want to go (Only way is south):")
 #             print(f"You go {d}")
 #         elif d == 's':
-#             player.room = room['outside']
-#             print(f"{player.room}")
+#             player.location = room['outside']
+#             print(f"{player.location}")
 #             d = input("Where do you want to go (Only way is north):")
 #             print(f"You go {d}")
 #         elif d == 'e':
-#             player.room = room['narrow']
-#             print(f"{player.room}")
+#             player.location = room['narrow']
+#             print(f"{player.location}")
 #             d = input("Where do you want to go (Choose: north or west):")
 #             print(f"You go {d}")
 #     else:
