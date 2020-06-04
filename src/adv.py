@@ -1,4 +1,5 @@
 from room import Room
+from textwrap import wrap 
 from player import Player
 
 # Declare all the rooms
@@ -33,6 +34,11 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+# room['outside'].s_to = "Blocked"
+# room['outside'].w_to = "Blocked"
+# room['outside'].e_to = "Blocked"
+# room['foyer'].w_to =  "Blocked"
+
 
 #
 # Main
@@ -57,31 +63,15 @@ print((David.current_room.name))
 # If the user enters "q", quit the game.
 
 
+
 while David.move != "q":
-    David.move = input("Your Character wants to move either [s], [n], [w], [e], if you want quit type [q]:")
+    David.move = input("Your Character wants to move either [s]outh, [n]orth, [w]est, [e]ast, if you want quit type [q]uit:").lower()
     if David.move == "q":
         print("Dr. Strange says `We are in the endgame now`")
-    elif David.move == "s":
-        print("You moved downward")
-        David.current_room = David.current_room.s_to
-        print(f"You entered {David.current_room.name}")
-        print(f"Now {David.current_room.description}")
-    elif David.move == "n":
-        print("You moved upward")
-        David.current_room = David.current_room.n_to
-        print(f"You entered {David.current_room.name}")
-        print(f"Now {David.current_room.description}")
-    elif David.move == "w":
-        print("You moved to West")
-        David.current_room = David.current_room.w_to
-        print(f"You entered {David.current_room.name}")
-        print(f"Now {David.current_room.description}")
-    elif David.move == "e":
-        print("You moved to East")
-        David.current_room = David.current_room.e_to
-        print(f"You entered {David.current_room.name}")
-        print(f"Now {David.current_room.description}")
+    elif David.move == "quit":
+        print("Dr. Strange says `We are in the endgame now`")
+        break
     else:
-        print("Please chose a letter according to the instruction")
+        David.entered()
 
 
