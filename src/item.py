@@ -7,3 +7,5 @@ class Item:
         self.description = description
     def __str__(self):
         return (f"{self.name}, item description: {self.description}")
+
+    
