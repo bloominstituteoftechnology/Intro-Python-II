@@ -80,3 +80,5 @@ while True:
     elif player_input == "Q":
         print("We are sad to see you go. Bye")
         break 
+    else:
+        print("Press N, S, E, W to move, press Q to quit the game:")
