@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -33,9 +35,25 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+items = {
+    'chocolate': Item('chocolate', 'eat to regain strength to code'),
+    'peanut butter': Item('peanut butter', 'the power food that never spoils'),
+    'book': Item('book', 'to strengthen the mind and the soul'),
+    'highlighter': Item('highlighter', 'to highlight the pertinent parts of your book'),
+    'computer': Item('computer', 'to code until you cannot code anymore')
+}
+
+room['outside'].add_item(items['highlighter'])
+room['foyer'].add_item(items['book'])
+room['foyer'].add_item(items['computer'])
+room['narrow'].add_item(items['chocolate'])
+room['treasure'].add_item(items['peanut butter'])
+
 #
 # Main
 #
+player1 = Player('player1', room['outside'])
 
 # Make a new player object that is currently in the 'outside' room.
 
@@ -49,3 +67,41 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while True:
+    command = input(
+        'Enter a direction using the keys n,s,e,w to go to different rooms, q to quit the game, i to see items, g to get items, or d to drop items. ').lower()
+
+    if command == 'n':
+        if player1.current_room.n_to != None:
+            player1.current_room = player1.current_room.n_to
+            print(
+                f'room:{player1.current_room.name} \n description: {player1.current_room.description}')
+        else:
+            print('You cannot move north')
+    elif command == 's':
+        if player1.current_room.s_to != None:
+            player1.current_room = player1.current_room.s_to
+            print(
+                f'room:{player1.current_room.name} \n description: {player1.current_room.description}')
+        else:
+            print('You cannot move south')
+    elif command == 'e':
+        if player1.current_room.e_to != None:
+            player1.current_room = player1.current_room.e_to
+            print(
+                f'room:{player1.current_room.name} \n description: {player1.current_room.description}')
+        else:
+            print('You cannot move east')
+    elif command == 'w':
+        if player1.current_room.w_to != None:
+            player1.current_room = player1.current_room.w_to
+            print(
+                f'room:{player1.current_room.name} \n description: {player1.current_room.description}')
+        else:
+            print('You cannot move west')
+    elif command == 'i':
+        if len(player1.current_room.items) > 0:
+            for i in player1.current_room.items:
+                print(f'name: {i.name} \n description: {i.description}')
+    elif command == 'q':
+        quit()
