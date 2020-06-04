@@ -36,9 +36,14 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # a room to place items
-# room["foyer"].items.append(shield)
-# room["overlook"].items.append(armor)
-# room["narrow"].items.append(axe)
+axe = Item("axe", "It glows and radiates heat to the enemy hearts")
+shield = Item("shield", "Crafted from Ancient Olympian God Zeus")
+armor = Item("armor", "Impenetrable armor crafted from Olympian God Poseidon ")
+
+
+room["foyer"].items.append(shield)
+room["overlook"].items.append(armor)
+room["narrow"].items.append(axe)
 #
 # Main
 #
