@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -36,11 +36,27 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+def try_direction(player, direction):
 
+    attribute = direction + '_to'
+
+    # python has a handy method called hasattr
+    # which allows us to check if a class has an attribute
+    if hasattr(player.location, attribute):
+        # this is valid direction
+        # use getattr to fetch the value associated with 
+        player.location = getattr(player.location)
+    else:
+        print("There's nothing in that direction")
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player(room['outside '])
 # Write a loop that:
-#
+while True:
+    print(player.location)
+
+    command = input("\nCommand: ").strip().lower().split()
+    print(command)
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -49,3 +65,21 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+if command == 'quit':
+    print('you have quit the game')
+
+first_comm = command[0]
+first_char = first_comm[0]
+
+if first_char == 'n':
+    #move to the north
+    try_direction(player, command)
+
+elif first_char == 's':
+    try_direction(player, command)
+    #move to the south 
+elif first_char == 'e':
+    try_direction(player, command)
+    #move to the east 
+elif first_char == 'w':
+    try_direction(player, command)
