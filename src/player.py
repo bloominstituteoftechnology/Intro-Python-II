@@ -12,6 +12,16 @@ class Player:
         self.current_room = current_room
         self.inventory: List[Item] = []
 
+    def can_move(self, direction: Direction):
+        if direction == Direction.NORTH:
+            return self.current_room.n_to is not None
+        elif direction == Direction.SOUTH:
+            return self.current_room.s_to is not None
+        elif direction == Direction.EAST:
+            return self.current_room.e_to is not None
+        elif direction == Direction.WEST:
+            return self.current_room.w_to is not None
+            
     def move(self, direction: Direction):
 
         room_to = None

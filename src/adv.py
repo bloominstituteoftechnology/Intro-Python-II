@@ -2,6 +2,8 @@ from room import Room
 from player import Player
 from direction import Direction
 from item import Item
+import os
+import time
 
 # Declare all the rooms
 
@@ -36,49 +38,44 @@ rooms['narrow'].w_to = rooms['foyer']
 rooms['narrow'].n_to = rooms['treasure']
 rooms['treasure'].s_to = rooms['narrow']
 
+# Add items
 
 rooms['foyer'].items.append(Item("Sword", "A sharp length of metal"))
+rooms['foyer'].items.append(Item("Coins", "100 gold coins"))
+rooms['overlook'].items.append(Item("Quiver", "A quiver with 10 arrows"))
+rooms['outside'].items.append(Item("Bow", "A recurve bow made of osage orange"))
 
-#
-# Main
-#
-
-# Make a new player object that is currently in the 'outside' room.
 player_one = Player("Player One", rooms['outside'])
-
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
 
 
 # Parsing
 
 def parse_word(verb: str):
     verb = verb.lower()
+    
     for direction in Direction:
         if verb == direction.value:
-            player_one.move(direction)
+            if player_one.can_move(direction):
+                player_one.move(direction)
+                print_location(True)
+            else:
+                print("You can not move in that direction currently. Type 'm' to see your map")
             return
     
     if verb == 'q':
-        print("\nThanks for playing!")
+        print("Thanks for playing!")
         exit()
     elif verb == 'i' or verb == 'inventory':
         if len(player_one.inventory) > 0:
-            print("\nInventory:")
+            print("Inventory:")
             for item in player_one.inventory:
                 print(f"* {item.name}")
         else:
-            print("\nYou don't have any items in your inventory!")
+            print("You don't have any items in your inventory!")
+    elif verb == 'm' or verb == 'map':
+        show_map()
     else:
-        print("""\nYou must enter a valid command! 
+        print("""You must enter a valid command! 
 Use 'n', 's', 'e', or 'w' to navigate.
 Use 'i' to show your inventory. 
 Type 'q' to quit the game """)
@@ -92,29 +89,79 @@ def parse_words(verb: str, obj: str):
             if obj == item.name.lower():
                 player_one.take(item)
                 return
-        print("\nThere are no items in the room by that name")
+        print("There are no items in the room by that name")
     elif verb == 'drop':
         for item in player_one.inventory:
             if obj == item.name.lower():
                 player_one.drop(item)
                 return
-        print("\nYou don't have any items in your inventory by that name")
+        print("You don't have any items in your inventory by that name")
     else:
-        print("\nYou must enter a valid command! Accepted verbs are 'get', 'take', and 'drop'")
+        print("You must enter a valid command! Accepted verbs are 'get', 'take', and 'drop'")
 
 
-# REPL
+# Printing
 
-while True:
-    print('')
-    print(player_one.current_room.name)
-    print(player_one.current_room.description)
+def print_animated(string: str):
+    string += '\n'
+    for char in string:
+        print(char, end='', flush=True)
+        time.sleep(.03)
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def print_location(animated: bool):
+    clear_screen()
+    print(f"{player_one.current_room.name}".center(50, '-') + '\n')
+    if animated:
+        print_animated(player_one.current_room.description)
+    else:
+        print(player_one.current_room.description)
+
     if len(player_one.current_room.items) > 0:
-        print("\nItems in the room:")
+        print('\n' + "VISIBLE ITEMS".center(50, '-') + '\n')
         for item in player_one.current_room.items:
             print(f"* {item.name}: {item.description}")
 
+def show_map():
+    clear_screen()
+    
+    nothing = "Nothing this way"
+    north = player_one.current_room.n_to.name if player_one.current_room.n_to is not None else nothing
+    south = player_one.current_room.s_to.name if player_one.current_room.s_to is not None else nothing
+    west = player_one.current_room.w_to.name if player_one.current_room.w_to is not None else nothing
+    east = player_one.current_room.e_to.name if player_one.current_room.e_to is not None else nothing
+
+    print("MAP".center(50, ' '))
+    print(''.center(50, '='))
+
+    print('\n' + north.center(50, ' '))
+    for _ in range(5):
+        print('|'.center(50, ' '))
+    print(west, end='')
+    print("YOU".center(50 - len(west) - len(east), '-'), end='')
+    print(east)
+    for _ in range(5):
+        print('|'.center(50, ' '))
+    print(south.center(50, ' '))
+
+    print('\n' + "".center(50, '='))
+
+    input("\nPress enter key to continue")
+    print_location(False)
+
+#
+# Main
+#
+
+print_location(True)
+
+while True:
+
     command = input("\nEnter a command: ")
+
+    print('')
 
     words = command.split()
     
