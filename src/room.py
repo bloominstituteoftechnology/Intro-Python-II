@@ -37,11 +37,8 @@ class Room:
 
         self.name = name
         self.description = description
-        self.items = [{"Name":item.name, 
-                      "Description":item.description, 
-                      "Damage":item.damage, 
-                      "Durability":item.durability, 
-                      "Mana":item.mana} for item in items]
+        #self.items = []
+        self.items = items
 
 
         self.n_to = None
