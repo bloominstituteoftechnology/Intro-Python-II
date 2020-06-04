@@ -4,7 +4,7 @@ class Item:
         self.description = description
 
     def on_take(self):
-        print(f'you selected {self.name}')
+        print(f'You just pickec up the {self.name}!')
 
     def on_drop(self):
-        print(f'You dropped {self.name}')
+        print(f'You just dropped the {self.name}!')

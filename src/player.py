@@ -17,4 +17,4 @@ class Player:
                 print(i)
 
         else:
-            print('no items for you in this room')
+            print('nothing for you here')
