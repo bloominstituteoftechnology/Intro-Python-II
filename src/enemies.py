@@ -14,3 +14,21 @@ class GiantSpider(Enemy):
 class Goblin(Enemy):
     def __init__(self):
         super().__init__(name="Goblin", hp=5, damage=1)
+        
+
+class Neutral():
+    def __init__(self, name, desc):
+        self.name = name
+        self.desc = desc
+        
+class Stranger(Neutral):
+    def __init__(self):
+        super().__init__(
+            name="The Stranger",
+            desc="The hollowed husk of a once famed warrior"
+        )
+        
+neutralStranger = Stranger()
+        
+
+    

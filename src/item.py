@@ -14,12 +14,16 @@ class Item():
     def on_drop(self):
         return "You just picked up {}".format(self.name)
     
+
 class Gold(Item):
     def __init__(self, amt):
         self.amt = amt
-        super().__init__(name="Silver",
-                            description="A round coin with {} stamped on the front.".formaat(str(self.amt)),
-                            value=self.amt)
+        super().__init__(
+            name="Silver",
+            description="A round coin with {} stamped on the front.".formaat(str(self.amt)),
+            value=self.amt
+        )
+
 
 class Weapon(Item):
     def __init__(self, name, description, value, damage):
@@ -29,6 +33,7 @@ class Weapon(Item):
     def __str__(self):
         return "{}\n=====\n{}\nValue: {}\n".format(self.name, self.description, self.value)
             
+
 class Rock(Weapon):
     def __init__(self):
         super().__init__(
@@ -37,7 +42,8 @@ class Rock(Weapon):
             value=0,
             damage=5
         )
-    
+
+
 class Dagger(Weapon):
     def __init__(self):
         super().__init__(
