@@ -5,6 +5,7 @@ class Player:
     def __init__(self, name, room):
         self.name = name
         self.room = room
+        self.items = []
 
     def __str__(self):
         return f"\nNow you are in the {self.room.name}. {self.room.description}."
@@ -15,3 +16,6 @@ class Player:
             print(self)
         else:
             print("\nTry a different direction")
+    
+    def add_item(self, item):
+        self.items.append(item)
