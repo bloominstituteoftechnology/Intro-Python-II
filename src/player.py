@@ -4,15 +4,12 @@
 from room import Room
 
 class Player:
-    def __init__(self, name, starting_room)
+    def __init__(self, name, current_room)
         self.name = name
-        self.current_room = starting_room
+        self.current_room = current_room
 
-    def movement(self, inp):
-        if inp == "q"
-            print("Thank you for playing! Goodbye!")
-            return True
-            # Returns True to quit game
-
+    def move(self, direction):
+        if self.currect_room.connections [direction] is not None:
+            self.currect_room = self.current_room.connections[direction]
         else:
-            possible_room
+            print("You cannot move in that direction.")

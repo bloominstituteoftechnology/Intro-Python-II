@@ -25,21 +25,35 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+#     #First version
+# room['outside'].n_to = room['foyer']
+# room['foyer'].s_to = room['outside']
+# room['foyer'].n_to = room['overlook']
+# room['foyer'].e_to = room['narrow']
+# room['overlook'].s_to = room['foyer']
+# room['narrow'].w_to = room['foyer']
+# room['narrow'].n_to = room['treasure']
+# room['treasure'].s_to = room['narrow']
+
+        #Second Version
+room['outside'].connections["n"] = room['foyer']
+room['foyer'].connections["s"] = room['outside']
+room['foyer'].connections["n"] = room['overlook']
+room['foyer'].connections["e"] = room['narrow']
+room['overlook'].connections["s"] = room['foyer']
+room['narrow'].connections["w"] = room['foyer']
+room['narrow'].connections["n"] = room['treasure']
+room['treasure'].connections["s"] = room['narrow']
 
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Chris", room["outside"])
+my_player = Player("Chris", room["outside"])
+
+print(room)
+print(player.name)
 # Write a loop that:
 #
 # * Prints the current room name
@@ -50,6 +64,24 @@ player = Player("Chris", room["outside"])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+user_is_playing = True
+
+while user_is_playing:
+    print(my_player.current_room.name)
+
+    for line in textwrap.wrap(my_player.current_room.description):
+        print(line)
+
+    user_input = input("Which direction do you want to go? (n/e/s/w): ")
+
+    if user_input in ["n", "e", "s", "w"]
+        my_player.move(user_input)
+    else:
+        print("You exited the game. Thanks for playing!")
+        user_is_playing = False
+
+# =============================
 
 while True:
     quit = player.input_instructions()
