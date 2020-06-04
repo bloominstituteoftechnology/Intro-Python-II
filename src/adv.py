@@ -36,9 +36,9 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # a room to place items
-room["foyer"].items = [shield]
-room["overlook"].items = [armor]
-room["narrow"].items = [axe]
+# room["foyer"].items.append(shield)
+# room["overlook"].items.append(armor)
+# room["narrow"].items.append(axe)
 #
 # Main
 #
@@ -49,48 +49,42 @@ player1 = Player(name_player, room['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
-print(f"Current location: { player1.current_room.name }")
+
 # * Prints the current description (the textwrap module might be useful here).
-print(player1.current_room.description)
+
 # * Waits for user input and decides what to do.
 #
-player_choice = ''
-while player_choice != 'q':
-    player_choice = input("Select a direction to move. Enter n, s, e, or w:")
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
 player_choice = ''
 while player_choice != 'q':
+    print(f"Current location: { player1.current_room.name }")
+    print(player1.current_room.description)
     player_choice = input("Choose a direction to move.  Enter n, s, e, or w: ")
     if player_choice == 'n':
-        if  (player1.current_room, 'n_to'):
+        if player1.current_room.n_to is not None:
             player1.current_room = player1.current_room.n_to
-            print(f"Current location: { player1.current_room.name }")
-            print(player1.current_room.description)
         else:
-            print("Cannot move in that direction.")
+            print("\nCannot move in that direction.\n")
     elif player_choice == 's':
-        if  (player1.current_room, 's_to'):
+        if player1.current_room.s_to is not None:
             player1.current_room = player1.current_room.s_to
-            print(f"Current location: { player1.current_room.name }")
-            print(player1.current_room.description)
         else:
-            print("Cannot move in that direction.")
+            print("\nCannot move in that direction.\n")
     elif player_choice == 'e':
-        if  (player1.current_room, 'e_to'):
-            print(f"Current location: { player1.current_room.name }")
-            print(player1.current_room.description)
+        if player1.current_room.e_to is not None:
+            player1.current_room = player1.current_room.e_to
         else:
-            print("Cannot move in that direction.")
+            print("\nCannot move in that direction.\n")
     elif player_choice == 'w':
-        if  (player1.current_room, 'w_to'):
-            print(f"Current location: { player1.current_room.name }")
-            print(player1.current_room.description)
+        if player1.current_room.w_to is not None:
+            player1.current_room = player1.current_room.w_to
         else:
-            print("Cannot move in that direction.")
-    elif player_choice == 'q':
-        print("Thanks for playing. Exiting game.")
-    else:
+            print("\nCannot move in that direction.\n")
+    elif player_choice != 'q':
         print("Not a valid direction.")
+
+print("Thanks for playing. Exiting game.")
