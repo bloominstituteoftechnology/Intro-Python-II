@@ -11,6 +11,8 @@ class Room:
         self.e_to = None
         self.w_to = None
 
+    def list(self, items)
+
     def __str__(self):
         result = f"{self.room_name}\n{self.description}\n"
         if self.n_to:

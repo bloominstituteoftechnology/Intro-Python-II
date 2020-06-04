@@ -30,6 +30,8 @@ earlier adventurers. The only exit is to the south.""",
     ),
 }
 
+item = [hat, coat, cane, ball, belt, hammer]
+
 
 # Link rooms together
 
