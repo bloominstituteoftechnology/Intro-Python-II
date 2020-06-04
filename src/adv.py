@@ -38,9 +38,11 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-David = Player("David", room['outside'])
+David = Player(room['outside'], "nowhere")
 
 # Make a new player object that is currently in the 'outside' room.
+
+print((David.current_room.name))
 
 
 # Write a loop that:
@@ -53,3 +55,33 @@ David = Player("David", room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+while David.move != "q":
+    David.move = input("Your Character wants to move either [s], [n], [w], [e], if you want quit type [q]:")
+    if David.move == "q":
+        print("Dr. Strange says `We are in the endgame now`")
+    elif David.move == "s":
+        print("You moved downward")
+        David.current_room = David.current_room.s_to
+        print(f"You entered {David.current_room.name}")
+        print(f"Now {David.current_room.description}")
+    elif David.move == "n":
+        print("You moved upward")
+        David.current_room = David.current_room.n_to
+        print(f"You entered {David.current_room.name}")
+        print(f"Now {David.current_room.description}")
+    elif David.move == "w":
+        print("You moved to West")
+        David.current_room = David.current_room.w_to
+        print(f"You entered {David.current_room.name}")
+        print(f"Now {David.current_room.description}")
+    elif David.move == "e":
+        print("You moved to East")
+        David.current_room = David.current_room.e_to
+        print(f"You entered {David.current_room.name}")
+        print(f"Now {David.current_room.description}")
+    else:
+        print("Please chose a letter according to the instruction")
+
+
