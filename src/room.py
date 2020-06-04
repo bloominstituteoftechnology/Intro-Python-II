@@ -14,7 +14,7 @@ class Room:
         self.w_to = None
         self.items = []
     def __str__(self):
-        plain = f"Room name :{self.name}, Room description: {self.description}"
+        plain = f"Current Room: {self.name} {self.description}\n"
 
         for i in self.items:
             plain = f"Available Items: {i}. {i.description}"
