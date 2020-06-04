@@ -4,7 +4,7 @@ import textwrap
 
 # Declare all the rooms
 
-room = {
+rooms = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
@@ -26,14 +26,14 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+rooms['outside'].n_to = rooms['foyer']
+rooms['foyer'].s_to = rooms['outside']
+rooms['foyer'].n_to = rooms['overlook']
+rooms['foyer'].e_to = rooms['narrow']
+rooms['overlook'].s_to = rooms['foyer']
+rooms['narrow'].w_to = rooms['foyer']
+rooms['narrow'].n_to = rooms['treasure']
+rooms['treasure'].s_to = rooms['narrow']
 
 #
 # Main
@@ -42,7 +42,7 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 print("Welcome foolish mortal, please state your name.")
 player_name_input = input("> ")
-player1 = Player(f'{player_name_input}', room['outside'])
+player1 = Player(f'{player_name_input}')
 
 # Write a loop that:
 #
@@ -55,53 +55,27 @@ player1 = Player(f'{player_name_input}', room['outside'])
 #
 # If the user enters "q", quit the game.
 
-# // print current state
-# // need user input
-# // while stuff is going on, do something
-# // if user input is cardinal direction, move-if allowed (error state)
-# // Else quit
+# ~~Day 1~~
+# print current state
+# need user input
+# while stuff is going on, do something
+# if user input is cardinal direction, move-if allowed (error state)
+# Else quit
+
+# ~~Day 2~~
+# add items to game
+# room needs to hold items
+# player needs to hold items
+# add get [ITEM_NAME] and drop [ITEM_NAME]
 
 user_input = ''
 while user_input != 'Q':
-    print(player1)
+    #print(player1.current_room.items)
     print(f'{player1.name}, what would you like to do? Move N, S, E, W, or Quit?')
     user_input = input("> ").capitalize()
-    if user_input == 'N':
-        if player1.current_room == room['outside']:
-            print('Moving North')
-            player1.current_room = room['outside'].n_to
-        elif player1.current_room == room['foyer']:
-            print('Moving North')
-            player1.current_room = room['foyer'].n_to
-        elif player1.current_room == room['narrow']:
-            print('Moving North')
-            player1.current_room = room['narrow'].n_to
-        else:
-            print('Invalid move')
-    elif user_input == 'S':
-        if player1.current_room == room['foyer']:
-            print('Moving South')
-            player1.current_room = room['foyer'].s_to
-        elif player1.current_room == room['overlook']:
-            print('Moving South')
-            player1.current_room = room['overlook'].s_to
-        elif player1.current_room == room['treasure']:
-            print('Moving South')
-            player1.current_room = room['treasure'].s_to
-        else:
-            print('Invalid move')
-    elif user_input == 'E':
-        if player1.current_room == room['foyer']:
-            print('Moving East')
-            player1.current_room = room['foyer'].e_to
-        else:
-            print('Invalid move')
-    elif user_input == 'W':
-        if player1.current_room == room['narrow']:
-            print('Moving West')
-            player1.current_room = room['narrow'].w_to
-        else:
-            print('Invalid move')
+    if user_input == 'N' or 'S' or 'E' or 'W':
+        player1.movement = user_input
+        player1.move()
     elif user_input == 'Q':
         print('You have decided to end your quest. Game Over.')
     else:
