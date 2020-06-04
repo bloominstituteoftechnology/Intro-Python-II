@@ -133,10 +133,11 @@ while response not in directions:
 
     elif response == "l":
         if player.location.loot != []:
-            player.loot()
-            print("\nYou're quite the wicked scoundrel. Here's your updated inventory:\n")
             time.sleep(2)
+            player.loot()
             print([item.name for item in player.items])
+            print("\nYou're quite the wicked scoundrel.\n")
+
         else:
             time.sleep(2)
             print("Nothing left to loot. I'm serious.")
