@@ -59,25 +59,25 @@ while game_running:
     # If the user enters a cardinal direction, attempt to move to the room there.
     if user == "n":
         # rooms you can travel north from
-        if new_player.current_room in (room['outside'], room['foyer'], room['narrow']):
+        if new_player.current_room is (room['outside'], room['foyer'], room['narrow']):
             new_player.current_room = new_player.current_room.n_to
         else:
-            print("Try a different direction!")
+            print("Go South!")
     elif user == "s":
         # rooms you can travel south from
-        if new_player.current_room in (room['foyer'], room['overlook'], room['treasure']):
+        if new_player.current_room is (room['foyer'], room['overlook'], room['treasure']):
             new_player.current_room = new_player.current_room.s_to
         else:
-            print("Try a different direction")
+            print("Go North!")
     elif user == "e":
         # rooms you can travel east from
-        if new_player.current_room in (room['foyer']):
+        if new_player.current_room is (room['foyer']):
             new_player.current_room = new_player.current_room.e_to
         else:
             print("Try a different direction")
     elif user == "w":
         # rooms you can travel west from
-        if new_player.current_room in (room['narrow']):
+        if new_player.current_room is (room['narrow']):
             new_player.current_room = new_player.current_room.w_to
         else:
             print("Try a different direction")
