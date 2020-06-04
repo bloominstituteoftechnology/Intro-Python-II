@@ -2,9 +2,11 @@ from room import Room
 from player import Player
 
 
+
 # Declare all the rooms
 
 room = {
+
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
@@ -72,5 +74,6 @@ while True:
         else:
             print(
                 "Invalid selection - valid inputs are 'n', 's,', 'e', 'w' directions or 'q' to quit")
+    #handles error
     except:
         print("\nCan't go further in this direction! Try another.\n")
