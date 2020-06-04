@@ -53,34 +53,14 @@ player = Player("Tom", room['outside'])
 #
 # If the user enters "q", quit the game.
 
-while True:
-    player_input = input(f"{player.name} what's your move? (N, S, E, W or Q to quit the game: ").upper()
+valid_directions = ("n", "s", "e", "w")
 
-    if player_input == "N":
-        if player.room.n_to == None:
-            print("Try a different direction")
-        else:
-            player.room = player.room.n_to
-            print(f"You're currently in {player.room.name}")
-    elif player_input == "S":
-        if player.room.s_to == None:
-            print("Try a different direction")
-        else:
-            player.room = player.room.s_to
-            print(f"You're currently in {player.room.name}")
-    elif player_input == "E":
-        if player.room.e_to == None:
-            print("Try a different direction")
-        else:
-            player.room = player.room.e_to
-            print(f"You're currently in {player.room.name}")
-    elif player_input == "W":
-        if player.room.w_to == None:
-            print("Try a different direction")
-        else:
-            player.room = player.room.w_to
-            print(f"You're currently in {player.room.name}")
-    elif player_input == "Q":
+while True:
+    command = input(f"\nWhere would you like to go next? (N, S, E, W or Q to quit the game): ").lower()
+
+    if command in valid_directions:
+        player.move(command)
+    elif command == "q":
         print("See you next time")
         break
     else:

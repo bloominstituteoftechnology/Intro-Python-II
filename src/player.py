@@ -5,3 +5,13 @@ class Player:
     def __init__(self, name, room):
         self.name = name
         self.room = room
+
+    def __str__(self):
+        return f"\n{self.name}, you are in the {self.room.name}.\n\n{self.room.description}."
+
+    def move(self, direction):
+        if getattr(self.room, f"{direction}_to") is not None:
+            self.room = getattr(self.room, f"{direction}_to")
+            print(self)
+        else:
+            print("Try a different direction")
