@@ -68,19 +68,19 @@ while game_running:
         if new_player.current_room in (room['foyer'], room['overlook'], room['treasure']):
             new_player.current_room = new_player.current_room.s_to
         else:
-            print("Try a different direction")
+            print("Try a different direction!")
     elif user == "e":
         # rooms you can travel east from
         if new_player.current_room is (room['foyer']):
             new_player.current_room = new_player.current_room.e_to
         else:
-            print("Try a different direction")
+            print("Try a different direction!")
     elif user == "w":
         # rooms you can travel west from
         if new_player.current_room is (room['narrow']):
             new_player.current_room = new_player.current_room.w_to
         else:
-            print("Try a different direction")
+            print("Try a different direction!")
     # If the user enters "q", quit the game
     elif user == "q":
         print("Game Over!")
