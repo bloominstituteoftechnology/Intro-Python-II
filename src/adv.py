@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,6 +35,10 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# a room to place items
+room["foyer"].items = [shield]
+room["overlook"].items = [armor]
+room["narrow"].items = [axe]
 #
 # Main
 #
