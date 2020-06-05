@@ -12,10 +12,13 @@ class Room:
         self.e_to: Room = None
         self.w_to: Room = None
 
-        self.item: [Item] = []
+        self.items: [Item] = []
 
     def __str__(self):
         result = 'You are at {self.name}. {self.description}\n'.format(self=self)
-        for i in self.item:
-            result = result + i.name
+
+        if len(self.items) > 0:
+            result = result + "\nThe following items are in the room:\n"
+        for i in self.items:
+            result = result + f"{i.name}: {i.description}\n"
         return result

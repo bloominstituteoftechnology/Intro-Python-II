@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from direction import Direction
+from item import Item
 
 # Declare all the rooms
 
@@ -34,6 +35,23 @@ room['overlook'].s_to = room['foyer']
 room['narrow'  ].w_to = room['foyer']
 room['narrow'  ].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+# Add items to room
+
+room['foyer'].items = [
+    Item("Silver Sword", "A magical sword")
+]
+
+room['overlook'].items = [
+    Item("Binoculars", "Multicoated eco-glass lenses"),
+    Item("Tent", "6 Person Dome Tent")
+]
+
+room['narrow'].items = [
+    Item("Book", "Spell book"),
+    Item("Toy Car", "Hot Wheel drag racing car"),
+    Item("Laptop", "16\" MacBoo Pro")
+]
 
 #
 # Main
