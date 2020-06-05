@@ -5,73 +5,86 @@ import items
 
 
 ##### Player Setup #####
-class Player:
+class Player():
   def __init__(self):
-    self.name = ''
-    self.type = ''
-    self.health = 0
-    self.armor = 0
-    self.attack = 0
-    self.experience = 0
-    self.inventory = []
-    self.status = []
-    self.location = 'The Outskirts'
-    self.isAlive = True
+    self._name = "None"
+    self._archetype = "None"
+    self._health = 0
+    self._armor = 0
+    self._attack = 0
+    self._experience = 0
+    self._inventory = []
+    self._status = []
+    self._location = "None"
+    self._isAlive = True
 
-  def getName(self):
-    return self.name
-  def getType(self):
-    return self.type
-  def getHealth(self):
-    return self.health
-  def getArmor(self):
-    return self.armor
-  def getAttack(self):
-    return self.attack
-  def getExperience(self):
-    return self.experience
-  def getInventory(self):
-    return self.inventory
-  def getStatus(self):
-    return self.status
-  def getLocaltion(self):
-    return self.location
-  def getisAlive(self):
-    return self.isAlive
-
-  def setName(self, newName):
-    self.name = newName
-  def setType(self, newType):
-    self.type = newType
-  def setHealth(self, newHealth):
-    self.health = newHealth
-  def setArmor(self, newArmor):
-    self.armor = newArmor
-  def setAttack(self, newAttack):
-    self.attack = newAttack
-  def setExperience(self, newExperience):
-    self.experience = newExperience
-  def setInventory(self, newInventory):
-    self.inventory = newInventory
-  def setStatus(self, newStatus):
-    self.status = newStatus
-  def setLocation(self, newLocation):
-    self.location = newLocation
-  def setisAlive(self, newisAlive):
-    self.isAlive = newisAlive
+  @property
+  def name(self):
+    return self._name
+  @property
+  def archetype(self):
+    return self._archetype
+  @property
+  def health(self):
+    return self._health
+  @property
+  def armor(self):
+    return self._armor
+  @property
+  def attack(self):
+    return self._attack
+  @property
+  def experience(self):
+    return self._experience
+  @property
+  def inventory(self):
+    return self._inventory
+  @property
+  def status(self):
+    return self._status
+  @property
+  def location(self):
+    return self._location
+  @property
+  def isAlive(self):
+    return self._isAlive
+  
+  @name.setter
+  def name(self, x):
+    self._name = x
+  @archetype.setter
+  def archetype(self, x):
+    self._archetype = x
+  @health.setter
+  def health(self, x):
+    self._health = x
+  @armor.setter
+  def armor(self, x):
+    self._armor = x
+  @attack.setter
+  def attack(self, x):
+    self._attack = x
+  @experience.setter
+  def experience(self, x):
+    self._experience = x
+  @inventory.setter
+  def inventory(self, x):
+    self._inventory = x
+  @status.setter
+  def status(self, x):
+    self._status = x
+  @location.setter
+  def location(self, x):
+    self._location = x
+  @isAlive.setter
+  def isAlive(self, x):
+    self._isAlive = x
 
   def __str__(self):
-      return "{}, {}, {}, {}, {}, {}, {}, {}, {}, {}\n".format(self.name, 
-                                                              self.type,
-                                                              self.health,
-                                                              self.armor, 
-                                                              self.attack,
-                                                              self.experience,
-                                                              self.inventory, 
-                                                              self.status, 
-                                                              self.location, 
-                                                              self.isAlive
-                                                            )
+      return "0/{},1/{},2/{},3/{},4/{},5/{},6/{},7/{},8/{},9/{}\n".format(
+        self.name, self.archetype, self.health, self.armor,  self.attack, 
+        self.experience, self.inventory, self.status, self.location, self.isAlive
+      )
 
 ##### Inventory Setup #####
 # def get_item(self, item):
@@ -107,4 +120,8 @@ class Player:
 if __name__ == "__main__":
   ##### Class Declaration ######
   myPlayer = Player()
-
+  print(myPlayer)
+  
+  #> Reference
+  # myPlayer.name=""
+  
