@@ -58,11 +58,13 @@ while user_input != "q":
     print(player.current_room)
     user_input = input("What direction do you want to go? ")
 
+    valid_input = False 
     for direction in Direction:
         if user_input == direction.value:
             player.move(direction)
+            valid_input = True
 
-    if user_input == "h":
+    if user_input == "h" or valid_input == False:
         print("[N]orth, [S]outh, [E]ast, [W]est, [Q]uit, [H]elp\n") 
 
 print("Thank you for playing.")

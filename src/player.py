@@ -27,4 +27,4 @@ class Player:
         if new_room is not None:
             self.current_room = new_room
         else:
-            print(f"⚠️  You can't move {direction.value}.\n")
+            print(f"⚠️  You can't go {direction.value}.\n")
