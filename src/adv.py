@@ -45,7 +45,7 @@ welcome_quote = """--Welcome to The Castle Of Treasures! You are in the outside 
 
 # Make a new player object that is currently in the 'outside' room.
 player_name = input("Enter Your Name:")
-player1 = Player(player_name , room['outside'])
+player1 = Player(player_name, room['outside'])
 print(player1)
 # Write a loop that:
 # # * Prints the current room name
@@ -56,54 +56,43 @@ print(player1)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-movement = ['up', 'down', 'right', 'left', 'quit']
-selection = ['y', 'n']
+commands = ['up', 'down', 'right', 'left', 'quit',
+            'get_item', 'drop_item', 'my_inventory']
+selection = ['y']
+running = True
+print(welcome_quote)
+while running:
+    user_input = input(f"please enter a command{commands}")
+    # answer = input(f"Would you like to start your adventure?:{selection}")
 
-answer = ""
+    # if answer.lower().strip() == 'y':
+    if user_input.lower().strip() == 'up':
+        player1.cardinal_dir(user_input)
+        print(f'---Welcome to {player1.current_room}')
 
-while answer not in selection:
-    answer = input(f"Would you like to start your adventure?:{selection}")
+    elif user_input.lower().strip() == 'down':
+        player1.cardinal_dir(user_input)
+        print(f'---Welcome to {player1.current_room}')
 
-    if answer.lower().strip() == 'y':
-        print(welcome_quote)
+    elif user_input.lower().strip() == 'left':
+        player1.cardinal_dir(user_input)
+        print(f'---Welcome to {player1.current_room}')
 
-        user_input = ""
+    elif user_input.lower().strip() == 'right':
+        player1.cardinal_dir(user_input)
+        print(f'---Welcome to {player1.current_room}')
 
-        while user_input not in movement:
-            user_input = input(f'please select: {movement}')
+    elif user_input.lower().strip() == 'get_item':
+        print('hello 3')
 
-            if user_input.lower().strip() == 'up':
-                player1.cardinal_dir(user_input)
-                print(f'---Welcome to {player1.current_room}')
-                user_input = ""
-            
-            elif user_input.lower().strip() == 'down':
-                player1.cardinal_dir(user_input)
-                print(f'---Welcome to {player1.current_room}')
-                user_input = ""
+    elif user_input.lower().strip() == 'drop_item':
+        print('hello 2')
 
-            elif user_input.lower().strip() == 'left':
-                player1.cardinal_dir(user_input)
-                print(f'---Welcome to {player1.current_room}')
-                user_input = ""
-            
-            elif user_input.lower().strip() == 'right':
-                player1.cardinal_dir(user_input)
-                print(f'---Welcome to {player1.current_room}')
-                user_input = ""
-            
-            elif user_input.lower().strip() == 'quit':
-                print('----The game will now quit----')
-                exit(0)
-            
-            else:
-                print('Incorrect input, Please try again!')
-                user_input = ""
+    elif user_input.lower().strip() == 'inventory':
+        print('Hello 1')
 
-    elif answer.lower().strip() == 'n':
-        print('----Game Over----')
-        exit(0)
-
+    elif user_input.lower().strip() == 'quit':
+        print('----The game will now quit----')
+        running = False
     else:
         print('Incorrect input, Please try again!')
-        answer = ""
