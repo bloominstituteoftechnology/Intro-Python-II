@@ -6,6 +6,9 @@ class Room:
     def __init__(self, name, description):
         self.name = name
         self.description = description
-    
-    # def __str__(self):
-    #     return f""
+        self.items_list = list()
+
+    def print_all_items(self):
+        for key, value in self.items_list.items():
+            print(f"{value.name},{value.description}")    
+

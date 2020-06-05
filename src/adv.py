@@ -80,18 +80,21 @@ def gaming_running():
     #current location
     print(f"\nCurrent Location =>{David.current_room.name}\n{David.current_room.description}")
 
-    print("This room has:")
-    if len(David.current_room.items_list) == 0:
-        print("There are no items in this room")
-    else:
-        for key, value in David.current_room.items_list.items():
-            print(f"{value.name}:{value.description}")
-    print("\n")
-    user_input= input("Your Character wants to move either [s]outh, [n]orth, [w]est, [e]ast, [I]nventory, or if you want quit type [q]uit:").lower().split(" ")
+    # print("This room has:")
+    # if len(David.current_room.items_list) == 0:
+    #     print("There are no items in this room")
+    
+    # else:
+    #     for key, value in David.current_room.items_list.items():
+    #         print(f"{value.name}:{value.description}")
+    # print("\n")
+    user_input= input("Your Character wants to move either [s]outh, [n]orth, [w]est, [e]ast, [I]nventory, [f]ind, or if you want quit type [q]uit:").lower().split(" ")
     if len(user_input) == 1:
         user_input = user_input[0]
         if user_input == "q":
             print("Dr. Strange says `We are in the endgame now`")
+        elif user_input == "f":
+            David.search()
         elif user_input =="i":
             David.print_inventory()
             gaming_running()

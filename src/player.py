@@ -63,5 +63,7 @@ class Player:
             print("You dont have anything :/")
 
 
-        
+    def search(self):
+        if self.current_room:
+            self.current_room.print_all_items()
      
