@@ -1,49 +1,49 @@
 from room import Room
 from player import Adventurer
+from item import Item
 
 # Declare all the rooms
-
 room = {
-    'outside': Room("Outside Cave Entrance", "North of you, the cave mount beckons"),
+    'outside': Room("Outside the Cave Entrance", """North of you, the cave mount beckons."""),
 
-    'entrance': Room("Entrance", """Dim light filters in from the south. Dusty passages run north and east."""),
+    'entrance': Room("Ingress", """Dim light filters in from the south. Dusty passages run north and east. There is a cool draft from a large crack in the rock to the west."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm. A slimy set of stairs is barely be visible to your east."""),
+    'overlook': Room("Thief's Overlook", """A steep cliff appears before you, falling into the darkness. Below to the west, you hear the faint sounds of water, but there is no way across the chasm. """),
 
-    'grotto': Room("Grotto", """You carefully decend the wet steps. The smell of damp lime permeates the air. Finally you reach a turquoise lake.  Stalagmites grow from the floor and walls, making it impossible to continue on without getting into the ominous water..."""),
+    'cavern': Room("Cavern", """You step into a cavernous chamber echoing with the squeaks of thousands of bats. The stench of ammonia and mold engulfs you. You almost fail to notice the narrow, uneven stairs carved into the stone, descending into the dark westward."""),
 
-    'crag': Room("Crag", """The narrow passage along the crag bends here from west to north. The smell of gold permeates the cold breeze."""),
+    'stairs': Room("Stairway", """You carefully decend the wet steps. The smell of damp lime permeates the air. You hope the occasional heavy drips on your cloak are water and not guano."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by earlier adventurers. The only exit is to the south."""),
+    'grotto': Room("Grotto", """Finally, you reach a grotto on a turquoise lake. Stalagmites grow from the floor and walls, making it impossible to continue on without entering the ominous water..."""),
+    
+    'lake': Room("Crystal Lake", """The calm, cool water appears to be shallow near the shore. You step into it. From the dephs ahead, a monstrous crab rises..."""),
+
+    'crag': Room("Crag", """The tapering passage winds along the crag from west to north. A low whistle pierces the wind streaming over the cliff cascading into the darkness below the footpath."""),
+
+    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure chamber! Sadly, it has already been looted by earlier adventurers. Was this really what you came for? The only exit is to the south."""),
 }
 
 
 # Link rooms together
-# room['outside'].n_to = room['entrance']
-
-# room['entrance'].s_to = room['outside']
-# room['entrance'].n_to = room['overlook']
-# room['entrance'].e_to = room['crag']
-
-# room['overlook'].s_to = room['entrance']
-# room['overlook'].e_to = room['grotto']
-
-# room['crag'].w_to = room['entrance']
-# room['crag'].n_to = room['treasure']
-
-# room['treasure'].s_to = room['crag']
-
-# add exits
 room['outside'].exits['n'] = room['entrance']
 
 room['entrance'].exits['s'] = room['outside']
-room['entrance'].exits['n'] = room['overlook']
+room['entrance'].exits['n'] = room['cavern']
 room['entrance'].exits['e'] = room['crag']
+room['entrance'].exits['w'] = room['overlook']
 
-room['overlook'].exits['s'] = room['entrance']
-room['overlook'].exits['e'] = room['grotto']
+room['overlook'].exits['e'] = room['entrance']
 
-room['grotto'].exits['w'] = room['overlook']
+room['cavern'].exits['s'] = room['entrance']
+room['cavern'].exits['w'] = room['stairs']
+
+room['stairs'].exits['e'] = room['cavern']
+room['stairs'].exits['w'] = room['grotto']
+
+room['grotto'].exits['e'] = room['stairs']
+room['grotto'].exits['w'] = room['lake']
+
+room['lake'].exits['e'] = room['grotto']
 
 room['crag'].exits['w'] = room['entrance']
 room['crag'].exits['n'] = room['treasure']
@@ -51,38 +51,96 @@ room['crag'].exits['n'] = room['treasure']
 room['treasure'].exits['s'] = room['crag']
 
 
+# Declare all items
+items = {
+    'lantern': Item("Old Lantern", """A dusty, dented lantern lies on the ground. The glass panels are shattered but it's oil compartment is still full. Not a bad find!"""),
+    
+    'sword': Item("Thief's Sword", """Leaning against the limestone wall is a rusty short sword. This blade might have seen better days, but it's better than nothing.""" )
+}
+
+
+# place items
+room['treasure'].contents[items['lantern']] = 1
+room['overlook'].contents[items['sword']] = 1
+
+
+# Player commands
+actions = {'s': 'search',
+        'l' : 'loot',
+        'i': 'inventory'}
+# search room for item
+def search(player, item_name):
+    if len(item_name) == 0:
+        print(player.room)
+    else:
+        for name in item_name:
+            try:
+                if items[name] in player.inventory or \
+                 items[name] in player.room.contents:
+                    print(items[name].full)
+            except KeyError:
+                print(f'The {name} doesn\'t appear to be visible at the '
+                      'moment.')
+# player get item
+def loot(player, item_name):
+    for name in item_name:
+        try:
+            if items[name] in player.room.contents:
+                player.inventory[items[name]] += 1
+                player.room.contents[items[name]] -= 1
+                if player.room.contents[items[name]] == 0:
+                    player.room.contents.pop(items[name])
+                    print(f'You have picked up {items[name].description}.')
+            else:
+                print(f'The {name} doesn\'t seem to be something you can pick up, '
+                      'at least not here and now.')
+        except KeyError:
+            print(f'The {name} doesn\'t seem to be something you can pick up, '
+                  'at least not here and now.')
+# check player inventory
+def inv(player, filter):
+    if len(player.inventory) == 0:
+        print('You are empty-handed.')
+    else:
+        print('You are carrying:')
+        for item, count in player.inventory.items():
+            if ' '.join(filter) in item.description:
+                if count == 1:
+                    print(item.description)
+                else:
+                    print(f'{count} of {item.shdescriptionort}')
 
 #
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
+# create player object, starts in the 'outside' room
 adventurer = Adventurer(room['outside'])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
-
-print("Greetings Adventurer! You can move around the world using:")
-print("\n n -> North \n s -> South \n e -> East \n w -> West")
-print("\nYou may end your adventure at anytime with 'q'")
-print("current location:")
+greeting = """
+Greetings Adventurer! You can move around the world using:
+\n n -> North \n s -> South \n e -> East \n w -> West
+\nTo search the current room for items, use: 
+\ns to search \nl to loot
+\nCheck your inventory with 'i'
+\nYou may end your adventure at anytime with 'q'
+"""
+print(greeting)
+print("Your adventure begins at:")
 
 directions = ['n','s','e','w']
 prompt = '> '
 
-action = input(f'{adventurer.room} \n which way would you like to go? \n{prompt}')
+action = input(f'{adventurer.room} \n Proceed north and enter the cave? \n{prompt}')
 
+# if the user enters a cardinal direction, attempt to move to the room there
 while action != 'q':
     try:
         adventurer.room = adventurer.room.exits[action]
-        action = input(f'{adventurer.room}\n\n{prompt}')
+        action = input(f'{adventurer.room}\n\nWhich way would you like to go? \n{prompt}')
     except KeyError:
-        action = input(f'Hmm.. It seems like there is no obvious way to do that.\n\n{prompt}')
+        action = input(f'Hmm.. It seems like there is no obvious way to do that.\n\n{prompt}') # error message
+# quitting the game
+while action == 'q':
+    print("Farewell...")
+    quit()
