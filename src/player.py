@@ -17,4 +17,4 @@ class Player:
             self.current_room = location
         
         else:
-            print('Error: No room here, Movement Not Allowed!!!')
+            print('Error: no room here, movement not allowed...')
