@@ -10,6 +10,8 @@ class Player:
     def __str__(self):
         return f'{self.name}, you are at the {self.current_room}'
 
-    # take item
+    def take(self, item):
+        self.items.append(item)
 
-    # drop item
+    def drop(self, item):
+        self.items.remove(item)

@@ -79,7 +79,7 @@ player1 = Player(f'{player_name_input}', room['outside'])
 # add items to game
 # room needs to hold items
 # player needs to hold items
-# add get [ITEM_NAME] and drop [ITEM_NAME]
+# add take [ITEM_NAME] and drop [ITEM_NAME]
 
 user_input = ''
 while user_input != 'Q':
@@ -91,38 +91,51 @@ while user_input != 'Q':
     user_input = input('> ')
     input_args = user_input.split(" ")
     if len(input_args) == 1:
-        if input_args[0] == 'N' or 'n':
+        if input_args[0] == 'N' or 'n' or 'North' or 'north':
             if player1.current_room.n_to != None:
                 print('Moving North')
                 player1.current_room = player1.current_room.n_to
             else:
                 print('Invalid move')
-        elif input_args[0] == 'S' or 's':
+        elif input_args[0] == 'S' or 's' or 'South' or 'south':
             if player1.current_room.s_to != None:
                 print('Moving South')
                 player1.current_room = player1.current_room.s_to
             else:
                 print('Invalid move')
-        elif input_args[0] == 'E' or 'e':
+        elif input_args[0] == 'E' or 'e' or 'East' or 'east':
             if player1.current_room.e_to != None:
                 print('Moving East')
                 player1.current_room = player1.current_room.e_to
             else:
                 print('Invalid move')
-        elif input_args[0] == 'W' or 'w':
+        elif input_args[0] == 'W' or 'w' or 'West' or 'west':
             if player1.current_room.w_to != None:
                 print('Moving West')
                 player1.current_room = player1.current_room.w_to
             else:
                 print('Invalid move')
-        elif input_args[0] == 'Q':
+        elif input_args[0] == 'Q' or 'q' or 'Quit' or 'quit':
             print('You have decided to end your quest. Game Over.')
     elif len(input_args) == 2:
+        item = input_args[1]
         if input_args[0] == 'take' or 'Take':
-            print('Taking item.')
-            # take item
-        elif input_args[0] == 'drop' or "Drop":
-            print('Dropping item.')
-            # drop item
+            if player1.current_room.items == []:
+                print('No items in this room to take')
+            else:
+                print(f'Taking {item}.')
+                player1.take(item)
+                # player1.current_room.remove_item(item)
+                print(player1.current_room.items)
+                print(f'You now have {item}')
+        elif input_args[0] == 'drop' or 'Drop':
+            if player1.items == []:
+                print('No item to drop')
+            else:
+                print(f'Dropping {item}.')
+                player1.drop(item)
+                # player1.current_room.add_item(item)
+                print(player1.current_room.items)
+                print(f'You no longer have {item}')
     else:
         print('Input not recognized.')
