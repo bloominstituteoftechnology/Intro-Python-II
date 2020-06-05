@@ -7,21 +7,21 @@ from item import Item
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", []),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", []),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", []),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", []),
 }
 
 
@@ -53,8 +53,11 @@ room['treasure'].items.append(items['peanut butter'])
 
 #
 # Main
-#
-user = Player('Totoro', room['outside'], inventory=None)
+# make a new player
+name = input("Hello! What is your name? ")
+
+
+user = Player(name, room['outside'])
 
 # Make a new player object that is currently in the 'outside' room.
 
@@ -70,17 +73,33 @@ user = Player('Totoro', room['outside'], inventory=None)
 # If the user enters "q", quit the game.
 while True:
     print(
-        f"\n\nWelcome {user.name}!\n You are currently standing in the {user.current_room}")
+        f"\n\nWelcome{user}!\n You are currently standing in the: " + user.current_room.name)
+    print("\n Description of room: " + user.current_room.description)
+    print("\nItems in the room: ")
+    for item in user.current_room.items:
+        print(item)
+    print("\n Choose the direction you want to go. Use n,s,e,w to select direction, i to get inventory, and t to get item, d to drop an item, and q to quit.")
+    command = input().split().lower()
+    currentRoom = user.current_room.name
 
-    direction = input(
-        "Choose a direction (n, s, e, w) and enter q to end the game: ").lower()
-
-    if direction in ['n', 's', 'e', 'w']:
-        user.current_room = user.move_to(direction, user.current_room)
-        continue
-    elif direction == 'q':
-        print('Have a great day!')
-        break
-    else:
-        direction != 'n' or 's' or 'w' or 'e' or 'q'
-        print("Please enter a valid command")
+    if len(command) == 1:
+        if command[0] == 'n':
+            if user.current_room.n_to:
+                user.current_room = user.current_room.n_to
+        elif command[0] == 's':
+            if user.current_room.s_to:
+                user.current_room = user.current_room.s_to
+        elif command[0] == 'e':
+            if user.current_room.e_to:
+                user.current_room = user.current_room.e_to
+        elif command[0] == 'w':
+            if user.current_room.w_to:
+                user.current_room = user.current_room.w_to
+        elif command[0] == 'i':
+            print("\n Here are your items: ")
+            for item in user.items:
+                print(item)
+        elif command[0] == 'q':
+            break
+        else:
+            print("Error entering command. Use n,s,e,w for directions, i for inventory, t to get an item, d to drop an item")
