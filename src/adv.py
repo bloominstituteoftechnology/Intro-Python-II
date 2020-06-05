@@ -54,9 +54,9 @@ player = Player(room['outside'])
 # If the user enters "q", quit the game.
 
 user_input = ""
-while user_input != "q":
+while user_input != "Q":
     print(player.current_room)
-    user_input = input("What direction do you want to go? ")
+    user_input = input("What direction do you want to go? ").upper()
 
     valid_input = False 
     for direction in Direction:
@@ -64,7 +64,7 @@ while user_input != "q":
             player.move(direction)
             valid_input = True
 
-    if user_input == "h" or valid_input == False:
+    if user_input == "H" or valid_input == False:
         print("[N]orth, [S]outh, [E]ast, [W]est, [Q]uit, [H]elp\n") 
 
 print("Thank you for playing.")
