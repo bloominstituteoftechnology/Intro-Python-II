@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -33,6 +35,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+flower = Item("Flower", "A pale pink rose.")
+ruby = Item("Ruby", "A sparkling red gem. It seems old.")
+dogtags = Item("Dogtags", "Looks like someone dropped their dogtag...who's 'L.J.C'?")
+
+
+room['outside'].items = [flower, ruby, dogtags]
+
 #
 # Main
 #
@@ -49,3 +58,59 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def adventure_game():
+    name = input("What is your name?").capitalize()
+    current_room = room["outside"]
+    player = Player(name, current_room)
+
+    while True:
+        print("\n")
+        print(player, "\n")
+        print("You can go north, south, east, or west. \n")
+        print("You can see what items are in the room by typing 'items'.\n")
+        print("You can see what items you have by typing 'my items'\n")
+        move = input("Which way do you go?\n")
+        splitMove = move.split(" ");
+
+        if len(splitMove) > 1:
+            if move == 'my items':
+                print(player.get_items())
+
+            elif splitMove[0] == "get" or splitMove[0] == "take":
+                # do blah
+                player.take_item(splitMove[1])
+            elif splitMove[0] == "drop":
+                player.drop_item(splitMove[1])
+
+        else:
+            if move == 'items':
+                print(player.current_room.get_items())
+            elif move == 'n':
+                try:
+                    player.current_room = player.current_room.n_to
+                except:
+                    print("Whoops, looks like you can't go in that direction. \n")
+            elif move == 'e':
+                try:
+                    player.current_room = player.current_room.e_to
+                except:
+                    print("Whoops, looks like you can't go in that direction. \n")
+            elif move == 's':
+                try:
+                    player.current_room = player.current_room.s_to
+                except:
+                    print("Whoops, looks like you can't go in that direction. \n")
+            elif move == 'w':
+                try:
+                    player.current_room = player.current_room.w_to
+                except:
+                    print("Whoops, looks like you can't go in that direction. \n")
+            elif move == 'q':
+                break
+            else:
+                print("That is not a valid input. Try again.")
+
+
+if __name__ == '__main__':
+    adventure_game()
