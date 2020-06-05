@@ -46,7 +46,7 @@ class Player:
         result = "Your satchel is empty.\n"
 
         if len(self.items) > 0:
-            result = result + "\nYour satchel contains the following items:\n"
+            result = "Your satchel contains the following items:\n"
             for i in self.items:
                 result = result + f"   {i.name}\n"
 

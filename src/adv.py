@@ -96,17 +96,31 @@ while verb != "Q":
             player.move(direction)
             valid_input = True
 
+    found = False 
+
     if valid_input == False:
         if verb == "G" or verb == "GET" or verb == "T" or verb == "TAKE":
             for item in player.current_room.items:
-                if object == item.name:
+                if object.lower() == item.name.lower():
                     player.get(item)
+                    found = True 
+
+            if found == False: 
+                print(f"I couldn't find a {object} in the {player.current_room.name}.")
+
             valid_input = True
+
         elif verb == "D" or verb == "DROP":
             for item in player.items:
-                if object == item.name:
+                if object.lower() == item.name.lower():
                     player.drop(item)
+                    found = True 
+
+            if found == False: 
+                print(f"I couldn't find a {object} in your satchel.")
+
             valid_input = True
+
         elif verb == "I" or verb == "INVENTORY":
             player.invetory()
             valid_input = True
