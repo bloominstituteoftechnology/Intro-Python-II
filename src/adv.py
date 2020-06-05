@@ -44,10 +44,10 @@ room['treasure'].south = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 player_a = Player("A", room['outside'])
-room['foyer'].items.append(Item("X", "XXXXX"))
-room['foyer'].items.append(Item("Y", "YYYY"))
-room['overlook'].items.append(Item("Z", "ZZZ"))
-room['outside'].items.append(Item("L", "LL"))
+room['foyer'].drops.append(Drop("X","XXXXX"))
+room['foyer'].drops.append(Drop("Y", "YYYY"))
+room['overlook'].drops.append(Drop("Z", "ZZZ"))
+room['outside'].drops.append(Drop("L", "LL"))
 # Write a loop that:
 #
 # * Prints the current room name
@@ -58,7 +58,7 @@ room['outside'].items.append(Item("L", "LL"))
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-print_location(True)
+
 def answer(input: str):
     input = input.lower()
     
@@ -66,7 +66,7 @@ def answer(input: str):
         if input == direction.value:
             if player_a.allow(direction):
                 player_a.move(direction)
-                print_location(True)
+
             else:
                 print("invalid move(type m to see map)")
             return
@@ -105,10 +105,10 @@ def take_drop(input: str, obj: str):
 def quit():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def print_location():
-    quit()
-    print(player_a.room.name)
-    print(player_a.room.description)
+# def print_location(start: bool):
+#     quit()
+#     print(player_a.room.name)
+#     print(player_a.room.description)
 
 def show_map():
     quit()
@@ -135,15 +135,16 @@ def show_map():
     print('\n' + "".center(50, '='))
 
     input("\nPress enter key to continue")
-    print_location(False)
 
 while True:
+    print(player_a.room.name)
+    print(player_a.room.description)
     message = input("\nEnter a command: ")
     print('')
     words = message.split()
 
-    if len(words) == 1:
+    if len(words) == 1: 
         answer(words[0])
-    elif len(words) == 2:
+    elif len(words) == 4:
         take_drop(words[0], words[1])
 
