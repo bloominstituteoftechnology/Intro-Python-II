@@ -2,6 +2,7 @@ from room import Room
 from player import Player
 from item import Item
 
+
 # Declare all the rooms
 
 room = {
@@ -44,16 +45,16 @@ items = {
     'computer': Item('computer', 'to code until you cannot code anymore')
 }
 
-room['outside'].add_item(items['highlighter'])
-room['foyer'].add_item(items['book'])
-room['foyer'].add_item(items['computer'])
-room['narrow'].add_item(items['chocolate'])
-room['treasure'].add_item(items['peanut butter'])
+room['outside'].items.append(items['highlighter'])
+room['foyer'].items.append(items['book'])
+room['foyer'].items.append(items['computer'])
+room['narrow'].items.append(items['chocolate'])
+room['treasure'].items.append(items['peanut butter'])
 
 #
 # Main
 #
-player1 = Player('player1', room['outside'])
+user = Player('Totoro', room['outside'], inventory=None)
 
 # Make a new player object that is currently in the 'outside' room.
 
@@ -67,3 +68,19 @@ player1 = Player('player1', room['outside'])
 # Print an error message if the movement isn't allowed.
 
 # If the user enters "q", quit the game.
+while True:
+    print(
+        f"\n\nWelcome {user.name}!\n You are currently standing in the {user.current_room}")
+
+    direction = input(
+        "Choose a direction (n, s, e, w) and enter q to end the game: ").lower()
+
+    if direction in ['n', 's', 'e', 'w']:
+        user.current_room = user.move_to(direction, user.current_room)
+        continue
+    elif direction == 'q':
+        print('Have a great day!')
+        break
+    else:
+        direction != 'n' or 's' or 'w' or 'e' or 'q'
+        print("Please enter a valid command")

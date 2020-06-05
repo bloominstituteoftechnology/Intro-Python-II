@@ -2,14 +2,23 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description, items=None):
+    def __init__(self, name, description, items=[]):
         self.name = name
         self.description = description
-        self.n_to = None
-        self.s_to = None
-        self.e_to = None
-        self.w_to = None
-        self.items = [] if items is None else items
+        self.items = items
 
-    def add_item(self, item):
-        self.items.append(item)
+    def __str__(self):
+        return f'{self.name}'
+
+    def print_description(self):
+        return f'{self.description}'
+
+    def list_items(self):
+        if not self.items:
+            print("there are no items to be found in this room")
+        else:
+            print("This room contains some items: ")
+            for item in self.items:
+                print(item.name)
+                print(item.description)
+

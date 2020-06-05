@@ -3,8 +3,8 @@ class Item:
         self.name = name
         self.description = description
 
-    def on_take(self):
-        print(f'You just pickec up the {self.name}!')
+    def pick_up(self):
+        print(f'You just picked up the {self.name}!')
 
-    def on_drop(self):
+    def drop(self):
         print(f'You just dropped the {self.name}!')
