@@ -1,4 +1,5 @@
 from room import Room
+from item import Item
 from player import Player
 import textwrap
 
@@ -26,14 +27,14 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['outside'].move["n"] = room['foyer']
+room['foyer'].move["s"] = room['outside']
+room['foyer'].move["n"] = room['overlook']
+room['foyer'].move["e"] = room['narrow']
+room['overlook'].move["s"] = room['foyer']
+room['narrow'].move["w"] = room['foyer']
+room['narrow'].move["n"] = room['treasure']
+room['treasure'].move["s"] = room['narrow']
 
 #
 # Main
@@ -41,6 +42,14 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 new_player = Player("Joe", room['outside'])
+
+# Make item objects 
+bow = Item("Bow", "A longbow made from a yew tree.")
+arrows = Item("Arrows", "Put these in your quiver.")
+
+# Assign items to a room
+room['foyer'].assign_item(bow)
+room['overlook'].assign_item(arrows)
 
 # Welcome message
 print("Welcome to the Adventure Game!")
@@ -55,35 +64,21 @@ while game_running:
     # * Prints the current description (the textwrap module might be useful here).
     print("Description:", new_player.current_room.description)
     # * Waits for user input and decides what to do.
-    user = input("[n] north [s] south [e] east [w] west [q] quit\n")
+    # Print Item
+    for item in new_player.current_room.items:
+        print("Found Item:", item.name, item.description)
+    print("Current Inventory", new_player.inventory)
+    user = input("""[n] north [s] south [e] east [w] west 
+    [p] pickup [d] drop [q] quit\n""")
     # If the user enters a cardinal direction, attempt to move to the room there.
-    if user == "n":
-        # rooms you can travel north from
-        if new_player.current_room in (room['outside'], room['foyer'], room['narrow']):
-            new_player.current_room = new_player.current_room.n_to
-        else:
-            print("Try a different direction!")
-    elif user == "s":
-        # rooms you can travel south from
-        if new_player.current_room in (room['foyer'], room['overlook'], room['treasure']):
-            new_player.current_room = new_player.current_room.s_to
-        else:
-            print("Try a different direction!")
-    elif user == "e":
-        # rooms you can travel east from
-        if new_player.current_room is (room['foyer']):
-            new_player.current_room = new_player.current_room.e_to
-        else:
-            print("Try a different direction!")
-    elif user == "w":
-        # rooms you can travel west from
-        if new_player.current_room is (room['narrow']):
-            new_player.current_room = new_player.current_room.w_to
-        else:
-            print("Try a different direction!")
-    # If the user enters "q", quit the game
+    if user in ["n", "s", "e", "w"]:
+        new_player.move(user)
     elif user == "q":
         print("Game Over!")
         break
+    elif user == "p":
+        new_player.pickup_item(item)
+    elif user == "d":
+        new_player.drop_item(item)
     else:
         print("Not a valid input!")
