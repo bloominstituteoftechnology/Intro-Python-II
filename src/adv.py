@@ -5,20 +5,20 @@ from item import Item
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("---Outside Cave Entrance",
+                     "---North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
+    'foyer':    Room("Foyer", """---Dim light filters in from the south. Dusty
 passages run north and east."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
+    'overlook': Room("---Grand Overlook", """---A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
+    'narrow':   Room("---Narrow Passage", """---The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
+    'treasure': Room("---Treasure Chamber", """---You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
@@ -37,10 +37,15 @@ room['treasure'].s_to = room['narrow']
 
 #
 # Main
-#
+welcome_quote = """--Welcome to Treasure Hunt! You are in the outside room,
+--to find your way to the treasure,
+--you can move around the palace by typing
+--'up', 'down', 'right', 'left'
+-- and 'quit' to exit game."""
 
 # Make a new player object that is currently in the 'outside' room.
-player1 = Player('Josh', room['outside'])
+player_name = input("Enter Your Name:")
+player1 = Player(player_name , room['outside'])
 print(player1)
 # Write a loop that:
 # # * Prints the current room name
@@ -51,23 +56,52 @@ print(player1)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+movement = ['up', 'down', 'right', 'left', 'quit']
+
+error_prompt = "Error: Movement Not Allowed!!!"
+
 answer = input("would you like to play an adventure game(y/n): ")
 
 if answer.lower().strip() == 'y':
-    print("--Welcome to Tresure Hunt! You are in the outside room,\n--to find your way to the treasure,\n--you need to go to the foyer.")
-    north = input("Type 'up' to go to foyer: ")
-    if north.lower().strip() == 'up':
-        """
-        I have to move my player from current room to the next room based on connections
-        """
-        player1.current_room = player1.current_room.n_to
-        print(f'Welcome to {player1.current_room}')
-        north_2 = input("Type 'up' to go to overlook: ")
-        if
+    print(welcome_quote)
+
+    user_input = ""
+
+    while user_input not in movement:
+        user_input = input(f'please select: {movement}')
+
+        if user_input.lower().strip() == 'up':
+            player1.cardinal_dir(user_input)
+            print(f'---Welcome to {player1.current_room}')
+            user_input = ""
         
+        elif user_input.lower().strip() == 'down':
+            player1.cardinal_dir(user_input)
+            print(f'---Welcome to {player1.current_room}')
+            user_input = ""
+
+        elif user_input.lower().strip() == 'left':
+            player1.cardinal_dir(user_input)
+            print(f'---Welcome to {player1.current_room}')
+            user_input = ""
+        
+        elif user_input.lower().strip() == 'right':
+            player1.cardinal_dir(user_input)
+            print(f'---Welcome to {player1.current_room}')
+            user_input = ""
+        
+        elif user_input.lower().strip() == 'quit':
+            print('----The game will now quit----')
+            exit(0)
+        
+        else:
+            print('Incorrect input, Please try again!')
+            user_input = ""
 
 elif answer.lower().strip() == 'n':
-    print('the game will now quit')
+    print('----The game will now quit----')
     exit(0)
 
-
+else:
+    print('Incorrect input, Please try again!')
+    exit(1)
