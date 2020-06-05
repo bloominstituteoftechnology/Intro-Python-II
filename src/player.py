@@ -6,6 +6,7 @@ from item import Item
 
 class Player:
     def __init__(self, current_room: Room):
+        self.name = None
         self.current_room = current_room
         self.item: [Item] = []
 
