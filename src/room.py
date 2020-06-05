@@ -9,13 +9,13 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
-        self.items = []
+        self.loot = []
 
     def __str__(self):
         return f'{self.name}: {self.description}'
 
     def remove_item(self, item):
-        self.items.remove(item)
+        self.loot.remove(item)
 
     def add_item(self, item):
-        self.items.append(item)
+        self.loot.append(item)

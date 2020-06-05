@@ -44,9 +44,9 @@ room['treasure'].s_to = room['narrow']
 
 # Add items to rooms
 
-room['foyer'].items = items['coins']
-room['overlook'].items = items['sword']
-room['narrow'].items = items['shield']
+room['foyer'].loot = items['coins']
+room['overlook'].loot = items['sword']
+room['narrow'].loot = items['shield']
 
 #
 # Main
@@ -83,59 +83,63 @@ player1 = Player(f'{player_name_input}', room['outside'])
 
 user_input = ''
 while user_input != 'Q':
-    if player1.current_room.items != []:
-        print(player1.current_room.items)
+    if player1.current_room.loot != []:
+        print(player1.current_room.loot)
     else:
-        print('No items in this room.')
-    print(f'{player1.name}, what would you like to do? Move N, S, E, W, or take/drop item, or Quit?')
+        print('No loot in this room.')
+    print(player1.current_room)
+    print(f'{player1.name}, what would you like to do? Move N, S, E, W, take/drop item, view inventory with I, or Quit?')
     user_input = input('> ')
     input_args = user_input.split(" ")
     if len(input_args) == 1:
-        if input_args[0] == 'N' or 'n' or 'North' or 'north':
+        if input_args[0] == 'N':
             if player1.current_room.n_to != None:
                 print('Moving North')
                 player1.current_room = player1.current_room.n_to
             else:
                 print('Invalid move')
-        elif input_args[0] == 'S' or 's' or 'South' or 'south':
+        elif input_args[0] == 'S':
             if player1.current_room.s_to != None:
                 print('Moving South')
                 player1.current_room = player1.current_room.s_to
             else:
                 print('Invalid move')
-        elif input_args[0] == 'E' or 'e' or 'East' or 'east':
+        elif input_args[0] == 'E':
             if player1.current_room.e_to != None:
                 print('Moving East')
                 player1.current_room = player1.current_room.e_to
             else:
                 print('Invalid move')
-        elif input_args[0] == 'W' or 'w' or 'West' or 'west':
+        elif input_args[0] == 'W':
             if player1.current_room.w_to != None:
                 print('Moving West')
                 player1.current_room = player1.current_room.w_to
             else:
                 print('Invalid move')
-        elif input_args[0] == 'Q' or 'q' or 'Quit' or 'quit':
+        elif input_args[0] == 'I':
+            if player1.inventory != []:
+                print(player1.inventory)
+            else:
+                print('No items in player inventory.')
+        elif input_args[0] == 'Q':
             print('You have decided to end your quest. Game Over.')
     elif len(input_args) == 2:
         item = input_args[1]
         if input_args[0] == 'take' or 'Take':
-            if player1.current_room.items == []:
-                print('No items in this room to take')
+            if player1.current_room.loot == []:
+                print('No loot in this room to take')
             else:
                 print(f'Taking {item}.')
                 player1.take(item)
-                # player1.current_room.remove_item(item)
-                print(player1.current_room.items)
+                player1.current_room.remove_item(item)
                 print(f'You now have {item}')
         elif input_args[0] == 'drop' or 'Drop':
-            if player1.items == []:
-                print('No item to drop')
+            if player1.inventory == []:
+                print('No item in inventory to drop')
             else:
                 print(f'Dropping {item}.')
                 player1.drop(item)
-                # player1.current_room.add_item(item)
-                print(player1.current_room.items)
+                player1.current_room.add_item(item)
                 print(f'You no longer have {item}')
     else:
         print('Input not recognized.')
