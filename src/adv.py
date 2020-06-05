@@ -98,13 +98,17 @@ while verb != "Q":
 
     if valid_input == False:
         if verb == "G" or verb == "GET" or verb == "T" or verb == "TAKE":
-            print("Get ")
+            for item in player.current_room.items:
+                if object == item.name:
+                    player.get(item)
             valid_input = True
         elif verb == "D" or verb == "DROP":
-            print("Drop ")
+            for item in player.items:
+                if object == item.name:
+                    player.drop(item)
             valid_input = True
         elif verb == "I" or verb == "INVENTORY":
-            print("Inventory ")
+            player.invetory()
             valid_input = True
 
     if verb == "H" or valid_input == False:

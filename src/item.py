@@ -9,3 +9,9 @@ class Item:
     def __str__(self):
         result = 'You\'re holding a {self.name}. {self.description}\n'.format(self=self)
         return result
+
+    def picked_up(self):
+        print(f"{self.name} has been picked up.\n")
+
+    def dropped(self):
+        print(f"{self.name} has been dropped.\n")

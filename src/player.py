@@ -8,7 +8,7 @@ class Player:
     def __init__(self, current_room: Room):
         self.name = None
         self.current_room = current_room
-        self.item: [Item] = []
+        self.items: [Item] = []
 
     def __str__(self):
         result = "You are at {self.current_room.name}.\n".format(self=self)
@@ -31,3 +31,23 @@ class Player:
             self.current_room = new_room
         else:
             print(f"⚠️  You can't go {direction.value}.\n")
+
+    def get(self, item: Item):
+        self.current_room.items.remove(item)
+        self.items.append(item)
+        item.picked_up()
+
+    def drop(self, item: Item):
+        self.items.remove(item)
+        self.current_room.items.append(item)
+        item.dropped()
+
+    def invetory(self):
+        result = "Your satchel is empty.\n"
+
+        if len(self.items) > 0:
+            result = result + "\nYour satchel contains the following items:\n"
+            for i in self.items:
+                result = result + f"   {i.name}\n"
+
+        print(result)
