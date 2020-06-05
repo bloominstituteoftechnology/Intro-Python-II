@@ -8,23 +8,18 @@ class Player:
         self.current_room = current_room
       
         self.inventory = []
-    def entered(self):
-        print(self.current_room)
-        print(f"{self.move}_to")
-        if hasattr(self.current_room, f"{self.move}_to"):
-            self.current_room = getattr(self.current_room, f"{self.move}_to")
-            print(f"{self.move}_to")
-            print("\n")
+
+    
+    def move_player(self, user_input):
+
+        if hasattr(self.current_room, f"{user_input}_to"):
+            self.current_room = getattr(self.current_room, f"{user_input}_to")
             print(f"You entered [{self.current_room.name}]")
             print(f"{self.current_room.description}")
-            print("\n")
-        elif len(self.move) > 2:
-            if self.move == "take" or self.move == "get":
-                self.take_item()
         else:
-            print("\n")
-            print("There is nowhere place to go, press [q]uit to leave")
-            print("\n")
+        
+            print("=======No Door To Next Room=======")
+        
     def take_item(self, item): 
         #first check if the item present
         present = 0
