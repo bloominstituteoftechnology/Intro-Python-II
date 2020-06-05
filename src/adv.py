@@ -125,21 +125,21 @@ while user_input != 'Q':
             print('You have decided to end your quest. Game Over.')
     elif len(input_args) == 2:
         item = input_args[1]
-        if input_args[0] == 'take' or 'Take':
+        if input_args[0] == 'take':
             if player1.current_room.loot == []:
                 print('No loot in this room to take')
             else:
                 print(f'Taking {item}.')
                 player1.take(item)
-                player1.current_room.remove_item(item)
+                # player1.current_room.remove_item(item)
                 print(f'You now have {item}')
-        elif input_args[0] == 'drop' or 'Drop':
+        elif input_args[0] == 'drop':
             if player1.inventory == []:
                 print('No item in inventory to drop')
             else:
                 print(f'Dropping {item}.')
                 player1.drop(item)
-                player1.current_room.add_item(item)
+                # player1.current_room.add_item(item)
                 print(f'You no longer have {item}')
     else:
         print('Input not recognized.')
