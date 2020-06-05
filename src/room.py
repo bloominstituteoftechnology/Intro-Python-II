@@ -12,5 +12,5 @@ class Room:
         self.w_to: Room = None
 
     def __str__(self):
-        result = 'name: {self.name}\ndescription: {self.description}\n'.format(self=self)
+        result = 'You are at {self.name}. {self.description}\n'.format(self=self)
         return result
