@@ -53,18 +53,43 @@ player = Player(room['outside'])
 #
 # If the user enters "q", quit the game.
 
-user_input = ""
-while user_input != "Q":
+user_input: str = ""
+verb:       str = None
+object:     str = None
+
+while verb != "Q":
     print(player.current_room)
-    user_input = input("What direction do you want to go? ").upper()
+    user_input = input("What direction do you want to go? ")
+
+    # Break user input down into a verb and object
+    first_space = user_input.find(" ")
+    if first_space > 0:
+        verb   = user_input[:first_space].strip().upper()
+        object = user_input[first_space:].strip()
+    else:
+        verb   = user_input.strip().upper()
+        object = None
+
+    print(f"verb: \'{verb}\', object: \'{object}\'")
 
     valid_input = False 
     for direction in Direction:
-        if user_input == direction.value:
+        if verb == direction.value:
             player.move(direction)
             valid_input = True
 
-    if user_input == "H" or valid_input == False:
-        print("[N]orth, [S]outh, [E]ast, [W]est, [Q]uit, [H]elp\n") 
+    if valid_input == False:
+        if verb == "G" or verb == "GET" or verb == "T" or verb == "TAKE":
+            print("Get ")
+            valid_input = True
+        elif verb == "D" or verb == "DROP":
+            print("Drop ")
+            valid_input = True
+        elif verb == "I" or verb == "INVENTORY":
+            print("Inventory ")
+            valid_input = True
+
+    if verb == "H" or valid_input == False:
+        print("[N]orth, [S]outh, [E]ast, [W]est, [G]et, [T]ake, [D]rop, [I]nventory, [Q]uit, [H]elp\n") 
 
 print("Thank you for playing.")

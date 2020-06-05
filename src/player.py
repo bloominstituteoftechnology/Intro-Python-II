@@ -2,10 +2,12 @@
 # currently.
 from room import Room
 from direction import Direction
+from item import Item
 
 class Player:
     def __init__(self, current_room: Room):
         self.current_room = current_room
+        self.item: [Item] = []
 
     def __str__(self):
         result = "You are at {self.current_room.name}.\n".format(self=self)
