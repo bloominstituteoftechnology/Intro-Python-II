@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -57,9 +58,14 @@ print(player.name)
 user_is_playing = True
 while user_is_playing:
     print(player.current_room.name)
-    print(player.current_room.description)
+
+    for line in textwrap.wrap(player.current_room.description, 40):
+        print(line)    
 
     user_input = input("Which direction would you like to go? (n/e/s/w): ")
+    if user_input in ["n", "e", "s","w"]:
+        player.move(user_input)
 
-    user_is_playing = False
-    
+    elif user_input == 'q':
+        print("You have quit the game, thank you for playing!")
+        user_is_playing = False
