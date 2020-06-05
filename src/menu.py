@@ -7,6 +7,7 @@ import random
 
 from player import Player
 from enemies import *
+from world_gen import *
 
 myPlayer = Player()
 
@@ -188,25 +189,29 @@ def prompt_list(option):
         n += 1
         
 
-speechDict = {
+speechDict = { 
+    'masterGlobal' :{
+      'missingItem' : """You aren't not holding any """,
+      'inventoryItem' : """You are holding a """
+    },
     'generalHelp' : {
         'archetype01': """You rumage through oddities and relics of the past. You make out a weapon through the pile...""",
-        'archetype02': """After closer inspection, you find an ornate shortsword.""",
-        'archetype03': """After closer inspection, you find a yew bow with a sack of wooden arrows."""
+        'archetype02': """After closer inspection, you find a """,
+        'archetype03': """After closer inspection, you find a """
     },
     'answersGlobal': {
-        'answer01': """Fair choice."""
+        'answer01': """A fair choice."""
     },
     'strangerIntro': {
-        'question01': """It's been a while since I've greeted wayfarers.""",
+        'question01': """It's been a while since I've greeted travellers.""",
         'question02': """Most end up here by curiosity, interest, or obssesion.""",
         'question03': """... you don't seem lost.""",
         'question04': """What brings you to our venerable house stranger?"""
     },
     'strangerArchetype': {
-        'question01': """Search the locker behind the desk. You'll find forgotten artifacts from the very forges and bellows that once spured this damned estate to life.""",
-        'answer01': """A strong arm, and sharp sword, anything to anchor purpose.""",
-        'answer02': """A keen eye, and a strong bow, anything to anchor purpose."""
+        'question01': """Search the locker behind the desk. You'll find forgotten artifacts from the very bellows that once spured this estate to life.""",
+        'answer01': """A strong arm, and sharp sword, an anchor of purpose.""",
+        'answer02': """A keen eye, and a strong bow, an anchor of purpose."""
     },
 }
 
@@ -356,38 +361,61 @@ def setup_game():
                  (speechDict['strangerIntro']['question03']),
                  (speechDict['strangerArchetype']['question01'])],
                 neutralStranger.name)
-    
+
     print_pause((speechDict['generalHelp']['archetype01']))
     
     starterWeapon_list = ["Sword", "Bow and Quiver"]
     prompt_list(starterWeapon_list)
-    
+
     print("\nSelect your starting weapon...")
     player_starterWeapon = input("> ")
-    
-    
+
+
     ##### Starter Weapon #####
-    if player_starterWeapon == "1":
-        print_pause((speechDict['generalHelp']['archetype02']))
-        print_pause([(speechDict['strangerArchetype']['answer01'])], neutralStranger.name)
-    elif player_starterWeapon == "2":
-        print_pause((speechDict['generalHelp']['archetype03']))
-        print_pause([(speechDict['strangerArchetype']['answer02'])], neutralStranger.name)
+    starterSword01 = RandWeapon(weaponMasterMaterialMelee,
+                                weaponMasterPrefixMelee,
+                                weaponMeleeStarter)
+
+    starterBow01 = RandWeapon(weaponMasterMaterialRange,
+                          weaponMasterPrefixRange,
+                          weaponRangeStarter)
+
+
     while player_starterWeapon not in ["1", "2"]:
         print(f"\nThere is no such thing here.\n")
         prompt_list(starterWeapon_list)
         print(f"\nSelect your started weapon...")
         player_starterWeapon = input("> ")
-        if player_starterWeapon == "1":
-            print('\n')
-            print_pause((speechDict['generalHelp']['archetype02']))
-            print_pause([(speechDict['strangerArchetype']['answer01'])], neutralStranger.name)
-        elif player_starterWeapon == "2":
-            print('\n')
-            print_pause((speechDict['generalHelp']['archetype03']))
-            print_pause([(speechDict['strangerArchetype']['answer02'])], neutralStranger.name)
+    if player_starterWeapon == "1":
+        print_pause((speechDict['generalHelp']['archetype02']) + f"{starterSword01}" + ".")
+        print_pause([(speechDict['strangerArchetype']['answer01']),
+                 (speechDict['answersGlobal']['answer01'])],
+                neutralStranger.name)
+    elif player_starterWeapon == "2":
+        print_pause((speechDict['generalHelp']['archetype03']) + f"{starterBow01}" + " with a sack of wooden arrows.")
+        print_pause([(speechDict['generalHelp']['archetype03']),
+                 (speechDict['answersGlobal']['answer01'])],
+                neutralStranger.name)
+    # while player_starterWeapon not in ["1", "2"]:
+    #     print(f"\nThere is no such thing here.\n")
+    #     prompt_list(starterWeapon_list)
+    #     print(f"\nSelect your started weapon...")
+    #     player_starterWeapon = input("> ")
+    #     if player_starterWeapon == "1":
+    #         print('\n')
+    #         print_pause((speechDict['generalHelp']['archetype02']) + f"{starterSword01}" + ".")
+    #         print_pause([(speechDict['strangerArchetype']['answer01']),
+    #                 (speechDict['answersGlobal']['answer01'])],
+    #                 neutralStranger.name)
+    #     elif player_starterWeapon == "2":
+    #         print('\n')
+    #         print_pause((speechDict['generalHelp']['archetype03']) + f"{starterBow01}" + " with a sack of wooden arrows.")
+    #         print_pause([(speechDict['generalHelp']['archetype03']),
+    #                 (speechDict['answersGlobal']['answer01'])],
+    #                 neutralStranger.name)
         
-    
+
+
 
 
     myPlayer.name = player_name

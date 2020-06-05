@@ -25,10 +25,26 @@ class Stranger(Neutral):
     def __init__(self):
         super().__init__(
             name="The Stranger",
-            desc="The hollowed husk of a once famed warrior"
+            desc="The hallowed remains of a once great steward."
         )
         
 neutralStranger = Stranger()
-        
 
+class NamelessKnight(Neutral):
+    def __init__(self):
+        super().__init__(
+            name="Nameless Knight",
+            desc="A wandering hedge knight of a bygone age."
+        )
+        
+neutralNamelessKnight = NamelessKnight()
+
+class ShroudedFigure(Neutral):
+    def __init__(self):
+        super().__init__(
+            name="Shrouded Figure",
+            desc="A cloaked denizen from beyond."
+        )
+        
+neutralShroudedFigure = ShroudedFigure()
     
