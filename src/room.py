@@ -6,8 +6,4 @@ class Room:
         # Name and description
         self.name = name
         self.desc = desc
-        # connections to other room objects
-        self.n_to = None    # North
-        self.w_to = None    # West
-        self.s_to = None    # South
-        self.e_to = None    # East
+        self.items = []
