@@ -1,10 +1,10 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+"North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -49,3 +49,57 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# my_player = Player("Abdiel", room["outside"])
+possible_directions = ["n", "s", "e", "w"]
+
+def get_direction():
+    direction = input("Which way would you like to go? \n").lower()
+
+    if direction == "q":
+        return direction
+    elif direction in possible_directions:
+        direction = f"{direction}_to"
+        return direction
+    else :
+        print(f"{direction} is not a valid input, please choose between 'n', 's', 'e', 'w', 'q'\n" )
+        return None
+
+def attempt_move(current_room, direction):
+    if direction == "q":
+        return False
+    elif direction == None:
+        return current_room
+    else:
+        if hasattr(current_room, direction):
+            attribute_returned = getattr(current_room, direction)
+            if attribute_returned == None:
+                print("There is no room in that direction \n")
+                return current_room
+            else:
+                return attribute_returned
+        else:
+            print("There is no room in that direction \n")
+            return current_room
+
+
+def begin_move():
+    player_name =  input("Before we start, let's get your name: \n")
+    my_player = Player(player_name, room['outside'])
+    print(f"Great, {my_player.name}, let's begin.\n")
+    print(f"We will start of at the {my_player.cur_room.name} where {my_player.cur_room.description}")
+    ask_if_ready = input("\nReady to begin? (Y/N)\n").lower()
+    if ask_if_ready == 'y':
+        while(my_player.cur_room):
+            direction = get_direction()
+            my_player.cur_room = attempt_move(my_player.cur_room, direction)
+            if my_player.cur_room == False:
+                pass
+            else:
+                print(f"\nYou are in the {my_player.cur_room.name} where {my_player.cur_room.description}\n")
+
+        print("\nThank you for playing! See ya soon")
+    else:
+        print("\nThank you for stopping by! See ya soon")
+
+begin_move()
