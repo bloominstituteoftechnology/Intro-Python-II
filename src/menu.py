@@ -7,7 +7,7 @@ import random
 
 from player import Player
 from enemies import *
-from world_gen import *
+
 
 myPlayer = Player()
 
@@ -55,28 +55,28 @@ def sub_screen_options():
 ##### SIZE = 25
 ##### HEADERS #####
 def main_title():
-    print('{:^103}'.format('████████╗██╗░░██╗███████╗  ██████╗░░█████╗░██╗░░░░░███████╗  ░█████╗░░█████╗░██╗░░░██╗██████╗░████████╗'))
-    print('{:^103}'.format('╚══██╔══╝██║░░██║██╔════╝  ██╔══██╗██╔══██╗██║░░░░░██╔════╝  ██╔══██╗██╔══██╗██║░░░██║██╔══██╗╚══██╔══╝'))
-    print('{:^103}'.format('░░░██║░░░███████║█████╗░░  ██████╔╝███████║██║░░░░░█████╗░░  ██║░░╚═╝██║░░██║██║░░░██║██████╔╝░░░██║░░░'))
-    print('{:^103}'.format('░░░██║░░░██╔══██║██╔══╝░░  ██╔═══╝░██╔══██║██║░░░░░██╔══╝░░  ██║░░██╗██║░░██║██║░░░██║██╔══██╗░░░██║░░░'))
-    print('{:^103}'.format('░░░██║░░░██║░░██║███████╗  ██║░░░░░██║░░██║███████╗███████╗  ╚█████╔╝╚█████╔╝╚██████╔╝██║░░██║░░░██║░░░'))
-    print('{:^103}'.format('░░░╚═╝░░░╚═╝░░╚═╝╚══════╝  ╚═╝░░░░░╚═╝░░╚═╝╚══════╝╚══════╝  ░╚════╝░░╚════╝░░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░'))
+    print('{:░^120}'.format('████████╗██╗░░██╗███████╗░░░██████╗░░█████╗░██╗░░░░░███████╗░░░░█████╗░░█████╗░██╗░░░██╗██████╗░████████╗'))
+    print('{:░^120}'.format('╚══██╔══╝██║░░██║██╔════╝░░░██╔══██╗██╔══██╗██║░░░░░██╔════╝░░░██╔══██╗██╔══██╗██║░░░██║██╔══██╗╚══██╔══╝'))
+    print('{:░^120}'.format('░░░██║░░░███████║█████╗░░░░░██████╔╝███████║██║░░░░░█████╗░░░░░██║░░╚═╝██║░░██║██║░░░██║██████╔╝░░░██║░░░'))
+    print('{:░^120}'.format('░░░██║░░░██╔══██║██╔══╝░░░░░██╔═══╝░██╔══██║██║░░░░░██╔══╝░░░░░██║░░██╗██║░░██║██║░░░██║██╔══██╗░░░██║░░░'))
+    print('{:░^120}'.format('░░░██║░░░██║░░██║███████╗░░░██║░░░░░██║░░██║███████╗███████╗░░░╚█████╔╝╚█████╔╝╚██████╔╝██║░░██║░░░██║░░░'))
+    print('{:░^120}'.format('░░░╚═╝░░░╚═╝░░╚═╝╚══════╝░░░╚═╝░░░░░╚═╝░░╚═╝╚══════╝╚══════╝░░░░╚════╝░░╚════╝░░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░'))
 
 def version_title():
-    print('{:=^103}'.format(''))
-    print('{:^103}'.format('The Pale Court 0.0.2'))
+    print('{:=^120}'.format(''))
+    print('{:^120}'.format('The Pale Court 0.0.2'))
     
 def sub_title_encyclopedia():
     print('\n')
-    print('{:=^103}'.format('=====/(----------)\====='))
-    print('{:^103}'.format('<[  ENCYCLOPEDIA  ]>'))
-    print('{:=^103}'.format('=====\(----------)/====='))
+    print('{:=^120}'.format('=====/(----------)\====='))
+    print('{:^120}'.format('<[  ENCYCLOPEDIA  ]>'))
+    print('{:=^120}'.format('=====\(----------)/====='))
     
 def sub_title_help():
     print('\n')
-    print('{:=^103}'.format('=====/(------------)\====='))
-    print('{:^103}'.format('<[  INSTRUCTIONS  ]>'))
-    print('{:=^103}'.format('=====\(------------)/====='))
+    print('{:=^120}'.format('=====/(------------)\====='))
+    print('{:^120}'.format('<[  INSTRUCTIONS  ]>'))
+    print('{:=^120}'.format('=====\(------------)/====='))
 
 
 ##### MAIN MENU #####
@@ -85,10 +85,10 @@ def title_screen(): # Title
     main_title()
     # print('\n')
     version_title()
-    print('\n'*3)
-    print('{:^103}'.format('The halls of your lineage, once familiar, now foreign whisper of heresy.'))
-    print('\n'*7)
-    print('{:^103}'.format('[ enter any key to continue ]'))
+    print('\n'*4)
+    print('{:^120}'.format('The halls of your lineage, once familiar, now foreign whisper of heresy.'))
+    print('\n'*6)
+    print('{:^120}'.format('[ enter any key to continue ]'))
     print('\n'*6)
     
     title_screen_options() # Title screen input
@@ -222,126 +222,6 @@ speechDict = {
 
 
 
-##### MAP #####
-"""
-# a1 a2 ... # PLAYER STARTS AT D4
-# [] [] [] [] a4
-# [] [] [] [] b4
-# [] [] [] [] ...
-# [] [] [] []
-"""
-
-zone_map = {
-    'outside': {
-        'NAME': "Outside Cave Entrance",
-        'DESCRIPTION': """North of you, the cave mount beckons.""",
-        'INSPECT': "",
-        'NORTH': 'foyer',
-        'SOUTH': '',
-        'EAST': '',
-        'WEST': '',
-        'STATUS': ['empty', 'explored']
-    }, 
-    'foyer': {
-        'NAME': "Foyer",
-        'DESCRIPTION': """Dim light filters in from the south. Dusty
-        passages run north and east.""",
-        'INSPECT': "",
-        'NORTH': 'overlook',
-        'SOUTH': 'outside',
-        'EAST': 'narrow',
-        'WEST': '',
-        'STATUS': ['empty', 'explored']
-    },
-    'overlook': {
-        'NAME': "Grand Overlook",
-        'DESCRIPTION': """A steep cliff appears before you, falling
-        into the darkness. Ahead to the north, a light flickers in
-        the distance, but there is no way across the chasm.""",
-        'INSPECT': "",
-        'NORTH': '',
-        'SOUTH': 'foyer',
-        'EAST': '',
-        'WEST': '',
-        'STATUS': ['empty', 'explored']
-    },
-    'narrow': {
-        'NAME': "Narrow Passage",
-        'DESCRIPTION': """The narrow passage bends here from west
-        to north. The smell of gold permeates the air.""",
-        'INSPECT': "",
-        'NORTH': 'treasure',
-        'SOUTH': '',
-        'EAST': '',
-        'WEST': 'foyer',
-        'STATUS': ['empty', 'explored']
-    },
-    'treasure': {
-        'NAME': "Treasure Chamber",
-        'DESCRIPTION': """You've found the long-lost treasure
-        chamber! Sadly, it has already been completely emptied by
-        earlier adventurers. The only exit is to the south.""",
-        'INSPECT': "",
-        'NORTH': '',
-        'SOUTH': 'narrow',
-        'EAST': '',
-        'WEST': '',
-        'STATUS': ['empty', 'explored']
-    }
-}
-
-##### GATE INTERACTION #####
-def print_location():
-    print('\n' + ('#' * (4 + len(myPlayer.location))))
-    print('# ' + myPlayer.location + ' #')
-    print('# ' + zone_map[myPlayer.location][DESCRIPTION] + ' #')
-    print('\n' + ('#' * (4 + len(myPlayer.location))))
-    
-def prompt():
-    print("\n" + "========================")
-    print("<What would you like to do?>")
-    action = input("> ")
-    possible_actions = ['move', 'go', 'travel', 'walk', 'quit', 'examine', 'inspect', 'look']
-    while action.lower() not in possible_actions:
-        print("Unkknown action, try again.\n")
-        action = input("> ")
-    if action.lower() == 'quit':
-        sys.exit()
-    elif action.lower() in ['move', 'go', 'travel']:
-        player_move(action.lower())
-    elif action.lower() in ['examine', 'inspect', 'look']:
-        player_examine(action.lower())
-        
-def player_move(myAction):
-    ask = "Where would you like to move to?\n"
-    dest = input(ask.lower())
-    if dest in ['up', 'north']:
-        destination = zone_map[myPlayer.location][NORTH]
-        movement_handler()
-    elif dest in ['down', 'south']:
-        destination = zone_map[myPlayer.location][SOUTH]
-        movement_handler()
-    elif dest in ['right', 'east']:
-        destination = zone_map[myPlayer.location][EAST]
-        movement_handler()
-    elif dest in ['down', 'west']:
-        destination = zone_map[myPlayer.location][WEST]
-        movement_handler()
-
-def movement_handler(destination):
-    print("\n" + "You moved to the " + destination + ".")
-    myPlayer.location = destination
-    print_location
-    
-def player_examine(action):
-    if zone_map[myPlayer.location][STATUS] == 'explored':
-        print("You have already explored this zone.")
-    
-
-
-
-
-
 
 ##### GATE INTERACTION #####
 def start_game():
@@ -444,12 +324,7 @@ def setup_game():
         myPlayer.health = 100
         myPlayer.mana = 40
         
-    ### INTRODUCTION ###
-    question3 = "Welcome, " + player_name + " the " + player_archetype + ".\n"
-    for char in question3:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(0.4)
+
         
     os.system('cls' if os.name == 'nt' else 'clear')
     print("###########################")
@@ -464,3 +339,6 @@ def setup_game():
 
 os.system('cls' if os.name == 'nt' else 'clear')
 title_screen()
+
+if __name__ == "__main__":
+    print('Check!')

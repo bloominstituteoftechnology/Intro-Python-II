@@ -1,3 +1,5 @@
+## Depreciated
+
 import random
 
 def inventoryWipe():

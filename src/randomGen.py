@@ -1,3 +1,7 @@
+#>
+#> Dev file
+#>
+
 import random
 
 class RandWeapon:
@@ -16,10 +20,10 @@ class RandWeapon:
     def getRandomTypes(self):
         return self.weaponTypes[random.randint(0, len(self.weaponTypes) - 1)]
 
-    def get_weapon(self):
-        return '{} {} {}'.format(self.getRandomPrefix(),
-                                 self.getRandomMaterial(),
-                                 self.getRandomTypes())
+    # def get_weapon(self):
+    #     return '{} {} {}'.format(self.getRandomPrefix(),
+    #                              self.getRandomMaterial(),
+    #                              self.getRandomTypes())
     
     def __str__(self):
         return "{} {} {}".format(self.getRandomPrefix(),

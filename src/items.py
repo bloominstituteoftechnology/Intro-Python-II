@@ -61,7 +61,7 @@ class Weapon(Item):
     def getweaponType(self):
         return self.weaponType
     def getStatus(self):
-        return self.status
+        return self.status 
 
     def setDamage(self, newDamage):
         self.damage = newDamage

@@ -1,337 +1,326 @@
+#> 
+#> Main file
+#>
+from intro import *
+
 class World():
     """Parent world class"""
-    def __init__(
-        self, name, description, items, south, north, east, west, light, encounter,
-        trap, explored
-    ):
+    def __init__(self, name, description, items, north, south, east, west, light, encounter, trap, explored, intro):
+        self._name = name
+        self._description = description
+        self._items = items
+        self._north = north
+        self._south = south
+        self._east = east
+        self._west = west
+        self._light = light
+        self._encounter = encounter
+        self._trap = trap
+        self._explored = explored
+        self._intro = intro
+        
+    @property
+    def name(self):
+        return self._name
+    @property
+    def description(self):
+        return self._description
+    @property
+    def items(self):
+        return self._items
+    @property
+    def north(self):
+        return self._north
+    @property
+    def south(self):
+        return self._south
+    @property
+    def east(self):
+        return self._east
+    @property
+    def west(self):
+        return self._west
+    @property
+    def light(self):
+        return self._light
+    @property
+    def encounter(self):
+        return self._encounter
+    @property
+    def trap(self):
+        return self._trap
+    @property
+    def explored(self):
+        return self._explored
+    @property
+    def intro(self):
+        return self._intro
 
-        self.name = name
-        self.description = description
-        self.items = items
-        self.south = south
-        self.north = north
-        self.east = east
-        self.west = west
-        self.light = light
-        self.encounter = encounter
-        self.trap = trap
-        self.explored = explored
-
-        def getName(self):
-            return self.name
-        def getDescription(self):
-            return self.description
-        def getItems(self):
-            return self.items
-        def getSouth(self):
-            return self.south
-        def getNorth(self):
-            return self.north
-        def getEast(self):
-            return self.east
-        def getWest(self):
-            return self.west
-        def getLight(self):
-            return self.light
-        def getisEncounter(self):
-            return self.encounter
-        def getTrap(self):
-            return self.trap
-        def getisExplored(self):
-            return self.explored
-
-        def setName(self, newName):
-            self.name = newName 
-        def setDescription(self, newDescription):
-            self.description = newDescription
-        def setItems(self, newItems):
-            self.items = newItems
-        def setSouth(self, newSouth):
-            self.south = newSouth
-        def setNorth(self, newNorth):
-            self.north = newNorth
-        def setEast(self, newEast):
-            self.east = newEast
-        def setWest(self, newWest):
-            self.west = newWest
-        def setLight(self, newLight):
-            self.light = newLight
-        def setEncounter(self, newEncounter):
-            self.encounter = newEncounter
-        def setTrap(self, newTrap):
-            self.trap = newTrap
-        def setExplored(self, newExplored):
-            self.explored = newExplored
+    @name.setter
+    def name(self, x):
+        self._name = x
+    @description.setter 
+    def description(self, x):
+        self._description = x
+    @items.setter
+    def items(self, x):
+        self._items = x
+    @north.setter
+    def north(self, x):
+        self._north = x
+    @south.setter
+    def south(self, x):
+        self._south = x
+    @east.setter
+    def east(self, x):
+        self._east = x
+    @west.setter
+    def west(self, x):
+        self._west = x
+    @light.setter
+    def light(self, x):
+        self._light = x
+    @encounter.setter
+    def encounter(self, x):
+        self._encounter = x
+    @trap.setter
+    def trap(self, x):
+        self._trap = x
+    @explored.setter
+    def explored(self, x):
+        self._explored = x
+    @intro.setter
+    def intro(self, x):
+        self._intro = x
 
     def __str__(self):
-        return "{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}\n".format(self.name, 
-                                                                    self.description,
-                                                                    self.items,
-                                                                    self.south,
-                                                                    self.north,
-                                                                    self.east,
-                                                                    self.west,
-                                                                    self.light,
-                                                                    self.encounter,
-                                                                    self.trap,
-                                                                    self.explored
-                                                                    )
+        return "{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}\n".format(
+            self.name, self.description, self.items, self.north, self.south, self.east,
+            self.west, self.light, self.encounter, self.trap, self.explored
+        )
 
+# class theOutskirts(World):
+#     def __init__(self):
+#         self._name = "Outskirts"
+#         self._description = "A description of the Outskirts"
+#         self._items = []
+#         self._north = thePaleGate()
+#         self._south = None
+#         self._east = None
+#         self._west = None
+#         self._light = True
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = True
+#         self._intro = ""
+        
+# class thePaleGate(World):
+#     def __init__(self):
+#         self._name = "Pale Gate"
+#         self._description = "A description of the Pale Gate"
+#         self._items = []
+#         self._north = theAshbourneConcourse()
+#         self._south = theOutskirts()
+#         self._east = theBattlements()
+#         self._west = None
+#         self._light = True
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
-class theOutskirts(World):
-    def __init__(self):
-        super().__init__(name="Outskirts",
-                        description="A description of the Outskirts",
-                        items=[],
-                        south=None,
-                        north="Blasted Gate",
-                        east=None,
-                        west=None,
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=True
-                        )
+# class theBattlements(World):
+#     def __init__(self):
+#         self._name = "Battlements"
+#         self._description = "A description of the Battlements"
+#         self._items = []
+#         self._north = None
+#         self._south = None
+#         self._east = None
+#         self._west = thePaleGate()
+#         self._light = True
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
+# class theAshbourneConcourse(World):
+#     def __init__(self):
+#         self._name = "Ashbourne Concourse"
+#         self._description = "A description of the Ashbourne Concourse"
+#         self._items = []
+#         self._north = theTorchedHalls()
+#         self._south = thePaleGate()
+#         self._east = theBlacksmith()
+#         self._west = theGrainCellars()
+#         self._light = True
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
-class theBlastedGate(World):
-    def __init__(self):
-        super().__init__(name="Blasted Gate",
-                        description="A description of the Blasted Gates",
-                        items=[],
-                        south=None,
-                        north="Solitary Fountain",
-                        east="Blasksmith",
-                        west="Sepulcher",
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
+# class theBlacksmith(World):
+#     def __init__(self):
+#         self._name = "Blacksmith"
+#         self._description = "A description of the Blacksmith"
+#         self._items = []
+#         self._north = None
+#         self._south = None
+#         self._east = None
+#         self._west = theAshbourneConcourse()
+#         self._light = True
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
+# class theGrainCellars(World):
+#     def __init__(self):
+#         self._name = "Grain Cellars"
+#         self._description = "A description of the Grain Cellars"
+#         self._items = []
+#         self._north = None
+#         self._south = None
+#         self._east = None
+#         self._west = theAshbourneConcourse()
+#         self._light = False
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
-class theSolitaryFountain(World):
-    def __init__(self):
-        super().__init__(name="Solitary Fountain",
-                        description="A description of the Solitary Fountain",
-                        items=[],
-                        south="Blasted Gate",
-                        north="Estate",
-                        east="Blacksmith",
-                        west="Sepulcher",
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
+# class theTorchedHalls(World):
+#     def __init__(self):
+#         self._name = "Torched Halls"
+#         self._description = "A description of the Torched Halls"
+#         self._items = []
+#         self._north = "hePaleThrone()
+#         self._south = theAshbourneConcourse()
+#         self._east = theReliquary()
+#         self._west = theUndercroft()
+#         self._light = True
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
+# class theReliquary(World):
+#     def __init__(self):
+#         self._name = "Reliquary"
+#         self._description = "A description of the Reliquary"
+#         self._items = []
+#         self._north = None
+#         self._south = None
+#         self._east = theProfaneShrine()
+#         self._west = theAshbourneConcourse()
+#         self._light = True
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
-class theSepulcher(World):
-    def __init__(self):
-        super().__init__(name="The Sepulcher",
-                        description="A description of the Sepulcher",
-                        items=[],
-                        south=None,
-                        north=None,
-                        east="Solitary Fountain",
-                        west=None,
-                        light=False,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
+# class theProfaneShrine(World):
+#     def __init__(self):
+#         self._name = "Profane Shrine"
+#         self._description = "A description of the Profane Shrine"
+#         self._items = []
+#         self._north = None
+#         self._south = None
+#         self._east = None
+#         self._west = ""#theReliquary()
+#         self._light = False
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
+# class theUndercroft(World):
+#     def __init__(self):
+#         self._name = "Undercroft"
+#         self._description = "A description of the Undercroft"
+#         self._items = []
+#         self._north = None
+#         self._south = None
+#         self._east = theTorchedHalls()
+#         self._west = None
+#         self._light = False
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
-class theBlacksmith(World):
-    def __init__(self):
-        super().__init__(name="Blacksmith",
-                        description="A description of the Blacksmith",
-                        items=[],
-                        south=None,
-                        north=None,
-                        east=None,
-                        west="Solitary Fountain",
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
+# class thePaleThrone(World):
+#     def __init__(self):
+#         self._name = "Pale Throne"
+#         self._description = "A description of the Pale Throne"
+#         self._items = []
+#         self._north = theTerrace()
+#         self._south = theTorchedHalls()
+#         self._east = None
+#         self._west = None
+#         self._light = True
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
+# class theTerrace(World):
+#     def __init__(self):
+#         self._name = "Terrace"
+#         self._description = "A description of the Terrace"
+#         self._items = []
+#         self._north = theKerberosGate()
+#         self._south = thePaleThrone()
+#         self._east = None
+#         self._west = None
+#         self._light = True
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
-class theEstate(World):
-    def __init__(self):
-        super().__init__(name="Estate",
-                        description="A description of the Estate",
-                        items=[],
-                        south="Solitary Fountain",
-                        north="Torched Halls",
-                        east=None,
-                        west=None,
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
+# class theKerberosGate(World):
+#     def __init__(self):
+#         self._name = "Kerberos Gate"
+#         self._description = "A description of the Kerberos Gate"
+#         self._items = []
+#         self._north = None
+#         self._south = theTerrace()
+#         self._east = None
+#         self._west = None
+#         self._light = True
+#         self._encounter = []
+#         self._trap = False
+#         self._explored = False
+#         self._intro = ""
 
-
-class theTorchedHalls(World):
-    def __init__(self):
-        super().__init__(name="Torched Halls",
-                        description="A description of the Torched Halls",
-                        items=[],
-                        south="Estate",
-                        north="Pale Throne",
-                        east="Reliquary",
-                        west="Cellar",
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
-
-
-class theCellar(World):
-    def __init__(self):
-        super().__init__(name="Cellar",
-                        description="A description of the Cellar",
-                        items=[],
-                        south=None,
-                        north=None,
-                        east="Torched Halls",
-                        west=None,
-                        light=False,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
-
-
-class theReliquary(World):
-    def __init__(self):
-        super().__init__(name="Reliquary",
-                        description="A description of the Reliquary",
-                        items=[],
-                        south=None,
-                        north=None,
-                        east="Overlook",
-                        west="Torched Halls",
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
-
-
-class theOverlook(World):
-    def __init__(self):
-        super().__init__(name="Overlook",
-                        description="A description of the Balcony",
-                        items=[],
-                        south=None,
-                        north=None,
-                        east="Narrow Passage",
-                        west="Reliquary",
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
-
-
-class theNarrowPassage(World):
-    def __init__(self):
-        super().__init__(name="Narrow Passage",
-                        description="A description of the Narrow Passage",
-                        items=[],
-                        south=None,
-                        north=None,
-                        east="Shrine",
-                        west="Overlook",
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
-
-
-class theShrine(World):
-    def __init__(self):
-        super().__init__(name="Shrine",
-                        description="A description of the Shrine",
-                        items=[],
-                        south=None,
-                        north=None,
-                        east=None,
-                        west="Narrow Passage",
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
-
-
-class thePaleThrone(World):
-    def __init__(self):
-        super().__init__(name="Pale Throne",
-                        description="A description of the Pale Throne",
-                        items=[],
-                        south="Torched Halls",
-                        north="Balcony",
-                        east=None,
-                        west=None,
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
-
-
-class theBalcony(World):
-    def __init__(self):
-        super().__init__(name="Balcony",
-                        description="A description of the Balcony",
-                        items=[],
-                        south="Pale Throne",
-                        north="Pale Gate",
-                        east=None,
-                        west=None,
-                        light=True,
-                        encounter=[],
-                        trap=False,
-                        explored=False
-                        )
-
-
-class thePaleGate(World):
-    def __init__(self):
-        super().__init__(name="Pale Gate",
-                        description="A description of the Pale Gate",
-                        items=[],
-                        south="Balcony",
-                        north=None,
-                        east=None,
-                        west=None,
-                        light=True,
-                        encounter=[],
-                        trap=True,
-                        explored=False
-                        )
-
+# name, description, items, north, south, east, west, light, encounter, trap, explored, intro
+dictWorld = { # North, South, East, West
+    'theOutskirts' : World("the Outskirts", "A description of the Outskirts", [], 'thePaleGate', None, None, None, 
+                    True, [],None, False, title_theOutskirts),
+    'thePaleGate' : World("the Pale Gate", "A description of the Pale Gate", [], 'theAshbourneConcourse',
+                    'theOutskirts', 'theBattlements', None, True, [], None, False, title_thePaleGate),
+    'theBattlements' : World("the Battlements", "A description of the Battlements", [], None, None, None, 
+                    'thePalgeGate', True, [], False, False, title_theBattlements),
+    'theAshbourneConcourse' : World("the Ashbourne Concourse", "A description of the Ashbourne Concourse", [],
+                    'theTorchedHalls', 'thePaleGate', 'theBlacksmith', 'theGrainCellars', True, [], False, False, title_theAshbourneConcourse),
+    'theBlacksmith' : World("the Blacksmith", "A description of the Blacksm,ith", [], None, None, None, 
+                    'theAshbourneConcourse', True, [], False, False, title_theBlacksmith),
+    'theGrainCellars' : World("the Grain Cellars", "A description of the Grain Cellars", [], None, None, None, 
+                    'theAshbourneConcourse', False, [], False, False, title_theGrainCellars),
+    'theTorchedHalls' : World("the Torched Halls", "A description of the Torched Halls", [], 'thePaleThrone',
+                    'theAshbourneConcourse', 'theReliquary', 'theUndercroft', True, [], False, False, title_theTorchedHalls),
+    'theReliquary' : World("the Reliquary", "A description of the Reliquary", [], None, None, 'theProfaneShrine', 
+                    'theAshbourneConcourse', False, [], False, False, title_theReliquary),
+    'theProfaneShrine' : World("the Profane Shrine", "A description of the Profane Shrine", [], None, None, 
+                    'theTorchedHalls', None, False, [], False, False, title_theProfaneShrine),
+    'thePaleThrone' : World("the Pale Throne", "A description of the Pale Thrones", [], 'theTerrace', 
+                    'theTorchedHalls', None, None, True, [], False, False, title_thePaleThrone),
+    'theTerrace' : World("the Terrace", "A description of the Terrace", [], 'theKerberosGate','thePaleThrone', 
+                    None, None, True, [], False, False, title_theTerrace),
+    'theKerberosGate' : World("the Kerberos Gate", "A description of the Kerberos Gate", [], None, 'theTerrace', None, 
+                    None, True, [], False, False, title_theKerberosGate)
+}
 
 if __name__ == "__main__":
-    ##### Class Declaration ######
-    theOutskirts = theOutskirts()
-    theBlastedGate = theBlastedGate()
-    theSolitaryFountain = theSolitaryFountain()
-    theSepulcher = theSepulcher()
-    theBlacksmith = theBlacksmith()
-    theEstate = theEstate()
-    theTorchedHalls = theTorchedHalls()
-    theCellar = theCellar()
-    theReliquary = theReliquary()
-    theOverlook = theOverlook()
-    theNarrowPassage = theNarrowPassage()
-    theShrine = theShrine()
-    thePaleThrone = thePaleThrone()
-    theBalcony = theBalcony()
-    thePaleGate = thePaleGate()
+    pass
