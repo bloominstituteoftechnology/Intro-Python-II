@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-import textwrap
+from item import Item
 
 # Declare all the rooms
 
@@ -54,6 +54,28 @@ while True:
         break
     elif d == 'n' or 's' or 'e' or 'w':
         player.move(d)
+    elif d == 'i':
+        player.print_inventory()
+    elif len(d.split(' ')) > 1:
+        action, item_name = d.split(' ')
+
+        if action == 'get' or action == 'take':
+            if item_name not in item or item[item_name] not in getattr(player.location, 'items'):
+                print("You can't take it with you. Because that item isn't here.")
+            else:
+                picked_up_item = item[item_name]
+                player.location.remove_item(picked_up_item)
+                player.get(picked_up_item)
+                picked_up_item.on_take()
+        
+        if action == 'drop':
+            if item_name not in item or item[item_name] not in getattr(player, 'items'):
+                print("You can't lose what you don't have. Because you're not carrying that item.")
+            else:
+                dropped_item = item[item_name]
+                player.drop(dropped_item)
+                player.location.store_item(dropped_item)
+                dropped_item.on_drop()                
 
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
