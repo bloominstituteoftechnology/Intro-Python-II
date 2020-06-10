@@ -1,5 +1,9 @@
 from room import Room
 
+from player import Player
+
+import textwrap
+
 # Declare all the rooms
 
 room = {
@@ -38,6 +42,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Blair", room["outside"])
 
 # Write a loop that:
 #
@@ -49,3 +54,43 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+def compass(player, direction):
+    attr = direction + '_to'
+
+    if hasattr(player.room, attr):
+        player.room = getattr(player.room, attr)
+    else:
+        print("You can't go that direction")
+
+
+player = Player("Blair", room["outside"])
+
+
+user_playing = True
+
+while user_playing:
+    print(player.room.name)
+    for desc in textwrap.wrap(player.room.description, width=150):
+        print(desc)
+
+    user_input = input(
+        "(N) North | (S) South | (E) East | (W) West | (Q) Quit\n")
+    print(f"You chose the following direction: {user_input}")
+
+    if user_input.lower() == 'n':
+        compass(player, user_input)
+    elif user_input.lower() == 's':
+        compass(player, user_input)
+    elif user_input.lower() == 'e':
+        compass(player, user_input)
+    elif user_input.lower() == 'w':
+        compass(player, user_input)
+
+    #     if player.room.connect is not None:
+    #         player.move(user_input)
+    #         print("You're now in ", player.room.name)
+
+    # else:
+    #     print("Please choose one of the following options: (N) North | (S) South | (E) East | (W) West | (Q) Quit")
