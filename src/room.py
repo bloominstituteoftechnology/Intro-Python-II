@@ -13,7 +13,7 @@ class Room:
         self.w_to = ''
 
     def __str__(self):
-        return f' Current room: {self.name:s} \n Description: {self.description} \n Items In Room: {self.items_in_room} \n '
+        return f'Location: {self.name} \n \n Hint: {self.description} \n Items in this locations: {self.items_in_room}.'
 
     def add_room_item(self, item):
         self.items_in_room.append(item)

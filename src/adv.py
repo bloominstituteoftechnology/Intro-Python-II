@@ -3,7 +3,7 @@ from player import Player
 
 # Declare all the rooms
 
-rooms = {
+room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
@@ -25,28 +25,22 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-rooms['outside'].n_to = rooms['foyer']
-rooms['foyer'].s_to = rooms['outside']
-rooms['foyer'].n_to = rooms['overlook']
-rooms['foyer'].e_to = rooms['narrow']
-rooms['overlook'].s_to = rooms['foyer']
-rooms['narrow'].w_to = rooms['foyer']
-rooms['narrow'].n_to = rooms['treasure']
-rooms['treasure'].s_to = rooms['narrow']
-
-
-
-def get_room_items(rooms):
-    for room in rooms:
-    print(rooms[room])
+room['outside'].n_to = room['foyer']
+room['foyer'].s_to = room['outside']
+room['foyer'].n_to = room['overlook']
+room['foyer'].e_to = room['narrow']
+room['overlook'].s_to = room['foyer']
+room['narrow'].w_to = room['foyer']
+room['narrow'].n_to = room['treasure']
+room['treasure'].s_to = room['narrow']
 
 #
 # Main
 #
 
-
 # Make a new player object that is currently in the 'outside' room.
-player = Player('Sam', 'outside')
+new_player = input('Give your player a name: ')
+player = Player(new_player, room['outside'])
 
 # Write a loop that:
 #
@@ -59,30 +53,22 @@ player = Player('Sam', 'outside')
 #
 # If the user enters "q", quit the game.
 
+command = ''
+
 while True:
+    print(player)
+    command = input(
+        ' \n \n Insert q to quit, \n Use n, s, e, w to move through out the map \n Make a move: ').split(" ")
+    # print('INSERTED COMMAND:', command)
 
-    print('Welcome to X Adventures!')
-    print('type q to quit')
-
-    print()
-    print()
-    print('Current Location:', player.current_room)
-
-    user_Input = input("Make a move: ")
-
-    try:
-        if (user_Input == 'q'):
+    new_room = getattr(player.current_room, command[0].lower() + "_to", None)
+    if(len(command) == 1):
+        if new_room:
+            player.current_room = new_room
+        elif (command[0] == 'q'):
             break
-        if (user_Input == 'n'):
-            pass
-        if (user_Input == 's'):
-            pass
-        if(user_Input == 'e'):
-            pass
-        if(user_Input == 'w'):
-            pass
         else:
-            print("Not in Range")
+            print(' \n \n !!!INVALID COMMAND, PLEASE TRY AGAIN!!!')
 
-    except ValueError:
-        print('TBD')
+    elif(len(command == 2)):
+        pass
