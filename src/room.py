@@ -8,7 +8,7 @@ class Room:
         super().__init__()
         self.name = name
         self.description = description
-        self.items = [Item(i[0], i[1]) for i in items]
+        self.items = []
     
     def __str__(self):
         return f'{self.name} - {self.description}'

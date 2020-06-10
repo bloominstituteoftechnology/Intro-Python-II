@@ -1,7 +1,7 @@
 import code
 
 from room import Room
-from player import Player
+from player import Playerr
 
 # Declare all the rooms
 
