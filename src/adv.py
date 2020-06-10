@@ -67,5 +67,25 @@ def next_move(direction_input):
     if possible_room != None:
         player.current_room = possible_room
     else:
-        print f"there is no available room to the {directions[direction_input][1]}"  
+        print (f"there is no available room to the {directions[direction_input][1]}")  
         return True       
+
+
+continue_adventure = True   
+
+while continue_adventure:
+    print(player)
+    print(player.current_room)
+    selection = input(
+      """Please select a direction that you would like to go in 
+      n - North
+      e - East
+      s - South
+      w - West
+      q, quit - Quit
+      """).split('')
+
+
+
+    
+
