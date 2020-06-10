@@ -12,10 +12,11 @@ class Room:
         self.w_to = None
 
     def __str__(self):
-        return f'{self.name}: {self.description}\n{"".join(str(item) for item in self.items)}'
+        print(self.items)
+        return f'{self.name}: {self.description}'
 
     def remove_item(self, item):
-        self.items.remove(item)
+        self.items = []
         return
 
     def store_item(self,item):

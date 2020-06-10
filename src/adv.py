@@ -34,11 +34,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+item = {
+    'sword': Item('Sword', 'A cool sword'),
+    'grail': Item('Grail', 'THE GRAIL')
+}
 
-# Make a new player object that is currently in the 'outside' room.
+room['foyer'].items = item['sword']
+room['treasure'].items = item['grail']
 
 player = Player('Pete', room['outside'])
 
@@ -50,24 +52,28 @@ while True:
 
     d = input("\nChoose direction: ").lower()    
 
-    if d =='q':
+    if d == 'q':
+        print('quit check')
         break
-    elif d == 'n' or 's' or 'e' or 'w':
+    elif d == 'n' or d == 's' or d == 'e' or d == 'w':
+        print('move check')
         player.move(d)
     elif d == 'i':
+        print('inv check')
         player.print_inventory()
     elif len(d.split(' ')) > 1:
+        print(d)
         action, item_name = d.split(' ')
-
+        print('test')
         if action == 'get' or action == 'take':
-            if item_name not in item or item[item_name] not in getattr(player.location, 'items'):
+            print('action')
+            if item_name not in item or hasattr(player.location, 'items') == False:
                 print("You can't take it with you. Because that item isn't here.")
             else:
                 picked_up_item = item[item_name]
                 player.location.remove_item(picked_up_item)
                 player.get(picked_up_item)
-                picked_up_item.on_take()
-        
+                picked_up_item.on_take()        
         if action == 'drop':
             if item_name not in item or item[item_name] not in getattr(player, 'items'):
                 print("You can't lose what you don't have. Because you're not carrying that item.")
@@ -75,7 +81,9 @@ while True:
                 dropped_item = item[item_name]
                 player.drop(dropped_item)
                 player.location.store_item(dropped_item)
-                dropped_item.on_drop()                
+                dropped_item.on_drop()
+    else:
+        print("didn't work")             
 
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
