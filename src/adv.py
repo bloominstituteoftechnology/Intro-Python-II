@@ -1,8 +1,9 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
-room = {
+rooms = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
@@ -24,20 +25,24 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+rooms['outside'].n_to = rooms['foyer']
+rooms['foyer'].s_to = rooms['outside']
+rooms['foyer'].n_to = rooms['overlook']
+rooms['foyer'].e_to = rooms['narrow']
+rooms['overlook'].s_to = rooms['foyer']
+rooms['narrow'].w_to = rooms['foyer']
+rooms['narrow'].n_to = rooms['treasure']
+rooms['treasure'].s_to = rooms['narrow']
+
+# functionality for items in room
+
 
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player('Sam', 'outside')
 
 # Write a loop that:
 #
@@ -49,3 +54,31 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+
+    print('Welcome to X Adventures!')
+    print('type q to quit')
+
+    print()
+    print()
+    print('Current Location:', player.current_room)
+
+    user_Input = input("Make a move: ")
+
+    try:
+        if (user_Input == 'q'):
+            break
+        if (user_Input == 'n'):
+            pass
+        if (user_Input == 's'):
+            pass
+        if(user_Input == 'e'):
+            pass
+        if(user_Input == 'w'):
+            pass
+        else:
+            print("Not in Range")
+
+    except ValueError:
+        print('TBD')

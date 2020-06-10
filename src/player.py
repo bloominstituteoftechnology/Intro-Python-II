@@ -13,9 +13,3 @@ class Player:
 
     def pick_up_item(self, item):
         self.items.append(item)
-
-
-Sam = Player('Sam')
-Sam.pick_up_item('Gold')
-Sam.pick_up_item('sword')
-print(Sam)
