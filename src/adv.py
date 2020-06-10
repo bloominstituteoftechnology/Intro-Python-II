@@ -54,7 +54,7 @@ newplayer = Player("Rick", room['outside'])
 
 while True:
     print(newplayer.current_room)
-    choice = input("Choose a direction. (n,s,e,w): ")
+    choice = input("Choose a direction (n,s,e,w) or q to quit: ")
     try:
         if(choice == 'q'):
             break
@@ -62,6 +62,24 @@ while True:
             print("You must select a direction or q to quit")
             print(choice)
         elif(choice == 'n'):
-            print("north")
+            if(newplayer.current_room.n_to == 'none'):
+                print("There is no pathway to take in that direction")
+            else:
+                newplayer.current_room = newplayer.current_room.n_to
+        elif(choice == 's'):
+            if(newplayer.current_room.s_to == 'none'):
+                print("There is no pathway to take in that direction")
+            else:
+                newplayer.current_room = newplayer.current_room.s_to
+        elif(choice == 'e'):
+            if(newplayer.current_room.e_to == 'none'):
+                print("There is no pathway to take in that direction")
+            else:
+                newplayer.current_room = newplayer.current_room.e_to
+        elif(choice == 'w'):
+            if(newplayer.current_room.w_to == 'none'):
+                print("There is no pathway to take in that direction")
+            else:
+                newplayer.current_room = newplayer.current_room.w_to
     except ValueError:
         print("Please enter a valid entry")
