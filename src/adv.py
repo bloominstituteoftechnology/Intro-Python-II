@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 
+
 # Declare all the rooms
 
 room = {
@@ -34,7 +35,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+#text color
+RED = '\033[31m'
+YELLOW = '\033[33m'
+GREEN = '\033[32m'
+CYAN = '\033[36m'
+ENDC = '\033[m'
+#room text
+no_room = YELLOW + "There is no pathway to take in that direction" + ENDC
 # Main
 #
 
@@ -54,31 +62,31 @@ newplayer = Player("Rick", room['outside'])
 
 while True:
     print(newplayer.current_room)
-    choice = input("Choose a direction (n,s,e,w) or q to quit: ")
+    choice = input(CYAN + "Choose a direction (n,s,e,w) or q to quit: " + ENDC )
     try:
         if(choice == 'q'):
             break
         elif(choice != 'n' and choice != 's' and choice != 'e' and choice != 'w'):
-            print("You must select a direction or q to quit")
+            print(RED + "You must select a direction or q to quit" + ENDC)
             print(choice)
         elif(choice == 'n'):
             if(newplayer.current_room.n_to == 'none'):
-                print("There is no pathway to take in that direction")
+                print(no_room)
             else:
                 newplayer.current_room = newplayer.current_room.n_to
         elif(choice == 's'):
             if(newplayer.current_room.s_to == 'none'):
-                print("There is no pathway to take in that direction")
+                print(no_room)
             else:
                 newplayer.current_room = newplayer.current_room.s_to
         elif(choice == 'e'):
             if(newplayer.current_room.e_to == 'none'):
-                print("There is no pathway to take in that direction")
+                print(no_room)
             else:
                 newplayer.current_room = newplayer.current_room.e_to
         elif(choice == 'w'):
             if(newplayer.current_room.w_to == 'none'):
-                print("There is no pathway to take in that direction")
+                print(no_room)
             else:
                 newplayer.current_room = newplayer.current_room.w_to
     except ValueError:
