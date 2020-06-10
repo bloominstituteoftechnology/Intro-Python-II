@@ -34,12 +34,16 @@ rooms['narrow'].w_to = rooms['foyer']
 rooms['narrow'].n_to = rooms['treasure']
 rooms['treasure'].s_to = rooms['narrow']
 
-# functionality for items in room
 
+
+def get_room_items(rooms):
+    for room in rooms:
+    print(rooms[room])
 
 #
 # Main
 #
+
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player('Sam', 'outside')
