@@ -1,4 +1,7 @@
+import code
+
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -33,9 +36,35 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
 #
 # Main
 #
+
+directions = ['n', 's', 'e', 'w']
+p = Player("Ryan", room ['outside'])
+
+print(f'Welcome {p.name}!\nExplore the map by moving North(n), South(s), East(e), or West(w)\nTo exit the game, enter q\n')
+print(f'You are in the {p.current_room.name} - {p.current_room.description}\n')
+
+while True:
+    selection = input('Where to? ').lower().split(' ')
+    
+    if selection == 'q':
+        print('Thanks for playing!') 
+        break
+    
+    try:
+        if selection in directions:
+            try:
+                p.move_room(selection)
+                print(f'The current room is {p.current_room.name} - {p.current_room.description}')
+            except AttributeError:
+                print('No room there, try another direction')
+        else:
+            print('Movement not allowed! Please enter a direction (n, s, e, w) to move around the map')
+    except KeyError:
+        print('Unknown territory! Please enter a valid direction or quit the game')-4
 
 # Make a new player object that is currently in the 'outside' room.
 
