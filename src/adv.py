@@ -67,8 +67,9 @@ def next_move(direction_input):
     if possible_room != None:
         player.current_room = possible_room
     else:
-        print (f"there is no available room to the {directions[direction_input][1]}")  
-        return True       
+        print (f"""there is no available room to the {directions[direction_input][1]}""")  
+        
+    return True       
 
 
 continue_adventure = True   
@@ -82,6 +83,7 @@ while continue_adventure:
       e - East
       s - South
       w - West
+      i, inventory - inventory
       q, quit - Quit
       """).split('')
 
