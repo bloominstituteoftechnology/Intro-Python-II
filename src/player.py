@@ -16,7 +16,25 @@ class Player:
     
     def move_room(self, direction):
         if getattr(self.current_room, f'{direction}_to'):
-            print(f'The current room is {self.current_room}')
             self.current_room = getattr(self.current_room, f'{direction}_to')
+    
+    def print_items(self):
+        if len(self.items) > 0:
+            print('Your current items:\n')
+            for i in self.items:
+                print(f'{i.name} - {i.description}')
         else:
-            print('No room there, try another direction')
+            print('You have no items - explore the map to find some and add them to your collection!')
+
+    def search_items(self, item):
+        for i in self.items:
+            if i.name.lower() == item:
+                return i
+            else:   
+                return None
+
+    def add_item(self, item):
+        self.items.append(item)
+
+    def drop_item(self, item):
+        self.items.remove(item)

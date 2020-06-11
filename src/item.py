@@ -4,11 +4,8 @@ class Item:
         self.name = name
         self.description = description
     
-    @property
-    def name(self):
-        return self.name
+    def on_take(self, item):
+        print(f'You have successfully picked up {self.name}')
 
-    @name.setter
-    def name(self, n):
-        if " " in n:
-            raise Exception('Name must be one word') 
+    def on_drop(self, item):
+        print(f'You have dropped {self.name}')
