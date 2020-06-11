@@ -9,6 +9,12 @@ class Room:
         self.s_to = None
         self.w_to = None
         self.e_to = None
-        
+
+
+    def get_name(self):
+        return f"{self.name}"
+
+    def get_description(self):
+        return f"{self.description}"      
         
         
