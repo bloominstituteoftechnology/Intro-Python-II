@@ -24,7 +24,7 @@ earlier adventurers. The only exit is to the south."""),
 
 items = {
     'torch': Item('torch', 'A stick with fire, good for light'),
-    'warhammer': Item('warhammer', 'Simple but sturdy and sharp')
+    'warhammer': Item('warhammer', 'Simple but sturdy and sharp'),
     'cloak': Item('cloak', 'A worn cloak that remains intact and warm')
 
 }
