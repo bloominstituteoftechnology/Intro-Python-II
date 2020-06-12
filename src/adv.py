@@ -1,4 +1,7 @@
+import sys
 from room import Room
+from player import Player
+from player import player_info
 
 # Declare all the rooms
 
@@ -19,6 +22,26 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+   'hall': Room("A hallway", """Dim light filters in from the south. Dusty
+passages run north and east.""" ),
+
+   'study': Room("A study", """Dim light filters in from the south. Dusty
+passages run north and east.""" ),
+
+   'stairs': Room("Some stairs, don't fall", """Dim light filters in from the south. Dusty
+passages run north and east."""),
+
+   'kitchen': Room("A kitchen", """Dim light filters in from the south. Dusty
+passages run north and east.""" ),
+
+   'bathroom': Room("A bathroom", """Dim light filters in from the south. Dusty
+passages run north and east."""),
+
+   'bedroom': Room("A bedroom", """Dim light filters in from the south. Dusty
+passages run north and east."""),
+
+
 }
 
 #foyer
@@ -56,18 +79,6 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-player_info = {
-
-    name:"Player"
-    'inventory': {{'slot_1': empty},
-                  {'slot_2': empty},
-                  {'slot_3': empty},
-                  {'slot_4': empty},
-                  {'slot_5': empty}}
-    'coordinates': {{'x': 0}
-                   {'y': 0}}
-
-}
 
 # Make a new player object that is currently in the 'outside' room.
 
@@ -87,12 +98,24 @@ Player("outside", player_info)
 trapped = True
 
 while trapped:
+
+    movement = input("Enter n, s, w, e, or q to quit:")
+
+    print(movement)
     
-    switch(movement) {
-        case 'n':
-        case 's':
-        case 'w':
-        case 'e':
-        case 'q':
-            exit
-    }
+    def switch(movement) :
+        if movement == 'n' or movement=='N':
+            print("move north")
+        elif movement =='s' or movement=='S':
+            print("move south")
+        elif movement == 'w' or movement=='W':
+            print("move west")
+        elif movement == 'e' or movement=='E':
+            print("move east")
+        elif movement == 'q' or movement=='Q':
+            trapped = False
+            sys.exit()
+        else:
+            print("Please be sure to enter n, s, e, w, or q")
+
+    switch(movement)
