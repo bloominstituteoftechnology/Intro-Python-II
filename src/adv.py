@@ -23,8 +23,10 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 items = {
-    'torch': Item('torch', 'a simple torch'),
-    'sword': Item('sword', 'such a very sharp sword')
+    'torch': Item('torch', 'A stick with fire, good for light'),
+    'warhammer': Item('warhammer', 'Simple but sturdy and sharp')
+    'cloak': Item('cloak', 'A worn cloak that remains intact and warm')
+
 }
 
 # Link rooms together
@@ -40,7 +42,8 @@ room['treasure'].s_to = 'narrow'
 
 # Place room items
 
-room['foyer'].items = [items['torch'], items['sword']]
+room['foyer'].items = [items['torch'], items['warhammer']]
+room['overlook'].items = [items['cloak']]
 
 #
 # Main
@@ -95,7 +98,7 @@ while player_input != 'q':
                 print(f"You picked up the {input_arr[1]}")
                 player_input = input("Please enter a command:")
             else:
-                print(f"There is no {input_arr[1]} in this room ya goober")
+                print(f"There is no {input_arr[1]} here")
                 player_input = input("Please enter a command:")
         elif input_arr[0] == 'drop':
             if jack.dropped_item(input_arr[1]):
@@ -106,5 +109,5 @@ while player_input != 'q':
                 print(f"You don't have a {input_arr[1]} to drop!")
                 player_input = input("Please enter a command:")
         else:
-            print('Please enter a valid two word command (ex. get torch, drop drawers)')
+            print('Commands must be phrased as action/object eg: get torch or drop warhammer')
             player_input = input("Please enter a command:")
