@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,7 +35,12 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+# Room Items
+room['outside'].items = [Item("Magic Sword", "Sword will melt your enemies")]
+room['foyer'].items = [Item("Glowing Orb", "Lights up the darkest of rooms")]
+room['overlook'].items = [Item("Shield", "Protects against lightning")]
+room['narrow'].items = [Item("Hat", "Instant wisdom!")]
+room['treasure'].items = [Item("Golden Chest", "Grants infinite wealth")]
 # Main
 #
 
@@ -59,7 +65,7 @@ def next_move(direction_input):
         "w":("w_to", "west"),
     }
 
-    if direction_input.lower() == 'q' or next_move.lower() == 'quit':
+    if direction_input.lower() == 'q' or direction_input.lower() == 'quit':
         return False
 
     possible_room = player.current_room.__getattribute__(directions[direction_input][0])
@@ -68,7 +74,7 @@ def next_move(direction_input):
         player.current_room = possible_room
     else:
         print (f"""there is no available room to the {directions[direction_input][1]}""")  
-        
+        print (f"this is possible room {possible_room}")
     return True       
 
 
@@ -85,9 +91,19 @@ while continue_adventure:
       w - West
       i, inventory - inventory
       q, quit - Quit
-      """).split('')
+      """)
 
+    if len(selection) > 1:
+        if selection[0] == "take":
+            player.take_item(selection[1]) 
+        elif selection[0]  == "drop":
+            player.drop_item(selection[1])    
 
+    else:
+        if selection[0] == "i" or selection[0] == "inventory":
+            player.show_inventory()  
+        else:
+            continue_adventure = next_move(selection[0])              
 
     
 
