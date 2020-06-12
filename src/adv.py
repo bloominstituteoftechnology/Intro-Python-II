@@ -1,7 +1,9 @@
 from room import Room
+from player import Player
+from item import Item
+
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -39,6 +41,17 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+lantern = Item('lantern', 'The light will guide you')
+sword = Item('Sword','A dusty sword is better than no sword')
+coins = Item('coins', 'oooh you have found some gold coins')
+
+player = Player(input("""Please tell me your name:"""), room['outside'])
+print(f'Thank you are you ready to begin, {player.name}')
+print(player.current_room.description)
+
+room['outside'].items.append(lantern)
+room['foyer'].items.append(sword)
+room['narrow'].items.append(coins)
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +62,42 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+
+game = 1
+
+while True:
+
+    command = input('Where would you like to move? choose from the following n for north, e for east s for south w for west, i for inventory, type take item name to take item or drop item name to drop and item or q (quit)')
+    if command == 'n':
+        player.move(command)
+
+    elif command == 's':
+        player.move(command)
+
+    elif command == 'e':
+        player.move(command)
+
+    elif command == 'w':
+        player.move(command)
+
+    elif command == 'i':
+        player.print_invent()
+
+    elif command.startswith('take'):
+        item = command.split(' ')[1]
+        player.take_item(item)
+        player.print_invent()
+    
+    elif command.startswith('drop'):
+        item = command.split(' ')[1]
+        player.drop_item(item)
+        player.print_invent()
+
+    elif command == 'q':
+
+        print(f'Goodbye, {player.name}')
+        break ## break exits the loop and sends it back to the start without break when we quit it will just say goodbye but loop back to the start
+    else:
+        print("You can't do that!")
