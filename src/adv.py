@@ -21,6 +21,25 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+#foyer
+#bathroom
+#bedroom
+#study
+#kitchen
+
+#bathroom->bedroom
+#bedroom->hall
+#study->hall
+#hall->bedroom
+#hall->study
+#hall->stairs
+#stairs->foyer
+#foyer->kitchen
+#kitchen->foyer
+#foyer->door
+
+# I guess I should number doors....?
+
 
 # Link rooms together
 
@@ -37,7 +56,22 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+player_info = {
+
+    name:"Player"
+    'inventory': {{'slot_1': empty},
+                  {'slot_2': empty},
+                  {'slot_3': empty},
+                  {'slot_4': empty},
+                  {'slot_5': empty}}
+    'coordinates': {{'x': 0}
+                   {'y': 0}}
+
+}
+
 # Make a new player object that is currently in the 'outside' room.
+
+Player("outside", player_info)
 
 # Write a loop that:
 #
@@ -49,3 +83,16 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+trapped = True
+
+while trapped:
+    
+    switch(movement) {
+        case 'n':
+        case 's':
+        case 'w':
+        case 'e':
+        case 'q':
+            exit
+    }
