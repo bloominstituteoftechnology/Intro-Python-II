@@ -40,7 +40,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 # player
-player_1 = Player('Robin', room['outside'])
+player = Player('Robin', room['outside'])
 
 print(room['outside'])
 
@@ -58,28 +58,18 @@ print(room['outside'])
 direction = input(
     'Where do you want to go \n  N, S, E, W, Q (please use single letter only Q is to quit)').lower().strip()
 
-
-flag = True
-
-
-while flag:
-    current_room = player_1.current_room
-    print("Your current location:", player_1.current_room.name)
-    print(player_1.current_room.description)
-    direction = input(
-        'Where do you want to go \n  N, S, E, W, Q (please use single letter only Q is to quit)').lower()
-    if direction == 'n' and player_1.current_room != None:
-        player_1.current_room = current_room.n_to
-        print('GOING north')
-    elif direction == 's' and player_1.current_room.s_to != None:
-        player_1.current_room = current_room.s_to
-        print('HEADING south')
-    elif direction == 'e' and player_1.current_room.e_to != None:
-        player_1.current_room = current_room.e_to
-        print('MOVING east')
-    elif direction == 'w' and player_1.current_room.w_to != None:
-        player_1.current_room = current_room.w_to
-        print('TRAVELING west')
-    elif direction == 'q':
-        print('Let us do this again')
-        break
+while True:
+    print(player.current_room)
+    cmd = input("-> ").lower()
+    if cmd in ["n", "e", "s", "w"]:
+        current_room = player.current_room
+        next_room = getattr(current_room, f"{cmd}_to")
+        if next_room is not None:
+            player.current_room = next_room
+        else:
+            print("Nothing there")
+    elif cmd == "q":
+        print("leaving already?")
+        exit()
+    else:
+        print("Let us do this again")
