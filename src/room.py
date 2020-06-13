@@ -13,7 +13,12 @@ class Room:
         self.w_to = ''
 
     def __str__(self):
-        return f'Location: {self.name} \n \n Hint: {self.description} \n Items in this locations: {self.items_in_room}.'
+        item_names = [str(item.name) for item in self.items_in_room]
+        return f'Location: {self.name} \n Hint: {self.description} \n. Items in sight: {item_names}'
 
     def add_room_item(self, item):
         self.items_in_room.append(item)
+
+    def remove_room_item(self, item):
+        self.items_in_room.remove(item)
+

@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -22,6 +23,16 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# key = Item('key', "Old Key")
+# old_latern = Item(
+#     'old latern', "A latern sits on an old table in the foyer, cobb webs hang off it. Doesn't seem like some one has been in here in a while")
+
+item = {
+    'key': Item('key', "Old Key"),
+    'latern': Item('latern', 'An old latern covered in dust & cob webs. The room illuminates as the item is picked up!'),
+    'random': Item('random', 'iuhklciuyaghdsukfh')
+}
+
 
 # Link rooms together
 
@@ -34,34 +45,28 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
 
-# Make a new player object that is currently in the 'outside' room.
+# PLAYER DECLARATION
 new_player = input('Give your player a name: ')
 player = Player(new_player, room['outside'])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+
+# Room Item Declarations
+room['outside'].add_room_item(item['key'])
+room['outside'].add_room_item(item['random'])
+room['foyer'].add_room_item(item['latern'])
 
 command = ''
+
 
 while True:
     print(player)
     command = input(
-        ' \n \n Insert q to quit, \n Use n, s, e, w to move through out the map \n Make a move: ').split(" ")
-    # print('INSERTED COMMAND:', command)
+        ' \n \n Insert q to quit, \n Use n, s, e, w to move through out the map \n To pick up an item type: grab, followed by the item name in sight! \n \n To drop an item type: drop, followed by the item in your inventory. \n Make a move: ').split(" ")
 
     new_room = getattr(player.current_room, command[0].lower() + "_to", None)
+    player_inventory = [item for item in player.items]
+
     if(len(command) == 1):
         if new_room:
             player.current_room = new_room
@@ -70,5 +75,25 @@ while True:
         else:
             print(' \n \n !!!INVALID COMMAND, PLEASE TRY AGAIN!!!')
 
-    elif(len(command == 2)):
-        pass
+    elif(len(command) == 2 and command[0].lower() == 'grab'):
+        item_choice = command[1].lower()
+        item_name = [item.name
+                     for item in player.current_room.items_in_room]
+
+        if item_choice in item_name:
+            player.pick_up_item(item[item_choice].name)
+            player.current_room.remove_room_item(item[item_choice])
+            print(f'\n \n You have picked up a {item_choice}!')
+            # print('ITEMS:', str(command[1].lower()))
+        else:
+            print(
+                f' \n \n Sorry but {item_choice} does not exist in {player.current_room}')
+
+    elif(len(command) == 2 and command[0].lower() == 'drop'):
+        item_choice = command[1].lower()
+        if item_choice in player_inventory:
+            player.drop_item(item[item_choice].name)
+            player.current_room.add_room_item(item[item_choice])
+        else:
+            print(
+                f' \n \n SORRY, BUT {item_choice} DOES NOT EXIST IN YOUR INVENTORY \n \n')
