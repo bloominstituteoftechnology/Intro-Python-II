@@ -10,10 +10,11 @@ class Room:
         self.e_to = None
         self.w_to = None
 
-        
-
     def __str__(self):
         return f"You are in the {self.name}. {self.description}!"
+
+    def __repr__(self):
+        return f"self.name" = {self.name} - self.description = {self.description}
         
 
 
