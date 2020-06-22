@@ -6,6 +6,12 @@ name = "pypi"
 [packages]
 
 [dev-packages]
+pylint = "*"
+black = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3"
+
+[pipenv]
+allow_prereleases = true
