@@ -1,4 +1,6 @@
 from room import Room
+from player import player
+from item import Item
 
 # Declare all the rooms
 
@@ -21,6 +23,15 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Declare the items
+
+items = {
+    "broom": Item("Magic Broomstick (broom)", "🧹 The Magic Broomstick can fly quickly in any direction and hover."),
+    "candlestick": Item("Golden Candlestick (candlestick)", "🕯️ The Casanova of all candelabras. He is suave and a gracious host."),
+    "sword": Item("Andúril (sword)", "⚔️ The reforged sword from the shards of Narsil."),
+    "map": Item("Treasure Map (map)", "🗺️ Follow the directions to get to the treasure."),
+    "diamond": Item("Diamond (diamond)", "💎Beautiful!")
+}
 
 # Link rooms together
 
@@ -32,6 +43,12 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+# Link items to rooms
+room["outside"].items = [items['map']]
+room["foyer"].items = [items['broom'], items['candlestick']]
+room["overlook"].items = [items['sword']]
+room["narrow"].items = [items['diamond']]
 
 #
 # Main
@@ -49,3 +66,74 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+class Quit(Exception):
+    pass
+
+# Accept inputs from the player
+
+
+def player_input(player):
+    player_input = input("🔮 Enter a command: ").lower()
+    command = player_input.split()[0]
+
+    if len(player_input.split()) == 2:
+        game_item = player_input.split()[1]
+
+    if command in ("quit", "q"):
+        print("Thanks for playing 🙌🏼")
+        raise Quit
+    elif command in ("n", "s", "e", "w", "north", "south", "east", "west"):
+        player.move(command[0] + "_to")
+        print(player.current_room)
+    elif command in ("take", "drop", "look"):
+        try:
+            item = items[game_item]
+
+            if command == "take":
+                if item in player.current_room.items:
+                    player.current_room.drop_item(items[game_item])
+                    player.take_item(items[game_item])
+                    print(items[game_item].pick_up())
+                else:
+                    print("\nItem is not in this room.")
+            elif command == "drop":
+                if item in player.items:
+                    player.current_room.take_item(items[game_item])
+                    player.drop_item(items[game_item])
+                    print(items[game_item].drop_it())
+                else:
+                    print("\nYou do not have this item.")
+            elif command == "look":
+                if item in player.items:
+                    print(item.look())
+                else:
+                    print("\nThis item is not in your inventory.")
+        except KeyError:
+            print("\nThis is not an item in this game.")
+    elif command in ("i", "inventory"):
+        print(f'\nYour inventory: {player.inventory}')
+    else:
+        print("💀 Please enter a valid command (n, s, e, w, i, take, drop, look).\n")
+        return command
+
+# Main method for the game
+
+
+def game():
+    print("👋🏼 Welcome to The Jungle 🌳 ")
+
+    player_name = input("What would you like your name to be? ")
+    player = Player(player_name, room["outside"])
+    print("\n")
+    print(player.current_room)
+
+    try:
+        while True:
+            player_input(player)
+    except Quit:
+        pass
+
+
+# Start game
+game()
