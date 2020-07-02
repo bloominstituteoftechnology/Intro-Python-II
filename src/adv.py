@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -33,19 +35,54 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+item = {
+    'stick': Item('stick', 'It\'s sharp at both ends.')
+}
+# stick = Item('stick', 'It\'s sharp at both ends.')
 
 # Make a new player object that is currently in the 'outside' room.
+p = Player(room['outside'])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+p.get_stuff(item['stick'])
+
+print('Welcome to life. Please make a decision.')
+
+valid_directions = ('n', 's', 'e', 'w')
+
+def parse(s):
+    l = s.split()
+    if len(l) == 2:
+        try:
+            print(l)
+            print(f'p.{l[0]}_stuff(item[\'{l[1]}\'])')
+            
+            print(a)
+            print('got past 1')
+            p.a(item[l[1]])
+            print('got past 2')
+        except:
+            print('huh?')
+    else: 
+        print('That don\'t make no sense.')
+
+
+# Game Play Loop
+while True:
+    print(p.current_room.name)
+    print(p.current_room.description)
+    print('What will you do?')
+    user = input("[n] North  [s] South  [e] East  [w] West  [i] Inventory [q] Quit\n")
+    if user == 'q':
+        print('Goodbye')
+        exit(0)
+    elif user in valid_directions:
+        p.move(user)
+    elif user == 'i':
+        print('You have: ')
+        for obj in p.stuff:
+            print(getattr(obj, 'name'))
+        action = input('Enter verb noun: \n')
+        parse(action)
+    else:
+        print("You must be confused by the limitations of this world. Try to find your way again.")
+        # user = input("[n] North  [s] South  [e] East  [w] West  [i] Inventory [q] Quit\n")
