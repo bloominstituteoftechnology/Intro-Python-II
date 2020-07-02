@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -33,12 +35,18 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+# Room Items
+room['outside'].items = [Item("Magic Sword", "Sword will melt your enemies")]
+room['foyer'].items = [Item("Glowing Orb", "Lights up the darkest of rooms")]
+room['overlook'].items = [Item("Shield", "Protects against lightning")]
+room['narrow'].items = [Item("Hat", "Instant wisdom!")]
+room['treasure'].items = [Item("Golden Chest", "Grants infinite wealth")]
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+player_name = input("Enter your characters name: ")
+player = Player(player_name, room["outside"])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +57,53 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+def next_move(direction_input):
+    directions = {
+        "n":("n_to","north"),
+        "e":("e_to", "east"),
+        "s":("s_to", "south"),
+        "w":("w_to", "west"),
+    }
+
+    if direction_input.lower() == 'q' or direction_input.lower() == 'quit':
+        return False
+
+    possible_room = player.current_room.__getattribute__(directions[direction_input][0])
+
+    if possible_room != None:
+        player.current_room = possible_room
+    else:
+        print (f"""there is no available room to the {directions[direction_input][1]}""")  
+        print (f"this is possible room {possible_room}")
+    return True       
+
+
+continue_adventure = True   
+
+while continue_adventure:
+    print(player)
+    print(player.current_room)
+    selection = input(
+      """Please select a direction that you would like to go in 
+      n - North
+      e - East
+      s - South
+      w - West
+      i, inventory - inventory
+      q, quit - Quit
+      """)
+
+    if len(selection) > 1:
+        if selection[0] == "take":
+            player.take_item(selection[1]) 
+        elif selection[0]  == "drop":
+            player.drop_item(selection[1])    
+
+    else:
+        if selection[0] == "i" or selection[0] == "inventory":
+            player.show_inventory()  
+        else:
+            continue_adventure = next_move(selection[0])              
+
+    
+
