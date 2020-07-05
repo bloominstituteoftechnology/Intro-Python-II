@@ -1,25 +1,40 @@
+import random
 from player import Player
 from room import Room
+from item import Item
 
 # Declare all the rooms
 
+item = {
+    'sword': Item('sword', 'a worn down blade'),
+
+    'ruby': Item('ruby', 'a gem that inspires greed and fortune, worth gold'),
+
+    'dung': Item('dung', 'a pile of dung, not sure why you would want to pick it up'),
+
+    'empty': Item('nothing', 'there are no items here')
+}
+
+print(random.choice(list(item.values())))
+
+
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", item['empty']),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", item['dung']),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", item['sword']),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", item['dung']),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", item['dung']),
 }
 
 print(room['outside'])
@@ -82,6 +97,8 @@ while not action == 9:
         if action == 1:
             location = room['outside'].n_to
             next_step()
+        else:
+            wrong_way()
 
     elif location == room['foyer']:
 
@@ -96,11 +113,15 @@ while not action == 9:
         elif action == 1:
             location = room['foyer'].n_to
             next_step()
+        else:
+            wrong_way()
 
     elif location == room['overlook']:
         if action == 2:
             location = room['overlook'].s_to
             next_step()
+        else:
+            wrong_way()
 
     elif location == room['narrow']:
         if action == 4:
@@ -109,14 +130,13 @@ while not action == 9:
         elif action == 1:
             location = room['narrow'].n_to
             next_step()
+        else:
+            wrong_way()
 
     elif location == room['treasure']:
         if action == 2:
             location = room['treasure'].s_to
             next_step()
-
-    else:
-        wrong_way()
 
 
 # Write a loop that:
