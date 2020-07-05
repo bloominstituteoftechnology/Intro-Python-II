@@ -15,26 +15,26 @@ item = {
     'empty': Item('nothing', 'there are no items here')
 }
 
-print(random.choice(list(item.values())))
+random_item = random.choice(list(item.values()))
 
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", item['empty']),
+                     "North of you, the cave mount beckons", random_item),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", item['dung']),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", item['sword']),
+the distance, but there is no way across the chasm.""", random_item),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", item['dung']),
+to north. The smell of gold permeates the air.""", random_item),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", item['dung']),
+earlier adventurers. The only exit is to the south.""", random_item),
 }
 
 print(room['outside'])
