@@ -1,3 +1,4 @@
+from player import Player
 from room import Room
 
 # Declare all the rooms
@@ -21,6 +22,8 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+print(room['outside'])
+
 
 # Link rooms together
 
@@ -38,6 +41,83 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+
+print('welcome to gay adventureland 3.0!')
+
+player_name = input("what is your name?: ")
+
+location = room['outside']
+
+player = Player(player_name, location)
+
+
+print(f"you are {player_name}, the gay barbarian {location}")
+
+print("where would you like to go next?")
+
+
+def choose_action():
+    return int(input("[1] north  [2] south   [3] east  [4] west    [9] Quit\n"))
+
+
+action = choose_action()
+
+
+def next_step():
+    print(location)
+    print('where would you like to go next?')
+    global action
+    action = choose_action()
+
+
+def wrong_way():
+    print('that direction is blocked, try again')
+    global action
+    action = choose_action()
+
+
+while not action == 9:
+    if location == room['outside']:
+        if action == 1:
+            location = room['outside'].n_to
+            next_step()
+
+    elif location == room['foyer']:
+
+        if action == 2:
+            location = room['foyer'].s_to
+            next_step()
+
+        elif action == 3:
+            location = room['foyer'].e_to
+            next_step()
+
+        elif action == 1:
+            location = room['foyer'].n_to
+            next_step()
+
+    elif location == room['overlook']:
+        if action == 2:
+            location = room['overlook'].s_to
+            next_step()
+
+    elif location == room['narrow']:
+        if action == 4:
+            location = room['narrow'].w_to
+            next_step()
+        elif action == 1:
+            location = room['narrow'].n_to
+            next_step()
+
+    elif location == room['treasure']:
+        if action == 2:
+            location = room['treasure'].s_to
+            next_step()
+
+    else:
+        wrong_way()
+
 
 # Write a loop that:
 #
