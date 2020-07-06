@@ -1,8 +1,6 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
 
-from item import Item
-
 
 class Room:
     def __init__(self, name, description, items):
@@ -10,5 +8,8 @@ class Room:
         self.description = description
         self.items = items
 
+    def addItem(self, i):
+        self.items.append(i)
+
     def __str__(self):
-        return f"you find yourself at {self.name}, {self.description}"
+        return f"you find yourself at the {self.name}, {self.description}, in it lies {self.items}"
