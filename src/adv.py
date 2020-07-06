@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -49,3 +50,55 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+
+
+
+ def start_game():
+    name=input('Enter your name here: ')
+    player_1=Player(name,room['outside'])
+    print(f'Welcome to Treasure Hunting,{name}! Press w,s,d,a,q to go north,south,east,west or to quit respectively')
+    while True:
+        cmd=input(f'You\'re in {player_1.location.name}.{player_1.location.description} ')
+        if cmd == 'w':
+            player_1.location=room['outside'].n_to
+            while True:
+                cmd=input(f'You\'re in {player_1.location.name}.{player_1.location.description} ')
+                if cmd == 'w':
+                    player_1.location=room['foyer'].n_to
+                    while True:
+                        cmd=input(f'You\'re in {player_1.location.name}.{player_1.location.description}')
+                        if cmd == 's':  
+                            player_1.location=room['overlook'].s_to
+                            break
+                        elif cmd == 'q':
+                            quit()
+                elif cmd == 's':
+                    player_1.location=room['foyer'].s_to
+                    break
+                elif cmd == 'd':
+                    player_1.location=room['foyer'].e_to
+                    while True:
+                        cmd=input(f'You\'re in {player_1.location.name}.{player_1.location.description}')
+                        if cmd == 'a':  
+                            player_1.location=room['narrow'].w_to
+                            break
+                        elif cmd == 'w':
+                            player_1.location=room['narrow'].n_to
+                            while True:
+                                cmd=input(f'You\'re in {player_1.location.name}.{player_1.location.description} ')
+                                if cmd == 's':
+                                    player_1.location=room['treasure'].s_to
+                                    break
+                                elif cmd == 'q':
+                                    quit()
+                        elif cmd == 'q':
+                            quit()
+                elif cmd == 'q':
+                    quit()
+        elif cmd == 'q':
+            break
+
+start_game()
+
