@@ -7,13 +7,15 @@ class Player:
         self.current_room = current_room
         self.items = items
 
-    def pickup_item(self, item):
-        self.items.append(item)
+    def pickup_item(self, item_list, item):
+        for i in range(0, len(item_list)):
+            if item_list[i].item_name == item:
+                self.items.append(item_list[i])
 
     def drop_item(self, item):
-        for i in range(0, len(self.items)):
-            if self.items[i].item_name == item:
-                self.items.remove(self.items[i])
+        for i in self.items:
+            if i.item_name == item:
+                self.items.remove(i)
 
     def open_inventory(self):
         for i in self.items:

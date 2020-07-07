@@ -22,24 +22,22 @@ def generate_item():
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", generate_item()),
+                     "North of you, the cave mount beckons", [generate_item(), generate_item()]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east""", generate_item()),
+passages run north and east""", [generate_item()]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm""", generate_item()),
+the distance, but there is no way across the chasm""", [generate_item()]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air""", generate_item()),
+to north. The smell of gold permeates the air""", [generate_item()]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south""", generate_item()),
+earlier adventurers. The only exit is to the south""", [generate_item()]),
 }
-
-print(room['outside'])
 
 
 # Link rooms together
@@ -60,7 +58,7 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 
 
-print('welcome to gay adventureland 3.0!')
+print('welcome to adventureland 3.0!')
 
 player_name = input("what is your name?: ")
 
@@ -71,7 +69,7 @@ inventory = []
 player = Player(player_name, location, inventory)
 
 
-print(f"you are {player_name}, the gay barbarian {location}")
+print(f"you are {player_name}, the barbarian {location}")
 
 print("what would you like to do next?")
 
@@ -97,7 +95,7 @@ def drop(item, current_room):
     for i in range(0, len(player.items)):
         if item == player.items[i].item_name:
             global room
-            room[current_room].items = player.items[i]
+            room[current_room].items.append(player.items[i])
 
 
 def next_step():
@@ -119,11 +117,12 @@ while not action == 9:
             location = room['outside'].n_to
             next_step()
         elif action == 5:
-            print('you picked up a {x}'.format(
-                x=room['outside'].items.item_name))
+            pickup = input('what item would you like to pick up?')
 
-            player.pickup_item(room['outside'].items)
-            room['outside'].items = 'nothing of interest'
+            player.pickup_item(room['outside'].items, pickup)
+            print(f'picked up {pickup}')
+            room['outside'].remove_item(pickup)
+
             action = choose_action()
         elif action == 6:
             open_inventory()
@@ -153,10 +152,11 @@ while not action == 9:
             next_step()
 
         elif action == 5:
-            print('you picked up a {x}'.format(
-                x=room['foyer'].items.item_name))
-            player.pickup_item(room['foyer'].items)
-            room['foyer'].items = 'nothing of interest'
+            pickup = input('what item would you like to pick up?')
+
+            player.pickup_item(room['foyer'].items, pickup)
+            print(f'picked up {pickup}')
+            room['foyer'].remove_item(pickup)
             action = choose_action()
 
         elif action == 6:
@@ -176,10 +176,12 @@ while not action == 9:
             next_step()
 
         elif action == 5:
-            print('you picked up a {x}'.format(
-                x=room['overlook'].items.item_name))
-            player.pickup_item(room['overlook'].items)
-            room['overlook'].items = 'nothing of interest'
+            pickup = input('what item would you like to pick up?')
+
+            player.pickup_item(room['overlook'].items, pickup)
+            print(f'picked up {pickup}')
+            room['overlook'].remove_item(pickup)
+
             action = choose_action()
 
         elif action == 6:
@@ -202,11 +204,11 @@ while not action == 9:
             next_step()
 
         elif action == 5:
-            print('you picked up a {x}'.format(
-                x=room['foyer'].items.item_name))
-            player.pickup_item(room['narrow'].items)
-            room['narrow'].items = 'nothing of interest'
-            action = choose_action()
+            pickup = input('what item would you like to pick up?')
+
+            player.pickup_item(room['narrow'].items, pickup)
+            print(f'picked up {pickup}')
+            room['narrow'].remove_item(pickup)
 
         elif action == 6:
             open_inventory()
@@ -228,11 +230,11 @@ while not action == 9:
             player.drop_item(discard)
             action = choose_action()
         elif action == 5:
-            print('you picked up a {x}'.format(
-                x=room['treasure'].items.item_name))
-            player.pickup_item(room['treasure'].items)
-            room['treasure'].items = 'nothing of interest'
-            action = choose_action()
+            pickup = input('what item would you like to pick up?')
+
+            player.pickup_item(room['treasure'].items, pickup)
+            print(f'picked up {pickup}')
+            room['treasure'].remove_item(pickup)
 
         elif action == 6:
             open_inventory()
