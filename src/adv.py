@@ -21,7 +21,7 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-print(room['outside'])
+# print(room['outside'])
 
 # Link rooms together
 
@@ -40,6 +40,9 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player_name = input("Enter Character's Name: ")
+player = Player(player_name, room["outside"])
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -50,3 +53,24 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def next_move(direction_input):
+    directions = {
+        "n":("n_to", "north"),
+        "s":("s_to", "south"),
+        "e":("e_to", "east"),
+        "w":("w_to", "west")
+    }
+
+    if direction_input.lower() == "q" or next_move.lower() == "quit":
+        return False
+
+    possible_room = player.current_room. __getattribute__(directions[direction_input] [0])
+
+    possible_room = player.current_room.__getattribute__(directions[direction_input] [0])
+
+    if possible_room != None:
+        player.current_room = possible_room
+    else:
+        print (f"No room to the {directions[direction_input] [1]}")
+        return True

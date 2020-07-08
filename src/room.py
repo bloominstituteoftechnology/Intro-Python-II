@@ -5,6 +5,10 @@ class Room:
   def __init__(self, name, description):
     self.name = name
     self.description = description
+    self.n_to = None
+    self.s_to = None
+    self.e_to = None
+    self.w_to = None
 
   def __str__(self):
-    return f"you find yourself at {self.name}, {self.description}"
+    return f"you find {self.name}, yourself at  {self.description}"
