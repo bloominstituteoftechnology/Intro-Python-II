@@ -2,7 +2,10 @@ from room import Room
 from player import Player
 import sys
 # Declare all the rooms
+from colorama import init
+from colorama import Fore, Back, Style
 
+init()
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -54,8 +57,9 @@ player = Player(input('Adventurer! What is your name?: '), room['outside'])
 
 ## Welcome the player!
 def player_welcome():
-    print(f'Welcome {player.name}\nExploring the map is easy! Just remember to (n)ever, (e)at, (s)oggy, (w)heaties, and you should be fine.\nIf you desire to leave for any reason, enter "q".')
+    print(f'{Fore.GREEN}Welcome {player.name}{Style.RESET_ALL}\n{Fore.YELLOW}Exploring the map is easy! Just remember to (n)ever, (e)at, (s)oggy, (w)heaties, and you should be fine.\nIf you desire to leave for any reason,{Style.RESET_ALL}{Fore.RED} enter "q".{Style.RESET_ALL}')
     print(f'You stand in the {player.current_room.name}\n{player.current_room.description}')
+    ## need if playname is set, then don't run this function
 
 ## function for commands the player can input 
 def select_command():
@@ -63,9 +67,13 @@ def select_command():
     if player_input == 'q': 
         player_quit()
     elif player_input == 'n' or player_input == 'e' or player_input == 's' or player_input == 'w':
-        player.movePlayer(player_input) 
-        print(f'{player.current_room.name}\n{player.current_room.description}')
-
+        player.movePlayer(player_input)
+        print()
+        print(f'Current Room: {player.current_room.name}\n{player.current_room.description}')
+        print()
+    else:
+        print(f'{Fore.RED}Please use n, e, s, w{Style.RESET_ALL}')
+        
 ## function to quit
 def player_quit():
     print('Are you sure you want to leave? There is stuff to find!')
@@ -77,8 +85,9 @@ def player_quit():
         print("Good bye!")
         sys.exit()
 
+## game start
+player_welcome()
 
 #Here's the loop
 while True:
-    player_welcome()
     select_command()

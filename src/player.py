@@ -10,4 +10,6 @@ class Player:
                 self.current_room, f'{direction}_to'
             )
         else:
+            print()
             print("There doesn't seem to be anything in that direction")
+            
