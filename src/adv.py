@@ -1,4 +1,7 @@
+from player import Player
 from room import Room
+import time
+import textwrap
 
 # Declare all the rooms
 
@@ -37,7 +40,45 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+def attempt_move(direction):
+    """ attempts to move the player in the given direction """
+
+    if direction == "north":
+        if player.current_room.n_to is None:
+            print("There is no room to the north")
+            time.sleep(1)  # pause for a moment to let player see the message
+        else:
+            player.current_room = player.current_room.n_to
+
+    elif direction == "south":
+        if player.current_room.s_to is None:
+            print("There is no room to the south")
+        else:
+            player.current_room = player.current_room.s_to
+
+    elif direction == "east":
+        if player.current_room.e_to is None:
+            print("There is no room to the east")
+        else:
+            player.current_room = player.current_room.e_to
+
+    elif direction == "west":
+        if player.current_room.w_to is None:
+            print("There is no room to the west")
+        else:
+            player.current_room = player.current_room.w_to
+
+
+def print_wrapped(message, width=50):
+    """ Prints a message using the textwrap module """
+    wrapper = textwrap.TextWrapper(width) 
+    message = wrapper.wrap(message) 
+    for line in message: 
+        print(line)
+
+
 # Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +90,47 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+print("--- Welcome to Lambda adventure! ---")
+print("To move, enter a direction")
+print('To quit, enter "q" or "quit"')
+
+game_over = False
+while not game_over:
+    # Print the current room name and description
+    print("\n----------------------------------")
+    print_wrapped(player.current_room.name)
+    print_wrapped(player.current_room.description)
+
+    # Ask for player input
+    #print("\nWhich direction would you like to go?")
+    command = input("\nWhich direction would you like to go? ")
+
+    # Convert to lower case to understand more input options
+    command = command.lower()
+
+    # Handle player input
+    # quit command
+    if command in ["q", "quit"]:
+        game_over = True
+    
+    # 4 movement commands
+    elif command in ["n", "north"]:
+        attempt_move("north")
+    
+    elif command in ["s", "south"]:
+        attempt_move("south")
+    
+    elif command in ["e", "east"]:
+        attempt_move("east")
+    
+    elif command in ["w", "west"]:
+        attempt_move("west")
+    
+    else:
+        print("Sorry, I don't know that command")
+    
+    time.sleep(.3)  # pause for a moment, helps player see what happens better
+
+# Out of the loop, game is over
+print("Thanks for playing!")
