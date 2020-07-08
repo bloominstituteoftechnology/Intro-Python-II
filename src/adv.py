@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -38,14 +38,51 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+new_player = Player("Krishna", room['outside'])
 # Write a loop that:
-#
-# * Prints the current room name
+while True:
+    
+# Prints the current room name
+    current_room = new_player.location
+    print(f"Hey, you're {current_room.name}.")
+
 # * Prints the current description (the textwrap module might be useful here).
+    print(f"Hey, your room {current_room.name} is described as: {current_room.description}")
+
 # * Waits for user input and decides what to do.
-#
+    player_input = input("Enter your next movement n, s, w, e or q for quit: ")
+
 # If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
+    if player_input == "n":
+        if current_room.n_to is not None:
+            new_player.current_room = current_room.n_to
+            print(f"You selected North. Now entering {new_player.current_room.name}")
+        else:
+            print(f"No room on that side. Try another side")
+    elif player_input == "s":
+        if current_room.s_to is not None:
+            new_player.current_room = current_room.s_to
+            print(f"You selected South. Now entering {new_player.current_room.name}")
+        else:
+            print(f"No room on that side. Try another side")
+    elif player_input == "w":
+        if current_room.w_to is not None:
+            new_player.current_room = current_room.w_to
+            print(f"You selected West. Now entering {new_player.current_room.name}")
+        else:
+            print(f"No room on that side. Try another side")
+    elif player_input == "e":
+        if current_room.e_to is not None:
+            new_player.current_room = current_room.e_to
+            print(f"You selected East. Now entering {new_player.current_room.name}")
+        else:
+            print(f"No room on that side. Try another side")
+
 # If the user enters "q", quit the game.
+    elif player_input == "q":
+        print("You selected to quit. Bye!")
+        exit()
+
+# Print an error message if the movement isn't allowed.
+    else:
+        print("Please check controls. n, s, w, s or q for quit only allowed")
