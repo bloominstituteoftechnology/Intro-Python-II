@@ -1,0 +1,21 @@
+[compile_catalog]
+directory = {{package}}/locale
+domain = {{project}}
+statistics = true
+
+[extract_messages]
+add_comments = TRANSLATORS:
+output_file = {{package}}/locale/{{project}}.pot
+width = 80
+mapping_file = message-extraction.ini
+
+[init_catalog]
+domain = {{project}}
+input_file = {{package}}/locale/{{project}}.pot
+output_dir = {{package}}/locale
+
+[update_catalog]
+domain = {{project}}
+input_file = {{package}}/locale/{{project}}.pot
+output_dir = {{package}}/locale
+previous = true

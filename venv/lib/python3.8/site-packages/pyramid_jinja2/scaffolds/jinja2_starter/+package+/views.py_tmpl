@@ -1,0 +1,7 @@
+from pyramid.i18n import TranslationStringFactory
+
+_ = TranslationStringFactory('{{project}}')
+
+
+def my_view(request):
+    return {'project': '{{project}}'}

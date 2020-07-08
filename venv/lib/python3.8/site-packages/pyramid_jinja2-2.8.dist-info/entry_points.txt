@@ -1,0 +1,6 @@
+
+        [paste.paster_create_template]
+        pyramid_jinja2_starter=pyramid_jinja2.scaffolds:Jinja2ProjectTemplate
+        [pyramid.scaffold]
+        pyramid_jinja2_starter=pyramid_jinja2.scaffolds:Jinja2ProjectTemplate
+      

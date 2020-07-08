@@ -1,4 +1,6 @@
 from room import Room
+from item import Item
+from player import Player
 
 # Declare all the rooms
 
@@ -6,19 +8,23 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    Room("Foyer", "Dim light filters in from the south.\n"
+                              "Dusty passages run north and east.",
+                     [Item('map', 'Map to another treasure chest in a different location')]),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'overlook': Room("Grand Overlook", "A steep cliff appears before you, falling into the darkness.\n"
+                                       "Ahead to the north, a light flickers in the distance,\n"
+                                       "but there is no way across the chasm.",
+                     [Item('sword', "And old rusty blade, it's been here a while")]),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'narrow':   Room("Narrow Passage", "The narrow passage bends here from west to north.\n"
+                                       "The smell of gold permeates the air.",
+                     [Item('key', "Old rusty key, it has an inscription on it but it's worn off")]),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+    'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber!\n"
+                                         "Sadly, it has already been completely emptied by earlier adventurers.\n"
+                                         "The only exit is to the south.",
+                     [Item('skeleton', "Only dusty bones remain in this room.")]),
 }
 
 
@@ -33,11 +39,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player('Chad', room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +57,61 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+def perform_move(command):
+    if command in ['q', 'quit', 'exit']:
+        print("\nThanks for playing!\n")
+        global running
+        running = False
+    elif command in ['?', 'help']:
+        print("\nValid commands: ['n': North, 's': South, 'e': East,\n"
+              "'w': West, 'i': 'Inventory', 'q, quit, exit': Quit, '?, help': Help]\n")
+    elif command == 'i':
+        print("Inventory:")
+        print("__________")
+        for index, item in enumerate(player.items):
+            print(f"{index + 1}. {item.name}")
+
+    else:
+        next_room = player.move_to(command)
+        if next_room is None:
+            print("\nNo room in this direction.\n")
+        elif next_room is room['treasure']:
+            item_list = [i.name for i in player.items]
+            if 'key' not in item_list:
+                print("You're missing the key to get in. Please look for a key and come back.")
+            else:
+                player.current_room = next_room
+        else:
+            player.current_room = next_room
+
+
+def perform_action(command):
+    if command[0] in ['get', 'take', 'pickup']:
+        for item in player.current_room.items:
+            if item.name == command[1]:
+                item.on_take(player)
+            else:
+                print(f"{command[1]} cannot be found in this room")
+    elif command[0] in ['drop', 'putdown', 'place']:
+        for item in player.items:
+            if item.name == command[1]:
+                item.on_drop(player)
+
+
+running = True
+
+while running:
+    print(f"\n{player.current_room.name}\n")
+    print(f"{player.current_room.description}\n")
+    if len(player.current_room.items) > 0:
+        for item in player.current_room.items:
+            print(f"Items: {item.name}, {item.description}")
+
+    command = input('\nWhere do you want to go? Enter (n, s, e, or w; q to quit): ').split(' ')
+    if len(command) > 1:
+        perform_action(command)
+        continue
+    else:
+        perform_move(command[0])

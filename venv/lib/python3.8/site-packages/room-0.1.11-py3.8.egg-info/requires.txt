@@ -1,0 +1,8 @@
+chainer
+numpy
+pymongo
+pyzmq
+tornado
+pypandoc
+pytz
+python-dateutil
