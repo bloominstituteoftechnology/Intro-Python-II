@@ -53,7 +53,7 @@ while not user == 9:
             print("Computer chose scissors...computer wins :(")
             losses += 1
     
-    #user chooses SCISSORS
+    #user chooses SCISSORS2
     elif user == 3:
         if computer == 1:
             print("Computer chose rock...computer wins :(")
