@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -33,14 +34,30 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+"""
+  | V | T
+  | F _ N
+  | O |
+"""
+
+fork = Item("Fork", "An eating utensil")
+axe = Item("Axe", "A beat up old battle axe")
+torch = Item("Torch", "An unlit torch")
+match = Item("Match", "A match for starting a fire")
+
+room['outside'].items = []
+room['foyer'].items = [torch]
+room['overlook'].items = [match]
+room['narrow'].items = [axe, fork]
+room['treasure'].items = []
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player_1 = Player(room["outside"])
 
-# Write a loop that:
-#
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -49,3 +66,47 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+def get_action(player):
+    action = input("What would you like to do? (n, s, e, w or q to quit) ").lower()
+    while action != "q" and action != "quit":
+        if len(action.split(" ")) > 1:
+            do(action, player)
+        else:
+            move(player, action)
+        print(player.current_room)
+        action = input("What would you like to do? (n, s, e, w or q to quit) ").lower()
+    print("Bye!")
+
+def move(player, direction_choice):
+    if direction_choice == "n":
+        player.try_north()
+    elif direction_choice == "s":
+        player.try_south()
+    elif direction_choice == "e":
+        player.try_east()
+    elif direction_choice == "w":
+        player.try_west()
+    elif direction_choice == "i" or direction_choice == "inventory":
+        player.print_items()
+    else:
+        print("I don't understand. Please try again.")
+
+def do(action, player):
+
+    if "take" in action or "get" in action:
+        item_names = [item.name.upper() for item in player.current_room.items]
+        if action.split()[1].upper() in item_names:
+            item = [item for item in player.current_room.items if item.name.upper() == action.split()[1].upper()]
+        player.get_item(item[0])
+    elif "drop" in action:
+        item_names = [item.name.upper() for item in player.items]
+        if action.split()[1].upper() in item_names:
+            item = [item for item in player.items if item.name.upper() == action.split()[1].upper()]
+        player.drop_item(item[0])
+    elif "move" in action or "go" in action:
+        direction = action.split()[-1]
+        move(player, direction)
+    else:
+        move(player, action)
+
+get_action(player_1)
