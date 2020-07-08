@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Chris", room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +51,45 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+    current_room = player.location
+    print(f"Your location: {location.name}")
+    print(f"{current_room.description}")
+    nextMove = input("Enter your next move n, s, e, w or q for quit: ")
+
+    # Setting it up for the user to make moves or quit
+    if nextMove == "n":
+        if current_room.n_to is not None:
+            player.current_room = current_room.n_to
+            print("You chose to go North!")
+        else:
+            print("There is not room that way; please try again!")
+    
+    elif nextMove == "s":
+        if current_room.s_to is not None:
+            player.current_room = current_room.s_to
+            print("You chose to go South!")
+        else:
+            print("There is not room that way; please try again!")
+    
+    elif nextMove == "e":
+        if current_room.e_to is not None:
+            player.current_room = current_room.e_to
+            print("You chose to go East!")
+        else:
+            print("There is not room that way; please try again!")
+    
+    elif nextMove == "w":
+        if current_room.w_to is not None:
+            player.current_room = current_room.w_to
+            print("You chose to go West!")
+        else:
+            print("There is not room that way; please try again!")
+    # Adding the ability 
+    elif nextMove == "q":
+        print("Thank you for playing! See you soon!")
+        exit()
+    # Adding an error message
+    else:
+        print("Please enter n, s, e, w to make a move or q to quit!")
