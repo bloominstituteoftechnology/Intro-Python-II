@@ -53,7 +53,7 @@ player = Player(input('Adventurer! What is your name?: '), room['outside'])
 # If the user enters "q", quit the game.
 
 ## Welcome the player!
-def welcome_player():
+def player_welcome():
     print(f'Welcome {player.name}\nExploring the map is easy! Just remember to (n)ever, (e)at, (s)oggy, (w)heaties, and you should be fine.\nIf you desire to leave for any reason, enter "q".')
     print(f'You stand in the {player.current_room.name}\n{player.current_room.description}')
 
@@ -80,5 +80,5 @@ def player_quit():
 
 #Here's the loop
 while True:
-    welcome_player()
+    player_welcome()
     select_command()
