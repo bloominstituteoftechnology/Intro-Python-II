@@ -1,10 +1,12 @@
-from room import Room
 from player import Player
+from room import Room
+
 # Declare all the rooms
 
+# instances of room class
 room = {
-    'outside':  Room("Outside",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("Outside Cave Entrance\n",
+                    "North of you, the cave mount beckons\n"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -22,7 +24,6 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 print(room['outside'])
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -39,52 +40,78 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+# Welcome Screen
+print('*****Welcome to TreasureLand!*****\n')
+player_name = input("Enter Character's Name:  ")
 
-player_name = input("Enter Character's Name: ")
-player = Player(player_name, room["outside"])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+location = room['outside']
 
-def next_move(direction_input):
-    directions = {
-        "n":("n_to", "north"),
-        "s":("s_to", "south"),
-        "e":("e_to", "east"),
-        "w":("w_to", "west")
-    }
+player = Player(player_name, location)
 
-    if direction_input.lower() == "q" or next_move.lower() == "quit":
-        return False
 
-    possible_room = player.current_room. __getattribute__(directions[direction_input] [0])
+print(f"{player_name}, you find yourself {location}.")
 
-    possible_room = player.current_room.__getattribute__(directions[direction_input] [0])
+print("where would you like to go next?")
 
-    if possible_room != None:
-        player.current_room = possible_room
+
+def choose_action():
+    return int(input("[1] north  [2] south   [3] east  [4] west    [9] Quit\n"))
+
+
+action = choose_action()
+
+
+def next_step():
+    print(location)
+    print('where would you like to go next?')
+    global action
+    action = choose_action()
+
+
+def wrong_way():
+    print('that direction is blocked, try again')
+    global action
+    action = choose_action()
+
+
+while not action == 9:
+    if location == room['outside']:
+        if action == 1:
+            location = room['outside'].n_to
+            next_step()
+
+    elif location == room['foyer']:
+
+        if action == 2:
+            location = room['foyer'].s_to
+            next_step()
+
+        elif action == 3:
+            location = room['foyer'].e_to
+            next_step()
+
+        elif action == 1:
+            location = room['foyer'].n_to
+            next_step()
+
+    elif location == room['overlook']:
+        if action == 2:
+            location = room['overlook'].s_to
+            next_step()
+
+    elif location == room['narrow']:
+        if action == 4:
+            location = room['narrow'].w_to
+            next_step()
+        elif action == 1:
+            location = room['narrow'].n_to
+            next_step()
+
+    elif location == room['treasure']:
+        if action == 2:
+            location = room['treasure'].s_to
+            next_step()
+
     else:
-        print (f"No room to the {directions[direction_input] [1]}")
-        return True
-
-continue_adventure = True
-
-while continue_adventure:
-    print(player)
-    print(player.current_room)
-    selection = input("""Which direction do you wish to travel?
-    n - North
-    s - South
-    e - East
-    w - West
-    q - Quit
-    """).split('')
-
+        wrong_way()
