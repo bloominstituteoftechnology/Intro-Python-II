@@ -1,4 +1,17 @@
+# Name of game is called Explore
+
 from room import Room
+import argparse
+
+# Argument Parser
+explore_parser = argparse.ArgumentParser()
+explore_parser.add_argument("north", "--north", help="Moves player north")
+explore_parser.add_argument("west", "--west", help="Moves player west")
+explore_parser.add_argument("south", "--south", help="Moves player south")
+explore_parser.add_argument("east", "--east", help="Moves player east")
+explore_parser.add_argument("backpack", "--backpack", help="Stores items for player")
+
+args = explore_parser.parse_args()
 
 # Declare all the rooms
 
@@ -38,6 +51,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+print("Welcome to Explore!")
 
 # Write a loop that:
 #
