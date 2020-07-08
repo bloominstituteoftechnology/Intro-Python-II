@@ -1,5 +1,6 @@
 from player import Player
 from room import Room
+from item import Item
 import time
 import textwrap
 
@@ -7,7 +8,7 @@ import textwrap
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mouth beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -20,13 +21,14 @@ the distance, but there is no way across the chasm."""),
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+chamber! Something is glittering in the middle! The only exit is to the south."""),
 }
 
+# Add items
+room['foyer'].add_item(Item('torch'))
+room['treasure'].add_item(Item('treasure'))
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -102,12 +104,19 @@ while not game_over:
     print_wrapped(player.current_room.name)
     print_wrapped(player.current_room.description)
 
+    # Show any items in the room
+    for item in player.current_room.items:
+        print("You see a", item.name)
+
     # Ask for player input
     #print("\nWhich direction would you like to go?")
-    command = input("\nWhich direction would you like to go? ")
+    command = input("\nWhat now? ")
 
     # Convert to lower case to understand more input options
     command = command.lower()
+    
+    # Used for multi-word commands
+    commands = command.split()
 
     # Handle player input
     # quit command
@@ -117,16 +126,41 @@ while not game_over:
     # 4 movement commands
     elif command in ["n", "north"]:
         attempt_move("north")
-    
+
     elif command in ["s", "south"]:
         attempt_move("south")
-    
+
     elif command in ["e", "east"]:
         attempt_move("east")
-    
+ 
     elif command in ["w", "west"]:
         attempt_move("west")
-    
+
+    # show inventory
+    elif command in ["i", "items", "inventory"]:
+        if len(player.items) == 0:
+            print("You are not holding any items")
+        else:
+            for item in player.items:
+                print("You are holding a", item.name)
+
+    # pick up items
+    elif commands[0] in ['get', 'take']:
+        # commands[1] should be the item name, attempt to take it
+        item = player.current_room.take_item(commands[1])
+
+        if item == None:
+            # No item with that name was found in the room
+            print(f"There is no {commands[1]} in this room")
+        else:
+            player.items.append(item)
+            item.on_take()  # this also prints the take message
+
+    # drop items
+    elif commands[0] in ['drop']:
+        # commands[1] should be the item name, attempt to drop it
+        player.drop_item(commands[1])
+
     else:
         print("Sorry, I don't know that command")
     

@@ -13,6 +13,7 @@ class Room():
         s_to (Room): the room to the south
         e_to (Room): the room to the east
         w_to (Room): the room to the west
+        items (list): a list of Items in this room
     """
 
     def __init__(self, name, description):
@@ -23,3 +24,17 @@ class Room():
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.items = []
+    
+    def add_item(self, item):
+        """ adds an item to this room """
+        self.items.append(item)
+    
+    def take_item(self, item_name):
+        """ removes an item from this room and returns it """
+        for i in range(len(self.items)):
+            if self.items[i].name == item_name:
+                return self.items.pop(i)
+        
+        # No item with that name found
+        return None

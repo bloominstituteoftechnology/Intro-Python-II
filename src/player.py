@@ -7,12 +7,28 @@ class Player():
 
     Attributes:
         current_room (Room): the room this player is currently in
+        items (list): a list of Items the player is holding
     """
 
     def __init__(self, starting_room):
         """ Initializes a Player object, takes the room they start in """
         self.current_room = starting_room
+        self.items = []
     
     def move_to(self, new_room):
         """ Moves the player to a new room """
         self.current_room = new_room
+    
+    def drop_item(self, item_name):
+        """ Drops an item from inventory """
+        # Find the item with that name
+        for i in range(len(self.items)):
+            if self.items[i].name == item_name:
+                # Remove the item from player's inventory and put it in
+                # the current room
+                item = self.items.pop(i)
+                item.on_drop()
+                self.current_room.add_item(item)                
+                return
+        
+        print(f"You don't have a {item_name} to drop!")
