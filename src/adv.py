@@ -63,7 +63,7 @@ while game_running:
     print(style.YELLOW + "Description:", player.current_room.description)
 
     user = input(style.CYAN + "[n] north [s] south [e] east [w] west [q] quit\n")
-    wrong_alert = "Wrong direction,follow the hint in description!!!"
+    wrong_alert = (style.RED + "Wrong direction,follow the hint in description!!!")
     if user == "n":
         if player.current_room.n_to == None:
             print(wrong_alert)
