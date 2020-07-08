@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from textwrap import TextWrapper
 
 # Declare all the rooms
 
@@ -39,6 +41,9 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player1 = Player("matt", "outside")
+# print(player1)
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +54,32 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+def player_input():
+    return int(input("[1] North [2] South [3] East [4] West [9] Quit"))
+
+
+input = player_input()
+
+
+def move():
+    print(player1.current_room)
+    print("What is your next move???")
+    global input
+    input = player_input()
+
+
+def bad_move():
+    print("Sorry, you cannot move in that direction. Please try another move!!!")
+    global input
+    input = player_input()
+
+
+def adventure_game():
+    print(f"You are currently in room: {player1.current_room}")
+    if player1.current_room == "outside":
+        print(room['outside'].description)
+
+
+adventure_game()
