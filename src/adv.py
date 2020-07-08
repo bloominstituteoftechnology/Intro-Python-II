@@ -1,10 +1,12 @@
+import textwrap
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+"North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -49,3 +51,198 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+def adventure_awaits():
+
+    new_name = input("\nEnter Your NAME! Adventure Awaits...\n-->  ")
+    current_player = Player(new_name, "outside")
+    playing = True
+    print(f"\nHello {current_player.name}!\nExplore rooms and obtain treasure! \nAdventure Awaits!\n")
+   
+    while (playing):
+        wrapper = textwrap.TextWrapper(width=70)
+        room_description = wrapper.wrap(
+            text=room[current_player.room].description)
+
+        # show heros current room and room description
+        print(f"\nCurrent Room: \n{current_player.room}\n")
+        print("Room Description: ")
+        for every_line in room_description:
+            print(every_line)
+
+        # waits for user input to decide what to do next
+        action = input("\n\nWhat shall the hero do next??? \ntype 'help' for a hint! \n-->  ")
+        if (action == help):
+            return "Enter a direction i.e. north, south, east, west to attempt to move to another location. \ntype 'q' to quit \n"
+        elif (action == "north"):
+            if (current_player.room == "outside"):
+                current_player.room = "foyer"
+            elif (current_player.room == "foyer"):
+                current_player.room = "overlook"
+            elif (current_player.room == "overlook"):
+                print("You fell off the cliff!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing:  ")
+            elif (current_player.room == "narrow"):
+                current_player.room = "treasure"
+            elif (current_player.room == "treasure"):
+                print("You ran into a cave wall!") 
+        elif (action == "south"):
+            if (current_player.room == "outside"):
+                print("You left the game!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing: \n-->  ")
+            elif (current_player.room == "foyer"):
+                current_player.room = "outside"
+            elif (current_player.room == "overlook"):
+                current_player.room = "foyer"
+            elif (current_player.room == "narrow"):
+                print("You fell off a ledge into spikes!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing: \n-->  ")
+            elif (current_player.room == "treasure"):
+                current_player.room = "narrow"
+        elif (action == "east"):
+            if (current_player.room == "outside"):
+                print("You left the game!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing: \n-->  ")
+            elif (current_player.room == "foyer"):
+                current_player.room = "narrow"
+            elif (current_player.room == "overlook"):
+                print("You fell off the cliff!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing:  ")
+            elif (current_player.room == "narrow"):
+                print("You fell off the narrow ledge into spikes!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing:  ")
+            elif (current_player.room == "treasure"):
+                print("A cave bear ate you!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing:  ")
+        elif (action == "west"):
+            if (current_player.room == "outside"):
+                print("You left the game!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing: \n-->  ")
+            elif (current_player.room == "foyer"):
+                print("A vampire spotted you and sucked your blood!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing:  ")
+            elif (current_player.room == "overlook"):
+                print("You fell off the cliff!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing:  ")
+            elif (current_player.room == "narrow"):
+                current_player.room = "foyer"
+            elif (current_player.room == "treasure"):
+                print("You stepped on a poisonous fungi and the spores killed you!")
+                leaving_game = True
+                while (leaving_game):
+                    try_again = input("Try Again? y/n? \n-->   ")
+                    if (try_again == "y"):
+                        current_player.room = "outside"
+                        leaving_game = False
+                    elif (try_again == "n"):
+                        leaving_game = False
+                        playing = False
+                    else:
+                        print("type 'y' to keep trying, 'n' to stop playing:  ")
+        elif (action == "q"):
+            playing = False
+        else:
+            print("Please enter a direction: south, west, east, north. etc.")
+
+adventure_awaits()
