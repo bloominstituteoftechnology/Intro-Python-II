@@ -1,6 +1,14 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
+# We're going to need a REPL that prints the name and description of the player's current room
+    # REPL:
+    # R - Read the user input
+    # E - Evaluate your code
+    # P - Print any results
+    # L - Loop back to step 1
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -49,3 +57,16 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player = Player("You", "outside")
+print("Welcome to the Adventure game! Will you be able to find the treasure?")
+
+# North - South, East, West, Quit
+moves = ["n", "s", "e", "w", "q"]
+
+while moves != "q":
+    direction = input("\nChoose a direction: ")
+    try:
+        if moves == "n":
+            player.current_room = room[player.current_room].n_to
+            print(f"\n You walk north into the {room[player.current_room].name} \n {room[player.current_room].description}")
