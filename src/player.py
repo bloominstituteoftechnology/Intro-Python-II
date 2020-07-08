@@ -9,25 +9,17 @@ class Mob:
         self.experience = experience
         
 class Player(Mob):
-    def __init__(self, name, health, experience, gold):
+    def __init__(self, name, health, experience = 0, gold = 0):
         super().__init__(name, health, experience)        
         self.gold = gold
+        self.inventory = []
 
     def __str__(self):
-        return "{} has {} health, {} gold, and {} experience".format(
-            self.name,
-            self.health,
-            self.gold,
-            self.experience
-        )
+        return f"{self.name} has {self.health} health, {self.gold} gold, and {self.experience} experience"
 
 class Monster(Mob):
     def __init__(self, name, health, experience):
         super().__init__(name, health, experience)        
 
     def __str__(self):
-        return "{} has {} health and is worth {} experience".format(
-            self.name,
-            self.health,
-            self.experience
-        )
+        return f"{self.name} has {self.health} health and is worth {self.experience} experience"
