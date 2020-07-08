@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+import sys
 # Declare all the rooms
 
 room = {
@@ -38,14 +39,46 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(input('Adventurer! What is your name?: '), room['outside'])
 
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
-#
+#q
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+## Welcome the player!
+def welcome_player():
+    print(f'Welcome {player.name}\nExploring the map is easy! Just remember to (n)ever, (e)at, (s)oggy, (w)heaties, and you should be fine.\nIf you desire to leave for any reason, enter "q".')
+    print(f'You stand in the {player.current_room.name}\n{player.current_room.description}')
+
+## function for commands the player can input 
+def select_command():
+    player_input = (input('What would you like to do? '))
+    if player_input == 'q': 
+        player_quit()
+    elif player_input == 'n' or player_input == 'e' or player_input == 's' or player_input == 'w':
+        player.movePlayer(player_input) 
+        print(f'{player.current_room.name}\n{player.current_room.description}')
+
+## function to quit
+def player_quit():
+    print('Are you sure you want to leave? There is stuff to find!')
+    quit = (input('Enter "y" to leave. Enter "n" to continue adventuring. '))
+    if quit == 'n':
+        print('Good choice!')
+        select_command()
+    elif quit == 'y':
+        print("Good bye!")
+        sys.exit()
+
+
+#Here's the loop
+while True:
+    welcome_player()
+    select_command()
