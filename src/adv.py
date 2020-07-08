@@ -1,15 +1,17 @@
 # Name of game is called Explore
 
 from room import Room
+from player import Player
 import argparse
 
 # Argument Parser
 explore_parser = argparse.ArgumentParser()
-explore_parser.add_argument("north", "--north", help="Moves player north")
-explore_parser.add_argument("west", "--west", help="Moves player west")
-explore_parser.add_argument("south", "--south", help="Moves player south")
-explore_parser.add_argument("east", "--east", help="Moves player east")
-explore_parser.add_argument("backpack", "--backpack", help="Stores items for player")
+explore_parser.add_argument("-n", "--north", help="Moves player north")
+explore_parser.add_argument("-w", "--west", help="Moves player west")
+explore_parser.add_argument("-s", "--south", help="Moves player south")
+explore_parser.add_argument("-e", "--east", help="Moves player east")
+explore_parser.add_argument("-bp", "--backpack", help="Stores items for player")
+explore_parser.add_argument("-q", "--quit", help="Quits the game")
 
 args = explore_parser.parse_args()
 
@@ -52,6 +54,17 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 print("Welcome to Explore!")
+player = input("What is your name explorer?")
+new_player = Player(player, room=room["outside"])
+print("{}, you are starting {}, {}".format(new_player.name, new_player.room.name, new_player.room.description))
+direction = input("Where would you like to go?")
+if direction == 'n':
+    new_player.room.n_to
+else:
+    print("You cannot go that way.")
+
+print("{}, you are now at the {}, {}".format(new_player.name, new_player.room.name, new_player.room.description))
+new_direction = input("Where would you like to go?")
 
 # Write a loop that:
 #
