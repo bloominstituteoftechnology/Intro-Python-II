@@ -74,3 +74,17 @@ def next_move(direction_input):
     else:
         print (f"No room to the {directions[direction_input] [1]}")
         return True
+
+continue_adventure = True
+
+while continue_adventure:
+    print(player)
+    print(player.current_room)
+    selection = input("""Which direction do you wish to travel?
+    n - North
+    s - South
+    e - East
+    w - West
+    q - Quit
+    """).split('')
+
