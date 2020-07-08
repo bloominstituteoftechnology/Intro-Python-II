@@ -80,7 +80,7 @@ while True:
     if command == 'n':
         try:
             new_player = Player(
-                "David", new_player.current_room.n_to)
+                "David,", new_player.current_room.n_to)
             print(
                 f"you have moved to the north and entered the {new_player.current_room.name}")
         except:
