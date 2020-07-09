@@ -76,7 +76,7 @@ def select_command():
         
 ## function to quit
 def player_quit():
-    print('Are you sure you want to leave? There is stuff to find!')
+    print(f'{Fore.RED}Are you sure you want to leave? There is stuff to find!{Style.RESET_ALL}')
     quit = (input('Enter "y" to leave. Enter "n" to continue adventuring. '))
     if quit == 'n':
         print('Good choice!')
@@ -84,6 +84,8 @@ def player_quit():
     elif quit == 'y':
         print("Good bye!")
         sys.exit()
+    else:
+        print("Please select 'n' or 'y'")
 
 ## game start
 player_welcome()
