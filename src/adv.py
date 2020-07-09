@@ -1,4 +1,7 @@
 from room import Room
+from textwrap import wrap 
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -32,20 +35,85 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+# room['outside'].s_to = "Blocked"
+# room['outside'].w_to = "Blocked"
+# room['outside'].e_to = "Blocked"
+# room['foyer'].w_to =  "Blocked"
+
+room['outside'].items_list = {
+    'sword': Item('Sword', ' Small tiny sword, looks very fundamental!')
+}
+
+room['foyer'].items_list = {
+    'Beer': Item('Beer', 'Time to open a party'),
+    'Potion': Item('Potion', ' A potion that seems rad')
+}
+
+room['narrow'].items_list = {
+    'Map': Item('Map', ' This map will guide us through')
+}
+
+room['overlook'].items_list = {
+    'glasses' : Item('Glasses', ' This glasses are enchanted with a magic. Will be able to see ghosts with it')
+}
+
+room['treasure'].items_list = {
+    'Wand': Item('Wand', 'The most strong wand you can ever have in the world')
+}
 
 #
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
+David = Player("David",room['outside'])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+
+
+def not_valid_needed():
+    print("Please enter a valid command, or q to quit the game!")
+    gaming_running()
+
+
+
+def gaming_running():
+    
+    #current location
+    print(f"\nCurrent Location =>{David.current_room.name}\n{David.current_room.description}")
+
+    # print("This room has:")
+    # if len(David.current_room.items_list) == 0:
+    #     print("There are no items in this room")
+    
+    # else:
+    #     for key, value in David.current_room.items_list.items():
+    #         print(f"{value.name}:{value.description}")
+    # print("\n")
+    user_input= input("Your Character wants to move either [s]outh, [n]orth, [w]est, [e]ast, [I]nventory, [f]ind, or if you want quit type [q]uit:").lower().split(" ")
+    if len(user_input) == 1:
+        user_input = user_input[0]
+        if user_input == "q":
+            print("Dr. Strange says `We are in the endgame now`")
+        elif user_input == "f":
+            David.search()
+        elif user_input =="i":
+            David.print_inventory()
+            gaming_running()
+        elif user_input == "n" or user_input == "e" or user_input == "s" or user_input == "w":
+          David.move_player(user_input)
+          gaming_running()
+        else:
+           not_valid_needed()
+    elif len(user_input) == 2: 
+        if user_input[0] == "take" or user_input[0] == "get":
+            David.take_item(user_input[1])
+            gaming_running()
+        if user_input[0] =="drop":
+            David.drop_item(user_input[1])
+            gaming_running()
+        else:
+            not_valid_needed()
+    else:
+        not_valid_needed()
+
+
+gaming_running()
