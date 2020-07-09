@@ -10,12 +10,18 @@ class Room:
     # e_to = "east"
     # w_to = "west"
 
-    def __init__(self, name, description):
+    def __init__(self, name, description, room_items=[]):
         self.name = name
         self.description = description
+        self.room_items = room_items
 
     def __str__(self):
         return f"LOCATION: {self.name} \nINFO: {self.description}"
+
+    def view_items(self):
+        print("\nITEMS IN ROOM: ")
+        for i in self.room_items:
+            i.print_name()
 
 
 

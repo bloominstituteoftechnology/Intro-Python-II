@@ -49,8 +49,9 @@ if __name__ == "__main__":
 
     # Write a loop that:
     while True:
-        # * Prints the current room name
-        print(f"\nYOUR CURRENT {player1.current_room}")
+        # * Prints the current room name and items
+        print(f"\nYOUR CURRENT: {player1.current_room}")
+        print(f"\n{player1.current_room.view_items()}")
 
         # * Prints the current description (the textwrap module might be useful here).
         # print(f"\nLOCATION INFO: {player1.current_room.description}")
