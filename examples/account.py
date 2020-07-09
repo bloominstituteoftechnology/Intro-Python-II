@@ -1,4 +1,5 @@
 class Account:
+    interest = 0.02
     def __init__(self, holder):
         self.balance = 10000
         self.holder = holder
@@ -14,3 +15,4 @@ class Account:
         return f'New balance: ${self.balance}'
 
 my_account = Account('Gavin')
+sean_account = Account('Sean')
