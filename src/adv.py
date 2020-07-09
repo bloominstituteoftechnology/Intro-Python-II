@@ -54,7 +54,7 @@ room['treasure'].s_to = room['narrow']
 # Main
 sword = Item('sword', 'this is an awesome sword')
 ring = Item('ring', 'this is the ring in history')
-coffee = Item('coffee', 'this is not Startbuck,Im lying')
+coffee = Item('coffee', 'this is not Starbuck,Im lying')
 coins = Item('coins', 'coins is what I love')
 arrow = Item('arrow', 'this is an arrow I need to catch some bird')
 
@@ -66,10 +66,14 @@ def add_initial_items_to_rooms():
     room['overlook'].add_item(arrow)
     room['overlook'].add_item(coffee)
     room['treasure'].add_item(coins)
+    room['narrow'].add_item(coffee)
 
 
 def print_out_items_in_current_room(room):
-    print(style.MAGENTA + 'This room has ' + ','.join(f"{item.name}" for item in room.items))
+    if not room.items:
+        print(style.MAGENTA + "This room have nothing left")
+    else:
+        print(style.MAGENTA + 'This room have ' + ','.join(f"{item.name}" for item in room.items))
 
 
 def get_room_detail():
@@ -80,39 +84,45 @@ def get_room_detail():
 player = Player("Nick", room['outside'])
 wrong_alert = (style.RED + "Wrong direction,follow the hint in description!!!")
 
+
+def show_wrong_direction_alert():
+    print(wrong_alert)
+
+
 print(style.BLUE + "Welcome to the Adventure Game!")
 print(style.BLUE + "Please choose a direction to move.")
 
 add_initial_items_to_rooms()
 game_running = True
 
-
 while game_running:
 
     get_room_detail()
-    print_out_items_in_current_room(player.current_room)
-    instruction = input(style.CYAN +
-        '\n'.join(f"[take {item.name}] take {item.name} and run" for item in player.current_room.items) +
-        "\n[n] north [s] south [e] east [w] west [q] quit\n" )
 
+    print_out_items_in_current_room(player.current_room)
+
+    instruction = input(style.CYAN +
+                        '\n'.join(
+                            f"[take {item.name}] take {item.name} and run" for item in player.current_room.items) +
+                        "\n[n] north [s] south [e] east [w] west [q] quit\n")
     if instruction == "n":
         if player.current_room.n_to == None:
-            print(wrong_alert)
+            show_wrong_direction_alert()
         else:
             player.current_room = player.current_room.n_to
     elif instruction == "s":
         if player.current_room.s_to == None:
-            print(wrong_alert)
+            show_wrong_direction_alert()
         else:
             player.current_room = player.current_room.s_to
     elif instruction == "e":
         if player.current_room.e_to == None:
-            print(wrong_alert)
+            show_wrong_direction_alert()
         else:
             player.current_room = player.current_room.e_to
     elif instruction == "w":
         if player.current_room.w_to == None:
-            print(wrong_alert)
+            show_wrong_direction_alert()
         else:
             player.current_room = player.current_room.w_to
     # If the user enters "q", quit the game
@@ -120,5 +130,19 @@ while game_running:
         print("Game Over!")
         quit()
 
+    for item in player.current_room.items:
+        if instruction == f"take {item.name}":
 
-    #
+            player.pick_up_item_to_inventory(item)
+            item.on_take()
+            print(style.RED + "USER INVENTORY: " +
+                  ",".join(f"{item.name}" for item in player.inventory))
+            player.current_room.remove_item(item)
+        else:
+            print(style.RED + "This item you are looking for not in this room")
+            break
+
+
+
+
+#

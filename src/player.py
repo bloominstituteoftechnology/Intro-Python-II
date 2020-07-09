@@ -11,3 +11,4 @@ class Player:
 
     def pick_up_item_to_inventory(self,item):
         self.inventory.append(item)
+
