@@ -2,7 +2,6 @@ from player import Player
 from room import Room
 from item import Item, LightSource
 import time
-import textwrap
 
 # Declare all the rooms
 
@@ -105,14 +104,6 @@ def attempt_move(direction):
             back = "east"
 
 
-def print_wrapped(message, width=50):
-    """ Prints a message using the textwrap module """
-    wrapper = textwrap.TextWrapper(width) 
-    message = wrapper.wrap(message) 
-    for line in message: 
-        print(line)
-
-
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside'])
 
@@ -136,21 +127,7 @@ game_over = False
 while not game_over:
     # Print the current room name and description
     print("\n----------------------------------")
-    print_wrapped(player.current_room.name)
-    if player.current_room.is_light or player.has_light():
-        print_wrapped(player.current_room.description)
-    else:
-        print("It's pitch black in here!")
-
-    if player.current_room.is_light or player.has_light():
-        # Show all items in the room
-        for item in player.current_room.items:
-            print("You see a", item.name)
-    else:
-        # Only show light sources
-        for item in player.current_room.items:
-            if type(item) == LightSource:
-                print("You see a", item.name)
+    player.current_room.print_description(player.has_light())
 
     # Ask for player input
     #print("\nWhich direction would you like to go?")
