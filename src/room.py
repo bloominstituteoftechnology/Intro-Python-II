@@ -14,9 +14,11 @@ class Room():
         e_to (Room): the room to the east
         w_to (Room): the room to the west
         items (list): a list of Items in this room
+        is_light (bool): True if the room is light enough to see
+        locks (list): a list of directions with locked doors
     """
 
-    def __init__(self, name, description, is_light=True):
+    def __init__(self, name, description, is_light=True, locks=[]):
         """ Initializes a room, takes a name and description """
         self.name = name
         self.description = description
@@ -26,6 +28,7 @@ class Room():
         self.w_to = None
         self.items = []
         self.is_light = is_light
+        self.locks = locks
     
     def add_item(self, item):
         """ adds an item to this room """

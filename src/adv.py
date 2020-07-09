@@ -11,7 +11,10 @@ room = {
                      "North of you, the cave mouth beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.  There is an old door to the west."""),
+
+    'dungeon':  Room("Dungeon", """The door creaks open to reveal a moldy smelling 
+dungeon. You notice a skeleton in the corner of one cell."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -20,12 +23,16 @@ the distance, but there is no way across the chasm."""),
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air.""", is_light=False),
 
+    'door':     Room("Closed Door", """You find a large door at the north end of 
+the passage. It appears to be locked.""", locks=["north"]),
+
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Something is glittering in the middle! The only exit is to the south."""),
 }
 
 # Add items
 room['overlook'].add_item(LightSource('torch'))
+room['dungeon'].add_item(Item('key'))
 room['treasure'].add_item(Item('treasure'))
 
 # Link rooms together
@@ -33,10 +40,14 @@ room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
+room['foyer'].w_to = room['dungeon']
+room['dungeon'].e_to = room['foyer']
 room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['narrow'].n_to = room['door']
+room['door'].n_to = room['treasure']
+room['door'].s_to = room['narrow']
+room['treasure'].s_to = room['door']
 
 #
 # Main
@@ -54,7 +65,17 @@ def attempt_move(direction):
             print("It is too dark to see!  You must go back.")
             return
         # Else, player is already going back so move like normal
-        
+    
+    # If the door is locked...
+    if direction in player.current_room.locks:
+        if player.has_item("key"):
+            print("You open the door with your key.")
+            # then move like normal
+        else:
+            print("The door is locked!")
+            return  # do not move
+
+    # Normal movement
     if direction == "north":
         if player.current_room.n_to is None:
             print("There is no room to the north")

@@ -43,3 +43,12 @@ class Player():
 
         # else
         return False
+    
+    def has_item(self, item_name):
+        """ returns true if the player has the given item """
+        for item in self.items:
+            if item.name == item_name:
+                return True
+
+        # else
+        return False
