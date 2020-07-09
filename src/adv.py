@@ -50,14 +50,13 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-player = Player('Gavin Test', room['outside'])
-print(player.current_room)
+player = Player('Gavin', room['outside'])
+print(f"Welcome {player.name}, you're currently located: {player.current_room}")
 
 is_playing = True
 while is_playing:
     data = input('Where shall we go? ')
     truthydata = 's n e w q'
-    print(player.current_room)
     # print(data)
     # print(truthydata)
 
@@ -71,3 +70,5 @@ while is_playing:
     if(data == 'q'):
         is_playing = False
         break
+    
+    player.move(data)
