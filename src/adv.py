@@ -1,6 +1,6 @@
 from player import Player
 from room import Room
-from item import Item
+from item import Item, LightSource
 import time
 import textwrap
 
@@ -18,14 +18,14 @@ into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", is_light=False),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Something is glittering in the middle! The only exit is to the south."""),
 }
 
 # Add items
-room['foyer'].add_item(Item('torch'))
+room['overlook'].add_item(LightSource('torch'))
 room['treasure'].add_item(Item('treasure'))
 
 # Link rooms together
@@ -47,10 +47,17 @@ def attempt_move(direction):
 
     global back # set the global variable if we move succsesfully
 
+    # If it is dark...
+    if not (player.current_room.is_light or player.has_light()):
+        # Too dark to move, can only go back
+        if direction != back:
+            print("It is too dark to see!  You must go back.")
+            return
+        # Else, player is already going back so move like normal
+        
     if direction == "north":
         if player.current_room.n_to is None:
             print("There is no room to the north")
-            time.sleep(1)  # pause for a moment to let player see the message
         else:
             player.current_room = player.current_room.n_to
             back = "south"
@@ -109,11 +116,20 @@ while not game_over:
     # Print the current room name and description
     print("\n----------------------------------")
     print_wrapped(player.current_room.name)
-    print_wrapped(player.current_room.description)
+    if player.current_room.is_light or player.has_light():
+        print_wrapped(player.current_room.description)
+    else:
+        print("It's pitch black in here!")
 
-    # Show any items in the room
-    for item in player.current_room.items:
-        print("You see a", item.name)
+    if player.current_room.is_light or player.has_light():
+        # Show all items in the room
+        for item in player.current_room.items:
+            print("You see a", item.name)
+    else:
+        # Only show light sources
+        for item in player.current_room.items:
+            if type(item) == LightSource:
+                print("You see a", item.name)
 
     # Ask for player input
     #print("\nWhich direction would you like to go?")
@@ -177,7 +193,7 @@ while not game_over:
     else:
         print("Sorry, I don't know that command")
     
-    time.sleep(.3)  # pause for a moment, helps player see what happens better
+    time.sleep(.5)  # pause for a moment, helps player see what happens better
 
 # Out of the loop, game is over
 print("Thanks for playing!")

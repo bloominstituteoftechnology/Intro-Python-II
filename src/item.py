@@ -19,3 +19,11 @@ class Item():
     def on_drop(self):
         """ Called when this item is dropped by the player """
         print("You have dropped", self.name)
+
+
+class LightSource(Item):
+    """
+    A specialized item that provides light
+    """
+    def on_drop(self):
+        print("It's not wise to drop your source of light!")

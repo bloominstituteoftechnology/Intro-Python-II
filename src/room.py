@@ -16,7 +16,7 @@ class Room():
         items (list): a list of Items in this room
     """
 
-    def __init__(self, name, description):
+    def __init__(self, name, description, is_light=True):
         """ Initializes a room, takes a name and description """
         self.name = name
         self.description = description
@@ -25,6 +25,7 @@ class Room():
         self.e_to = None
         self.w_to = None
         self.items = []
+        self.is_light = is_light
     
     def add_item(self, item):
         """ adds an item to this room """
