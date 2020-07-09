@@ -1,6 +1,7 @@
 import sys
 from room import Room
 from player import Player
+# from parser import parser
 
 # Declare all the rooms
 
@@ -67,6 +68,9 @@ if __name__ == "__main__":
         if action in choices:
             print(f"\nUSER SELECTION: {action}")
 
+            # # Apply parser function
+            # parser(player1.current_room, action)
+
             # Rules for outside
             if player1.current_room == room["outside"] and action == "n":
                 player1.current_room = player1.current_room.n_to
@@ -114,6 +118,7 @@ if __name__ == "__main__":
         # Print an error message if the movement isn't allowed.
         elif action not in choices and action != "q":
             print("\nERROR: invalid movement")
+
         # If the user enters "q", quit the game.
         elif action == "q":
             sys.exit("\nThanks for playing!")
