@@ -38,17 +38,25 @@ room['treasure'].s_to = room['narrow']
 
 # Declaring Items
 
-item = {
+items = {
     'boots': Item("Boots", "Perfect for muddy adventures!"),
     'lantern': Item("Lantern", "Perfect for lighting up dark places!"),
     'sword': Item("Sword", "Perfect for protecting yourself!")
 }
+room['outside'].add_items(items['boots'])
+room['foyer'].add_items(items['sword'])
+room['overlook'].add_items(items['lantern'])
 
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+name = input('What is your name, Adventurer? ')
+player = Player(name, room['outside'])
+
+print(f'Welcome {name}. Begin your adventure from {player.current_room} \n')
+print(room['outside'].show_items())
 
 # Write a loop that:
 #
@@ -62,8 +70,7 @@ item = {
 # If the user enters "q", quit the game.
 
 while True:
-    current_room = player.location
-    print(f"Your location: {location.name}")
+    current_room = player.current_room
     print(f"{current_room.description}")
     nextMove = input("Enter your next move n, s, e, w or q for quit: ")
 
