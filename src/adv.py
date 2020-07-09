@@ -45,30 +45,36 @@ room['treasure'].s_to = room['narrow']
 def attempt_move(direction):
     """ attempts to move the player in the given direction """
 
+    global back # set the global variable if we move succsesfully
+
     if direction == "north":
         if player.current_room.n_to is None:
             print("There is no room to the north")
             time.sleep(1)  # pause for a moment to let player see the message
         else:
             player.current_room = player.current_room.n_to
+            back = "south"
 
     elif direction == "south":
         if player.current_room.s_to is None:
             print("There is no room to the south")
         else:
             player.current_room = player.current_room.s_to
+            back = "north"
 
     elif direction == "east":
         if player.current_room.e_to is None:
             print("There is no room to the east")
         else:
             player.current_room = player.current_room.e_to
+            back = "west"
 
     elif direction == "west":
         if player.current_room.w_to is None:
             print("There is no room to the west")
         else:
             player.current_room = player.current_room.w_to
+            back = "east"
 
 
 def print_wrapped(message, width=50):
@@ -97,6 +103,7 @@ print("--- Welcome to Lambda adventure! ---")
 print("To move, enter a direction")
 print('To quit, enter "q" or "quit"')
 
+back = ""
 game_over = False
 while not game_over:
     # Print the current room name and description
@@ -123,7 +130,7 @@ while not game_over:
     if command in ["q", "quit"]:
         game_over = True
     
-    # 4 movement commands
+    # 5 movement commands
     elif command in ["n", "north"]:
         attempt_move("north")
 
@@ -135,6 +142,12 @@ while not game_over:
  
     elif command in ["w", "west"]:
         attempt_move("west")
+    
+    elif command in ["back"]:
+        if back == "":
+            print("You haven't moved yet, and cannot go back")
+        else:
+            attempt_move(back)
 
     # show inventory
     elif command in ["i", "items", "inventory"]:
