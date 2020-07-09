@@ -124,7 +124,7 @@ print('To quit, enter "q" or "quit"')
 
 back = ""
 game_over = False
-while not game_over:
+while not (game_over or player.has_item("treasure")):
     # Print the current room name and description
     print("\n----------------------------------")
     player.current_room.print_description(player.has_light())
@@ -193,5 +193,9 @@ while not game_over:
     
     time.sleep(.5)  # pause for a moment, helps player see what happens better
 
+if player.has_item("treasure"):
+    print("\n----------------------------------")
+    print("You found the treasure!  You win!")
+
 # Out of the loop, game is over
-print("Thanks for playing!")
+print("\nThanks for playing!")
