@@ -5,15 +5,7 @@ class Room:
     def __init__(self, name, description):
         self.name = name
         self.description = description
-
-    def n_to(self):
-        return Room
-
-    def s_to(self):
-        return self.name
-
-    def e_to(self):
-        return self.name
-
-    def w_to(self):
-        return self.name
+        self.n_to = None
+        self.s_to = None
+        self.w_to = None
+        self.e_to = None
