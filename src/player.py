@@ -3,9 +3,9 @@
 
 class Player:
 
-    def __init__(self, name, location):
+    def __init__(self, name, current_room):
         self.name = name
-        self.location = location
+        self.current_room = current_room
     
     def __str__(self):
-        return f"PLAYER NAME: {self.name} \n{self.location}"
+        return f"PLAYER NAME: {self.name} \n{self.current_room}"
