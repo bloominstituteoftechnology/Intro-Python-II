@@ -69,7 +69,7 @@ def select_command():
     elif player_input == 'n' or player_input == 'e' or player_input == 's' or player_input == 'w':
         player.movePlayer(player_input)
         print()
-        print(f'Current Room: {player.current_room.name}\n{player.current_room.description}')
+        print(f'{Fore.BLUE}{player.current_room.name}{Style.RESET_ALL}\n{player.current_room.description}')
         print()
     else:
         print(f'{Fore.RED}Please use n, e, s, w{Style.RESET_ALL}')
