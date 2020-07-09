@@ -7,6 +7,9 @@ class Item:
 
         print(f"You have picked up {self.name}")
 
+    def on_drop(self):
+        print(f"You have dropped {self.name}")
+
 # item - Room : This is aggregate relationship
 #   |
 # -Player

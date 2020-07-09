@@ -95,34 +95,30 @@ print(style.BLUE + "Please choose a direction to move.")
 add_initial_items_to_rooms()
 game_running = True
 
-while game_running:
 
-    get_room_detail()
-
-    print_out_items_in_current_room(player.current_room)
-
-    instruction = input(style.CYAN +
-                        '\n'.join(
-                            f"[take {item.name}] take {item.name} and run" for item in player.current_room.items) +
-                        "\n[n] north [s] south [e] east [w] west [q] quit\n")
+def cardinal_direction():
     if instruction == "n":
         if player.current_room.n_to == None:
             show_wrong_direction_alert()
+
         else:
             player.current_room = player.current_room.n_to
     elif instruction == "s":
         if player.current_room.s_to == None:
             show_wrong_direction_alert()
+
         else:
             player.current_room = player.current_room.s_to
     elif instruction == "e":
         if player.current_room.e_to == None:
             show_wrong_direction_alert()
+
         else:
             player.current_room = player.current_room.e_to
     elif instruction == "w":
         if player.current_room.w_to == None:
             show_wrong_direction_alert()
+
         else:
             player.current_room = player.current_room.w_to
     # If the user enters "q", quit the game
@@ -130,19 +126,61 @@ while game_running:
         print("Game Over!")
         quit()
 
-    for item in player.current_room.items:
-        if instruction == f"take {item.name}":
 
-            player.pick_up_item_to_inventory(item)
-            item.on_take()
-            print(style.RED + "USER INVENTORY: " +
-                  ",".join(f"{item.name}" for item in player.inventory))
-            player.current_room.remove_item(item)
-        else:
-            print(style.RED + "This item you are looking for not in this room")
-            break
+while game_running:
+
+    get_room_detail()
+
+    print_out_items_in_current_room(player.current_room)
+
+    if not player.inventory:
+
+        instruction = input(style.CYAN +
+                            '\n'.join(
+                                f"[take {item.name}] take {item.name} and run" for item in player.current_room.items) +
+                            "\n[n] north [s] south [e] east [w] west [q] quit\n")
+        cardinal_direction()
+
+        for item in player.current_room.items:
+            if instruction == f"take {item.name}":
+
+                player.pick_up_item_to_inventory(item)
+                item.on_take()
+                print(style.RED + "USER INVENTORY: " +
+                      ",".join(f"{item.name}" for item in player.inventory))
+                player.current_room.remove_item(item)
+            elif instruction != "n" and instruction != "s" and instruction != "e" and instruction != "w" and instruction != "q":
+                print(style.RED + "This item you are looking for not in this room")
+                break
 
 
+    else:
+        instruction = input(
+            '\n'.join(f"[take {item.name}] take {item.name} and run\n" for item in player.current_room.items) +
+            '\n'.join(f"[drop {item.name}]" for item in player.inventory) + "\n" +
+            "\n[n] north [s] south [e] east [w] west [q] quit\n")
 
+        cardinal_direction()
+
+        for item in player.current_room.items:
+            if instruction == f"take {item.name}":
+
+                player.pick_up_item_to_inventory(item)
+                item.on_take()
+                print(style.RED + "USER INVENTORY: " +
+                      ",".join(f"{item.name}" for item in player.inventory))
+                player.current_room.remove_item(item)
+            else:
+                print(style.RED + "This item you are looking for not in this room")
+                break
+
+        for item in player.inventory:
+            if instruction == f"drop {item.name}":
+                player.drop_item(item)
+                item.on_drop()
+                player.current_room.add_item(item)
+            else:
+                print(style.RED + "You don't have this item to drop")
+                break
 
 #
