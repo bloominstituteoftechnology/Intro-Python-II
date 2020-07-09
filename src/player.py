@@ -2,6 +2,6 @@
 # currently.
 
 class Player:
-    def __init__(self, location):
+    def __init__(self, name, current_room):
         # super().__init__()
-        self.location = location
+        self.current_room = current_room
