@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+import textwrap
 # Declare all the rooms
 
 room = {
@@ -38,14 +39,47 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+directions = ['n', 's', 'e', 'w']
+player = Player("Ezra Black", room ['outside'])
 # Write a loop that:
 #
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+while True:
+    selection = input('Where to? ').lower().split(' ')
+    if len(selection) > 2 or len(selection) < 1:
+        print("please type help for more valid commands.")
+    elif len(selection) == 2:
+        if selection[0] in item_actions:
+            if selection[0] == 'get' or selection[0] == 'take':
+                item = player.current_room.search_items(selection[1])
+                player.current_room.drop_item(item)
+                player.add_item(item)
+                item.on_take(item)
+            elif selection[0] == 'drop':
+                item = p.search_items(selection[1])
+                player.current_room.add_item(item)
+                player.drop_item(item)
+                item.on_drop(item)
+        else: 
+            print("type help for more information")
+    else:
+        if selection[0] == 'q' or selection[0] == 'quit':
+            print(f'See you next time {player.name}!') 
+            break
+
+        if selection[0] == 'h' or selection[0] == 'help':
+            print("Commands:\n'n' - North\n's' - South\n'e' - East\n'w' - West\n'i'\nor 'quit' - Exit Game\n")
+            continue
+
+        # if selection[0] == 'inventory' or selection[0] == 'inventory':
+        #     player.print_items()
+        #     continue
+
+        if selection[0] in directions:
+            try:
+                player.move_room(selection[0])
+                print(f'Location: {player.current_room.name} - {player.current_room.description}\n')
+                player.current_room.print_items()
+            except AttributeError:
+                print('Go a different way')
+        else:
+            print('Enter a direction (n, s, e, w)')
