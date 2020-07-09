@@ -7,7 +7,7 @@ from item import Item
 room = {
     'outside':  Room("outside", "Outside Cave Entrance",
                      "North of you, the cave mount beckons",
-                     ["lantern", "fire", "grapple", "shovel"])
+                     ["lantern", "fire", "grapple", "shovel"]),
 
     'foyer':    Room("foyer", "Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", []),
@@ -41,7 +41,7 @@ room['treasure'].s_to = room['narrow']
 #
 player = input("Enter your name here to play: ")
 
-player1 = Player(player, room['outside'])
+player1 = Player(player, room['outside'], [])
 
 # print("GETATTR", getattr(room['outside'], 'n_to'))
 direction = input("""Please enter a direction you want to travel,
@@ -62,6 +62,11 @@ while not userIpt == 'q':
 
         except AttributeError:
             print("Try again, you cannot move in that direction!")
+
+    elif userIpt == 'look':
+        grabbedItems = room[currentRoom].look()
+        for item in grabbedItems:
+            player1.item_list.append(item)
 
     direction = input("""Please enter a direction you want to travel,
 [n], [s], [e] or [w] If you would like to quit please enter [q]: """)
