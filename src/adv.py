@@ -89,9 +89,18 @@ if __name__ == "__main__":
 
         # * Waits for user input and decides what to do.
         action = input("\nPlease enter a directional move (n, s, e or w; q to quit): ")
-        if len(action) > 0:
+        # Rules for when command is a single word
+        if len(action.split()) == 1:
             action = action.strip().lower().split()[0]
             action = action[0]
+        # Rules for when command is multiple words
+        elif len(action.split()) >= 2:
+            action = action.strip().lower().split()
+            # Ex. `get water`
+            get_action = action[0]
+            get_action = get_action[0] #> `g`
+            action_object = action[1:]
+            action_object = action_object[0][0] #> `w`
         else:
             print("Please enter a command!")
             continue
