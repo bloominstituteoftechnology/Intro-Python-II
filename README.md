@@ -21,6 +21,7 @@ Up to this point, you've gotten your feet wet by working on a bunch of small Pyt
 * Create the input command parser in `adv.py` which allows the program to receive player input and commands to move to rooms
   in the four cardinal directions.
 * Fill out Player and Room classes in `player.py` and `room.py`
+#upload comment
 
 ### Day 2 MVP
 
