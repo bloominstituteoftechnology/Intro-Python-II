@@ -3,6 +3,6 @@
 from room import Room
 
 class Player:
-    def __init__(self, name, room = None):
+    def __init__(self, name, room):
         self.room = room
         self.name = name
