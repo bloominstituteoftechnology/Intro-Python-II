@@ -71,15 +71,39 @@ def move():
 
 
 def bad_move():
-    print("Sorry, you cannot move in that direction. Please try another move!!!")
+    print("Sorry, you can't move in that direction. Please try another move!")
     global input
     input = player_input()
 
 
-def adventure_game():
-    print(f"You are currently in room: {player1.current_room}")
-    if player1.current_room == "outside":
-        print(room['outside'].description)
-
-
-adventure_game()
+while not input == 9:
+    if player1.current_room == room['outside']:
+        if input == 1:
+            player1.current_room = room["outside"].n_to
+            move()
+        else:
+            bad_move()
+    elif player1.current_room == room['foyer']:
+        if input == 1:
+            player1.current_room = room['foyer'].n_to
+            move()
+        elif input == 2:
+            player1.current_room = room['foyer'].s_to
+            move()
+        elif input == 3:
+            player1.current_room = room['foyer'].e_to
+            move()
+        else:
+            bad_move()
+    elif player1.current_room == room['overlook']:
+        if input == 2:
+            player1.current_room = room['overlook'].s_to
+            move()
+        else:
+            bad_move()
+    elif player1.current_room == room['narrow']:
+        if input == 1:
+        player1.current_room = room['narrow'].n_to
+        move()
+        elif input == 4:
+            player1.current_room = room['narrow'].w_to
