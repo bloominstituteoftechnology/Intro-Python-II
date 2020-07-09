@@ -7,10 +7,8 @@ class Player:
         self.current_room = current_room
         self.items = []
 
-    def grab_item(self, item):
-        self.current_room.delete_item(item)
-        self.items.append(item)
-        return f"Great find! You grabbed {item.name}"
+    def pickup_item(self, item):
+        return self.items.append(item)
 
     def try_direction(self, command):
         attribute = command + "_to"
