@@ -59,14 +59,35 @@ room['treasure'].s_to = room['narrow']
 # If the user enters "q", quit the game.
 
 player = Player("You", "outside")
-print("Welcome to the Adventure game! Will you be able to find the treasure?")
 
-# North - South, East, West, Quit
+# Welcome message for when the user starts up the game
+print("\nWelcome to the Adventure game! Will you be able to find the treasure?")
+
+# North, South, East, West, Quit
 moves = ["n", "s", "e", "w", "q"]
 
+# Print out  the player's starting location. 
+print(f"\nRight now, you are at the {room[player.current_room].name}\n{room[player.current_room].description}")
+
+# While the player doesn't press "q" to quit the game, we can keep progressing. 
 while moves != "q":
-    direction = input("\nChoose a direction: ")
+    moves = input("\nWhich direction would you like to go? ")
     try:
         if moves == "n":
-            player.current_room = room[player.current_room].n_to
-            print(f"\n You walk north into the {room[player.current_room].name} \n {room[player.current_room].description}")
+            player.current_room = room[player.current_room].n_to 
+            print(f"\n You walk north into the room {room[player.current_room].name}\n\n {room[player.current_room].description}")
+        
+        if moves == "s":
+            player.current_room = room[player.current_room].s_to
+            print(f"\n You walk south into the {room[player.current_room].name}\n\n {room[player.current_room].description}")
+
+        if moves == "e":
+            player.current_room = room[player.current_room].e_to
+            print(f"You walk east into the {room[player.current_room].name}\n\n {room[player.current_room].description}")
+
+        if moves == "w":
+            player.current_room = room[player.current_room].w_to
+            print(f"You walk west into the {room[player.current_room].name}\n\n {room[player.current_room].description} ")
+
+    except:
+        print("\n That direction isn't allowed")
