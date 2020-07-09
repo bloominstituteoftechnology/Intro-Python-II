@@ -76,7 +76,7 @@ def adventure_awaits():
         print(" ")
         print("Items Available:")
         for count, item in enumerate(current_player.room.items):
-            print(count, item)
+            print(f"{item.name} --- {item.description}")
         print("\n----------------------------")
         print("----------------------------")
 
@@ -111,10 +111,10 @@ def adventure_awaits():
             elif (action == "i"):
                 print(f"{current_player.name} items:" )
                 for each_item in current_player.inventory:
-                    print(f"{each_item}\n")
+                    print(f"{each_item.name} --- {each_item.description}")
             else:
                 wrapper = textwrap.TextWrapper(width=70)
-                error=wrapper.wrap(text="When entering one character please enter a direction: n, s, e, w. etc. Type 'q' to quit. Type 'i' for player inventory. Type 'take item-name' or 'drop item-name' to add or remove ITEM from player inventory. When entering more then one character, two words are expected. The only admissable first words are 'take', 'get', and 'drop' and the only admissiable second words are 'item-name' in order to remove or add items to player inventory For example: 'take sword', 'drop gold', or 'get potion'")
+                error=wrapper.wrap(text="The game takes a one letter command, or a two word command. For a one letter command, possible commands include: n = north, s = south, w = west, e = east, i = display player inventory, q = quit game. For two letter commands you can do the following: take 'item-name', get 'item-name' or drop 'item-name' to add or remove items from player inventory and rooms.")
                 for each_line in error:
                     print(each_line)
 
