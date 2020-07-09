@@ -1,9 +1,13 @@
-# Write a class to hold player information, e.g. what room they are in
-# currently.
 class Player:
-  def __init__(self, name, current_room):
-    self.name = name
-    self.current_room = current_room
+    def __init__(self, name, location):
+        self.name = name
+        self.location = location
+        self.items = []
 
-  def __str__(self):
-    return f"{self.name} is located in {self.current_room}"
+    def get_item(self, item):
+        self.location.remove_item(item)
+        self.items.append(item)
+        return f'You picked up {item.name}'
+
+    def __str__(self):
+        return f'{self.name}' 
