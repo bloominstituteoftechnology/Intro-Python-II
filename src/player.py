@@ -82,7 +82,7 @@ Step 8: Find the room with the treasure in it.
 -display the name, description
 -display the treasure
 -interactions w/ treasure
-Step 10: You won/You died conditions
+Step 9: You won/You died conditions
 -You won! Exit Program/Try Again
-Step 11: Exit program
+Step 10: Exit program
 '''
