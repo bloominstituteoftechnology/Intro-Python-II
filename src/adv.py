@@ -133,6 +133,11 @@ while not (game_over or player.has_item("treasure")):
     #print("\nWhich direction would you like to go?")
     command = input("\nWhat now? ")
 
+    # Check for empty commands
+    if command == "":
+        print("No command was entered")
+        continue  # go back to top of loop
+
     # Convert to lower case to understand more input options
     command = command.lower()
     
