@@ -1,6 +1,7 @@
 
 from room import Room
 from player import Player
+from item import Item
 
 
 # Declare all the rooms
@@ -41,6 +42,34 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+#
+# items = Item('Sword', 'a killing machine')
+# newcod = [
+# (1, 'new', 'cody'),
+# (2, 'neww', 'dalton')
+# ]
+#
+# print(newcod[1])
+
+items = [
+    Item(1, 'Sword', 'a killing machine'),
+    Item(2, 'Knife', 'a slaying machine'),
+    Item(3, 'Pistol', 'Sig Sauer P320'),
+    Item(4, 'Revolver', 'Limb Ripping Handgun'),
+    Item(5, 'Rifle', '.338 Lapua Magnum - Sniper'),
+    Item(6, 'Shotgun', 'Benelli 12 Gauage Pump')
+]
+
+
+
+
+print('Available weapons: ')
+print(*items, sep = '\n')
+
+
+
+# print(items.print_items())
+
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside'])
@@ -50,13 +79,25 @@ player = Player(room['outside'])
 while True:
 
 
+    print(f'\nThe room that you are currently in is....{player.room.name}\n')
+    print(f'Heres a hint...{player.room.description}\n')
 
-    print(f'    The room that you are currently in is....{player.room.name}')
-    print(f'Heres a hint...{player.room.description}')
+
+    pickup = input('What weapon? ')
+
+    chosen_weapon = items[int(pickup)-1]
+    player.add_weapon(chosen_weapon)
+
+    print(player.currentinv())
+
+    
+
+
     selection = input('Please select a direction in which to go: select "n" for North, "e" for East, "s" for South, "w" for West. ')
 
 
     if selection == 'q':
+        print('\nSee you next time!\n')
         break
 
     try:
@@ -85,6 +126,11 @@ while True:
             player.room = player.room.w_to
     except:
         print("you can't go that way")
+
+
+
+
+
 
 
 
