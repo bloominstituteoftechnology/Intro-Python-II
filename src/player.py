@@ -5,7 +5,7 @@ class Player:
     def __init__(self, name, current_room):
         self.name = name
         self.current_room = current_room
-        # self.bag = []
+        self.bag = []
     def directions(self, direction):
         if direction == "n":
             room_i = 0
