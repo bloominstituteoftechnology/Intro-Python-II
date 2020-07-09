@@ -39,7 +39,6 @@ room['treasure'].s_to = room['narrow']
 
 if __name__ == "__main__":
     
-
     # Make a new player object that is currently in the 'outside' room.
 
     player1 = Player("Mercedes", room['outside'])
@@ -50,8 +49,11 @@ if __name__ == "__main__":
     # Write a loop that:
     while True:
         # * Prints the current room name and items
-        print(f"\nYOUR CURRENT: {player1.current_room}")
-        print(f"\n{player1.current_room.view_items()}")
+        print(f"\nYOUR CURRENT {player1.current_room}")
+        print(player1.current_room.view_items())
+
+        # View Player Inventory
+        print(player1.view_inventory())
 
         # * Prints the current description (the textwrap module might be useful here).
         # print(f"\nLOCATION INFO: {player1.current_room.description}")

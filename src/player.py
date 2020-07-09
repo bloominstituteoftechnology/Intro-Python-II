@@ -3,9 +3,10 @@
 
 class Player:
 
-    def __init__(self, name, current_room):
+    def __init__(self, name, current_room, inventory=[]):
         self.name = name
         self.current_room = current_room
+        self.inventory = inventory
     
     def __str__(self):
         return f"PLAYER NAME: {self.name} \n{self.current_room}"
@@ -20,5 +21,10 @@ class Player:
 
         else:
             print("You can't go that way!")
+
+    def view_inventory(self):
+        print("\nPLAYER INVENTORY: ")
+        for i in self.inventory:
+            i.print_name()
 
 
