@@ -150,7 +150,7 @@ while game_running:
                       ",".join(f"{item.name}" for item in player.inventory))
                 player.current_room.remove_item(item)
             elif instruction != "n" and instruction != "s" and instruction != "e" and instruction != "w" and instruction != "q":
-                print(style.RED + "This item you are looking for not in this room")
+                print(style.RED + "Wrong command line")
                 break
 
 
@@ -164,23 +164,18 @@ while game_running:
 
         for item in player.current_room.items:
             if instruction == f"take {item.name}":
-
                 player.pick_up_item_to_inventory(item)
                 item.on_take()
                 print(style.RED + "USER INVENTORY: " +
                       ",".join(f"{item.name}" for item in player.inventory))
                 player.current_room.remove_item(item)
-            else:
-                print(style.RED + "This item you are looking for not in this room")
-                break
 
         for item in player.inventory:
             if instruction == f"drop {item.name}":
                 player.drop_item(item)
                 item.on_drop()
+                print(style.RED + "USER INVENTORY: " +
+                      ",".join(f"{item.name}" for item in player.inventory))
                 player.current_room.add_item(item)
-            else:
-                print(style.RED + "You don't have this item to drop")
-                break
 
 #
