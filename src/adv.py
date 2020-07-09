@@ -2,6 +2,7 @@ from room import Room
 from player import Player
 from item import Item
 import time
+import tkinter as tk
 
 # function to return key for any value 
 def get_key(val): 
@@ -22,6 +23,8 @@ item5 = Item('hookshot', 'Maybe I can cross that chasm with this...')
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons", []),
+    'glory':  Room("You win!!!",
+                     "You have achieved eternal glory! You collected all the items and crossed the great chasm!!!", []),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", [item2]),
@@ -44,9 +47,23 @@ room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
 room['overlook'].s_to = room['foyer']
+room['overlook'].n_to = room['glory']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+# GUI experimenting
+# from tkinter import *
+# from tkinter.ttk import *
+# master = tk.Tk()
+# pane = Frame(master)
+# greeting = tk.Label(text="What is your adventurer\'s name?")
+# greeting.pack()
+# entry = tk.Entry(fg="yellow", bg="blue", width=50)
+# entry.pack()
+# name = entry.get()
+# pane.pack_forget()
+# mainloop()
 
 # Main
 name = input('--------------------------------------------\nWhat is your adventurer\'s name?\n--------------------------------------------\n')
@@ -62,7 +79,7 @@ while user_input[0] != "q":
         for item in room[player.current_room].items:
             print(item.name, '-', item.description)
 
-    user_input = input("\n\n        [n] North\n[w] West         [e] East\n        [s] South\n\n\n[i] Inventory\n[get [ITEM_NAME]] Grab an item\n[q] Quit\n\n")
+    user_input = input("\n\n        [n] North\n[w] West         [e] East\n        [s] South\n\n\n[i] Inventory\n[get [ITEM_NAME]] Grab an item\n[drop [ITEM_NAME]] Drop an item\n[q] Quit\n\n")
 
     # Split input
     user_input = user_input.split()
@@ -95,8 +112,14 @@ while user_input[0] != "q":
 
     # Action based on input
     if user_input[0] == 'n':
-        if room[player.current_room].n_to != None:
+        if room[player.current_room].n_to != None and player.current_room != 'overlook':
+            #if len(player.items) == 5
             player.current_room = get_key(room[player.current_room].n_to)
+        elif len(player.items) == 5 and player.current_room == 'overlook':
+            player.current_room = get_key(room[player.current_room].n_to)
+        elif len(player.items) < 5 and player.current_room == 'overlook':
+            print('Maybe if I collect all the items I\'ll be able to cross this chasm...')
+            time.sleep(1.5)
         else:
             room[player.current_room].invalid_room()
     if user_input[0] == 'e':
