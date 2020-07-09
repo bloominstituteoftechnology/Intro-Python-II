@@ -57,6 +57,7 @@ is_playing = True
 while is_playing:
     data = input('Where shall we go? ')
     truthydata = 's n e w q'
+    print(player.current_room)
     # print(data)
     # print(truthydata)
 
