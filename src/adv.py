@@ -5,14 +5,19 @@ from string import capwords
 
 # Declare all the rooms
 
+north = 'Move North'
+south = 'Move South'
+east = 'Move East'
+west = 'Move West'
+
 room = {
     'outside': Room("Outside Cave Entrance",
                     "North of you, the cave mount beckons",
-                    ['Move North']),
+                    [north]),
 
     'foyer': Room("Foyer", """Dim light filters in from the south. Dusty
     passages run north and east.""",
-                  ['Move South', 'Move North', 'Move East'],
+                  [south, north, east],
                   {'empty lantern': Item('empty lantern',
                                          'An simple oil-fueled lantern, '
                                          'currently devoid of fuel.', 5)}),
@@ -20,18 +25,18 @@ room = {
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, 
     falling into the darkness. Ahead to the north, a light flickers in 
     the distance, but there is no way across the chasm.""",
-                     ['Move South']),
+                     [south]),
 
     'narrow': Room("Narrow Passage", """The narrow passage bends here from 
     west to north. The smell of gold permeates the air.""",
-                   ['Move West', 'Move North'],
+                   [west, north],
                    {'gold': Gold(3), 'rock': Rock()}),
 
     'treasure': Room("Treasure Chamber",
                      """You've found the long-lost treasure
                      chamber! Sadly, it has already been completely emptied by
                      earlier adventurers. The only exit is to the south.""",
-                     ['Move South'],
+                     [south],
                      {'gold': Gold(1), 'dagger': Dagger()}),
 }
 
@@ -71,7 +76,7 @@ def action_loop(player):
         f'Get {capwords(x)}'
         for x in player.current_room.inventory
         if player.current_room.inventory is not None
-    ] + ['View Inventory', 'Drop Item']
+    ] + ['', 'View Inventory', 'Drop Item', '']
 
     for action in available_actions:
         print(action)
@@ -94,7 +99,7 @@ def action_loop(player):
             item = action_input[4:]
             if item in player.current_room.inventory.keys():
                 player.get_item(player.current_room.inventory[item])
-                print(f'You have acquired the {item}.\n')
+                player.inventory[item].on_take()
                 player.view_inventory()
                 action_loop(player)
             else:
@@ -108,7 +113,7 @@ def action_loop(player):
                 drop = input('Item:\n')
                 if drop in player.inventory:
                     player.drop_item(player.inventory[drop])
-                    print(f'You have dropped {drop}.')
+                    player.current_room.inventory[drop].on_drop()
                     action_loop(player)
                 else:
                     print('No such item!')

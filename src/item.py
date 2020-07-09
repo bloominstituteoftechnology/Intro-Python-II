@@ -7,6 +7,12 @@ class Item:
     def __str__(self):
         return f'{self.name}\n=====\n{self.description} Value: {self.value}\n'
 
+    def on_take(self):
+        print(f'You have picked up {self.name}!\n')
+
+    def on_drop(self):
+        print(f'You have dropped {self.name}!\n')
+
 
 class Gold(Item):
     def __init__(self, amount):
