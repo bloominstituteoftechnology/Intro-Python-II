@@ -5,10 +5,10 @@
 # which point to the room in that respective direction.
 
 class Room:
-    n_to = "north"
-    s_to = "south"
-    e_to = "east"
-    w_to = "west"
+    # n_to = "north"
+    # s_to = "south"
+    # e_to = "east"
+    # w_to = "west"
 
     def __init__(self, name, description):
         self.name = name

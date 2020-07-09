@@ -7,4 +7,5 @@ class Product:
     def __str__(self):
         return f"{self.name}: ${self.price}"
 
-    
+    def print_name(self):
+        print(f"{self.name}")

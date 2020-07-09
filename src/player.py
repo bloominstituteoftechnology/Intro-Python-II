@@ -9,3 +9,16 @@ class Player:
     
     def __str__(self):
         return f"PLAYER NAME: {self.name} \n{self.current_room}"
+
+    def try_direction(self, action):
+        attribute = action + "_to"
+
+        # see if the current room has the attribute
+        if hasattr(self.current_room, attribute):
+            # `getattr` to move to the room
+            self.current_room = getattr(self.current_room, attribute)
+
+        else:
+            print("You can't go that way!")
+
+
