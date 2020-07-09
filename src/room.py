@@ -1,13 +1,15 @@
+import time
+
 class Room:
     def __init__(self, name, description, items):
         self.name = name
         self.description = description
         self.items = items
+        self.n_to = None
+        self.s_to = None
+        self.e_to = None
+        self.w_to = None
 
-    """
-    Specs say the following:
-    The room should also have n_to, s_to, e_to, and w_to attributes which point to the room in that respective direction.
-
-    I'm confused on this. I was given starter code that connected the rooms correctly already. Am I supposed to be transferring that
-    starting code into the Room class?
-    """
+    def invalid_room(self):
+        print('There is nothing to be gained by going in this direction...')
+        time.sleep(1.5)

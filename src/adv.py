@@ -11,14 +11,14 @@ def get_key(val):
   
     return "key doesn't exist"
 
-# Declare all the items
+# Instantiate all the items
 item1 = Item('sword', 'The blade is sharp. I best be careful with this. Hopefully I won\'t need to use it.')
 item2 = Item('shield', 'An old wooden shield with some wierd symbols engraved on it.')
 item3 = Item('bow', 'This is useless unless I can find some arrows...')
 item4 = Item('arrows', 'Sharp! Now if only I had a bow...')
 item5 = Item('hookshot', 'Maybe I can cross that chasm with this...')
 
-# Declare all the rooms
+# Instantiate all the rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons", []),
@@ -51,48 +51,70 @@ room['treasure'].s_to = room['narrow']
 # Main
 name = input('--------------------------------------------\nWhat is your adventurer\'s name?\n--------------------------------------------\n')
 player = Player(name, 'outside', [])
-user_input = "p"
+user_input = ["p"]
 
-while user_input != "q":
+while user_input[0] != "q":
+    # Prompt based on room and items
     print("--------------------------------------------\nLOCATION:\nThe", room[player.current_room].name)
     print(room[player.current_room].description)
     if len(room[player.current_room].items) > 0:
         print('\nNEARBY ITEMS:')
         for item in room[player.current_room].items:
-            print('A', item.name, '-', item.description)
-    print('\nPick an action for', player.name)
+            print(item.name, '-', item.description)
 
-    user_input = input("\n\n        [n] North\n[w] West         [e] East\n        [s] South\n\n\n[i] Inventory\n[g] Grab an item\n[q] Quit\n\n")
+    user_input = input("\n\n        [n] North\n[w] West         [e] East\n        [s] South\n\n\n[i] Inventory\n[get [ITEM_NAME]] Grab an item\n[q] Quit\n\n")
 
-    if user_input == 'n':
-        try:
+    # Split input
+    user_input = user_input.split()
+    if len(user_input) == 2:
+        if user_input[0] == 'get' or user_input[0] == 'take':
+            for item in room[player.current_room].items:
+                if item.name == user_input[1]:
+                    player.items.append(item)
+                    room[player.current_room].items.remove(item)
+                    item.on_take()
+                    time.sleep(1.5)
+                else:
+                    print('That item doesn\'t seem to be in this room!')
+                    time.sleep(1.5)
+        if user_input[0] == 'drop':
+            if len(player.items) == 0: 
+                print('You\'re inventory is empty!')
+                time.sleep(1.5)  
+            for item in player.items:
+                if item.name == user_input[1]:
+                    room[player.current_room].items.append(item)
+                    player.items.remove(item)
+                    item.on_drop()
+                    time.sleep(1.5)
+                else:
+                    print('That item isn\'t in your inventory!')
+                    time.sleep(1.5)   
+                   
+    
+
+    # Action based on input
+    if user_input[0] == 'n':
+        if room[player.current_room].n_to != None:
             player.current_room = get_key(room[player.current_room].n_to)
-        except:
-            print('There is nothing to be gained by going in this direction...')
-            time.sleep(1.5)
-    if user_input == 'e':
-        try:
+        else:
+            room[player.current_room].invalid_room()
+    if user_input[0] == 'e':
+        if room[player.current_room].e_to != None:
             player.current_room = get_key(room[player.current_room].e_to)
-        except:
-            print('There is nothing to be gained by going in this direction...')
-            time.sleep(1.5)
-    if user_input == 's':
-        try:
+        else:
+            room[player.current_room].invalid_room()
+    if user_input[0] == 's':
+        if room[player.current_room].s_to != None:
             player.current_room = get_key(room[player.current_room].s_to)
-        except:
-            print('There is nothing to be gained by going in this direction...')
-            time.sleep(1.5)
-    if user_input == 'w':
-        try:
+        else:
+            room[player.current_room].invalid_room()
+    if user_input[0] == 'w':
+        if room[player.current_room].w_to != None:
             player.current_room = get_key(room[player.current_room].w_to)
-        except:
-            print('There is nothing to be gained by going in this direction...')
-            time.sleep(1.5)
-    if user_input == 'i':
+        else:
+            room[player.current_room].invalid_room()
+    if user_input[0] == 'i':
         for item in player.items:    
             print(item.name, ' ', item.description)
         time.sleep(1.5)
-    if user_input == 'g':
-        for item in room[player.current_room].items:
-            player.items.append(item)
-            room[player.current_room].items.remove(item)
