@@ -1,27 +1,56 @@
 import sys
 from room import Room
 from player import Player
+from item import Item
 # from parser import parser
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                     room_items=[
+                         Item("Key", "Appears to unlock something ...")
+                     ]),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    Room(
+        "Foyer", 
+        """
+        Dim light filters in from the south. Dusty
+        passages run north and east.
+        """,
+        room_items=[
+            Item("Unopened Water Bottle", "Lucky! Some drinking water!")
+        ]),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'overlook': Room(
+        "Grand Overlook", 
+        """
+        A steep cliff appears before you, falling
+        into the darkness. Ahead to the north, a light flickers in
+        the distance, but there is no way across the chasm.
+        """,
+        room_items=[
+            Item("Skeleton", "An unlucky traveler ...")
+        ]),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'narrow':   Room(
+        "Narrow Passage", 
+        """
+        The narrow passage bends here from west
+        to north. The smell of gold permeates the air.
+        """),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+    'treasure': Room(
+        "Treasure Chamber", 
+        """
+        You've found the long-lost treasure
+        chamber! Sadly, it has already been completely emptied by
+        earlier adventurers. The only exit is to the south.
+        """,
+        room_items=[
+            Item("Strange Map", "A strange map ... does another adventure beckon!?")
+        ]),
 }
 
 
@@ -60,10 +89,13 @@ if __name__ == "__main__":
 
         # * Waits for user input and decides what to do.
         action = input("\nPlease enter a directional move (n, s, e or w; q to quit): ")
-        action = action.strip().lower().split()[0]
-        action = action[0]
+        if len(action) > 0:
+            action = action.strip().lower().split()[0]
+            action = action[0]
+        else:
+            print("Please enter a command!")
+            continue
 
-        
         # If the user enters a cardinal direction, attempt to move to the room there.
         if action in choices:
         #   print(f"\nUSER SELECTION: {action}")
