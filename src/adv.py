@@ -72,7 +72,7 @@ print(room['outside'].show_items())
 while True:
     current_room = player.current_room
     print(f"{current_room.description}")
-    nextMove = input("Enter your next move n, s, e, w or q for quit: ")
+    nextMove = input("Enter your next move n, s, e, w, t to pick up item, d to drop item, i to see iventory, or q for quit: ")
 
     # Setting it up for the user to make moves or quit
     if nextMove == "n":
@@ -102,10 +102,25 @@ while True:
             print("You chose to go West!")
         else:
             print("There is not room that way; please try again!")
-    # Adding the ability 
+    # Picking up an item
+    elif nextMove == "t":
+        for item in player.current_room.items:
+            print(player.pickupItem(item))
+
+        print(player.items)
+    # Dropping the item
+    elif nextMove == "d":
+        for item in player.items:
+            if item.name == item:
+                player.dropItem(item)
+    # To see what items the player has            
+    elif nextMove == "i":
+        print(player.show_inventory())
+
+    # Adding the ability to quit
     elif nextMove == "q":
         print("Thank you for playing! See you soon!")
         exit()
     # Adding an error message
     else:
-        print("Please enter n, s, e, w to make a move or q to quit!")
+        print("Please enter n, s, e, w to make a move, t to pick up an item, d to drop an item or i to see iventory or q to quit!")
