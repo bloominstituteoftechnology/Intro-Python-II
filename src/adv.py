@@ -71,9 +71,9 @@ while True:
                 print(count, item)
             # print(*new_player.items, sep='\n')
 
-    travel_direction = input("\nWhat direction would you like to travel (n, s, w or e)?: ").lower()
+    travel_direction = input("\nWhat direction would you like to travel (n, s, w or e)?: ").strip().lower()[0]
  
-    if travel_direction == "s" or travel_direction == "south":
+    if travel_direction == "s":
         if new_player.current_room.s_to == []:
             print("\n\033[1mYou checked, but South doesn't work.\033[0m")
         else:
@@ -81,7 +81,7 @@ while True:
             print(f'\n\033[1mYou moved to {new_player.current_room.name}\033[0m \n')
             print(f"{new_player.current_room.description}.\033[0m \n")
 
-    elif travel_direction == "w" or travel_direction == "west":
+    elif travel_direction == "w":
         if new_player.current_room.w_to == []:
             print("\n\033[1mYou checked, but West doesn't work.\033[0m")
         else:
@@ -89,7 +89,7 @@ while True:
             print(f'\n\033[1mYou moved to {new_player.current_room.name}\033[0m \n')
             print(f"{new_player.current_room.description}.\033[0m \n")
 
-    elif travel_direction == "e" or travel_direction == "east":
+    elif travel_direction == "e":
         if new_player.current_room.e_to == []:
             print("\n\033[1mYou checked, but East doesn't work.\033[0m")
         else:
@@ -97,7 +97,7 @@ while True:
             print(f'\n\033[1mYou moved to {new_player.current_room.name}\033[0m \n')
             print(f"{new_player.current_room.description}.\033[0m \n")
 
-    elif travel_direction == "n" or travel_direction == "north":
+    elif travel_direction == "n":
         if new_player.current_room.n_to == []:
             print("\n\033[1mYou checked, but North doesn't work.\033[0m")
         else:
@@ -105,7 +105,7 @@ while True:
             print(f'\n\033[1mYou moved to {new_player.current_room.name}\033[0m \n')
             print(f"{new_player.current_room.description}.\033[0m \n")
     
-    elif travel_direction == "d" or travel_direction == "drop" or travel_direction == "i":
+    elif travel_direction == "d" or travel_direction == "i":
         if new_player.items == None:
             print("You have nothing in your inventory")
         else:
@@ -123,7 +123,7 @@ while True:
                     except:
                         print("You don't have that item to drop!")
 
-    elif travel_direction == "q" or travel_direction == "quit":
+    elif travel_direction == "q":
         break
        
     else:
