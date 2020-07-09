@@ -57,7 +57,9 @@ while True:
     # when input comes in, strip off whitespace, lowercase the input, and split it
     command = input("What would you like to do? ").strip().lower().split()[0]
     command = command[0]
-
+    if command != ['n', 's', 's', 'w']:
+        print("The given direction is not valid!")
+        print()
     if command == 'q':
         break
 

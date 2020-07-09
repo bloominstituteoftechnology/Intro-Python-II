@@ -1,8 +1,10 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 class Player:
-    def __init__(self, location):
+    def __init__(self, location, name, current_room):
         self.location = location
+        self.name = name
+        self.current_room = current_room
 
     def try_direction(self, command):
         attribute = command  + '_to'
@@ -14,3 +16,4 @@ class Player:
             self.location = getattr(self.location, attribute)
         else:
             print("You can't go that way!\n")
+
