@@ -1,6 +1,8 @@
 from room import Room
+from player import Player
+from item import Item, items, description
 
-# Declare all the rooms
+# Declare all the rooms   ;)
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -36,9 +38,9 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
+print("Welcome Adventurer!")
 # Make a new player object that is currently in the 'outside' room.
-
+player_one = Player("Frodo", room["outside"], ["cape", "ring"])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +51,53 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+while player_one.awake:
+    print("If you'd like to take a nap at anytime think of the letter 'q'")
+    print(f"{player_one.current_room.name}\n{player_one.current_room.description}")
+    player_one_input = input("Explore the area to find the treasure.") 
+
+    if player_one_input == "q":
+        player_one.awake = False 
+    
+    #Outside--->Foyer
+    elif player_one_input == "n":
+        player_one.current_room = player_one.current_room.n_to
+        print(player_one.current_room)
+    
+    #Foyer--->Overlook
+    elif player_one_input == "n":
+        player_one.current_room = player_one.current_room.n_to
+        print(player_one.current_room)
+    #Foyer--->Narrow
+    elif player_one_input == "e":
+        player_one.current_room = player_one.current_room.e_to
+        print(player_one.current_room)
+    #Foyer--->Outside
+    elif player_one_input == "s":
+        player_one.current_room = player_one.current_room.s_to
+        print(player_one.current_room)
+
+    #Overlook--->Foyer
+    elif player_one_input == "s":
+        player_one.current_room = player_one.current_room.s_to
+        print(player_one.current_room)
+
+    #Narrow--->Foyer
+    elif player_one_input == "w":
+        player_one.current_room = player_one.current_room.w_to
+        print(player_one.current_room)
+    #Narrow--->Treasure
+    elif player_one_input == "n":
+        player_one.current_room = player_one.current_room.n_to
+        print(player_one.current_room)
+    
+    #Treasure--->Narrow
+    elif player_one_input == "s":
+        player_one.current_room = player_one.current_room.s_to
+        print(player_one.current_room)
+
+    #check if None = blocked    
+    else:
+        print("The path seems to be blocked")
