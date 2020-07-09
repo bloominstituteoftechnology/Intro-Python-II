@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item, Food, Weapon
 
 # Declare all the rooms
 
@@ -33,19 +35,61 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Initialize items
+ammo9mm = Item("ammo9mm", "ammunition for 9mm guns")
+
+# Food
+ramen = Food("ramen", "a cup of instant noodles", 250)
+pizza = Food("pizza", "a box of left over pizza", 300)
+
+
+# Weapon
+knife = Weapon("knife", "a hand knife", 20)
+pistol = Weapon("pistol", "9mm pistol", 40)
+
+# Add room items
+room['outside'].addItems(ammo9mm, ammo9mm, ammo9mm, ammo9mm, ammo9mm)
+room['foyer'].addItems(knife, ramen)
+room['overlook'].addItems(ramen, pistol)
+room['narrow'].addItems(ammo9mm, ammo9mm, ramen)
+room['treasure'].addItems(pizza, pizza, ramen)
+
 #
 # Main
 #
 
+username = input("What is your name? ")
+
 # Make a new player object that is currently in the 'outside' room.
+player = Player(username, room['outside'])
 
 # Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
+while True:
+	player.displayRoom()
+	
+	user = input("[n] North\t[s] South\t[e] East\t[w] West\n[i] Inventory\n[take item]\t[drop item]\n[q] Quit: ").lower()
+
+	inputs = user.split()
+
+	directions = ('n', 's', 'e', 'w')
 # If the user enters "q", quit the game.
+# * Waits for user input and decides what to do
+	if len(inputs) == 1:
+		if inputs[0] == 'q':
+			break
+	# If the user enters a cardinal direction, attempt to move to the room there.
+		elif inputs[0] in directions:
+			player.moveTo(inputs[0])
+		elif inputs[0] == 'i':
+			player.displayInventory()
+
+	elif len(inputs) == 2:
+		if inputs[0] == "get" or inputs[0] == "take":
+			player.addItem(inputs[1])
+		elif inputs[0] == "drop":
+			player.dropItem(inputs[1])
+	# Print an error message if the movement isn't allowed.
+	else:
+		print("Invalid command.")
+
+	print("\n")
