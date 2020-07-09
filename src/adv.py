@@ -68,6 +68,8 @@ while not userIpt == 'q':
         for item in grabbedItems:
             player1.item_list.append(item)
 
+        print(room[currentRoom].items)
+
     direction = input("""Please enter a direction you want to travel,
 [n], [s], [e] or [w] If you would like to quit please enter [q]: """)
 
