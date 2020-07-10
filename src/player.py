@@ -22,11 +22,6 @@ class Player:
         else:
             print("You can't go that way!")
 
-    # need a way for player to pick up an item
-    def get_item(self, get_action):
-        item = get_action
-        # see if room has the item
-
     def add_to_inventory(self, action_object):
         attribute = "item_" + action_object
 
@@ -35,6 +30,18 @@ class Player:
             # add item to inventory
             item = getattr(self.current_room, attribute)
             self.inventory.append(item)
+
+    def drop_from_inventory(self, action_object):
+        # Ensure inventory isn't empty
+        if len(self.inventory) > 0:
+            # Loop into inventory
+            for i in self.inventory:
+                # grab item if object name string includes action_object
+                if action_object in i.name:
+                    item = i
+                    self.inventory.remove(item)
+        else:
+            print("No items to drop!")
 
     def view_inventory(self):
         print("\nPLAYER INVENTORY: ")

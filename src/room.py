@@ -27,6 +27,9 @@ class Room:
         for i in self.room_items:
             self.room_items.remove(i)
 
+    def catch_item(self, item):
+        self.room_items.append(item)
+
 
 
 if __name__ == "__main__":
