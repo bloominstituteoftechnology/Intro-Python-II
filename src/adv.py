@@ -1,6 +1,8 @@
+import code
 from room import Room
 from player import Player
-import textwrap
+from item import Item
+
 # Declare all the rooms
 
 room = {
@@ -33,7 +35,11 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-
+room['outside'].add_item(Item("knife", "A pointy object"))
+room['foyer'].add_item(Item("staff", "for mages!"))
+room['overlook'].add_item(Item("fire scroll", "shoot some fireballs!"))
+room['narrow'].add_item(Item("Ice Scroll", "kill em with ice!"))
+room['treasure'].add_item(Item("Key", "Wonder what this opens??"))
 #
 # Main
 #
@@ -41,6 +47,11 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 directions = ['n', 's', 'e', 'w']
 player = Player("Ezra Black", room ['outside'])
+item_actions = ['get', 'take', 'drop']
+
+print(f'You are {player.name}!\nEnter h for help')
+print(f'You are in {player.current_room.name} - {player.current_room.description}\n')
+player.current_room.print_items()
 # Write a loop that:
 #
 while True:
@@ -63,16 +74,16 @@ while True:
             print("type help for more information")
     else:
         if selection[0] == 'q' or selection[0] == 'quit':
-            print(f'See you next time {player.name}!') 
+            print(f'Goodbye {player.name}!') 
             break
 
         if selection[0] == 'h' or selection[0] == 'help':
-            print("Commands:\n'n' - North\n's' - South\n'e' - East\n'w' - West\n'i'\nor 'quit' - Exit Game\n")
+            print("Commannds:\n'n' - North\n's' - South\n'e' - East\n'w' - West\n'i'\nget/take/drop for items\nor 'quit' - Exit Game\n")
             continue
 
-        # if selection[0] == 'inventory' or selection[0] == 'inventory':
-        #     player.print_items()
-        #     continue
+        if selection[0] == 'inventory' or selection[0] == 'inventory':
+            player.print_items()
+            continue
 
         if selection[0] in directions:
             try:

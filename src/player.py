@@ -11,7 +11,7 @@ class Player:
         self.items = []
         
     def __str__(self):
-        return f'Name: {self.name}, Current Room: {self.current_room}'
+        return f'Name: {self.name}, Room: {self.current_room}'
     
     def move_room(self, direction):
         if getattr(self.current_room, f'{direction}_to'):
@@ -19,11 +19,11 @@ class Player:
     
     def print_items(self):
         if len(self.items) > 0:
-            print('Your current items:\n')
+            print('current items:\n')
             for i in self.items:
                 print(f'{i.name} - {i.description}')
         else:
-            print('You have no items - explore the map to find some and add them to your collection!')
+            print('You have no items.')
 
     def search_items(self, item):
         for i in self.items:
