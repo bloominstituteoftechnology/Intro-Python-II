@@ -10,7 +10,7 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons",
                      room_items=[
-                         Item("Key", "Appears to unlock something ...")
+                         Item("Key [key]", "Appears to unlock something ...")
                      ]),
 
     'foyer':    Room(
@@ -20,7 +20,7 @@ room = {
         passages run north and east.
         """,
         room_items=[
-            Item("Unopened Water Bottle", "Lucky! Some drinking water!")
+            Item("Unopened Water Bottle [water]", "Lucky! Some drinking water!")
         ]),
 
     'overlook': Room(
@@ -31,7 +31,7 @@ room = {
         the distance, but there is no way across the chasm.
         """,
         room_items=[
-            Item("Skeleton", "An unlucky traveler ...")
+            Item("Skeleton [skeleton]", "An unlucky traveler ...")
         ]),
 
     'narrow':   Room(
@@ -49,7 +49,7 @@ room = {
         earlier adventurers. The only exit is to the south.
         """,
         room_items=[
-            Item("Strange Map", "A strange map ... does another adventure beckon!?")
+            Item("Strange Map [map]", "A strange map ... does another adventure beckon!?")
         ]),
 }
 
@@ -66,8 +66,18 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 
+# To reference if item is in room
+room["outside"].item_key = room["outside"].room_items[0]
+room["foyer"].item_water = room["foyer"].room_items[0]
+room["overlook"].item_skeleton = room["overlook"].room_items[0]
+room["treasure"].item_map = room["treasure"].room_items[0]
+
+# room["outside"].room_items[0].name #> Key
+
+
 if __name__ == "__main__":
     
+
     # Make a new player object that is currently in the 'outside' room.
 
     player1 = Player("Mercedes", room['outside'])
@@ -89,31 +99,59 @@ if __name__ == "__main__":
 
         # * Waits for user input and decides what to do.
         action = input("\nPlease enter a directional move (n, s, e or w; q to quit): ")
+
         # Rules for when command is a single word
         if len(action.split()) == 1:
             action = action.strip().lower().split()[0]
             action = action[0]
+
+            # If the user enters a cardinal direction, attempt to move to the room there.
+            if action in choices:
+                player1.try_direction(action)
+
+            # Print an error message if the movement isn't allowed.
+            elif action not in choices and action != "q":
+                print("\nERROR: invalid movement")
+
+            # If the user enters "q", quit the game.
+            elif action == "q":
+                sys.exit("\nThanks for playing!")
+
         # Rules for when command is multiple words
         elif len(action.split()) >= 2:
             action = action.strip().lower().split()
             # Ex. `get water`
-            get_action = action[0]
-            get_action = get_action[0] #> `g`
-            action_object = action[1:]
-            action_object = action_object[0][0] #> `w`
+            get_action = action[0] #> `get`
+            action_object = action[1] #> `water`
+            # action_object = action_object[0][0] #> `w`
+
+            # If the user enters a get [item] command, attempt to add item to player inventory
+            if get_action == "get":
+                # add item to player inventory
+                player1.add_to_inventory(action_object)
+                # remove item from room
+                player1.current_room.drop_item()
+
         else:
             print("Please enter a command!")
             continue
 
         # If the user enters a cardinal direction, attempt to move to the room there.
-        if action in choices:
-        #   print(f"\nUSER SELECTION: {action}")
-            player1.try_direction(action)  
+        # if action in choices:
+        # #   print(f"\nUSER SELECTION: {action}")
+        #     player1.try_direction(action)  
 
-        # Print an error message if the movement isn't allowed.
-        elif action not in choices and action != "q":
-            print("\nERROR: invalid movement")
+        # # Print an error message if the movement isn't allowed.
+        # elif action not in choices and action != "q":
+        #     print("\nERROR: invalid movement")
 
-        # If the user enters "q", quit the game.
-        elif action == "q":
-            sys.exit("\nThanks for playing!")
+        # # If the user enters "q", quit the game.
+        # elif action == "q":
+        #     sys.exit("\nThanks for playing!")
+
+        # # If the user enters a get [item] command, attempt to add item to player inventory
+        # if get_action == "get":
+        #     # add item to player inventory
+        #     player1.add_to_inventory(action_object)
+        #     # remove item from room
+        #     player1.current_room.drop_item()

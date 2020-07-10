@@ -23,6 +23,10 @@ class Room:
         for i in self.room_items:
             i.print_name()
 
+    def drop_item(self):
+        for i in self.room_items:
+            self.room_items.remove(i)
+
 
 
 if __name__ == "__main__":

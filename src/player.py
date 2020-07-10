@@ -22,6 +22,20 @@ class Player:
         else:
             print("You can't go that way!")
 
+    # need a way for player to pick up an item
+    def get_item(self, get_action):
+        item = get_action
+        # see if room has the item
+
+    def add_to_inventory(self, action_object):
+        attribute = "item_" + action_object
+
+        # see if current room has the attribute
+        if hasattr(self.current_room, attribute):
+            # add item to inventory
+            item = getattr(self.current_room, attribute)
+            self.inventory.append(item)
+
     def view_inventory(self):
         print("\nPLAYER INVENTORY: ")
         for i in self.inventory:
