@@ -14,8 +14,8 @@ items = {
     "jacket":  Item("Jacket", "It's cold, wear this to warm yourself up"),
     "lantern":  Item("Lantern", "Use this to illuminate the way"),
     "telescope": Item("Telescope", "Get a birds eye view"),
-    "money": Item("money", "You found some gold. The treasure must be near"),
-    "paperclip": Item("paperclip", "This is all that was left")
+    "money": Item("Money", "You found some gold. The treasure must be near"),
+    "paperclip": Item("Paperclip", "This is all that was left")
 }
 
 room = {
@@ -70,7 +70,7 @@ player = Player("You", room["outside"])
 
 # Welcome message for when the user starts up the game
 print("\nWelcome to the Adventure game! Will you be able to find the treasure?")
-print("The controls are simple. N for North, S for South, E for east, W for West. Press Q at anytime to quit the game.\n")
+print("The controls are simple. N for North, S for South, E for east, W for West. I to check your inventory. Press Q at anytime to quit the game.\n")
 # North, South, East, West
 moves = ["n", "s", "e", "w"]
 
@@ -97,3 +97,7 @@ while True:
             player.pickup_item(player.current_room.items)
             player.current_room.items = None
             print("\nSuccessfully added to your inventory")
+
+    if command == "i":
+        for count, item in enumerate(player.items, 1):
+            print(count, item)
