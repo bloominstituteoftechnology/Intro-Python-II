@@ -39,6 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 is_playing = True
 player = Player(room['outside'])
+wrongway = "You cannot go that way!"
 
 # Make a new player object that is currently in the 'outside' room.
 
@@ -68,19 +69,19 @@ while is_playing:
         if direction == 'e':
             player.room = player.room.e_to
     except:
-        print("You cannot go that way!")
+        print(wrongway)
 
     try:
         if direction == 's':
             player.room = player.room.s_to
     except:
-        print("You cannot go that way!")
+        print(wrongway)
 
     try:
         if direction == 'w':
             player.room = player.room.w_to
     except:
-        print("You cannot go that way!")
+        print(wrongway)
 
     if direction == 'q':
         print("\n\nGame over!")
