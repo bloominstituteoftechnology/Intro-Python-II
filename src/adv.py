@@ -1,4 +1,7 @@
+import code
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -32,20 +35,62 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-
+room['outside'].add_item(Item("knife", "A pointy object"))
+room['foyer'].add_item(Item("staff", "for mages!"))
+room['overlook'].add_item(Item("fire scroll", "shoot some fireballs!"))
+room['narrow'].add_item(Item("Ice Scroll", "kill em with ice!"))
+room['treasure'].add_item(Item("Key", "Wonder what this opens??"))
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+directions = ['n', 's', 'e', 'w']
+player = Player("Ezra Black", room ['outside'])
+item_actions = ['get', 'take', 'drop']
 
+print(f'You are {player.name}!\nEnter h for help')
+print(f'You are in {player.current_room.name} - {player.current_room.description}\n')
+player.current_room.print_items()
 # Write a loop that:
 #
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+while True:
+    selection = input('Where to? ').lower().split(' ')
+    if len(selection) > 2 or len(selection) < 1:
+        print("please type help for more valid commands.")
+    elif len(selection) == 2:
+        if selection[0] in item_actions:
+            if selection[0] == 'get' or selection[0] == 'take':
+                item = player.current_room.search_items(selection[1])
+                player.current_room.drop_item(item)
+                player.add_item(item)
+                item.on_take(item)
+            elif selection[0] == 'drop':
+                item = p.search_items(selection[1])
+                player.current_room.add_item(item)
+                player.drop_item(item)
+                item.on_drop(item)
+        else: 
+            print("type help for more information")
+    else:
+        if selection[0] == 'q' or selection[0] == 'quit':
+            print(f'Goodbye {player.name}!') 
+            break
+
+        if selection[0] == 'h' or selection[0] == 'help':
+            print("Commannds:\n'n' - North\n's' - South\n'e' - East\n'w' - West\n'i'\nget/take/drop for items\nor 'quit' - Exit Game\n")
+            continue
+
+        if selection[0] == 'inventory' or selection[0] == 'inventory':
+            player.print_items()
+            continue
+
+        if selection[0] in directions:
+            try:
+                player.move_room(selection[0])
+                print(f'Location: {player.current_room.name} - {player.current_room.description}\n')
+                player.current_room.print_items()
+            except AttributeError:
+                print('Go a different way')
+        else:
+            print('Enter a direction (n, s, e, w)')
