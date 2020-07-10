@@ -61,8 +61,8 @@ while is_playing:
     # print(truthydata)
 
     if not (truthydata.count(data)):
-        print('s to travel south')
         print('n to travel north')
+        print('s to travel south')
         print('e to travel east')
         print('w to travel west')
         print('q to quit playing')
