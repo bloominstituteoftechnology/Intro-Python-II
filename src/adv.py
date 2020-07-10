@@ -64,11 +64,23 @@ while not userIpt == 'q':
             print("Try again, you cannot move in that direction!")
 
     elif userIpt == 'look':
-        grabbedItems = room[currentRoom].look()
-        for item in grabbedItems:
-            player1.item_list.append(item)
+        if room[currentRoom].items:
+            print("Player Inventory:", player1.item_list)
+            grabbedItems = room[currentRoom].look()
+            player1.item_list.append(grabbedItems)
 
-        print(room[currentRoom].items)
+            print(player1.item_list)
+
+        else:
+            print("Sorry, there are no items remaining in this room.")
+
+    elif userIpt == 'inventory':
+        player1.get_inventory()
+
+    elif userIpt == 'drop':
+        dropped = player1.drop()
+        for item in dropped:
+            room[currentRoom].items.append(item)
 
     direction = input("""Please enter a direction you want to travel,
 [n], [s], [e] or [w] If you would like to quit please enter [q]: """)

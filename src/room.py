@@ -1,5 +1,7 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
+
+
 class Room:
     def __init__(self, roomID, name, description, items):
         self.roomID = roomID
@@ -8,21 +10,24 @@ class Room:
         self.items = items
 
     def look(self):
+
         updateItems = []
 
         for item in self.items:
-            itemName = item
 
-            print(f"Look what you found: {itemName}")
-            playerChoice = input("Would you like to pick up the item? y/n: ")
+            print(f"Look what you found: {item}")
+            playerChoice = input(
+                "Would you like to pick up the item? y/n: ")
 
             if (playerChoice == 'y'):
-                print(f"You have added {itemName} to your inventory!")
-                self.items.pop()
-                updateItems = itemName
+                print(f"You have added {item} to your inventory!")
+                self.items.remove(item)
+                updateItems = item
+                break
 
             elif (playerChoice == 'n'):
                 print("You chose not to take any items from this room!")
+                break
 
             else:
                 print("Bad User Input - Please enter a valid input!")
