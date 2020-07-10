@@ -7,7 +7,7 @@ class Player:
         self.name = name
         self.current_room = current_room
         self.inventory = inventory
-    
+
     def __str__(self):
         return f"PLAYER NAME: {self.name} \n{self.current_room}"
 
@@ -47,5 +47,3 @@ class Player:
         print("\nPLAYER INVENTORY: ")
         for i in self.inventory:
             i.print_name()
-
-

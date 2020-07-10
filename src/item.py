@@ -16,6 +16,7 @@ class Item:
     def on_drop(self):
         return f"\nYou have dropped {self.name}"
 
+
 if __name__ == "__main__":
     my_item = Item("Key", "Seems to unlock something ...")
     print(my_item)
