@@ -3,8 +3,14 @@
 
 class Room:
 
-    def __init__(self, name, items_in_room = []):
+    self.n_to = None
+    self.s_to = None
+    self.e_to = None
+    self.w_to = None
+
+    def __init__(self, name, description, items_in_room = []):
         self.name = name
+        self.description = description
         self.items_in_room = items_in_room
 
     # method for setting some of the attributes

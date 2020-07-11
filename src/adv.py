@@ -37,8 +37,29 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
 
+###
+# some of the methods that are used in the game logic
+def fareWell():
+    print("""
+        Goodbye, Hope to see you again!
+        """)
+
+
+
+# Make a new player object that is currently in the 'outside' room.
+intro = """
+        Welcome to the mighty adventure game!
+        Would you like to start an adventure?
+        Press "y or yes" if you would like to play the game.
+        Press "n or no" if your not adventureous.
+        """
+
+answer = input(intro)
+
+# if the 
+
+   
 # Write a loop that:
 #
 # * Prints the current room name
