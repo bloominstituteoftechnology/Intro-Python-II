@@ -51,13 +51,33 @@ room['treasure'].s_to = room['narrow']
 # If the user enters "q", quit the game.
 
 def north(plyr):
-    return 'You move North'
+    toroom = plyr.current_room.n_to
+    if toroom:
+        plyr.current_room = toroom
+        return 'You move to:'
+    else:
+        return 'There is nothing to the north of you'
 def south(plyr):
-    return 'You move South'
+    toroom = plyr.current_room.s_to
+    if toroom:
+        plyr.current_room = toroom
+        return 'You move to:'
+    else:
+        return 'There is nothing to the south of you'
 def east(plyr):
-    return 'You move East'
+    toroom = plyr.current_room.e_to
+    if toroom:
+        plyr.current_room = toroom
+        return 'You move to:'
+    else:
+        return 'There is nothing to the east of you'
 def west(plyr):
-    return 'You move West'
+    toroom = plyr.current_room.w_to
+    if toroom:
+        plyr.current_room = toroom
+        return 'You move to:'
+    else:
+        return 'There is nothing to the west of you'
 def quiter(plyr):
     '''Accepts player object strictly for conformity'''
     return 'It has been fun. See you nex time.'
@@ -88,7 +108,6 @@ def cmd_switch(argument):
     # returning the reference to the function
     return function
 
-
 def main():
     
     print('Welcome to Lambda Quest')
@@ -100,7 +119,7 @@ def main():
         print(player.current_room)
         cmd = input('>> ')
         func = cmd_switch(cmd)
-        func(player)
+        print(func(player))
 
         #The conditional to break our loop, must remain at end of loop
         if cmd == 'q':
