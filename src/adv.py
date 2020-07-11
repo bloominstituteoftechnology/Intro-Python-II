@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -37,6 +37,11 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+
+# Add items to rooms
+lantern = Item("lantern", "A lantern is hanging on the wall. Its light may help you find your way.")
+room["foyer"].add_item(lantern)
+
 is_playing = True
 player = Player(room['outside'])
 wrongway = "You cannot go that way!"
@@ -56,6 +61,7 @@ wrongway = "You cannot go that way!"
 
 while is_playing:
     print(f'\nCurrent location: {player.room.name}')
+    print(player.room.items)
     print(player.room.description, "\n")
     direction = input('Which way would you like to go?\n`n` for North, `e` for East, `s` for South, `w` for West, `q` to quit\nEnter selection here:  ')
 
