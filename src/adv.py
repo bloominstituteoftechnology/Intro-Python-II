@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import getpass
 
 # Declare all the rooms
 
@@ -38,7 +40,10 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+playerName = getpass.getuser().title()
 
+print('\nA fresh meat has joined our world...\n\nWelcome {}!'.format(playerName))
+player = Player(playerName, room['outside'])
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +54,50 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+intro = """
+The Menacing Cave has many treasures but the challenges will be difficult.
+Look for these treasures in each room at your own risk
+using the four cardinal directions (n, s, w, e).
+If you wish to return to safety, simply quit the game (q).
+Even if you die once there will be no reward, so
+Beware of the masters of black magic and monsters that lurk around here.
+You have been warned!"""
+
+print(intro)
+
+print('\nStarting location: ' + player.location.name)
+
+user_prompt = '\nMove around or just quit, but at the end it will be worth it... '
+
+directions = ['n', 's', 'w', 'e']
+
+response = ""
+while response not in directions:
+    
+    response = input(user_prompt)
+
+    if response == 'n':
+        player.move(response)
+        print('Current location: ' + player.location.name, '\nPrevious direction input: ', response)
+        response = ''
+
+    elif response == 's':
+        player.move(response)
+        print('Location: ' + player.location.name, '\nPrevious direction input: ', response)
+        response = ''
+
+    elif response == 'w':
+        player.move(response)
+        print('Location: ' + player.location.name, '\nPrevious direction input: ', response)
+        response = ''
+
+    elif response == 'e':
+        player.move(response)
+        print('Location: ' + player.location.name, '\nPrevious direction input: ', response)
+        response = ''
+
+    elif response == 'q':
+        quit()
+
+    else:
+        print("You must have pressed a wrong button, try again\n")
