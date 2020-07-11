@@ -1,37 +1,37 @@
-# from room import Room
+from room import Room
+from player import Player
+# Declare all the rooms
 
-# # Declare all the rooms
+room = {
+    'outside':  Room("Outside Cave Entrance",
+                     "North of you, the cave mount beckons"),
 
-# room = {
-#     'outside':  Room("Outside Cave Entrance",
-#                      "North of you, the cave mount beckons"),
+    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
+passages run north and east."""),
 
-#     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-# passages run north and east."""),
+    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
+into the darkness. Ahead to the north, a light flickers in
+the distance, but there is no way across the chasm."""),
 
-#     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-# into the darkness. Ahead to the north, a light flickers in
-# the distance, but there is no way across the chasm."""),
+    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
+to north. The smell of gold permeates the air."""),
 
-#     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-# to north. The smell of gold permeates the air."""),
-
-#     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-# chamber! Sadly, it has already been completely emptied by
-# earlier adventurers. The only exit is to the south."""),
-# }
+    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
+chamber! Sadly, it has already been completely emptied by
+earlier adventurers. The only exit is to the south."""),
+}
 
 
-# # Link rooms together
+# Link rooms together
 
-# room['outside'].n_to = room['foyer']
-# room['foyer'].s_to = room['outside']
-# room['foyer'].n_to = room['overlook']
-# room['foyer'].e_to = room['narrow']
-# room['overlook'].s_to = room['foyer']
-# room['narrow'].w_to = room['foyer']
-# room['narrow'].n_to = room['treasure']
-# room['treasure'].s_to = room['narrow']
+room['outside'].n_to = room['foyer']
+room['foyer'].s_to = room['outside']
+room['foyer'].n_to = room['overlook']
+room['foyer'].e_to = room['narrow']
+room['overlook'].s_to = room['foyer']
+room['narrow'].w_to = room['foyer']
+room['narrow'].n_to = room['treasure']
+room['treasure'].s_to = room['narrow']
 
 #
 # Main
@@ -50,25 +50,31 @@
 #
 # If the user enters "q", quit the game.
 
-def north():
-    return 'You moved North'
-def south():
-    return 'You moved South'
-def east():
-    return 'You moved East'
-def west():
-    return 'You moved West'
-def quiter():
+def north(plyr):
+    return 'You move North'
+def south(plyr):
+    return 'You move South'
+def east(plyr):
+    return 'You move East'
+def west(plyr):
+    return 'You move West'
+def quiter(plyr):
+    '''Accepts player object strictly for conformity'''
     return 'It has been fun. See you nex time.'
-
-def cmd_switch(argument):
-    error = """Invalid command please use one of the following:
+def error(plyr):
+    '''Accepts player object strictly for conformity'''
+    err_msg = """Invalid command please use one of the following:
 'n' to travel north
 's' to travel south
 'e' to travel east
 'w' to travel west
 'q' to quit the game"""
+    return err_msg
 
+def cmd_switch(argument):
+    '''
+    A quick switch block for processing user input
+    '''
     switcher = {
         'n': north,
         's': south,
@@ -79,20 +85,26 @@ def cmd_switch(argument):
 
     function = switcher.get(argument, error)
 
-    return function()
+    # returning the reference to the function
+    return function
 
 
 def main():
+    
+    print('Welcome to Lambda Quest')
 
-    cmd = input('>> ')
-    print(cmd_switch(cmd))
+    player = Player('Felix Peone')
+    player.current_room = room['outside']
 
-    if cmd == 'q':
-        return False
-    else:
-        return True
+    while True:
+        print(player.current_room)
+        cmd = input('>> ')
+        func = cmd_switch(cmd)
+        func(player)
+
+        #The conditional to break our loop, must remain at end of loop
+        if cmd == 'q':
+            break
 
 if __name__ == "__main__":
-    print('Welcome to Lambda Quest')
-    while main():
-        continue
+    main()
