@@ -6,3 +6,5 @@ class Room:
         self.name = name
         self.description = description
 
+def __repr__(self):
+    return "{name: "+self.name+", description: "+self.description+"}"
