@@ -1,5 +1,7 @@
 from room import Room
 from player import Player
+import time
+
 
 # Declare all the rooms
 
@@ -50,55 +52,42 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+directions={
+    'w': 'north',
+    's':  'south',
+    'a':  'west',
+    'd':  'east'
+}
 
 
-
-
-
- def start_game():
+def start_game():
     name=input('Enter your name here: ')
     player_1=Player(name,room['outside'])
-    print(f'Welcome to Treasure Hunting,{name}! Press w,s,d,a,q to go north,south,east,west or to quit respectively')
+    print(f'''
+                Welcome to Treasure Hunting,{name}! 
+    Press w,s,d,a,q to go north,south,east,west or to q to quit''')
+    time.sleep(1)
     while True:
-        cmd=input(f'You\'re in {player_1.location.name}.{player_1.location.description} ')
-        if cmd == 'w':
-            player_1.location=room['outside'].n_to
-            while True:
-                cmd=input(f'You\'re in {player_1.location.name}.{player_1.location.description} ')
-                if cmd == 'w':
-                    player_1.location=room['foyer'].n_to
-                    while True:
-                        cmd=input(f'You\'re in {player_1.location.name}.{player_1.location.description}')
-                        if cmd == 's':  
-                            player_1.location=room['overlook'].s_to
-                            break
-                        elif cmd == 'q':
-                            quit()
-                elif cmd == 's':
-                    player_1.location=room['foyer'].s_to
-                    break
-                elif cmd == 'd':
-                    player_1.location=room['foyer'].e_to
-                    while True:
-                        cmd=input(f'You\'re in {player_1.location.name}.{player_1.location.description}')
-                        if cmd == 'a':  
-                            player_1.location=room['narrow'].w_to
-                            break
-                        elif cmd == 'w':
-                            player_1.location=room['narrow'].n_to
-                            while True:
-                                cmd=input(f'You\'re in {player_1.location.name}.{player_1.location.description} ')
-                                if cmd == 's':
-                                    player_1.location=room['treasure'].s_to
-                                    break
-                                elif cmd == 'q':
-                                    quit()
-                        elif cmd == 'q':
-                            quit()
-                elif cmd == 'q':
-                    quit()
+        cmd=input(f'''
+                    You\'re in {player_1.location.name}.
+        {player_1.location.description}\n ''')
+        if cmd in directions:
+            if (player_1.location.n_to==None and cmd=='w' or 
+            player_1.location.s_to==None and cmd=='s' or 
+            player_1.location.w_to==None and cmd=='a' or 
+            player_1.location.e_to==None and cmd=='d'):
+                print (f'Sorry! You can\'t go {directions[cmd]} from here')
+                time.sleep(1)
+                continue
+            else:
+                player_1.change_location(cmd)
+                continue
         elif cmd == 'q':
-            break
+            print('Thank you for playing. Goodbye!!')
+            quit()
+        else:
+            print('Please enter a valid direction')
+            continue
 
 start_game()
 
