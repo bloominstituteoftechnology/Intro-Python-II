@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -21,7 +22,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -33,19 +33,22 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+# Start player at room 'Outside Cave Entrance'
 
-# Make a new player object that is currently in the 'outside' room.
+me = Player(room['outside'])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+running = True
+
+while running:
+    print(f"-------------------\nPlayer's current location: {me.location.name}")
+    player_input = input("Where shall you go next? (n, s, w, e)\n\
+q - quit, d -location's description, l - loot \n")
+    if player_input == "q":
+        running = False
+    elif player_input == 'd':
+        print(f"location's description: {me.location.desc}")
+    elif player_input == 'l':
+        me.loot()
+    else:
+        me.move(player_input)
+
