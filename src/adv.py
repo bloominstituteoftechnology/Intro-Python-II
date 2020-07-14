@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+import random
 
 # Declare all the rooms
 
@@ -45,6 +46,45 @@ player = Player(room["outside"])
 print(player)
 
 # Write a loop that:
+
+while player.room != room["treasure"]:
+    n = input("\nPress q to quit or choose North, East, South, West: ")
+    if n == "q":
+        break
+    elif (player.room == room['foyer']) & (n.lower().title() == "East"):
+        print(f"Enetering a new area ... \n")
+        player.room = room['foyer'].e_to
+        print(player.room)
+    elif (player.room == room['narrow']) & (n.lower().title() == "West"):
+        print(f"Enetering a new area ... \n")
+        player.room = room['narrow'].w_to
+        print(player.room)
+    elif (player.room == room['foyer']) & (n.lower().title() == "North"):
+        print(f"Enetering a new area ... \n")
+        player.room = room['foyer'].n_to
+        print(player.room)
+    elif (player.room == room['foyer']) & (n.lower().title() == "South"):
+        print(f"Enetering a new area ... \n")
+        player.room = room['foyer'].s_to
+        print(player.room)
+    elif (player.room == room['overlook']) & (n.lower().title() == "South"):
+        print(f"Enetering a new area ... \n")
+        player.room = room['overlook'].s_to
+        print(player.room)
+    elif (player.room == room['outside']) & (n.lower().title() == "North"):
+        print(f"Enetering a new area ... \n")
+        player.room = room['outside'].n_to
+        print(player.room)
+    elif (player.room == room['narrow']) & (n.lower().title() == "North"):
+        print(f"Enetering a new area ... \n")
+        player.room = room['narrow'].n_to
+        print(player.room)
+    else:
+        ls = ["The way is blocked..", "I wouldn't go that way...", "Try Again...", "You shall not pass.."]
+        print(random.sample(ls, 1)[0])
+        
+
+
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
