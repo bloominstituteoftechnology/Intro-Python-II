@@ -2,6 +2,7 @@ from room import Room
 from os import system, name
 import sys
 from game import play_game
+from player import Player
 
 # Declare all the rooms
 
@@ -104,10 +105,16 @@ def okay_play():
 
     """)
 
+    theName = input("""
+                    What do you want to be called during this game?\n
+                    """)
+    return theName
 
 
 
 
+
+### THE GAME LOOP IS FOUND IN GAME.PY ###
 
 
 # Make a new player object that is currently in the 'outside' room.
@@ -124,18 +131,21 @@ while True:
     if first_time:
         check_if_play()
     
-    okay_play()
+    theName = okay_play()
 
+    # instanciating the player and putting him in the "outside" room
+    thePlayer = Player(playerName=theName, current_room=room["outside"]) 
     # calling the game loop here:
     # The game loop I am putting in a new file called game just to keep this less
     # full of stuff
-    play_game()
+  
+    play_game(thePlayer)
 
 
 
 
    
-# Write a loop that:
+# Write a loop that:  #####------ This loop will be found in the game.py file ------#####
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
