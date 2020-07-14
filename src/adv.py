@@ -1,4 +1,7 @@
 from room import Room
+from os import system, name
+import sys
+from game import play_game
 
 # Declare all the rooms
 
@@ -37,27 +40,99 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-
-###
-# some of the methods that are used in the game logic
-def fareWell():
-    print("""
-        Goodbye, Hope to see you again!
-        """)
-
-
-
-# Make a new player object that is currently in the 'outside' room.
 intro = """
         Welcome to the mighty adventure game!
         Would you like to start an adventure?
         Press "y or yes" if you would like to play the game.
         Press "n or no" if your not adventureous.
         """
+###
+# some of the methods that are used in the game logic
 
-answer = input(intro)
+## function that will be used to clear the screen of the terminal when wanted
+def clear_screen():
+    if name == "nt":
+       _= system('cls')
+    else:
+        _ = system("clear")
 
-# if the 
+def fareWell():
+    # cleaing the screen
+    clear_screen()
+
+    print("""
+        Goodbye, Hope to see you again!\n\n
+        """)
+    sys.exit()
+
+
+def add_explan():
+    # this function will first need to clear the 
+    # screen
+    clear_screen()
+    print(
+        """
+        You need to make sure that you put the right input in!\n
+        """
+    )
+    
+
+
+
+def check_if_play():
+    while True:
+        answer = input(intro)
+        if answer.isalpha():
+            if answer.lower()[0] == "y":
+                break
+            elif answer.lower()[0] == "n":
+                # Will be calling the farewell and then
+                # exit the program
+                fareWell()
+        # will add this if they have input somthing that is 
+        # not right
+        add_explan()
+
+    
+
+
+def okay_play():
+    clear_screen()
+    print("""
+        Okay, let play!
+
+
+    """)
+
+
+
+
+
+
+
+# Make a new player object that is currently in the 'outside' room.
+
+
+# STARTING of the GAME here
+
+#Putting the game loop here
+# this is an flag to see if this is the first time to play the game
+first_time = 1
+
+while True:
+    # the inner loop of if you wanto to play the game
+    if first_time:
+        check_if_play()
+    
+    okay_play()
+
+    # calling the game loop here:
+    # The game loop I am putting in a new file called game just to keep this less
+    # full of stuff
+    play_game()
+
+
+
 
    
 # Write a loop that:

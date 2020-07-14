@@ -3,19 +3,23 @@
 
 class Room:
 
-    self.n_to = None
-    self.s_to = None
-    self.e_to = None
-    self.w_to = None
-
+    
     def __init__(self, name, description, items_in_room = []):
         self.name = name
         self.description = description
         self.items_in_room = items_in_room
+        self.n_to = None
+        self.s_to = None
+        self.e_to = None
+        self.w_to = None
+
 
     # method for setting some of the attributes
     # for the class
-    def set_next_to_attr(self, n_to, s_to, e_to, w_to):
+    # This method is not used because the locations are set in the 
+    # adv.py file.
+
+    def __set_next_to_attr(self, n_to, s_to, e_to, w_to):
         """
         used to set the attributes of what rooms are next to this room
         """
@@ -23,6 +27,9 @@ class Room:
         self.s_to = s_to
         self.e_to = e_to
         self.w_to = w_to
+
+    
+    
     
     def list_items_in_room(self):
         return self.items_in_room
