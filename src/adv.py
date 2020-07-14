@@ -1,13 +1,33 @@
-from room import Room
+from room import Room, TreasureRoom
 from player import Player
+from item import Item
+
+# Declare some lists of items
+basic_items = [
+    Item('Glove', 'A leather glove'),
+    Item('Hat', 'A hat with a feather'),
+    Item('Boot', 'An old leather boot')
+]
+
+magic_items = [
+    Item('Bazooka', 'Kaboom'),
+    Item('Gun', 'Brrrat, brrrat'),
+    Item('Wand', 'Wait a wand?')
+]
+
+fruity_items = [
+    Item('Banana', 'Yellow, curved, with a single bruise'),
+    Item('Plantain', 'Green and curved'),
+    Item('Mango', 'Yellow, orange and delicious')
+]
+
 # Declare all the rooms
-
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  TreasureRoom("Outside Cave Entrance",
+                     "North of you, the cave mount beckons", fruity_items),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    TreasureRoom("Foyer", """Dim light filters in from the south. Dusty
+passages run north and east.""", basic_items),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -16,14 +36,13 @@ the distance, but there is no way across the chasm."""),
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
+    'treasure': TreasureRoom("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", magic_items),
 }
 
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -33,22 +52,32 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+def main():
+    
+    print('Welcome to Lambda Quest')
 
-# Make a new player object that is currently in the 'outside' room.
+    player = Player('Felix Peone')
+    player.current_room = room['outside']
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+    while True:
+        # printing the room name and description
+        print(player.current_room)
+        
+        # checking if the room has the items attribute,
+        # then checking if it is empty, and if not printing the items
+        if hasattr(player.current_room, 'items'):
+            if len(player.current_room.items) > 0:
+                print('You see the following items: ')
+                print(player.current_room.pstring_items())
+
+        # Taking user input and processing it
+        cmd = input('>> ')
+        func = cmd_switch(cmd)
+        print(func(player))
+
+        #The conditional to break our loop, must remain at end of loop
+        if cmd == 'q':
+            break
 
 def north(plyr):
     toroom = plyr.current_room.n_to
@@ -56,28 +85,37 @@ def north(plyr):
         plyr.current_room = toroom
         return 'You move to:'
     else:
-        return 'There is nothing to the north of you'
+        return 'There is nothing to the north of you.'
 def south(plyr):
     toroom = plyr.current_room.s_to
     if toroom:
         plyr.current_room = toroom
         return 'You move to:'
     else:
-        return 'There is nothing to the south of you'
+        return 'There is nothing to the south of you.'
 def east(plyr):
     toroom = plyr.current_room.e_to
     if toroom:
         plyr.current_room = toroom
         return 'You move to:'
     else:
-        return 'There is nothing to the east of you'
+        return 'There is nothing to the east of you.'
 def west(plyr):
     toroom = plyr.current_room.w_to
     if toroom:
         plyr.current_room = toroom
         return 'You move to:'
     else:
-        return 'There is nothing to the west of you'
+        return 'There is nothing to the west of you.'
+def get(plyr):
+    #TODO call get method
+    return 'Getting item'
+def drop(plyr):
+    # TODO call drop method
+    return 'Dropping item'
+def inventory(plyr):
+    # TODO call inventory method
+    return 'Displaying inventory'
 def quiter(plyr):
     '''Accepts player object strictly for conformity'''
     return 'It has been fun. See you nex time.'
@@ -88,6 +126,9 @@ def error(plyr):
 's' to travel south
 'e' to travel east
 'w' to travel west
+'get item' to take an item from a room
+'drop item' to drop an item from your inventory
+'i' or 'inventory' to check the player's inventory
 'q' to quit the game"""
     return err_msg
 
@@ -100,7 +141,11 @@ def cmd_switch(argument):
         's': south,
         'e': east,
         'w': west,
-        'q': quiter
+        'q': quiter,
+        'get': get,
+        'drop': drop,
+        'i': inventory,
+        'inventory': inventory
     }
 
     function = switcher.get(argument, error)
@@ -108,22 +153,10 @@ def cmd_switch(argument):
     # returning the reference to the function
     return function
 
-def main():
-    
-    print('Welcome to Lambda Quest')
-
-    player = Player('Felix Peone')
-    player.current_room = room['outside']
-
-    while True:
-        print(player.current_room)
-        cmd = input('>> ')
-        func = cmd_switch(cmd)
-        print(func(player))
-
-        #The conditional to break our loop, must remain at end of loop
-        if cmd == 'q':
-            break
+def argument_parser(argument):
+    # TODO parse into verb item, or just direction
+    verb, item = arugment.split()
+    pass
 
 if __name__ == "__main__":
     main()

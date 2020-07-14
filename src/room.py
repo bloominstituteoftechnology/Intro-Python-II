@@ -24,3 +24,22 @@ class Room(object):
 
     def __str__(self):
         return self.name + '\n' +self.description
+
+class TreasureRoom(Room):
+    '''
+    An extension of the Room object, which contains items
+    Params -
+        name - a string with the name of the room
+        description - a string with a description of what a player sees
+        items - a list optionally containing items found in the room
+    '''
+
+    def __init__(self, name, description, items = []):
+        self.items = items
+        super(TreasureRoom, self).__init__(name, description)
+
+    def pstring_items(self):
+        '''
+        Pretified string of all items
+        '''
+        return ', '.join([str(item) for item in self.items])

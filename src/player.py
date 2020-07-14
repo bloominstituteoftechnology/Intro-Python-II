@@ -10,6 +10,17 @@ class Player(object):
         current_room - a reference to the current room the player is in
     """
 
-    def __init__(self, name):
+    def __init__(self, name, items = []):
         self.name = name
+        self.items = items
         self.current_room = None
+
+    def pstring_items(self):
+        '''
+        Pretified string of all items
+        '''
+        return ', '.join([str(item) for item in self.items])
+
+    def get_item(self, item_name):
+        # TODO implement picking up an item
+        self.current_room.items.find(item_name)
