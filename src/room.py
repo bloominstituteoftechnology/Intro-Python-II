@@ -11,8 +11,17 @@ class Room:
         return getattr(self, name)
     def get_item(self):
         if self.items:
-            item = random.choice(self.items)
-            self.items.remove(item)
-            return item
-        print('There are no items in this room.')
+            selected_item = input(f"Room's items:\n\
+{', '.join(self.items)}, random\n")
+            if selected_item == 'random':
+                item = random.choice(self.items)
+                self.items.remove(item)
+                return item
+            else:
+                try:
+                    item_index = self.items.index(selected_item)
+                    return self.items.pop(item_index)
+                except:
+                    print("Item not found, try again.")
+                    self.get_item()
         return False

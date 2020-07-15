@@ -4,6 +4,7 @@
 class Player:
     def __init__(self, location):
         self.location = location
+        self.items = []
     def move(self, direction):
         directions = ['w', 'e', 'n', 's']
         if direction not in directions:
@@ -20,5 +21,12 @@ class Player:
         item = self.location.get_item()
         if item:
             print(f"Yes! You got {item}.")
+            self.items.append(item)
         else:
             print('There are no items in this room.')
+    def drop_item(self):
+        if self.items:
+            item_to_drop = input(f"Which item do you want to drop?\n\
+{', '.join(self.items)}")
+
+            
