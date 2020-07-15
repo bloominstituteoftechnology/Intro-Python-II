@@ -90,7 +90,7 @@ while not direction == 'q':
             print('\n'.join(congratulatory_message))
     
     # If the player attempts to go south
-    if direction == 's':
+    elif direction == 's':
 
         # This will test whether the resulting room is no longer a class object location (meaning it doesn't exist)
         if isinstance(player_1.current_room.s_to, list) is True:
@@ -105,7 +105,7 @@ while not direction == 'q':
             player_1.current_room = player_1.current_room.s_to
             print('\n'.join(congratulatory_message))
 
-    if direction == 'e':
+    elif direction == 'e':
 
         # This will test whether the resulting room is no longer a class object location (meaning it doesn't exist)
         if isinstance(player_1.current_room.e_to, list) is True:
@@ -119,7 +119,7 @@ while not direction == 'q':
             player_1.current_room = player_1.current_room.e_to
             print('\n'.join(congratulatory_message))
 
-    if direction == 'w':
+    elif direction == 'w':
 
         # This will test whether the resulting room is no longer a class object location (meaning it doesn't exist)
         if isinstance(player_1.current_room.w_to, list) is True:
@@ -134,6 +134,9 @@ while not direction == 'q':
             player_1.current_room = player_1.current_room.w_to
             print('\n'.join(congratulatory_message))
     
+    else:
+        print("ValueError: Please enter an string input of length 1.")
+        
 
         
 # If the user enters "q", quit the game.
