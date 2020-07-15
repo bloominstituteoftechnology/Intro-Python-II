@@ -112,7 +112,7 @@ while not direction == 'q':
 
         # This will test whether the resulting room is no longer a class object location (meaning it doesn't exist)
         if isinstance(player_1.current_room.w_to, list) is True:
-            error_message = ("Going east? Just because it's easy doesn't make it right."
+            error_message = ("Going west? You're the best. Just not at this game."
             "Try a new direction!\n")
             print('\n'.join(error_message))
 
