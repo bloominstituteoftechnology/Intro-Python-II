@@ -52,23 +52,30 @@ print(f'Hello, stranger. You are currently in the {player_1.room_name}. {player_
 
 output = ('Choose a direction to travel in order to find the treasure.', 
 f'But beware, there are many wrong paths to take:'
-'[n] North [s] South [e][w][q]\n')
+'[n] North  [s] South  [e] East  [w] West  [q] Quit\n')
 direction = input('\n'.join(output))
 
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
-while not direction == 'q': 
+if not direction == 'q': 
     if direction == 'n':
         player_1 = player_1.n_to
+        print(f'You are now in the {player_1.room_name}. \n{player_1.room_description}.')
     elif direction == 's':
         print("Error: That's beyond our borders. You must never go there.")
+        direction = input('\n'.join(output))
     elif direction == 'e': 
         print("Tut tut. Not that way.")
+        direction = input('\n'.join(output))
     elif direction == 'w':
         print("Wow, you chose the wrong way. You may try again, before I change my mind.")
+        direction = input('\n'.join(output))
     else:
         print("You just don't know how to type, do you?")
+        direction = input('\n'.join(output))
+else: 
+    sys.exit()
         
 # If the user enters "q", quit the game.
