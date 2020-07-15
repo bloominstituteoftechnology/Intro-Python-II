@@ -1,8 +1,6 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
 
-from collections import namedtuple
-
 class Room:
     n_to = []
     s_to = []
@@ -14,6 +12,7 @@ class Room:
         self.description = description
 
 if __name__ == '__main__':
+    
     room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),

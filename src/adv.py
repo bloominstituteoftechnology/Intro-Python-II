@@ -53,14 +53,15 @@ print(f'Hello, stranger. You are currently in the {player_1.current_room.name}. 
 output = ('Choose a direction to travel in order to find the treasure.', 
 f'But beware, there are many wrong paths to take:\n'
 '[n] North  [s] South  [e] East  [w] West  [q] Quit\n')
+
 direction = input('\n'.join(output))
 
-#
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
-#
+
 while not direction == 'q': 
-    
+
     # You are here 
     print(f'You are in the {player_1.current_room.name}. \n{player_1.current_room.description}.')
 
