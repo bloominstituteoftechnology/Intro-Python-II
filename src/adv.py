@@ -72,56 +72,58 @@ def main():
 
         # Taking user input and processing it
         cmd = input('>> ')
-        func = cmd_switch(cmd)
-        print(func(player))
+        arg, itm = argument_parser(cmd)
+        func = cmd_switch(arg)
+        print(func(player, itm))
 
         #The conditional to break our loop, must remain at end of loop
         if cmd == 'q':
             break
 
-def north(plyr):
+def north(plyr, itm = None):
     toroom = plyr.current_room.n_to
     if toroom:
         plyr.current_room = toroom
         return 'You move to:'
     else:
         return 'There is nothing to the north of you.'
-def south(plyr):
+def south(plyr, itm = None):
     toroom = plyr.current_room.s_to
     if toroom:
         plyr.current_room = toroom
         return 'You move to:'
     else:
         return 'There is nothing to the south of you.'
-def east(plyr):
+def east(plyr, itm = None):
     toroom = plyr.current_room.e_to
     if toroom:
         plyr.current_room = toroom
         return 'You move to:'
     else:
         return 'There is nothing to the east of you.'
-def west(plyr):
+def west(plyr, itm = None):
     toroom = plyr.current_room.w_to
     if toroom:
         plyr.current_room = toroom
         return 'You move to:'
     else:
         return 'There is nothing to the west of you.'
-def get(plyr):
+def get(plyr, itm = None):
     #TODO call get method
     return 'Getting item'
-def drop(plyr):
+def drop(plyr, itm = None):
     # TODO call drop method
     return 'Dropping item'
-def inventory(plyr):
+def inventory(plyr, itm = None):
     # TODO call inventory method
     return 'Displaying inventory'
-def quiter(plyr):
+def quiter(plyr, itm = None):
     '''Accepts player object strictly for conformity'''
     return 'It has been fun. See you nex time.'
-def error(plyr):
+def error(plyr, itm = None):
     '''Accepts player object strictly for conformity'''
-    err_msg = """Invalid command please use one of the following:
+    err_msg = """Invalid command please use one of the following
+---------------------------------------------------
 'n' to travel north
 's' to travel south
 'e' to travel east
@@ -129,7 +131,9 @@ def error(plyr):
 'get item' to take an item from a room
 'drop item' to drop an item from your inventory
 'i' or 'inventory' to check the player's inventory
-'q' to quit the game"""
+'q' to quit the game
+---------------------------------------------------
+"""
     return err_msg
 
 def cmd_switch(argument):
@@ -143,6 +147,7 @@ def cmd_switch(argument):
         'w': west,
         'q': quiter,
         'get': get,
+        'take': get,
         'drop': drop,
         'i': inventory,
         'inventory': inventory
@@ -153,10 +158,16 @@ def cmd_switch(argument):
     # returning the reference to the function
     return function
 
-def argument_parser(argument):
-    # TODO parse into verb item, or just direction
-    verb, item = arugment.split()
-    pass
+def argument_parser(cmd):
+    '''
+    A quick helper function to check if there is a space in the user input
+    '''
+    if cmd.strip().count(' ') == 1:
+        verb, item = cmd.strip().split()
+        return (verb, item)
+    else:
+        return (cmd.strip(), None)
+
 
 if __name__ == "__main__":
     main()
