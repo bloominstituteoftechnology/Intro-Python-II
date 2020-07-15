@@ -68,7 +68,7 @@ while is_playing:
         if direction == 'n':
             player.room = player.room.n_to
     except:
-        print(wrongWay)
+        print(wrongway)
 
     try:
         if direction == 'e':
