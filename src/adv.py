@@ -73,7 +73,7 @@ while not direction == 'q':
 
         # This will test whether the resulting room is no longer a class object location (meaning it doesn't exist)
         if isinstance(player_1.current_room.n_to, list) is True:
-            error_message = ("Wrong way, cowboy. You can't go north here."
+            error_message = ("Wrong way, cowboy. You can't go north here.",
             "Try a new direction!\n")
             print('\n'.join(error_message))
 
@@ -87,7 +87,7 @@ while not direction == 'q':
 
         # This will test whether the resulting room is no longer a class object location (meaning it doesn't exist)
         if isinstance(player_1.current_room.s_to, list) is True:
-            error_message = ("Uh oh. There's no way to go south here so keep your pants on."
+            error_message = ("Uh oh. There's no way to go south here so keep your pants on.",
             "Try a new direction!\n")
             print('\n'.join(error_message))
 
@@ -100,7 +100,7 @@ while not direction == 'q':
 
         # This will test whether the resulting room is no longer a class object location (meaning it doesn't exist)
         if isinstance(player_1.current_room.e_to, list) is True:
-            error_message = ("Going east? Just because it's easy doesn't make it right."
+            error_message = ("Going east? Just because it's easy doesn't make it right.",
             "Try a new direction!\n")
             print('\n'.join(error_message))
         else:
@@ -112,7 +112,7 @@ while not direction == 'q':
 
         # This will test whether the resulting room is no longer a class object location (meaning it doesn't exist)
         if isinstance(player_1.current_room.w_to, list) is True:
-            error_message = ("Going west? You're the best. Just not at this game."
+            error_message = ("Going west? You're the best. Just not at this game.",
             "Try a new direction!\n")
             print('\n'.join(error_message))
 
