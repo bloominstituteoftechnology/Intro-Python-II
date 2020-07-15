@@ -19,23 +19,37 @@ from getchar import getch
 
 # Will be making a class that is called game
 
+possesions = ""
+item_added_removed = ""
+roomName = ""
 
 class Game:
 
     def __init__(self, player=None):
         self.player = player
 
+    # This is a place holder for the item that is added to the player or
+    # removed from the room. It is added to the dictionary of the appended 
+    # responces
+    
 
+    
+    
+    
 
     # This the is the string that is used in the function
     # print_instructions_and_get_input
     instructString = """
-        To move: press \"n\", \"s\", \"e\", \"w\" or \"q\" to quit
+        To move: press \"n\", \"s\", \"e\", \"w\" or \"q\" to quit.
+        To pick up an item enter "take" "name-of-item".
+        To drop an item enter "drop" "name-of-item"
+        Enter "List" to show what things you have in your possesion. 
 
     """
+
     # This is just to find out if they have entered in 
     # some letters or words that are valid with our game
-    allowedLettersorWords = ["north", "n", "south", "s", "east", "e", "west", "w", "q", "quit"]
+    allowedLettersorWords = ["north", "n", "south", "s", "east", "e", "west", "w", "q", "quit", "take", "drop", "list", "l"]
 
     # This is a list of the action for two word values
     twoWordList = [""]
@@ -45,13 +59,20 @@ class Game:
     # This list is used to help get the action to perform
     oneWordList = ["n", "s", "e", "w", "q"]
 
+    
     # making a dictionary that is used to append to the 
     # print out each time
     appendPrint = {
 
                 2: "You can\'t go in that direction! Choose somewhere else to go.\n\n",
                 1: "Make sure that you are entering the correct info!\n\n",
-                0: "" # Nothing is added with this one
+                0: "" ,# Nothing is added with this one
+                3:  f"You have the following possesions:\n",
+                4: f"You have added the ",
+                5: f"You can't have the ",
+                6: f"You have now dropped the ",
+                7: f"You can't drop the "
+
 
 
     }
@@ -129,6 +150,25 @@ class Game:
         return theName
 
 
+    #    This is the funtion that will list the items that the player has in 
+    # possesion.  If there are no items in his posssesion, then it will say 
+    # "You don't have anything in your possesion"
+    def listPossesions(self):
+        global possesions 
+        if len(self.player.playersItems) == 0:
+           
+            possesions = "You don't have anything in your possesion.\n\n"
+            return 
+        # the string to which the whole list will be returned
+        s = ""    
+        for i, item in enumerate(self.player.playersItems):
+            s = s + item.name 
+            if i < len(self.player.playersItems) - 1:
+                s = s + ", "
+        possesions = s + "\n\n"
+        return 
+            
+
 
 
     # This function will be used to find the integer that matches the user input
@@ -142,19 +182,20 @@ class Game:
 
 
     # This the function that will move direction
-    def movePlayer(self, direction):
+    def movePlayer(self, userInput):
         nextRoom = None
         # getting the current room the player is in
         theRoom = self.player.current_room
-                
-        if direction == 0: # This means north
+        direction = userInput.lower()[0]
+
+        if direction == "n": # This means north
             # need to see if you can move north
             nextRoom = theRoom.n_to
-        if direction == 1: # This means south
+        if direction == "s": # This means south
             nextRoom = theRoom.s_to
-        if direction == 2: # This means east
+        if direction == "e": # This means east
             nextRoom = theRoom.e_to
-        if direction == 3: # This means west
+        if direction == "w": # This means west
             nextRoom == theRoom.w_to
             
         # now will check to see if the dircection is available
@@ -175,31 +216,25 @@ class Game:
 
 
     # This method will do that action that was inputted by the user
-    def perform_user_action(self, userInput, numWords=None):
+    def oneWordFunction(self, userInput):
         """
         This function will return -1 if there was an error and -2 if 
         the player wants to quit.  It can also return the number for the key to 
-        print. 
+        print. This function is for only one word inputs.
         
         """
-        num = None
-        wordList = None
-        if numWords == 1:
-            wordList = self.oneWordList
             # if the userinput is a q or a quit
             # then here we will perform the action to quit
-            if userInput.lower()[0] == "q":
-                return -2 # When returning 2 it is a signal 
+        if userInput.lower()[0] == "q":
+            return -2 # When returning 2 it is a signal 
                         # that they want to quit the game
-        else:
-            wordList = self.twoWordList
-        # This where the one word values are performed
-        # getting the integer of the element in the oneWordList
-        num = self.elemNum_of_list(self.oneWordList, userInput)
+        elif userInput.lower()[0] == "l":
+            self.listPossesions()
+            return 3
 
-        # sending to the function that is necessary
-        if num >= 0 and num <= 3:
-            return self.movePlayer(num)
+        else:
+            # sending to the function that is necessary
+            return self.movePlayer(userInput)
             
         return -1 # This means that something was not right.
 
@@ -209,25 +244,69 @@ class Game:
     # and then will also print the description of the room
     def print_room_and_descrip(self, theKey):
         r = self.player.current_room
+        filler = ""
         self.clear_screen() # clearing the screen      
-       
+        if theKey == 3:
+            filler = possesions
+        elif theKey == 4:
+            filler = f"{item_added_removed} to the items you hold.\n\n"
+        elif theKey == 5:
+            filler = f"{item_added_removed}, because it is not available to have.\n\n"
+        elif theKey == 6:
+            filler = f"{item_added_removed} on the ground in {roomName}\n\n"
+        elif theKey == 7:
+            filler = f"{item_added_removed} because you don't have one on you!\n\n"
         # using the textwrapper to wrap the function
+        else:
+            filler = ""
         wrapper = textwrap.TextWrapper(width=50)
         theString = wrapper.fill(r.description)
         
-        answer = input(f"{self.appendPrint[theKey]}{self.player.playerName}, you are in the {r.name}\n{theString}\n\n\n\n{self.instructString}\n")
+        answer = input(f"{self.appendPrint[theKey]}{filler}{self.player.playerName}, you are in the {r.name}\n{theString}\n\n\n\n{self.instructString}\n")
         return answer
 
 
 
     # This function will check to see if the one word is valid
     def is_valid(self, word,):
+        """
+        Used to check if the words are valid words for input
+        """
         if word.isalpha():
+            # The words are all in lower case when reaching here
             if word  in self.allowedLettersorWords:
                 return True
         
         return False
 
+
+    # This is the function that will work on handling the 
+    # inputs that are two words
+    def twoWordFunction(self,wordInputList):
+        # This is assigned to be used in the dictionary with the 
+        # append strings
+        global item_added_removed
+        global roomName
+        item_added_removed = wordInputList[1]
+        if wordInputList[0] == 'take':
+            # Will check to see if the item is in the room
+            for item in self.player.current_room.items_in_room:
+                if item.name ==item_added_removed:
+                # Will add to the players items and remove from the rooms
+                    self.player.addItem(item)
+                    self.player.current_room.items_in_room.pop(item)
+                    
+                    return 4
+               
+            return  5
+        else:
+            for item in self.player.playersItems:
+                if item.name == item_added_removed:
+                    self.player.current_room.items_in_room.append(item)
+                    self.player.playersItems.pop(item)
+                    roomName = self.player.current_room.name
+                    return 6
+            return 7
 
 
     # This function will return false if there was an error such as 
@@ -236,18 +315,19 @@ class Game:
     def parse_user_input(self, theInput):
         # making the input as a list so that we can then check one word
         # at a time if needed
-        
-        number_of_words = None
-
-        if self.is_valid(theInput):
-            theList = theInput.split()
+        # making just the lower case version of the word
+        theInput = theInput.lower()
+        theList = theInput.split()
+        if self.is_valid(theList[0]): # This does not check to see if the items askec to drop or add are good
+            
             if len(theList) == 1: #  here it is a one word input
-                number_of_words = 1
+                return self.oneWordFunction(theInput)
+                
             else:
-                number_of_words = 2
+                return self.twoWordFunction(theList)
                 # Need to do the action that is asked for
-            return self.perform_user_action(theInput, numWords=number_of_words)
-        return 1   # Will return this is the input was not valid 
+            
+        return  1   # Will return this is the input was not valid 
             
             
 
