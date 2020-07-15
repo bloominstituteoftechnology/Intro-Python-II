@@ -13,3 +13,9 @@ class Item(object):
 
     def __str__(self):
         return self.name
+
+    def on_take(self):
+        print(f'You have picked up {self.name}')
+
+    def on_drop(self):
+        print(f'You have dropped {self.name}')

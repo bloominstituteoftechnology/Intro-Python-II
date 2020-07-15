@@ -114,7 +114,8 @@ def get(plyr, itm = None):
         return 'No such item exists'
     if hasattr(plyr.current_room, 'items'):
         if plyr.get_item(itm):
-            return f'You took the {itm}.'
+            # TODO I don't like this, rethink this
+            return '----------------------------------------------------------'
         else:
             return f'{itm} not found.'
     else:
@@ -125,14 +126,14 @@ def drop(plyr, itm = None):
         return 'No such item exists'
     if hasattr(plyr.current_room, 'items'):
         if plyr.drop_item(itm):
-            return f'You dropped the {itm}'
+            # TODO I don't like this, rethink this
+            return '----------------------------------------------------------'
         else:
             return f'{itm} not found in inventory.'
     else:
         return f'There is no place to drop the {itm}'
 def inventory(plyr, itm = None):
-    # TODO call inventory method
-    return 'Displaying inventory'
+    return plyr.check_inventory()
 def quiter(plyr, itm = None):
     '''Accepts player object strictly for conformity'''
     return 'It has been fun. See you nex time.'

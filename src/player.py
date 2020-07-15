@@ -37,6 +37,7 @@ class Player(object):
         if len(item_refs) > 0:
             self.items.append(item_refs[0])
             self.current_room.items.remove(item_refs[0])
+            item_refs[0].on_take()
             return True
         else:
             return False
@@ -55,7 +56,20 @@ class Player(object):
         if len(item_refs) > 0:
             self.current_room.items.append(item_refs[0])
             self.items.remove(item_refs[0])
+            item_refs[0].on_drop()
             return True
         else:
             return False
 
+    def check_inventory(self):
+        '''
+        Returns - a string of all items in the player's inventory
+        '''
+        if len(self.items) > 0:
+            item_string = self.pstring_items()
+        else:
+            item_string = 'No items'
+        inventory = f'''You have the following items in your inventory:
+    {item_string}'''
+
+        return inventory
