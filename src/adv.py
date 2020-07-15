@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,11 +40,11 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-player_1 = Player(room="outside")
+player_1 = room['outside'].room_description
+print(player_1)
 
 # Write a loop that:
-print(player_1.room)
-print(room[(player_1.room)].value)
+
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
