@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -36,14 +37,17 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+#possible directions
 
 # Make a new player object that is currently in the 'outside' room.
-NewPlayer.location = room['foyer']  # we were in the outside room
+
 
 # Write a loop that:
 #
 # * Prints the current room name
-print(NewPlayer)
+print(room)
+
+
 
 
 
