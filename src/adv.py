@@ -75,10 +75,17 @@ while user_is_palying:
         print("Bye, come back again")
         exit()
         
-    #if user inputs 4 directions 
-    
-    #if the direction is available/not none then got to that room
-    
-    #else the option is not available/none then throw error and back to use input 
-    
-    #any other input will throw error
+    # if user inputs 4 directions
+    if user_cmd in ("n", "s", "e", "w"):
+        user_cmd = f"{user_cmd}_to"
+        # if the direction is available/not none then go to that room
+        if hasattr(player.current_room, user_cmd):
+            player.current_room = getattr(
+                player.current_room, user_cmd)
+         # else the option is not available/none then throw error and back to user input
+        else:
+            print("There's not room with your chosen direction.")
+    # any other user input will throw any error
+    else:
+        print(
+            "Please choose 1 of the 5 given options: [n] North   [s] South  [e] East  [w] West  [q] Quit")
