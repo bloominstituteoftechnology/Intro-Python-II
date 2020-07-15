@@ -14,7 +14,14 @@ class Room:
     def remove_item(self, item):
         self.items[item]
 
-def __repr__(self):
-    if items is not None:
-        return f""
-    return "{name: "+self.name+", description: "+self.description+"}"
+    def __str__(self):
+        return f"Name: {self.name}, Description: {self.description}"
+
+# def __repr__(self):
+#     if items is not None:
+#         return f""
+#     return "{name: "+self.name+", description: "+self.description+"}"
+
+
+room = Room("name", "description test")
+print(room)

@@ -17,5 +17,6 @@ class Player:
         self.room.append(item)
         self.items.remove(item)
     
-    def __repr__(self):
-        return "{room: "+self.room+"}"
+    def __str__(self):
+        return f"{self.room}"
+

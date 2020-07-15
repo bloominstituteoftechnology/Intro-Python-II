@@ -61,7 +61,6 @@ wrongway = "You cannot go that way!"
 
 while is_playing:
     print(f'\nCurrent location: {player.room.name}')
-    print(player.room.items)
     print(player.room.description, "\n")
     direction = input('Which way would you like to go?\n`n` for North, `e` for East, `s` for South, `w` for West, `q` to quit\nEnter selection here:  ')
 
