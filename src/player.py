@@ -4,7 +4,7 @@
 
 class Player:
 
-    def __init__(self, playerName, current_room=None, playersItems=[], ):
+    def __init__(self, playerName=None, current_room=None, playersItems=[], ):
         self.playerName = playerName
         self.current_room = current_room
         self.playersItems = playersItems

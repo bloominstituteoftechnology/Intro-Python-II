@@ -1,115 +1,28 @@
 from room import Room
 from os import system, name
 import sys
-from game import play_game
+from game import Game
 from player import Player
-
-# Declare all the rooms
-
-room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
-
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
-
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
-
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
-
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
-}
+from buildRooms import room
 
 
-# Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+### ----------------------------------------------####
+# I have moved the rooms dictionary into the buildRooms file
+# I also moved the linking of the rooms  in to the build rooms file
+### ---------------------------------------------- ###
+
 
 #
 # Main
 #
 
-intro = """
-        Welcome to the mighty adventure game!
-        Would you like to start an adventure?
-        Press "y or yes" if you would like to play the game.
-        Press "n or no" if your not adventureous.
-        """
+
 ###
 # some of the methods that are used in the game logic
 
-## function that will be used to clear the screen of the terminal when wanted
-def clear_screen():
-    if name == "nt":
-       _= system('cls')
-    else:
-        _ = system("clear")
-
-def fareWell():
-    # cleaing the screen
-    clear_screen()
-
-    print("""
-        Goodbye, Hope to see you again!\n\n
-        """)
-    sys.exit()
-
-
-def add_explan():
-    # this function will first need to clear the 
-    # screen
-    clear_screen()
-    print(
-        """
-        You need to make sure that you put the right input in!\n
-        """
-    )
-    
-
-
-
-def check_if_play():
-    while True:
-        answer = input(intro)
-        if answer.isalpha():
-            if answer.lower()[0] == "y":
-                break
-            elif answer.lower()[0] == "n":
-                # Will be calling the farewell and then
-                # exit the program
-                fareWell()
-        # will add this if they have input somthing that is 
-        # not right
-        add_explan()
-
-    
-
-
-def okay_play():
-    clear_screen()
-    print("""
-        Okay, let play!
-
-
-    """)
-
-    theName = input("""
-                    What do you want to be called during this game?\n
-                    """)
-    return theName
-
+# instanciating a game
+game = Game(Player())
 
 
 
@@ -122,24 +35,24 @@ def okay_play():
 
 # STARTING of the GAME here
 
-#Putting the game loop here
+
 # this is an flag to see if this is the first time to play the game
 first_time = 1
 
 while True:
     # the inner loop of if you wanto to play the game
     if first_time:
-        check_if_play()
+        game.check_if_play()
     
-    theName = okay_play()
+    theName = game.okay_play()
 
-    # instanciating the player and putting him in the "outside" room
-    thePlayer = Player(playerName=theName, current_room=room["outside"]) 
-    # calling the game loop here:
-    # The game loop I am putting in a new file called game just to keep this less
-    # full of stuff
-  
-    play_game(thePlayer)
+    # putting giving the player a name and putting him in the outside room
+    game.player.current_room = room["outside"]
+    game.player.playerName = theName
+    
+    
+    game.play_game() # this is the real loop for the game
+
 
 
 
