@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+new_player = Player("Jackson", room["outside"])
 
 # Write a loop that:
 #
@@ -49,3 +51,53 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+selection = input('You are currently located outside. Please select a direction to move using n, s, e, w, or quit with q:\n')
+while(selection != 'q'):
+    if new_player.current_room == room['outside'] and selection == 'n':
+        new_player.current_room = room['foyer']
+        print(new_player.current_room)
+        selection = input('Please select a direction to move using n, s, e, w, or quit with q:\n')
+
+        if new_player.current_room == room['foyer'] and selection == 's':
+            new_player.current_room = room['outside']
+            print(new_player.current_room)
+            selection = input('Please select a direction to move using n, s, e, w, or quit with q:\n')
+
+        elif new_player.current_room == room['foyer'] and selection == 'n':
+            new_player.current_room = room['overlook']
+            print(new_player.current_room)
+            selection = input('Please select a direction to move using n, s, e, w, or quit with q:\n')
+
+            if new_player.current_room == room['overlook'] and selection == 's':
+                new_player.current_room = room['foyer']
+                print(new_player.current_room)
+                selection = input('Please select a direction to move using n, s, e, w, or quit with q:\n')
+
+        elif new_player.current_room == room['foyer'] and selection == 'e':
+            new_player.current_room = room['narrow']
+            print(new_player.current_room)
+            selection = input('Please select a direction to move using n, s, e, w, or quit with q:\n')
+
+            if new_player.current_room == room['narrow'] and selection == 'w':
+                new_player.current_room = room['foyer']
+                print(new_player.current_room)
+                selection = input('Please select a direction to move using n, s, e, w, or quit with q:\n')
+
+            elif new_player.current_room == room['narrow'] and selection == 'n':
+                new_player.current_room = room['treasure']
+                print(new_player.current_room)
+                selection = input('Please select a direction to move using n, s, e, w, or quit with q:\n')
+
+                if new_player.current_room == room['treasure'] and selection == 's':
+                    new_player.current_room = room['narrow']
+                    print(new_player.current_room)
+                    selection = input('Please select a direction to move using n, s, e, w, or quit with q:\n')
+    
+    
+    else:
+        new_player.current_room = room['outside']
+        selection = input('While you are outside, you can only go north. Please select n or quit with q:\n')
+
+    
+    
