@@ -2,13 +2,34 @@
 # description attributes.
 class Room:
     def __init__(self, name, description):
-    # n_to, s_to, e_to, w_to):
         self.name = name
         self.description = description
-        # self.n_to = n_to
-        # self.s_to = s_to
-        # self.w_to = w_to
-        # self.e_to = e_to
-    
+        self.n_to = None
+        self.s_to = None
+        self.w_to = None
+        self.e_to = None
+        self.items = []
+        
     def __str__(self):
-        return f'You are now {self.name} \n {self.description} \n'
+        output = f'You are now in the {self.name} \n {self.description} \n'
+        for i, c  in enumerate(self.items):
+            output += "Items: " + str(i+1) + ". " + c.name + "\n"
+        return output
+
+    def __repr__(self):
+        return '{ room: ' + self.name + ' n_to: ' + self.n_to.name + ' s_to: ' + self.s_to.name + ' e_to: ' + self.e_to.name + ' w_to: ' + self.w_to.name + ' }'
+    
+    def possible_directions(self):
+        directions = {}
+        directions.update({ 'n': self.n_to, 's': self.s_to, 'w': self.w_to, 'e': self.e_to})
+        msg = f'You choices are: '
+        for d, r in dict(directions).items():
+            if  r is None:
+                del directions[d]
+            if r != None:
+                msg += d + " "
+        print(msg)
+        return list(directions.values())
+        
+    def list_items(self):
+        print(self.items)
