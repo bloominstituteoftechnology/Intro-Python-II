@@ -4,7 +4,7 @@
 class Room:
 
     
-    def __init__(self, name, description, items_in_room = []):
+    def __init__(self, name, description, items_in_room = [], is_light=False, animal_monster=None):
         self.name = name
         self.description = description
         self.items_in_room = items_in_room
@@ -12,6 +12,8 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.is_light = False
+        self.animal_monster = animal_monster
 
 
     # method for setting some of the attributes

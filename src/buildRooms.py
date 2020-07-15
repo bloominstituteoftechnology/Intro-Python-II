@@ -1,5 +1,6 @@
 
 from room import Room
+from monster import Monster
 
 # Declare all the rooms
 
@@ -20,6 +21,11 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+"tunnel": Room("Tunnel", """Your inside a tunnel.  
+This tunnel is only large enough to crawl through""", is_light=False, animal_monster=),
+
+
 }
 
 
@@ -34,3 +40,9 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room["treasure"].e_to = room["tunnel"]
+
+
+# making some of the rooms have light in them
+
+room["outside"].is_light = True

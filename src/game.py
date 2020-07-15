@@ -41,15 +41,16 @@ class Game:
     # print_instructions_and_get_input
     instructString = """
         To move: press \"n\", \"s\", \"e\", \"w\" or \"q\" to quit.
-        To pick up an item enter "take" "name-of-item".
+        To pick up an item enter ["take" or "get"] "name-of-item".
         To drop an item enter "drop" "name-of-item"
-        Enter "List" to show what things you have in your possesion. 
+        Enter "inventory" or "i",  to show what things you have in your possesion. 
 
     """
 
     # This is just to find out if they have entered in 
     # some letters or words that are valid with our game
-    allowedLettersorWords = ["north", "n", "south", "s", "east", "e", "west", "w", "q", "quit", "take", "drop", "list", "l"]
+    allowedLettersorWords = ["north", "n", "south", "s", "east", "e", "west", "w", "q", "quit", 
+                                "take", "drop", "inventory", "i", "get" ]
 
     # This is a list of the action for two word values
     twoWordList = [""]
@@ -67,11 +68,12 @@ class Game:
                 2: "You can\'t go in that direction! Choose somewhere else to go.\n\n",
                 1: "Make sure that you are entering the correct info!\n\n",
                 0: "" ,# Nothing is added with this one
-                3:  f"You have the following possesions:\n",
+                3:  f"",
                 4: f"You have added the ",
                 5: f"You can't have the ",
                 6: f"You have now dropped the ",
-                7: f"You can't drop the "
+                7: f"You can't drop the ", 
+                8: f"There is "
 
 
 
@@ -91,6 +93,8 @@ class Game:
             _= system('cls')
         else:
             _ = system("clear")
+
+
 
     def fareWell(self):
         # cleaing the screen
@@ -141,7 +145,6 @@ class Game:
         print("""
             Okay, let's play!
 
-
         """)
 
         theName = input("""
@@ -150,15 +153,62 @@ class Game:
         return theName
 
 
+
+
+    def player_has_light(self):
+        """
+        This method will return true if the player has a
+        light in their possesion.  Will return false otherwise
+        """
+        for item in self.player.playersItems:
+            if item.description == "LightSource":
+                return True
+        return False
+
+
+
+
+
+    def getRoomDescription(self):
+        """ 
+        This method will return the room description with the items 
+        also that are in the room in the description.
+        """
+        s = self.list_Items("room")
+        # Checking to see if the player has a light source
+        light = self.player_has_light()
+        if s == "You don't have anything in your possesion.\n\n":
+            # checking to see if the player has a light source
+            if light == False and self.player.current_room.is_light == False:
+                return self.player.current_room.description + "  To see what " \
+                                    "items are in a room, find a lightsource in a room and " \
+                                        "pick it up."
+            return self.player.current_room.description
+        else:
+            if light == False and self.player.current_room.is_light == False:
+                return self.player.current_room.description + "To see what" \
+                                    "items are in a room, find a lightsource in a room and" \
+                                        "pick it up."
+            s = self.player.current_room.description + " " + s
+            return s
+
+
+
     #    This is the funtion that will list the items that the player has in 
     # possesion.  If there are no items in his posssesion, then it will say 
     # "You don't have anything in your possesion"
-    def listPossesions(self):
+    def list_Items(self, player_or_room="player"):
         global possesions 
-        if len(self.player.playersItems) == 0:
+        itemsList = None
+        if player_or_room == "player":
+            itemsList = self.player.playersItems
+        else:
+            itemsList = self.player.current_room.items_in_room
+
+        if len(itemsList) == 0:
            
             possesions = "You don't have anything in your possesion.\n\n"
-            return 
+            return possesions
         # the string to which the whole list will be returned
         s = ""    
         for i, item in enumerate(self.player.playersItems):
@@ -166,7 +216,7 @@ class Game:
             if i < len(self.player.playersItems) - 1:
                 s = s + ", "
         possesions = s + "\n\n"
-        return 
+        return possesions
             
 
 
@@ -213,8 +263,6 @@ class Game:
 
 
 
-
-
     # This method will do that action that was inputted by the user
     def oneWordFunction(self, userInput):
         """
@@ -228,10 +276,13 @@ class Game:
         if userInput.lower()[0] == "q":
             return -2 # When returning 2 it is a signal 
                         # that they want to quit the game
-        elif userInput.lower()[0] == "l":
-            self.listPossesions()
+        elif userInput.lower()[0] == "i":
+            self.list_Items()
             return 3
 
+        #elif userInput.lower()[0] == "r":
+         #   self.listRoomItems()
+        
         else:
             # sending to the function that is necessary
             return self.movePlayer(userInput)
@@ -256,13 +307,18 @@ class Game:
             filler = f"{item_added_removed} on the ground in {roomName}\n\n"
         elif theKey == 7:
             filler = f"{item_added_removed} because you don't have one on you!\n\n"
+        elif theKey == 8:
+            filler = f"no light. You need to find a light source to be able to see what is in this room!\n\n"
         # using the textwrapper to wrap the function
         else:
             filler = ""
         wrapper = textwrap.TextWrapper(width=50)
-        theString = wrapper.fill(r.description)
+        # This is getting the room description. It will add the items to the 
+        # desription and return a complete string 
+        description = self.getRoomDescription()
+        theString = wrapper.fill(description)
         
-        answer = input(f"{self.appendPrint[theKey]}{filler}{self.player.playerName}, you are in the {r.name}\n{theString}\n\n\n\n{self.instructString}\n")
+        answer = input(f"{self.appendPrint[theKey]}{filler}{self.player.playerName}, you are in the {r.name}\n\n{theString}\n\n\n\n{self.instructString}\n")
         return answer
 
 
@@ -288,23 +344,29 @@ class Game:
         global item_added_removed
         global roomName
         item_added_removed = wordInputList[1]
-        if wordInputList[0] == 'take':
-            # Will check to see if the item is in the room
-            for item in self.player.current_room.items_in_room:
-                if item.name ==item_added_removed:
-                # Will add to the players items and remove from the rooms
-                    self.player.addItem(item)
-                    self.player.current_room.items_in_room.pop(item)
-                    
-                    return 4
-               
-            return  5
+        if wordInputList[0] == 'take' or wordInputList[0] ==  "get":
+            if self.player_has_light() == True or self.player.current_room.is_light == True:
+                # Will check to see if the item is in the room
+                for item in self.player.current_room.items_in_room:
+                    if item.name == item_added_removed:
+                    # Will add to the players items and remove from the rooms
+                        self.player.addItem(item)
+                        self.player.current_room.items_in_room.pop(item)
+                        # adding the method on_take
+                        item_added_removed = item.on_take()
+                        return 4
+                
+                return  5
+                
+            else:
+                return 8
         else:
             for item in self.player.playersItems:
                 if item.name == item_added_removed:
                     self.player.current_room.items_in_room.append(item)
                     self.player.playersItems.pop(item)
                     roomName = self.player.current_room.name
+                    item_added_removed = item.on_drop()
                     return 6
             return 7
 
