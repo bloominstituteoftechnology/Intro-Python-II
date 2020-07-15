@@ -32,4 +32,4 @@ class Room:
         return list(directions.values())
         
     def list_items(self):
-        print(self.items)
+        print(f'You have: self.items')

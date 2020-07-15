@@ -9,5 +9,8 @@ class Player:
     def __str__(self): 
         return f'You, {self.name}, are currently in {self.current_room}'
     
-    def add_item(self, item):
-        self.invetory.append(item)
+    def get_item(self, name):
+        # get item by passing in item name
+        item = self.current_room.list_items['name']
+        print(item)
+        self.inventory.append(item)

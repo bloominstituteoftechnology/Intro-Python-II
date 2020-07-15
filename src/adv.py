@@ -74,47 +74,52 @@ room['music'].items = [crossbow, shield]
 room['dining'].items = [key]
 
 # Main
-#
+# 
+def get_next(input, current_room):
+    key = input + "_to" 
+    atr = getattr(current_room, key) 
+    if getattr(current_room, key) is not None:
+        return atr
+    else:
+        return "There is nothing in that direction"
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Player 1", room['outside'])
+
 # Write a loop that:
+# * Prints the current room name
+# * Prints the current description (the textwrap module might be useful here).
+# If the user enters a cardinal direction, attempt to move to the room there.
 
 playing = True
 
 print(f"\n Welcome {player.name}! \n")
 
-current_room = room['outside']
-
 print(f'You are standing in the {player.current_room.name}, just north of you lies a large mansion. \n')
 
+current_room = player.current_room
 while playing is True:
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-    selection = input("Enter direction to move >> ") # * Waits for user input and decides what to do.
-# If the user enters a cardinal direction, attempt to move to the room there.
+    selection = input("Enter direction to move >> ").lower().split() # * Waits for user input and decides what to do.
+
     try: 
-        if selection == "n" and current_room.n_to is not None:
-            current_room = current_room.n_to
-            print(f'\n{current_room}')
-        elif selection == "s" and current_room.s_to is not None:
-            current_room = current_room.s_to
-            print(f'\n{current_room}')
-        elif selection == 'w' and current_room.w_to is not None:
-            current_room = current_room.w_to
-            print(f'\n{current_room}')
-        elif selection == 'e' and current_room.e_to is not None:
-            current_room = current_room.e_to
-            print(f'\n{current_room}')
-        elif selection == 'd':
-            print(f'\n{current_room}')
-            current_room.possible_directions()
-        elif selection == 'q':
-            print('Goodbye')
-            playing = False
-        else:
-        # elif selection == 'n' or selection == 'w' or selection == 's' or selection == 'e': 
-            print("You can't go that way. Enter d to see your current location and possible directions; enter q to exit")
+
+        if len(selection) == 1 and selection[0] in ['n', 's', 'e', 'w', 'd', 'q']:
+            if selection[0] == 'd':
+                print(f'\n{current_room}')
+                current_room.possible_directions()
+            elif selection[0] == 'q':
+                print('Goodbye')
+                playing = False
+            else:
+                current_room = get_next(selection[0], current_room)
+                print(f'\n{current_room}')
+        
+        # elif len(selection) == 2:
+        #     if selection[0] in ['get', 'take' 'pick']:
+        #         player.get_item
+        #         print(player.inventory)
+        else: 
+            print('Invalid input. try n, s, e, w in order to move or enter command "get book" to collect items')
     except ValueError: 
         print("That move isn't allowed please choose another direction. ") # Print an error message if the movement isn't allowed.
 
