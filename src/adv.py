@@ -1,11 +1,12 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -22,6 +23,26 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Declare all the items
+
+item = {
+    'sword':    Item("sword", """a close range weapon used to defeat enemies, cut 
+        tall grass, and break open clay pots."""),
+
+    'rupee':    Item("rupee", """this is the primary local unit of currency and can
+        be used to purchase items from the local shops."""),
+
+    'key':      Item("key", """this key looks like it would fit into a lock on a
+        treasure chest."""),
+
+    'potion':   Item("potion", """drink this potion to replenish your health if you
+        are running low."""),
+
+    'hookshot': Item("hookshot", """a spring-loaded, trigger-pulled hooks attached to
+        lengthy chains. It can can attack enemies at a distance, 
+        retrieve remote items, and attach onto certain surfaces 
+        (like wood) to pull you across large distances."""),
+}
 
 # Link rooms together
 
@@ -34,7 +55,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+# Add items to room
+
+room['outside'].items = [item['sword']]
+room['foyer'].items = [item['rupee'], item['potion']]
+room['overlook'].items = [item['hookshot']]
+room['treasure'].items = [item['key']]
+
 # Main
 #
 
@@ -51,46 +78,44 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-player_name = "David"
-starting_room = room["outside"]
-player = Player(player_name, starting_room)
+def print_valid_commands():
+    print("""Valid commands:
+    \'n\', \'s\', \'e\', or \'w\'   move North, South, East, or West
+    \'take <item>\'           pickup an item, where <item> is the item name
+    \'drop <item>\'           drop an item, where <item> is the item name
+    \'q\'                     quit\n""")
+
+# Program Start
+
+possible_directions = ['n', 's', 'e', 'w']
+player = Player("David", room["outside"])
+
+player.print_location_status()
+print_valid_commands()
+
+# REPL Start
 
 while True:
-    current_room = player.current_room
+    cmd = input("What would you like to do? ").strip().lower().split()        
+    num_words = len(cmd)
 
-    print(f'You are now in room: {current_room.name}\n')
-    print(current_room.description)
-    print("\nWhich direction would you like to move?")
-    
-    cmd = input("Enter 'n', 's', 'e', or 'w' ('q' to quit): ")
-
-    if cmd == 'q':
-        print("\nThanks for playing! Goodbye.\n")
-        break
-    
-    if cmd == 'n':
-        if hasattr(current_room, 'n_to'):
-            print("\nMoving North...\n")
-            player.current_room = current_room.n_to
-        else:
-            print("You cannot move North from here. Please try another direction.")
-    elif cmd == 's':
-        if hasattr(current_room, 's_to'):
-            print("\nMoving South...\n")
-            player.current_room = current_room.s_to
-        else:
-            print("You cannot move South from here. Please try another direction.")
-    elif cmd == 'e':
-        if hasattr(current_room, 'e_to'):
-            print("\nMoving East...\n")
-            player.current_room = current_room.e_to
-        else:
-            print("You cannot move East from here. Please try another direction.")
-    elif cmd == 'w':
-        if hasattr(current_room, 'w_to'):
-            print("\nMoving West...\n")
-            player.current_room = current_room.w_to
-        else:
-            print("\nYou cannot move West from here. Please try another direction.\n")
-    else:
-        print('\nInvalid input, please try again.\n')
+    if num_words == 1:
+        cmd = cmd[0]
+        if cmd == 'q':
+            print("\nThanks for playing! Goodbye.\n")
+            break
+        if cmd in possible_directions:
+            player.try_direction(cmd)
+            continue
+    elif num_words == 2:
+        verb = cmd[0]
+        item_name = cmd[1]
+        if verb == 'get' or verb == 'take':
+            player.try_add_item_to_inventory(item_name)
+            continue
+        elif verb == 'drop':
+            player.try_drop_item_from_inventory(item_name)
+            continue
+        
+    print("\nInvalid input, please try again.")
+    print_valid_commands()
