@@ -5,7 +5,7 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -40,8 +40,11 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-player1 = room['outside'].description
-player1
+
+name_input = input('Please select a name for your character.')
+
+player1 = Player(room['outside'].room, room['outside'].description, name_input)
+print(player1)
 
 # Write a loop that:
 #
@@ -54,5 +57,63 @@ player1
 #
 # If the user enters "q", quit the game.
 
-# while True: 
-#     asdfj
+user_input = input(
+    'Which direction would you like to move? \n\
+    [n] North  [e] East  [s] South  [w] West  [q] Quit'
+    )
+
+user_input = user_input.lower()
+
+while not user_input == 'q' or user_input == 'quit':
+    # Player is 'outside'
+    if player1 == room['outside']:
+        if user_input == 'north' or user_input == 'n':
+            player1 = room['outside'].n_to
+            print(player1)
+        elif user_input == 'south' or user_input == 's':
+            print('That would mean you leave. Don\'t do that')
+        else:
+            print('You cannot go that direction, sorry.')
+
+    elif player1 == room['foyer']:
+        # Player is in the 'foyer'
+        if user_input == 'north' or user_input == 'n':
+            player1 = room['foyer'].n_to
+            print(player1)
+        if user_input == 'east' or user_input == 'e':
+            player1 = room['foyer'].e_to
+            print(player1)
+        if user_input == 'south' or user_input == 's':
+            player1 = room['foyer'].s_to
+            print(player1)
+        else:
+            print('You cannot go that direction, sorry.')
+
+    elif player1 == room['overlook']:
+        # Player is on the 'overlook'
+        if user_input == 'south' or user_input == 's':
+            player1 = room['overlook'].s_to
+            print(player1)
+        else:
+            print('You cannot go that direction, sorry.')
+
+    elif player1 == room['narrow']:
+        # Player is in 'narrow' passage
+        if user_input == 'north' or user_input == 'n':
+            player1 = room['narrow'].n_to
+            print(player1)
+        if user_input == 'east' or user_input == 'e':
+            player1 = room['narrow'].e_to
+            print(player1)
+        if user_input == 'south' or user_input == 's':
+            player1 = room['narrow'].s_to
+            print(player1)
+        else:
+            print('You cannot go that direction, sorry.')
+    
+    else:
+        if user_input == 'south' or user_input == 's':
+            player1 = room['treasure'].s_to
+            print(player1)
+        else:
+            print('You cannot go that direction, sorry.')
