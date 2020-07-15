@@ -109,11 +109,27 @@ def west(plyr, itm = None):
     else:
         return 'There is nothing to the west of you.'
 def get(plyr, itm = None):
-    #TODO call get method
-    return 'Getting item'
+    if itm is None:
+        # TODO left over from debuggin, shouldn't happen, consider removing
+        return 'No such item exists'
+    if hasattr(plyr.current_room, 'items'):
+        if plyr.get_item(itm):
+            return f'You took the {itm}.'
+        else:
+            return f'{itm} not found.'
+    else:
+        return 'This room has no items'
 def drop(plyr, itm = None):
-    # TODO call drop method
-    return 'Dropping item'
+    if itm is None:
+        # TODO left over from debuggin, shouldn't happen, consider removing
+        return 'No such item exists'
+    if hasattr(plyr.current_room, 'items'):
+        if plyr.drop_item(itm):
+            return f'You dropped the {itm}'
+        else:
+            return f'{itm} not found in inventory.'
+    else:
+        return f'There is no place to drop the {itm}'
 def inventory(plyr, itm = None):
     # TODO call inventory method
     return 'Displaying inventory'
