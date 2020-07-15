@@ -57,6 +57,8 @@ f'But beware, there are many wrong paths to take:\n'
 direction = input('\n'.join(output))
 
 
+
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 
@@ -82,7 +84,10 @@ while not direction == 'q':
         else:
             # Move player north
             player_1.current_room = player_1.current_room.n_to
-            print("You're getting closer to the treasure! Or maybe further away. Don't get lost now :)")
+            congratulatory_message = ("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+            "You're getting closer to the treasure! Or maybe further away. Don't get lost now :)",
+            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+            print('\n'.join(congratulatory_message))
     
     # If the player attempts to go south
     if direction == 's':
@@ -98,7 +103,7 @@ while not direction == 'q':
         else:
             # Move player south
             player_1.current_room = player_1.current_room.s_to
-            print("You're getting closer to the treasure! Or maybe further away. Don't get lost now :)")
+            print('\n'.join(congratulatory_message))
 
     if direction == 'e':
 
@@ -112,7 +117,7 @@ while not direction == 'q':
         else:
             # Move player east
             player_1.current_room = player_1.current_room.e_to
-            print("You're getting closer to the treasure! Or maybe further away. Don't get lost now :)")
+            print('\n'.join(congratulatory_message))
 
     if direction == 'w':
 
@@ -127,7 +132,7 @@ while not direction == 'q':
         else:
             # Move player east
             player_1.current_room = player_1.current_room.w_to
-            print("You're getting closer to the treasure! Or maybe further away. Don't get lost now :)")
+            print('\n'.join(congratulatory_message))
     
 
         
