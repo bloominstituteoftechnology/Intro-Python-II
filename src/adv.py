@@ -53,10 +53,10 @@ room['treasure'].s_to = room['narrow']
 player = Player(room["outside"])
 room_items = room["outside"].items
 
-f"TEST ROOM ITEMS: {[x.name for x in player.room.items]}"
-
 print("\n--------Game Starting----------")
+print(f"\n{player.room}")
 print(f"\nItems in this room: {[x.name for x in room_items]}")
+print(f"\nYour Items: {player.items}")
 # Write a loop that:
 #
 # * Prints the current room name
@@ -74,70 +74,97 @@ while player.room != room["treasure"]:
 
     if n == "q":
         break
+
     elif (player.room == room['foyer']) & (n.lower().title() == "East"):
         print(f"Enetering a new area ... \n")
         player.room = room['foyer'].e_to
         print(player.room)
         room_items = room["narrow"].items
-        print(f"Items in this room: {[x for x in room_items]}")
+        print(f"Items in this room: {[x.name for x in room_items]}")
 
     elif (player.room == room['narrow']) & (n.lower().title() == "West"):
         print(f"Enetering a new area ... \n")
         player.room = room['narrow'].w_to
         print(player.room)
         room_items = room["foyer"].items
-        print(f"Items in this room: {[x for x in room_items]}")
+        print(f"Items in this room: {[x.name for x in room_items]}")
 
     elif (player.room == room['foyer']) & (n.lower().title() == "North"):
         print(f"Enetering a new area ... \n")
         player.room = room['foyer'].n_to
         print(player.room)
         room_items = room["overlook"].items
-        print(f"Items in this room: {[x for x in room_items]}")
+        print(f"Items in this room: {[x.name for x in room_items]}")
 
     elif (player.room == room['foyer']) & (n.lower().title() == "South"):
         print(f"Enetering a new area ... \n")
         player.room = room['foyer'].s_to
         print(player.room)
         room_items = room["outside"].items
-        print(f"Items in this room: {[x for x in room_items]}")
+        print(f"Items in this room: {[x.name for x in room_items]}")
 
     elif (player.room == room['overlook']) & (n.lower().title() == "South"):
         print(f"Enetering a new area ... \n")
         player.room = room['overlook'].s_to
         print(player.room)
         room_items = room["foyer"].items
-        print(f"Items in this room: {[x for x in room_items]}")
+        print(f"Items in this room: {[x.name for x in room_items]}")
 
     elif (player.room == room['outside']) & (n.lower().title() == "North"):
         print(f"Enetering a new area ... \n")
         player.room = room['outside'].n_to
         print(player.room)
-        room_items = [x.name for x in room["foyer"].items]
-        print(f"Items in this room: {[x for x in room_items]}")
+        room_items = room["foyer"].items
+        print(f"Items in this room: {[x.name for x in room_items]}")
 
     elif (player.room == room['narrow']) & (n.lower().title() == "North"):
         print(f"Enetering a new area ... \n")
         player.room = room['narrow'].n_to
         print(player.room)
+    
+    elif len(n.split()) == 2:
+        n1 = n.lower().split()[0]
+        n2 = n.lower().split()[1]
+
+        if n1 == "get":
+            item_obj = [x for x in player.room.items if x.name.lower() == n2][0]
+            player.items.append(item_obj)
+            print(f"You have picked up the {item_obj.name} the {item_obj.description}")
+            print(f"Your items: {[x.name for x in player.items]}")
+        
+        elif n1 == "drop":
+            item_obj = [x for x in player.items if x.name.lower() == n2]
+            print("Removing items..")
+            player.items.remove(item_obj[0])
+            print(f"your items: {[x.name for x in player.items]}")
+
+        else:
+            pass
+
+
+
 
 # --------GET ITEM----------
-    elif ((n.lower().split()[0] == "get") & (n.lower().split()[1] == n.lower().split()[1] in ls)):
-        item_obj = [x for x in player.room.items if x.name.lower() == n.lower().split()[1]]
-        if input(f"Would you like to pick up the {item_obj[0].name} the {item_obj[0].description} y/n?: ") == "y":
-            print(f"You picked up the {item_obj[0].name}")
-            player.items.append(item_obj[0])
-            print(f"Your inventory: {[x.name for x in player.items]}")
-        else:
-            print(f"You decided not to pick up the {item_obj[0].name}")
+    # elif ((n.lower().split()[0] == "get") & (n.lower().split()[1] == n.lower().split()[1] in ls)):
+    #     item_obj = [x for x in player.room.items if x.name.lower() == n.lower().split()[1]]
+    #     if input(f"Would you like to pick up the {item_obj[0].name} the {item_obj[0].description} y/n?: ") == "y":
+    #         print(f"You picked up the {item_obj[0].name}")
+    #         player.items.append(item_obj[0])
+    #         print(f"Your inventory: {[x.name for x in player.items]}")
+    #     else:
+    #         print(f"You decided not to pick up the {item_obj[0].name}")
 
 # -------DROP ITEM--------- WIP
-    elif ((n.lower().split()[0] == "drop") & (n.lower().split()[1] == n.lower().split()[1] in player.items)):
-        print("dropped")
-        item_obj = [x for x in player.room.items if x.name.lower() == n.lower().split()[1]]
-        if input(f"Would you like to pick up the {item_obj[0].name} the {item_obj[0].description} y/n?: ") == "y":
-            print(f"You picked up the {item_obj[0].name}")
-            player.items.remove(item_obj[0])
-            print(f"Your inventory: {[x.name for x in player.items]}")
-        else:
-            print(f"You decided not to pick up the {item_obj[0].name}")
+    # elif (n.lower().split()[0] == "drop"):
+    #     print("dropped")
+        # item_obj = [x for x in player.room.items if x.name.lower() == n.lower().split()[1]]
+        # if input(f"Would you like to pick up the {item_obj[0].name} the {item_obj[0].description} y/n?: ") == "y":
+        #     print(f"You picked up the {item_obj[0].name}")
+        #     player.items.remove(item_obj[0])
+        #     print(f"Your inventory: {[x.name for x in player.items]}")
+        # else:
+        #     print(f"You decided not to pick up the {item_obj[0].name}")
+
+    else:
+        ls = ["The way is blocked..", "I wouldn't go that way...", "Try Again...", "You shall not pass.."]
+        print(random.sample(ls, 1)[0])
