@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,8 +40,12 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player_name = input("What's your name?: ")
+player_room = room["outside"]
+player = Player(player_name, player_room)
+print(player)
+
 # Write a loop that:
-#
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -49,3 +54,38 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+# !!The hasattr() method returns TRUE if provided an attribute, FALSE if it doesn't.!!
+
+while True:
+    current_room = player.current_room
+    print(f'You are located at {current_room.name}. {current_room.description}')
+    print("What direction are you headed now?")
+    answer = input('Enter n, s , e, w and q to quit the game: ')
+
+    if answer == 'n':
+        if hasattr(current_room, 'n_to'):
+            print("Head North. Don't forget, the North Remembers...")
+            player.current_room = current_room.n_to
+        else:
+            print(f'{player_name}, {player_name}... enter another location, this area is off limits ')
+    elif answer == 's':
+        if hasattr(current_room, 's_to'):
+            print(f'{player_name}, Grab the sunscreen, Youre headed South!')
+            player.current_room = current_room.s_to
+        else:
+            print(f'{player_name}, {player_name}... enter another location, this area is off limits')
+    elif answer == 'e':
+        if hasattr(current_room, 'e_to'):
+            print(f'{player_name}, Youre moving on up, Headed to the East(side)')
+            player.current_room = current_room.e_to
+        else:
+            print(f'{player_name}, {player_name}... enter another location, this area is off limits')
+    elif answer == 'w':
+        if hasattr(current_room, 'w_to'):
+            print(f'{player_name}, Getting Wild? Head West')
+            player.current_room = current_room.w_to
+        else:
+            print(f'{player_name}, {player_name}... enter another location, this area is off limits')
+    elif answer == 'q':
+            print(f"Its been fun, {player_name}. Youll be back soon!")
+            exit()
