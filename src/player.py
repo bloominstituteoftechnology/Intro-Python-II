@@ -6,7 +6,6 @@ class Player:
         self.name = name
         self.current_room = current_room
 
-
 if __name__ == "__main__": 
     player_1 = Player(room='outside')
     print(player_1)

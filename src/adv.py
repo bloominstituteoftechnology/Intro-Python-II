@@ -74,7 +74,7 @@ while not direction == 'q':
     if direction == 'n':
 
         # This will test whether the resulting room is no longer a class object location (meaning it doesn't exist)
-        if isinstance(player_1.current_room.n_to, list) is True:
+        if player_1.current_room.n_to:
             error_message = ("-------------------------------------------------------------",
             "Wrong way, cowboy. You can't go north here.",
             "Try a new direction!",
@@ -135,7 +135,7 @@ while not direction == 'q':
             print('\n'.join(congratulatory_message))
     
     else:
-        print("ValueError: Please enter an string input of length 1.")
+        print("ValueError: Please enter a string input of length 1.")
         
 
         
