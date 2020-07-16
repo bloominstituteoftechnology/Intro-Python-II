@@ -38,9 +38,18 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+# Items
+sword = Item("sword", "A rusty, old sword.")
+lantern = Item("Lantern", "Still has some light left to illuminate the dark!")
+coins = Item("Coins", "Silver and gold coins")
+arrow = Item("Arrow", "A single arrow. Where is the bow?")
+
 # Add items to rooms
-lantern = Item("lantern", "A lantern is hanging on the wall. Its light may help you find your way.")
-room["foyer"].add_item(lantern)
+def add_items_to_rooms():
+    room['outside'].add_item(sword)
+    room['foyer'].add_item(lantern)
+    room['outside'].add_item(arrow)
+    room['overlook'].add_item(coins)
 
 is_playing = True
 player = Player(room['outside'])
