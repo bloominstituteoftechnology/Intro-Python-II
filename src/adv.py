@@ -141,30 +141,6 @@ while player.room != room["treasure"]:
         else:
             pass
 
-
-
-
-# --------GET ITEM----------
-    # elif ((n.lower().split()[0] == "get") & (n.lower().split()[1] == n.lower().split()[1] in ls)):
-    #     item_obj = [x for x in player.room.items if x.name.lower() == n.lower().split()[1]]
-    #     if input(f"Would you like to pick up the {item_obj[0].name} the {item_obj[0].description} y/n?: ") == "y":
-    #         print(f"You picked up the {item_obj[0].name}")
-    #         player.items.append(item_obj[0])
-    #         print(f"Your inventory: {[x.name for x in player.items]}")
-    #     else:
-    #         print(f"You decided not to pick up the {item_obj[0].name}")
-
-# -------DROP ITEM--------- WIP
-    # elif (n.lower().split()[0] == "drop"):
-    #     print("dropped")
-        # item_obj = [x for x in player.room.items if x.name.lower() == n.lower().split()[1]]
-        # if input(f"Would you like to pick up the {item_obj[0].name} the {item_obj[0].description} y/n?: ") == "y":
-        #     print(f"You picked up the {item_obj[0].name}")
-        #     player.items.remove(item_obj[0])
-        #     print(f"Your inventory: {[x.name for x in player.items]}")
-        # else:
-        #     print(f"You decided not to pick up the {item_obj[0].name}")
-
     else:
         ls = ["The way is blocked..", "I wouldn't go that way...", "Try Again...", "You shall not pass.."]
         print(random.sample(ls, 1)[0])
