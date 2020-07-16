@@ -1,10 +1,12 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -21,6 +23,26 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Declare all the items
+
+item = {
+    'sword':    Item("sword", """a close range weapon used to defeat enemies, cut 
+        tall grass, and break open clay pots."""),
+
+    'rupee':    Item("rupee", """this is the primary local unit of currency and can
+        be used to purchase items from the local shops."""),
+
+    'key':      Item("key", """this key looks like it would fit into a lock on a
+        treasure chest."""),
+
+    'potion':   Item("potion", """drink this potion to replenish your health if you
+        are running low."""),
+
+    'hookshot': Item("hookshot", """a spring-loaded, trigger-pulled hooks attached to
+        lengthy chains. It can can attack enemies at a distance, 
+        retrieve remote items, and attach onto certain surfaces 
+        (like wood) to pull you across large distances."""),
+}
 
 # Link rooms together
 
@@ -33,7 +55,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+# Add items to room
+
+room['outside'].items = [item['sword']]
+room['foyer'].items = [item['rupee'], item['potion']]
+room['overlook'].items = [item['hookshot']]
+room['treasure'].items = [item['key']]
+
 # Main
 #
 
@@ -49,3 +77,49 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def print_valid_commands():
+    print("""Valid commands:
+    \'n\', \'s\', \'e\', or \'w\'   move North, South, East, or West
+    \'take <item>\'           pickup an item, where <item> is the item name
+    \'drop <item>\'           drop an item, where <item> is the item name
+    \'i\' or \'inventory\'      view the items currently in your inventory
+    \'q\'                     quit\n""")
+
+# Program Start
+
+possible_directions = ['n', 's', 'e', 'w']
+player = Player("David", room["outside"])
+
+player.print_location_status()
+print_valid_commands()
+
+# REPL Start
+
+while True:
+    cmd = input("What would you like to do? ").strip().lower().split()        
+    num_words = len(cmd)
+
+    if num_words == 1:
+        cmd = cmd[0]
+        if cmd == 'q':
+            print("\nThanks for playing! Goodbye.\n")
+            break
+        if cmd in possible_directions:
+            player.try_direction(cmd)
+            continue
+        elif cmd == 'i' or cmd == 'inventory':
+            player.print_inventory()
+            continue
+    elif num_words == 2:
+        verb = cmd[0]
+        item_name = cmd[1]
+        if verb == 'get' or verb == 'take':
+            player.try_add_item_to_inventory(item_name)
+            continue
+        elif verb == 'drop':
+            player.try_drop_item_from_inventory(item_name)
+            continue
+        
+    print("Invalid input, please try again.\n")
+    print_valid_commands()
