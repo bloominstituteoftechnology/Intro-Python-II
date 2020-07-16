@@ -4,7 +4,7 @@ class Player:
     def __init__(self, name, current_room):
 
         self.name = name
-        self.room = current_room
+        self.current_room = current_room
         self.item = []
 
     def get_item(self, item):
@@ -23,5 +23,10 @@ class Player:
             print ('No items in your inventory.')
 
     def __str__(self):
-      s =  f'{self.name} is located in{self.current_room}'
+      s =  f'{self.name} is located  {self.current_room}'
       return s
+
+
+    def move_player(self, room):
+        self.room = room
+        print(f'direction is {self.room}') 
