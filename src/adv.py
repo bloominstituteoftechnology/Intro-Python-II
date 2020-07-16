@@ -39,7 +39,9 @@ room['treasure'].s_to = room['narrow']
 #possible directions
 possible_directions = ['n', 'e', 'w', 's']
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Sal", room['outside'])
+new_player = Player("Sal", room['outside'])
+
+print(new_player)
 
 
 
