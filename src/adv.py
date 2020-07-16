@@ -1,6 +1,7 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -22,6 +23,7 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 
+
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -39,6 +41,9 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player("Aaron", room["outside"])
+
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +54,30 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+print(player.room.name)
+print(player.room.description)
+
+userInput = input('Input a movement direction (n,w,s,e) press "q" to quit ')
+
+while userInput != 'q':
+    
+
+    if(userInput not in ['n', 'w', 's', 'e', 'q']):
+
+        userInput = input('please enter valid input press "q" to quit ')
+        
+    elif(not hasattr(player.room, f'{userInput}_to') and userInput != 'q'):
+
+        print(userInput)
+        userInput = input('you cannot move in that direction: Choose another press "q" to quit ')
+
+    elif(userInput != 'q'):
+
+        player.room = getattr(player.room, f'{userInput}_to')
+        print(player.room.name)
+        print(player.room.description)
+
+        userInput = input('Input a movement direction (n,w,s,e) press "q" to quit ')
+
+print('done')
