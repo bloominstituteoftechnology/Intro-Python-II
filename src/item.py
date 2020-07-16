@@ -32,8 +32,8 @@ class LightSource(Item):
 
 class Shovel(Item):
 
-    def __init__(self, name, description, how_use):
-        super().__init__(self, name description, how_use)
+    def __init__(self, name, description, how_use=None):
+        super().__init__(self, name, description, how_use)
 
 class Diamond(Item):
     def __init__(self, name, description, how_use):

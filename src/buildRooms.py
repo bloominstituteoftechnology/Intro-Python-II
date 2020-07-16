@@ -28,13 +28,13 @@ earlier adventurers. The only exit is to the south."""),
 This tunnel is only large enough to crawl through""", is_light=False, animal_monster=Monster("Dirk the snake", "shovel", description="a rattle snake")),
 
     "great chamber": Room("Great Chamber", dark_description="""Man it is dark inside here. You can't here anything but you can hear 
-some water flowing.""" ,description="""Wow, this is a big room!""" items_in_room=[Item("key", "This key looks familar?"), Item("diamond", """My jeweler, says that diamons are the 
+some water flowing.""" ,description="""Wow, this is a big room!""" , items_in_room=[Item("key", "This key looks familar?"), Item("diamond", """My jeweler, says that diamonds are 
 the way to a womans heart""")])
 
 
 }
 
-LightSource()
+
 
 # Link rooms together
 
@@ -74,7 +74,7 @@ def link(theDir, key_to_link_to, key):
     
 
 
-def is_available_or_link(link_to_key, thedir, ):
+def is_available(link_to_key, thedir, ):
     if thedir == 0:
         if room[link_to_key].n_to == None:
             return True
@@ -90,7 +90,7 @@ def is_available_or_link(link_to_key, thedir, ):
     return False
 
 
-def pick_to_link_to():
+def pick_to_link_to(linkedList):
     link_to_key = None
     keepTrying = True
     theDir = None
@@ -119,7 +119,7 @@ def link_inner(linkedList, toLinkList):
     # toLinkList.
     key = toLinkList.pop(choice(range(0, len(toLinkList))))
     # choosing one from the linkedList randomly and then linking to it
-    theDir , key_to_link_to = pick_to_link_to()
+    theDir , key_to_link_to = pick_to_link_to(linkedList)
     # linking
     link(theDir, key_to_link_to, key)
     # add to the linkedList
