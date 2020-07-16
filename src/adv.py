@@ -2,14 +2,16 @@
 
 from room import Room
 from player import Player
-from item import Item
+from item import Item, Treasure, LightSource
 from utils import clear
 # Declare all the rooms
 
 
 item = {
     'sword': Item('sword', 'very sharp stuff'),
-    'shield': Item('shield', 'blocks sharp stuff')
+    'shield': Item('shield', 'blocks sharp stuff'),
+    'gold': Treasure('gold', 'shiny stuff', 500),
+    'candle': LightSource('candle', 'illuminates dark areas')
 }
 
 room = {
@@ -17,7 +19,7 @@ room = {
                      "North of you, the cave mount beckons", item),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", dark=True),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -49,11 +51,17 @@ me = Player(room['outside'])
 running = True
 
 while running:
-    print(f"-------------------\nPlayer's current location: {me.location.name}")
-    print(f"Items in the room: {me.location.list_items()}.")
+    hasLightSource = [item for item in me.items.values() if isinstance(item, LightSource)]
+    isDark = me.location.dark and len(hasLightSource) == 0
+    if isDark:
+        print(f"-------------------\nIt's too dark to see!\n\
+Items cannot be seen")
+    else:
+        print(f"-------------------\nPlayer's current location: {me.location.name}")
+        print(me.location.list_items(),"\n")
     player_input = input("Where shall you go next? (n, s, w, e)\n\
 verbs - go, take, drop\n\
-menu options - q - quit, d -location's description\n")
+menu options - q - quit, d -location's description, i - inventory\n")
 
     clear()
 
@@ -66,7 +74,11 @@ menu options - q - quit, d -location's description\n")
 
     if verb == "q": running = False
 
-    elif verb == 'd': print(f"location's description: {me.location.desc}")
+    elif verb == 'd': 
+        if isDark: print("It's pitch black!")
+        else: print(f"location's description: {me.location.desc}")
+
+    elif verb == 'i': print(me.list_items())
         
     elif verb == 'take': me.loot(obj)
         
