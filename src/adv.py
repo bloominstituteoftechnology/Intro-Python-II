@@ -34,17 +34,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+
+# Main -----------------------------------------------------------
+
 
 # Make a new player object that is currently in the 'outside' room.
-
-
-name_input = input('Please select a name for your character.')
-
-player1 = Player(room['outside'].room, room['outside'].description, name_input)
-print(player1)
+name_input = input('Please select a name for your character.\n')
+player = Player(room['outside'], name_input)
+print(player.room)
 
 # Write a loop that:
 #
@@ -57,63 +54,101 @@ print(player1)
 #
 # If the user enters "q", quit the game.
 
-user_input = input(
-    'Which direction would you like to move? \n\
-    [n] North  [e] East  [s] South  [w] West  [q] Quit'
-    )
+cardinals = ['n', 'e', 's', 'w']
 
-user_input = user_input.lower()
+input_text = 'Which direction would you like to move? \n\
+    [n] North  [e] East  [s] South  [w] West  [q] Quit\n\n'
 
-while not user_input == 'q' or user_input == 'quit':
-    # Player is 'outside'
-    if player1 == room['outside']:
-        if user_input == 'north' or user_input == 'n':
-            player1 = room['outside'].n_to
-            print(player1)
-        elif user_input == 'south' or user_input == 's':
-            print('That would mean you leave. Don\'t do that')
-        else:
-            print('You cannot go that direction, sorry.')
+decision = input(input_text)
 
-    elif player1 == room['foyer']:
-        # Player is in the 'foyer'
-        if user_input == 'north' or user_input == 'n':
-            player1 = room['foyer'].n_to
-            print(player1)
-        if user_input == 'east' or user_input == 'e':
-            player1 = room['foyer'].e_to
-            print(player1)
-        if user_input == 'south' or user_input == 's':
-            player1 = room['foyer'].s_to
-            print(player1)
-        else:
-            print('You cannot go that direction, sorry.')
 
-    elif player1 == room['overlook']:
-        # Player is on the 'overlook'
-        if user_input == 'south' or user_input == 's':
-            player1 = room['overlook'].s_to
-            print(player1)
-        else:
-            print('You cannot go that direction, sorry.')
+# Main game loop
 
-    elif player1 == room['narrow']:
-        # Player is in 'narrow' passage
-        if user_input == 'north' or user_input == 'n':
-            player1 = room['narrow'].n_to
-            print(player1)
-        if user_input == 'east' or user_input == 'e':
-            player1 = room['narrow'].e_to
-            print(player1)
-        if user_input == 'south' or user_input == 's':
-            player1 = room['narrow'].s_to
-            print(player1)
-        else:
-            print('You cannot go that direction, sorry.')
-    
+while not decision == 'q':
+    if decision in cardinals:
+        player = player.movement(decision)
+        print(player, '\n')
+        decision = input(input_text)
+
     else:
-        if user_input == 'south' or user_input == 's':
-            player1 = room['treasure'].s_to
-            print(player1)
-        else:
-            print('You cannot go that direction, sorry.')
+        print('Sorry, try a different direction...')
+
+print('\nThe quest has been abandoned...')
+
+
+
+
+# while not decision == 'q':
+
+#     # Player is 'outside'
+#     if player == room['outside']:
+#         if decision == 'north' or decision == 'n':
+#             player = room['outside'].n_to
+#             print(player, '\n')
+#             decision = input(input_text)
+#         elif decision == 'south' or decision == 's':
+#             print('That would mean you leave. Don\'t do that...\n')
+#             decision = input(input_text)
+#         else:
+#             print('You cannot go that direction, sorry.')
+#             decision = input(input_text)
+
+#     # Player is in the 'foyer'
+#     elif player == room['foyer']:
+#         if decision == 'north' or decision == 'n':
+#             player = room['foyer'].n_to
+#             print(player, '\n')
+#             decision = input(input_text)
+#         if decision == 'east' or decision == 'e':
+#             player = room['foyer'].e_to
+#             print(player, '\n')
+#             decision = input(input_text)
+#         if decision == 'south' or decision == 's':
+#             player = room['foyer'].s_to
+#             print(player, '\n')
+#             decision = input(input_text)
+#         else:
+#             print('You cannot go that direction, sorry...\n')
+#             decision = input(input_text)
+
+#     # Player is on the 'overlook'
+#     elif player == room['overlook']:
+#         if decision == 'south' or decision == 's':
+#             player = room['overlook'].s_to
+#             print(player, '\n')
+#             decision = input(input_text)
+#         else:
+#             print('You cannot go that direction, sorry...\n')
+#             decision = input(input_text)
+
+#     # Player is in 'narrow' passage
+#     elif player == room['narrow']:
+#         if decision == 'north' or decision == 'n':
+#             player = room['narrow'].n_to
+#             print(player, '\n')
+#             decision = input(input_text)
+#         if decision == 'east' or decision == 'e':
+#             player = room['narrow'].e_to
+#             print(player, '\n')
+#             decision = input(input_text)
+#         if decision == 'south' or decision == 's':
+#             player = room['narrow'].s_to
+#             print(player, '\n')
+#             decision = input(input_text)
+#         else:
+#             print('You cannot go that direction, sorry...\n')
+#             decision = input(input_text)
+    
+#     # Player is in the 'treasure' room
+#     elif player == room['treasure']:
+#         if decision == 'south' or decision == 's':
+#             player = room['treasure'].s_to
+#             print(player1, '\n')
+#             decision = input(input_text)
+#         else:
+#             print('You cannot go that direction, sorry...\n')
+#             decision = input(input_text)
+#     else:
+#         if decision == 'q' or decision == 'quit':
+#             print('The quest has been abandoned...')
+#             break
