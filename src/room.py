@@ -4,9 +4,10 @@
 class Room:
 
     
-    def __init__(self, name, description, items_in_room = [], is_light=False, animal_monster=None):
+    def __init__(self, name, description, dark_description=None, items_in_room = [], is_light=False, animal_monster=None):
         self.name = name
         self.description = description
+        self.dark_description = dark_description
         self.items_in_room = items_in_room
         self.n_to = None
         self.s_to = None

@@ -1,7 +1,9 @@
-from theTry import getch
+from random import sample , choice
 
-while True:
-    n = getch()
-    n = n.decode('ascii')
- 
-    print(f"This is the letter that has been pressed {n}\n")
+
+# my list 
+theList = [1,2,3,4,5]
+
+theList.pop(2)
+
+print(f"I popped the second,  the list now has:\n{theList}")
