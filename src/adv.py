@@ -51,6 +51,13 @@ def add_items_to_rooms():
     room['outside'].add_item(arrow)
     room['overlook'].add_item(coins)
 
+def items_in_current_room(room):
+    if not room.items:
+        print("This room appears to be empty!")
+    else:
+        print("There appears to be something here!")
+
+add_items_to_rooms()
 is_playing = True
 player = Player(room['outside'])
 wrongway = "You cannot go that way!"
@@ -71,6 +78,8 @@ wrongway = "You cannot go that way!"
 while is_playing:
     print(f'\nCurrent location: {player.room.name}')
     print(player.room.description, "\n")
+
+    items_in_current_room(player.room)
     direction = input('Which way would you like to go?\n`n` for North, `e` for East, `s` for South, `w` for West, `q` to quit\nEnter selection here:  ')
 
     try:
