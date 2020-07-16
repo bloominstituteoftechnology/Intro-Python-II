@@ -2,7 +2,7 @@ import textwrap
 from room import Room
 from player import Player
 from item import Item
-
+from colors import Colors
 # Declare all the rooms
 room = {
     'outside':
@@ -71,7 +71,7 @@ def adventure_awaits():
     current_player = Player(new_name, room["outside"], [])
     playing = True
     print(
-        f"\nHello {current_player.name}!\
+        f"\nHello {Colors.WARNING} {current_player.name}!" + Colors.ENDC + "\
             \nExplore rooms and find the treasure!\n"
     )
 
@@ -83,14 +83,14 @@ def adventure_awaits():
         input("Enter Any Character to Continue...\n -->  ")
         print("\n----------------------------")
         print("----------------------------")
-        print(f"\nCurrent Room: \n{current_player.room.name}\n")
+        print(f"\nCurrent Room: \n{Colors.OKBLUE} {current_player.room.name}\n" + Colors.ENDC)
         print("Room Description: ")
         for every_line in room_description:
             print(every_line)
         print(" ")
         print("Items Available:")
         for count, item in enumerate(current_player.room.items):
-            print(f"{item.name} --- {item.description}")
+            print(f"{Colors.OKGREEN} {item.name} --- {item.description}" + Colors.ENDC)
         print("\n----------------------------")
         print("----------------------------")
 
