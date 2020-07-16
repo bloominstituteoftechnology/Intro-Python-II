@@ -3,9 +3,10 @@
 
 class Player:
 
-    def __init__(self, room):
+    def __init__(self, name, room, inventory):
+        self.name = name
         self.room = room
-        self.items = []
+        self.inventory = inventory
 
     def grab_item(self, item):
         """
