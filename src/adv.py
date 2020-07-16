@@ -22,7 +22,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -41,16 +40,14 @@ room['treasure'].s_to = room['narrow']
 possible_directions = ['n', 'e', 'w', 's']
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Sal", room['outside'])
-print(player.current_room)
+
 
 
 # Write a loop that:
 #
 # * Prints the current room name
-print(room)
-
-
-
+# print(player.current_room)
+# player.print_current_location FIX
 
 
 # * Prints the current description (the textwrap module might be useful here).
