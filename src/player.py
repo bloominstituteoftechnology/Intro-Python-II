@@ -73,3 +73,14 @@ class Player:
                 break
         else:
             print(f"\n...Erm, you do not have an item named \"{item_name}\" in your inventory.\n")
+    
+    def print_inventory(self):
+        num_items = len(self.inventory)
+
+        if num_items > 0:
+            s = "\n    "
+            item_descriptions = s + s.join(str(item) for item in self.inventory)
+            item_plural = "item" if num_items == 1 else "items"
+            print(f"\nYou have {num_items} {item_plural} in your inventory:{item_descriptions}\n")
+        else:
+            print("\nYou have 0 items in your inventory.\n")

@@ -83,6 +83,7 @@ def print_valid_commands():
     \'n\', \'s\', \'e\', or \'w\'   move North, South, East, or West
     \'take <item>\'           pickup an item, where <item> is the item name
     \'drop <item>\'           drop an item, where <item> is the item name
+    \'i\' or \'inventory\'      view the items currently in your inventory
     \'q\'                     quit\n""")
 
 # Program Start
@@ -107,6 +108,9 @@ while True:
         if cmd in possible_directions:
             player.try_direction(cmd)
             continue
+        elif cmd == 'i' or cmd == 'inventory':
+            player.print_inventory()
+            continue
     elif num_words == 2:
         verb = cmd[0]
         item_name = cmd[1]
@@ -117,5 +121,5 @@ while True:
             player.try_drop_item_from_inventory(item_name)
             continue
         
-    print("\nInvalid input, please try again.")
+    print("Invalid input, please try again.\n")
     print_valid_commands()
