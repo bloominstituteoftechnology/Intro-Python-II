@@ -1,21 +1,28 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 from utils import clear
-from item import LightSource
+from item import LightSource, Equipment
 
 class Player:
-    def __init__(self, location):
+    def __init__(self, location, base_hp=1, base_attack=0, base_defense=0):
         self.location = location
         self.items = {}
-
+        self.base_hp = base_hp
+        self.base_attack = base_attack
+        self.base_defense = base_defense
+        self.boosted_attack = 0
+        self.boosted_defense = 0
+        
     def list_items(self):
         items = ", ".join([name.__str__() for name in self.items.keys()])
         if items:
             return f"Player's items: {items}"
         return 'Player currently have no items.'
+
     def hasLightSource(self):
         lightSources = [item for item in self.items.values() if isinstance(item, LightSource)]
         return len(lightSources) > 0
+
     def move(self, direction):
         directions = ['w', 'e', 'n', 's']
         if direction not in directions:
@@ -29,7 +36,6 @@ class Player:
                 clear()
                 print("You can't move in that direction! Try again.")
                 
-
     def loot(self, item_name):
         if self.location.dark and self.hasLightSource() == 0:
             print("Good luck finding that in the dark!")
@@ -39,6 +45,7 @@ class Player:
             clear()
             found_item.on_take()
             self.items[found_item.name] = found_item
+            self.update_stats()
         else:
             print('That item is not in this room.')
             
@@ -50,5 +57,16 @@ class Player:
             return
         print(f"item {item_name} is not in inventory")
     
+    def update_stats(self):
+        attack = 0
+        defense = 0
+        for item in self.items.values():
+            if isinstance(item, Equipment):
+                attack += item.attack
+                defense += item.defense
+        self.boosted_attack = attack
+        self.boosted_defense = defense
+        print(f"total attack: {self.base_attack + self.boosted_attack}, total defense: {self.base_defense + self.boosted_defense}")
+        
 
             

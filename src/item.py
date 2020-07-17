@@ -17,3 +17,9 @@ class Treasure(Item):
 class LightSource(Item):
     def on_drop(self):
         print(f"Dropping {self.name} is a poor decision, but it's yours to make.")
+
+class Equipment(Item):
+    def __init__(self, name, desc, attack=0, defense=0):
+        super().__init__(name, desc)
+        self.attack = attack
+        self.defense = defense

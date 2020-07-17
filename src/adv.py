@@ -1,22 +1,23 @@
-
+import random
 
 from room import Room
 from player import Player
-from item import Item, Treasure, LightSource
+from item import Item, Treasure, LightSource, Equipment
 from utils import clear
+from battle import Battle
 # Declare all the rooms
 
 
 item = {
-    'sword': Item('sword', 'very sharp stuff'),
-    'shield': Item('shield', 'blocks sharp stuff'),
+    'sword': Equipment('sword', 'very sharp stuff', 10, 0),
+    'shield': Equipment('shield', 'blocks sharp stuff', 0, 10),
     'gold': Treasure('gold', 'shiny stuff', 500),
     'candle': LightSource('candle', 'illuminates dark areas')
 }
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", item),
+                     "North of you, the cave mount beckons", item, encounter_chance=7),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", dark=True),
@@ -46,13 +47,15 @@ room['treasure'].s_to = room['narrow']
 
 # Start player at room 'Outside Cave Entrance'
 
-me = Player(room['outside'])
+me = Player(room['outside'],50, 10, 5)
+# print(me.base_attack, me.base_defense, me.base_hp)
+random_battle = random.randint(0, 10) <= me.location.encounter_chance
 
-running = True
+mode = "explore"
 
 prev_obj = ""
 
-while running:
+while mode == "explore":
     isDark = me.location.dark and not me.hasLightSource()
     if isDark:
         print(f"-------------------\nIt's too dark to see!\n\
@@ -75,7 +78,7 @@ menu options - q - quit, d -location's description, i - inventory\n")
     except:
         verb = player_input
 
-    if verb == "q": running = False
+    if verb == "q": mode = False
 
     elif verb == 'd': 
         if isDark: print("It's pitch black!")
@@ -92,4 +95,12 @@ menu options - q - quit, d -location's description, i - inventory\n")
     else: print("Invalid input, try again")
 
     prev_obj = obj
+
+while mode == "battle":
+    active_monsters = me.location.monsters
+    print(f"Monsters encountered! Get ready for combat.\n-------------------")
+    battle_room = Battle(me, active_monsters)
+    while len(active_monsters) > 0:
+        player_input = input(f"Select")
+
 
