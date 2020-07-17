@@ -1,5 +1,7 @@
 from room import Room
 from player import Player
+from items import Item
+import time
 
 # Declare all the rooms
 
@@ -22,7 +24,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
@@ -33,11 +34,30 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+item = {
+    'bottle' : Item('bottle', 'An empty glass bottle'),
+    'stick' : Item('stick', 'A hefty knotted stick from a tree'),
+    'book' : Item('book', 'A strange book full of glyphs and writing in an unknown language'),
+    'lantern' : Item('lantern', 'A lantern lit with oil'),
+    'coin' : Item('gold coin', 'A worn gold coin'),
+    'key' : Item('pewter key', 'A rusted pewter skeleton key')
+}
 
 # Make a new player object that is currently in the 'outside' room.
+print('\nWelcome to your quest, player... \n')
+time.sleep(1)
 name_input = input('Please select a name for your character.\n')
 player = Player(room['outside'], name_input)
-print(f'{player.name}! {player.room}.')
+print(f'\n{player.name}?')
+time.sleep(2)
+print('\nWhat a strange name... ')
+time.sleep(2)
+print('\nAnyhow...\n')
+time.sleep(1)
+print(f'Hello, {player.name}.')
+time.sleep(1)
+print(f'\n\n{player.room}')
+time.sleep(1)
 
 #------------------------------------------------------------------------------------
 # Write a loop that:
@@ -61,16 +81,23 @@ input_text = 'Which direction would you like to move? \n\
 decision = input(input_text)
 
 # Item initialization
+outside_items = [item['lantern']]
+foyer_items = [item['bottle'], item['book']]
+overlook_items = [item['stick']]
+narrow_items = []
+treasure_items = [item['coin'], item['key']]
+player_items = []
 
 
 # Main game loop
 while not decision == 'q':
     if decision in cardinals:
         player.room = player.movement(decision)
+        time.sleep(1)
         decision = input(input_text)
     else:
         print('Please select a valid direction. \n\
             [n] North  [e] East  [s] South  [w] West  [q] Quit\n\n')
         decision = input(input_text)
 
-print('\nThe quest has been abandoned...')
+print('\nYour quest has been abandoned... farewell.')
