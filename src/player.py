@@ -20,7 +20,7 @@ class Player:
     def __str__(self):
         num_items = len(self.inventory)
 
-        if len(num_items) > 0:
+        if num_items > 0:
             s = "\n    "
             item_descriptions = s + s.join(str(item) for item in self.inventory)
         else:
@@ -81,6 +81,17 @@ class Player:
     
     def look_at_inventory(self):
         if len(self.inventory) >= 1:
-            print(self.__str__())
+            for item in self.inventory:
+                print(item.description)
         else:
             print("There are no items in your inventory.")
+
+    def look_at_item(self, item_name):
+        if item_name == 'self':
+            print(self.__str__())
+        else:
+            for item in self.current_room.items or self.inventory:
+                if item.name == item_name:
+                    print(item.description)
+                    break
+            print(f"There is no {item_name} here.")
