@@ -22,7 +22,9 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
+room['outside'].addItem('sword')
+room['outside'].addItem('cape')
+room['outside'].addItem('goldpile')
 
 # Link rooms together
 
@@ -55,29 +57,126 @@ player = Player("Aaron", room["outside"])
 #
 # If the user enters "q", quit the game.
 
-print(player.room.name)
-print(player.room.description)
+# print(player.room.name)
+# print(player.room.description)
+# print(player.room.items)
 
-userInput = input('Input a movement direction (n,w,s,e) press "q" to quit ')
+# userInput = input('Input a movement direction (n,w,s,e) press "q" to quit ')
 
-while userInput != 'q':
+# while userInput != 'q':
     
 
-    if(userInput not in ['n', 'w', 's', 'e', 'q']):
+#     if(userInput not in ['n', 'w', 's', 'e', 'q']):
 
-        userInput = input('please enter valid input press "q" to quit ')
+#         userInput = input('please enter valid input press "q" to quit ')
         
-    elif(not hasattr(player.room, f'{userInput}_to') and userInput != 'q'):
+#     elif(not hasattr(player.room, f'{userInput}_to') and userInput != 'q'):
 
-        print(userInput)
-        userInput = input('you cannot move in that direction: Choose another press "q" to quit ')
+#         print(userInput)
+#         userInput = input('you cannot move in that direction: Choose another press "q" to quit ')
 
-    elif(userInput != 'q'):
+#     elif(userInput != 'q'):
 
-        player.room = getattr(player.room, f'{userInput}_to')
+#         player.room = getattr(player.room, f'{userInput}_to')
+#         print(player.room.name)
+#         print(player.room.description)
+#         print(player.room.items)
+
+#         userInput = input('Input a movement direction (n,w,s,e) press "q" to quit ')
+
+# print('done')
+
+
+
+
+class Game(): 
+   
+    def __init__(self):
+       self.commandMap = {
+           'n': self.move,
+           'w': self.move,
+           's': self.move,
+           'e': self.move,
+           'drop': self.dropItem,
+           'pickup': self.pickupItem,
+           'q': self.quit
+       }
+    
+    def printState(self, player):
+
         print(player.room.name)
         print(player.room.description)
+        print('item', player.room.items)
+        print('inventory', player.inventory)
 
-        userInput = input('Input a movement direction (n,w,s,e) press "q" to quit ')
+        return input('Input a movement direction (n,w,s,e) press "q" to quit ')
 
-print('done')
+
+    def move(self, player, userInput):
+
+        print(player, userInput[0])
+        
+        if(not hasattr(player.room, f'{userInput[0]}_to')):
+            return input('you cannot move in that direction: Choose another press "q" to quit ')
+        else:
+
+            player.room = getattr(player.room, f'{userInput[0]}_to')
+
+            return self.printState(player)
+
+            
+    def dropItem(self, player, commands):
+
+        player.removeItem(commands[1])
+        player.room.addItem(commands[1])
+        
+        return self.printState(player)
+
+        
+
+    def pickupItem(self, player, commands): 
+
+        player.addItem(commands[1])
+        player.room.removeItem(commands[1])
+
+        return self.printState(player)
+
+        
+    
+    def quit(self, *args): 
+        return 'q'
+
+
+    def issueCommand(self, userInput, player):
+        
+        commands = userInput.split(" ")
+
+        if(commands[0] in self.commandMap.keys()):
+
+            nextCommand = self.commandMap[commands[0]](player, commands)
+    
+            if nextCommand == 'q': return
+
+            else: self.issueCommand(nextCommand, player)
+
+        else:
+            
+            userInput = input('please enter valid input press "q" to quit ')
+            self.issueCommand(userInput, player)
+
+
+gameInstance = Game()
+
+print(player.room.name)
+print(player.room.description)
+print(player.room.items)
+
+userInput = input('Input a movement direction (n,w,s,e) or press "q" to quit ')
+
+gameInstance.issueCommand(userInput, player)
+
+print("done")  
+
+
+
+
