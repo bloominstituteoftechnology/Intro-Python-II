@@ -35,10 +35,17 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+# Adding items to the room
+room['outside'].add_items(['plant', 'playground', 'pond'])
+room['foyer'].add_items(['sofa', 'tv', 'drawer'])
+room['overlook'].add_items(['dinning table', 'painting'])
+room['narrow'].add_items(['lights'])
+room['treasure'].add_items(['treasure chest'])
+
+
 # Main
 #
-
+#print(*room['outside'].items)
 # # Make a new player object that is currently in the 'outside' room.
 player = Player()
 
@@ -49,24 +56,40 @@ user_input = ''
 while user_input != 'q':
     # * Prints the current room name
 
-    print(player.current_room.name)
+    print(f'player Current Room: --- {player.current_room.name}')
     # * Prints the current description (the textwrap module might be useful here).
-    print(player.current_room.description)
+    print(f'Room Description:--- {player.current_room.description}')
+    print('Items in the Room--', (*player.current_room.items))
+    #Add get [ITEM_NAME] and drop [ITEM_NAME] commands to the parser
+    print('*******'*10)
+    # add_item = input(f'get item for player: ')
+    # len(add_item.split())
     # * Waits for user input and decides what to do.
-    user_input = input("Press key (n, s, e, w )to move the player:")
-
+    user_input = input('Press keys (n, s, e, w )to move the player\nOR press get item_name or drop item_name: ')
+    print('*******'*10)
+    
     try:
+        if len(user_input.split()) == 2:
+            if user_input.split()[0] in {'get', 'take'}:
+                if user_input.split()[1] in (player.current_room.items):
+                    player.current_room.remove_item(user_input.split()[1])
+                    print('Items in the Room--', (*player.current_room.items))
+                    player.add_inventory(user_input.split()[1])
+                    print(f'Player inventory:{player.player_items[0]}')
+                elif user_input.split()[0] == 'drop':
+                    print('Items in the Room--', (*player.current_room.items))
+
 
         # If the user enters a cardinal direction, attempt to move to the room there.
-        if user_input in  ['n', 's', 'e', 'w']:
+        elif user_input in  ['n', 's', 'e', 'w']:
             if getattr(player.current_room, f'{user_input}_to') !=None:
                 player.current_room = getattr(player.current_room, f'{user_input}_to')
             else:
-                print("Movement is not allowed there qplease enter different direction")
-            # Print an error message if the movement isn't allowed.
-
+                print('Error movement is not allowed')
+    
+        
     except:
-        print('press q  to quit')
+        print('Please enter valid inputs')
         
 # # If the user enters "q", quit the game.
 # player = Player()
