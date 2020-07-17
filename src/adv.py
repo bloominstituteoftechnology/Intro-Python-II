@@ -43,11 +43,26 @@ class NewPlayer:
         self.name = name
         self.location = location
 
+    def __str__(self):
+        output = f"{self.name}" + "\n"
+        for i, l in enumerate(self.location):
+            output += "" + str(i+1) + "." + l.name + "\n"
+        return output
+
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
+
+direction = ["n", "s", "e", "w"]
+
+while True:
+    direction_input = input("\n Where too, player? \n n for north \n s for south \n e for east \n w for west \n q to quit game")
+
+    print(direction_input)
+
+
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
