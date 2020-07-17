@@ -25,3 +25,5 @@ class Player:
     #     self.current_room == room
 
 
+    def add_item(self, item):
+        self.invetory.append(item)
