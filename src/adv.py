@@ -101,6 +101,6 @@ while mode == "battle":
     print(f"Monsters encountered! Get ready for combat.\n-------------------")
     battle_room = Battle(me, active_monsters)
     while len(active_monsters) > 0:
-        player_input = input(f"Select")
+        player_input = input(f"Select your attack")
 
 
