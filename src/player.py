@@ -12,7 +12,7 @@ class Player:
 
     # method for adding am item to the players items
     def addItem(self, newItem):
-        self.playersItems.append()
+        self.playersItems.append(newItem)
 
     # method that is used for returning the list of items that the 
     # player has in his possesion
@@ -32,3 +32,5 @@ class Player:
     # Used to set the room where the player is found
     def set_current_room(self, room):
         self.current_room = room
+
+    

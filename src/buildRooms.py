@@ -7,7 +7,7 @@ from random import sample , choice
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", is_light=True, items_in_room=[Item("rope", "a long old rope")], 
+                     "North of you, the cave mount beckons.", is_light=True, items_in_room=[Item("rope", "a long old rope")], 
                      animal_monster=Monster("Jerry", weakness="rope", description="ravenous warthog")),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
@@ -15,17 +15,22 @@ passages run north and east.""", is_light=True, items_in_room=[LightSource("flas
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", items_in_room=[Shovel("shovel", "long old shovel")]),
+the distance, but there is no way across the chasm.""", dark_description=""""Wow, It is so dark in here!
+Ahead to the north, a small light flickers"""
+,items_in_room=[Shovel("shovel", "long old shovel")]),
 
-    'narrow':   Room("Narrow Passage", """You are at the narrow passage.
-The smell of gold permeates the air.""", ),
+    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
+to north. The smell of gold permeates the air.""", dark_description="""The smell of gold permeates the air"""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exits are to the south and a small tunnel to the east""", 
+dark_description="""You are close, don't give up!"""),
 
     "tunnel": Room("Tunnel", """Your inside a tunnel.  
-This tunnel is only large enough to crawl through""", is_light=False, animal_monster=Monster("Dirk the snake", "shovel", description="a rattle snake")),
+This tunnel is only large enough to crawl through""", dark_description="""You can't see anything.
+But you managed to begin crawling into the tunnel. You just felt something touch your hand!""",
+ is_light=False, animal_monster=Monster("Dirk the snake", "shovel", description="a rattle snake")),
 
     "great chamber": Room("Great Chamber", dark_description="""Man it is dark inside here. You can't here anything but you can hear 
 some water flowing.""" ,description="""Wow, this is a big room!""" , items_in_room=[Item("key", "This key looks familar?"), Item("diamond", """My jeweler, says that diamonds are 

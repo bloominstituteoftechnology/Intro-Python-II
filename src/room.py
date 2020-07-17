@@ -13,7 +13,7 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
-        self.is_light = False
+        self.is_light = is_light
         self.animal_monster = animal_monster
 
 

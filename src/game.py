@@ -10,6 +10,7 @@ import sys
 import buildRooms
 import textwrap 
 from getchar import getch
+from item import LightSource, Shovel, Diamond
 
 
 
@@ -69,9 +70,9 @@ class Game:
                 1: "Make sure that you are entering the correct info!\n\n",
                 0: "" ,# Nothing is added with this one
                 3:  f"",
-                4: f"You have added the ",
+                4: "",
                 5: f"You can't have the ",
-                6: f"You have now dropped the ",
+                6: f"",
                 7: f"You can't drop the ", 
                 8: f"There is "
 
@@ -161,7 +162,8 @@ class Game:
         light in their possesion.  Will return false otherwise
         """
         for item in self.player.playersItems:
-            if item.description == "LightSource":
+            # checking the instance of the lightsource
+            if isinstance(item, LightSource):
                 return True
         return False
 
@@ -174,23 +176,29 @@ class Game:
         This method will return the room description with the items 
         also that are in the room in the description.
         """
-        s = self.list_Items("room")
+        s , numItems = self.list_Items("room")
         # Checking to see if the player has a light source
         light = self.player_has_light()
-        if s == "You don't have anything in your possesion.\n\n":
-            # checking to see if the player has a light source
-            if light == False and self.player.current_room.is_light == False:
-                return self.player.current_room.description + "  To see what " \
+        is_are = "is a"
+
+        theStr = ""
+        if s != "You don't have anything in your possesion.\n\n":
+            theStr = f"  There {is_are} {s} on the ground."
+
+        if light == True or self.player.current_room.is_light == True:
+            
+                s = self.player.current_room.description + theStr
+                return s
+        else:
+            
+            theStr = "  To see what " \
                                     "items are in a room, find a lightsource in a room and " \
                                         "pick it up."
-            return self.player.current_room.description
-        else:
-            if light == False and self.player.current_room.is_light == False:
-                return self.player.current_room.description + "To see what" \
-                                    "items are in a room, find a lightsource in a room and" \
-                                        "pick it up."
-            s = self.player.current_room.description + " " + s
-            return s
+            return self.player.current_room.dark_description + theStr
+       
+        
+       
+            
 
 
 
@@ -200,23 +208,27 @@ class Game:
     def list_Items(self, player_or_room="player"):
         global possesions 
         itemsList = None
+        you_have = "You have a "
+        period = ".  "
         if player_or_room == "player":
             itemsList = self.player.playersItems
         else:
             itemsList = self.player.current_room.items_in_room
+            you_have = ""
+            period =""
 
         if len(itemsList) == 0:
            
             possesions = "You don't have anything in your possesion.\n\n"
-            return possesions
+            return possesions, len(itemsList)
         # the string to which the whole list will be returned
         s = ""    
-        for i, item in enumerate(self.player.playersItems):
+        for i, item in enumerate(itemsList):
             s = s + item.name 
-            if i < len(self.player.playersItems) - 1:
+            if i < len(itemsList) - 1 and len(itemsList) < 1:
                 s = s + ", "
-        possesions = s + "\n\n"
-        return possesions
+        possesions = you_have + s + period
+        return possesions, len(itemsList)
             
 
 
@@ -277,7 +289,7 @@ class Game:
             return -2 # When returning 2 it is a signal 
                         # that they want to quit the game
         elif userInput.lower()[0] == "i":
-            self.list_Items()
+            self.list_Items(player_or_room="player")
             return 3
 
         #elif userInput.lower()[0] == "r":
@@ -347,11 +359,11 @@ class Game:
         if wordInputList[0] == 'take' or wordInputList[0] ==  "get":
             if self.player_has_light() == True or self.player.current_room.is_light == True:
                 # Will check to see if the item is in the room
-                for item in self.player.current_room.items_in_room:
+                for i, item in enumerate(self.player.current_room.items_in_room):
                     if item.name == item_added_removed:
                     # Will add to the players items and remove from the rooms
                         self.player.addItem(item)
-                        self.player.current_room.items_in_room.pop(item)
+                        self.player.current_room.items_in_room.pop(i)
                         # adding the method on_take
                         item_added_removed = item.on_take()
                         return 4
@@ -361,10 +373,10 @@ class Game:
             else:
                 return 8
         else:
-            for item in self.player.playersItems:
+            for i, item in enumerate(self.player.playersItems):
                 if item.name == item_added_removed:
                     self.player.current_room.items_in_room.append(item)
-                    self.player.playersItems.pop(item)
+                    self.player.playersItems.pop(i)
                     roomName = self.player.current_room.name
                     item_added_removed = item.on_drop()
                     return 6

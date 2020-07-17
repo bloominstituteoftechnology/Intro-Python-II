@@ -9,10 +9,10 @@ class Item:
 
     # adding the on_take method in the item class
     def on_take(self):
-        return f"You have picked up {self.name}"
+        return f"You have added the, {self.name}"
 
     def on_drop(self):
-        return f"You have drop the{self.name}"
+        return f"You have now dropped the {self.name}"
 
     # This is the string function of the item class
     def __str__(self):
@@ -33,7 +33,7 @@ class LightSource(Item):
 class Shovel(Item):
 
     def __init__(self, name, description, how_use=None):
-        super().__init__(self, name, description, how_use)
+        super().__init__( name, description, how_use)
 
 class Diamond(Item):
     def __init__(self, name, description, how_use):
