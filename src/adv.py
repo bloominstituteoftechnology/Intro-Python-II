@@ -75,7 +75,9 @@ room['hall'].n_to = room['treasure']
 """
 
 # Props
-keyProp = Prop('Key', 'A glinting, golden key')    # in the zombie
+keyProp = Prop('Key', 'A glinting, golden key')
+keyProp.hidden = True  # in the zombie
+room['dungeon'].add_item(keyProp)
 
 sword = Prop('Sword', 'A shining, magical sword. You can feel its power')
 room['chamber'].add_item(sword)
@@ -89,7 +91,9 @@ room['overlook'].add_item(cyrstal)
 rope = Prop('Rope', 'A very long bit of rope')
 room['foyer'].add_item(rope)
 
-treasure = Prop('Treasure', "The riches you've been seeking")  # in the chest
+treasure = Prop('Treasure', "The riches you've been seeking")
+treasure.hidden = True  # in the chest
+room['treasure'].add_item(treasure)
 
 # Fixed items
 zombie = Fixed('Zombie', 'A disgusting and deadly-looking zombie',
@@ -102,21 +106,22 @@ room['dungeon'].add_item(zombie)
 demon = Fixed('Demon', 'This demon is clearly the guardian of this place', 'The demon visciously attacks, and....',
               'It screams horribly as it sinks into the flames of hell, never to been seen again.')
 demon.used_with = bow
-demon.blocking_path = 'n'
 room['hall'].add_item(demon)
+room['hall'].n_blocked_by = demon
 
 boulder = Fixed('Boulder', 'An immovable boulder, with an odd circular hole in the center',
                 '', 'With the crystal in place, the boulder rolls itself away from the passage.')
 boulder.used_with = cyrstal
-boulder.blocking_path = 'e'
 room['narrow'].add_item(boulder)
+room['narrow'].e_blocked_by = boulder
 
 chasm = Fixed('Chasm', "It's really quite beautiful, and you can hear water rushing below",
               'You fell down the chasm. That was stupid.')
-chasm.blocking_path = 'n'
 room['overlook'].add_item(chasm)
+room['overlook'].n_blocked_by = chasm
 
-chest = Fixed('Chest', 'A locked chest, clearly filled with treasure')
+chest = Fixed('Chest', 'A locked chest, clearly filled with treasure',
+              '', '', 'The chest opens and reveals the treasure!')
 chest.open_when_used = True
 chest.item_inside = treasure
 chest.used_with = keyProp
@@ -145,54 +150,20 @@ player = Player(name, room['outside'])
 def movePlayer(player, direction):
     """ Checks to see if there is a room in the direction the player wants
        to move, and moves them if there is """
-    # check to see if any items are blocking a path
-    n_blocked = None
-    e_blocked = None
-    s_blocked = None
-    w_blocked = None
-
-    for item_name in player.in_room.items:
-        item = player.in_room.items[item_name]
-        if isinstance(item, Fixed):
-            if item.blocking_path == 'n':
-                n_blocked = item
-            if item.blocking_path == 'e':
-                e_blocked = item
-            if item.blocking_path == 's':
-                s_blocked = item
-            if item.blocking_path == 'w':
-                w_blocked = item
-
-    if direction == "n" and player.in_room.n_to != None:
-        if n_blocked == None:
-            player.in_room = player.in_room.n_to
-            return True
+    to = player.in_room.__dict__[direction + '_to']
+    blocked = player.in_room.__dict__[direction + '_blocked_by']
+    if blocked == None or blocked.removed:
+        if to == None:
+            print('\n\n🤔 There is no path leading in that direction.')
+            wait()
         else:
-            player.use_fixed(n_blocked)
-            return False
-    elif direction == "e" and player.in_room.e_to != None:
-        if e_blocked == None:
-            player.in_room = player.in_room.e_to
-            return True
-        else:
-            player.use_fixed(e_blocked)
-            return False
-    elif direction == "s" and player.in_room.s_to != None:
-        if s_blocked == None:
-            player.in_room = player.in_room.s_to
-            return True
-        else:
-            player.use_fixed(s_blocked)
-            return False
-    elif direction == "w" and player.in_room.w_to != None:
-        if w_blocked == None:
-            player.in_room = player.in_room.w_to
-            return True
-        else:
-            player.use_fixed(w_blocked)
-            return False
+            player.in_room = to
     else:
-        return False
+        print(f'🔒 That way is blocked by {blocked.a_or_an()} {blocked.name}')
+        player.use_fixed(blocked)
+        if(player.alive):
+            wait()  # if they didn't die, give them a chance to read what happened
+            # before continuing on
 
 
 def wait():
@@ -214,7 +185,7 @@ while player.alive:
     print(player.in_room)
     for item_name in player.in_room.items:
         item = player.in_room.items[item_name]
-        if isinstance(item, Prop) or item.removed == False:
+        if isinstance(item, Prop) and item.hidden == False or isinstance(item, Fixed) and item.removed == False:
             print(f'🔹 {item}')
     for prop in player.props:
         print(f'👜 {player.props[prop]}')
@@ -229,9 +200,7 @@ while player.alive:
             if cardinals.match(sl[0]) or sl[0] == 'n' or sl[0] == 'e' or sl[0] == 's' or sl[0] == 'w':
                 # take the first letter of the input string
                 s = sl[0][0]
-                if not movePlayer(player, s):
-                    print('\n\n🤔 There is no path leading in that direction.')
-                    wait()
+                movePlayer(player, s)
             elif sl[0] == 'q':
                 player.alive = False
             elif sl[0] == '?':
@@ -266,6 +235,9 @@ while player.alive:
                 prop = player.put_down(prop_name)
                 if prop != None:
                     player.in_room.add_item(prop)
+                else:
+                    wait()  # a message is displayed when they fail to pick this up
+                    # give them a chance to read it
             else:
                 invalid_choice()
         elif len(sl) == 4:
@@ -274,6 +246,7 @@ while player.alive:
                     prop = player.props[sl[1]]
                     fixed = player.in_room.items[sl[3]]
                     player.use_prop(prop, fixed)
+                    wait()
         else:
             invalid_choice()
 

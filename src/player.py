@@ -15,9 +15,13 @@ class Player:
             return False
         else:
             self.props[prop.name.lower()] = prop
-            print(f'\n\n🙌 You picked up the {prop.name}.')
-            prop.held = True
-            return True
+            if prop.hidden:
+                print(f'\n\n🤔 Huh? What {prop.name}?')
+                return False
+            else:
+                print(f'\n\n🙌 You picked up the {prop.name}.')
+                prop.held = True
+                return True
 
     def put_down(self, prop_name):
         if prop_name in self.props:
@@ -27,12 +31,12 @@ class Player:
             prop.held = False
             return prop
         else:
-            print(f"\n\n🤦 You weren't holding the {prop.name}!")
+            print(f"\n\n🤦 You weren't holding the {prop_name}!")
             return None
 
     def die(self):
         self.alive = False
-        print('💀You died.')
+        print('💀 You died.')
 
     def use_prop(self, prop, fixed):
         success = fixed.use(prop)     # use the prop on the fixed item
@@ -43,4 +47,5 @@ class Player:
 
     def use_fixed(self, fixed):
         if fixed.dangerous:
+            print(fixed.danger_message)
             self.die()

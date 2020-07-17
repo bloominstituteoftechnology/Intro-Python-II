@@ -2,7 +2,7 @@ from item import Item
 
 
 class Fixed(Item):
-    def __init__(self, name, description, danger_message="", removed_message=""):
+    def __init__(self, name, description, danger_message="", removed_message="", open_message=""):
         super().__init__(name, description)
         self.blocking_path = None   # if this item is blocking a path, string n|e|s|w
 
@@ -13,17 +13,22 @@ class Fixed(Item):
             self.dangerous = True
         self.danger_message = danger_message  # message to display if player is hurt
 
+        # set to True if it should disappear after being used
         if removed_message == "":
             self.remove_when_used = False
         else:
-            # should be removed when associated Prop is used
             self.remove_when_used = True
         self.removed = False
         self.removed_message = removed_message  # displays when item is removed
 
-        self.open_when_used = False     # should be opened when associated Prop is used
+        # set to True if it should open and reveal what's inside after used
+        if open_message == "":
+            self.open_when_used = False     # should be opened when associated Prop is used
+        else:
+            self.open_when_used = True
         self.opened = False
-        self.item_inside = None     # when opened, this Item replaces it
+        self.item_inside = None             # when opened, this Item replaces it
+        self.open_message = open_message    # displays when item is opened
 
         self.used_with = None    # what Prop does this Fixed item interact with?
 
@@ -32,11 +37,13 @@ class Fixed(Item):
             if self.remove_when_used:
                 self.blocking_path = None
                 self.removed = True
+                print(self.removed_message)
             if self.open_when_used:
                 self.opened = True
                 self.item_inside.hidden = False
                 # print(f'The {self.name} opened. {prop.a_or_an} {prop.name} was revealed! 🎉')
                 self.item_inside = None     # the item is just in the room now
+                print(self.open_message)
             return True
         elif self.dangerous:
             print(self.danger_message)
