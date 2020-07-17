@@ -62,6 +62,10 @@ while True:
 
     print(direction_input)
 
+    if direction_input[0] in direction:
+        try:
+            
+
 
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
