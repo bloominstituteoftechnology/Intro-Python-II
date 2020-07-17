@@ -32,4 +32,14 @@ class Room:
         return list(directions.values())
         
     def list_items(self):
-        print(f'You have: self.items')
+        print(f'There is: {self.items}') 
+        return [item.name for item in self.items] 
+
+    def hasitem(self, item_name):
+        return item_name in self.list_items()
+    
+    def new_room(self, direction):
+        print(direction)
+        new = self.__getattribute__(direction)
+
+        return new

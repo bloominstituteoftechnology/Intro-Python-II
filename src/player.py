@@ -14,3 +14,14 @@ class Player:
         item = self.current_room.list_items['name']
         print(item)
         self.inventory.append(item)
+    
+    def get_inventory(self):
+        msg = 'your current inventory: '
+        msg += [item.name for item in self.inventory] 
+        return msg
+
+    # # abtract away current_room = current_room.n_to
+    # def move(self, room):
+    #     self.current_room == room
+
+

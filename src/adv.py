@@ -64,10 +64,10 @@ room['library'].w_to = room['narrow']
 room['treasure'].s_to = room['narrow']
 
 # Items
-book = Item("Book", "Contains a treasure map.")
-crossbow = Item("Crossbow", "A powerful weapon.")
-key = Item("Key", "Unlocks secret room.")
-shield = Item("Shield", "Protects you from enemies and evil spirits.")
+book = Item("book", "Contains a treasure map.")
+crossbow = Item("crossbow", "A powerful weapon.")
+key = Item("key", "Unlocks secret room.")
+shield = Item("shield", "Protects you from enemies and evil spirits.")
 
 room['library'].items = [book]
 room['music'].items = [crossbow, shield]
@@ -75,14 +75,18 @@ room['dining'].items = [key]
 
 # Main
 # 
-def get_next(input, current_room):
+def get_next(input, room):
     key = input + "_to" 
-    atr = getattr(current_room, key) 
-    if getattr(current_room, key) is not None:
-        return atr
-    else:
-        return "There is nothing in that direction"
-
+    if hasattr(player.current_room, key):
+        if getattr(room, key) is not None:
+            return getattr(room, key)
+    
+def interpret_input(input):
+    # split input
+    # destructor verb, object
+    # if verb is n/s/w/e
+        # player moves to that room player.move() ?
+    pass
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Player 1", room['outside'])
 
@@ -97,30 +101,41 @@ print(f"\n Welcome {player.name}! \n")
 
 print(f'You are standing in the {player.current_room.name}, just north of you lies a large mansion. \n')
 
-current_room = player.current_room
 while playing is True:
     selection = input("Enter direction to move >> ").lower().split() # * Waits for user input and decides what to do.
 
-    try: 
+    # try: 
 
-        if len(selection) == 1 and selection[0] in ['n', 's', 'e', 'w', 'd', 'q']:
-            if selection[0] == 'd':
-                print(f'\n{current_room}')
-                current_room.possible_directions()
-            elif selection[0] == 'q':
-                print('Goodbye')
-                playing = False
+    if len(selection) == 1 and selection[0] in ['n', 's', 'e', 'w', 'd', 'q']:
+        if selection[0] == 'd':
+            print(f'\n{player.current_room}')
+            player.current_room.possible_directions()
+        elif selection[0] == 'q':
+            print('Goodbye')
+            playing = False
+        else:
+            if player.current_room.new_room(f'{selection[0]}_to') != None:
+                new = player.current_room.new_room(f'{selection[0]}_to')
+                print(new)
+                # player.move(new)
+                print(player.current_room)
             else:
-                current_room = get_next(selection[0], current_room)
-                print(f'\n{current_room}')
-        
-        # elif len(selection) == 2:
-        #     if selection[0] in ['get', 'take' 'pick']:
-        #         player.get_item
-        #         print(player.inventory)
-        else: 
-            print('Invalid input. try n, s, e, w in order to move or enter command "get book" to collect items')
-    except ValueError: 
-        print("That move isn't allowed please choose another direction. ") # Print an error message if the movement isn't allowed.
+                print(" There is nothing in that direction. try 'd' to see available directions")
+                
+    elif len(selection) == 2:
+        if selection[0] in ['get', 'take' 'pick'] and player.current_room.hasitem(selection[1]):
+            print(selection[1])
+            index = player.current_room.list_items().index(selection[1])
+            player.get_item(player.current_room.items[1])
+            player.get_inventory()
+            continue
+        else:
+            print(selection)
+            print("That item is not in the room. ")
+            player.current_room.list_items()
+    else: 
+        print('Invalid input. try n, s, e, w in order to move or enter command "get book" to collect items')
+    # except ValueError: 
+    #     print("That move isn't allowed please choose another direction. ") # Print an error message if the movement isn't allowed.
 
 # If the user enters "q", quit the game.
