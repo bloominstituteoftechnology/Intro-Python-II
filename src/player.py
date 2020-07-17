@@ -13,23 +13,25 @@ class Player:
         if items:
             return f"Player's items: {items}"
         return 'Player currently have no items.'
-
+    def hasLightSource(self):
+        lightSources = [item for item in self.items.values() if isinstance(item, LightSource)]
+        return len(lightSources) > 0
     def move(self, direction):
         directions = ['w', 'e', 'n', 's']
         if direction not in directions:
-            new_direction = input("Please enter a valid direction. (n, s, w, e)")
-            self.move(new_direction)
+            clear()
+            print("Please enter a valid direction.")
         else:
             try:
                 diff_location = self.location[f"{direction}_to"]
                 self.location = diff_location
             except:
-                new_direction = input("You can't move in that direction! Try again. (n, s, w, e)")
-                self.move(new_direction)
+                clear()
+                print("You can't move in that direction! Try again.")
+                
 
     def loot(self, item_name):
-        hasLightSource = [item for item in self.items.values() if isinstance(item, LightSource)]
-        if self.location.dark and len(hasLightSource) == 0:
+        if self.location.dark and self.hasLightSource() == 0:
             print("Good luck finding that in the dark!")
             return
         found_item = self.location.get_item(item_name)

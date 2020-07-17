@@ -50,9 +50,10 @@ me = Player(room['outside'])
 
 running = True
 
+prev_obj = ""
+
 while running:
-    hasLightSource = [item for item in me.items.values() if isinstance(item, LightSource)]
-    isDark = me.location.dark and len(hasLightSource) == 0
+    isDark = me.location.dark and not me.hasLightSource()
     if isDark:
         print(f"-------------------\nIt's too dark to see!\n\
 Items cannot be seen")
@@ -69,6 +70,8 @@ menu options - q - quit, d -location's description, i - inventory\n")
 
     try:
         verb, obj = player_input.split(" ")
+        if obj == "it" and prev_obj:
+            obj = prev_obj
     except:
         verb = player_input
 
@@ -87,5 +90,6 @@ menu options - q - quit, d -location's description, i - inventory\n")
     elif verb == 'go': me.move(obj)
         
     else: print("Invalid input, try again")
-        
+
+    prev_obj = obj
 
