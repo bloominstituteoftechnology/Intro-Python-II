@@ -10,7 +10,7 @@ room = {
     'entrance': Room("entrance", """Dim light filters in from the south. Dusty passages run north, east and west."""),
 
     'cliff': Room("steep cliff", """A steep cliff appears before you, falling into the darkness. 
-    Ahead to the north, a light flickers in the distance, but there is no way across the chasm."""),
+    There is a passage to the north, overgrown with what might be tree roots. There appears to be no way across the chasm."""),
 
     'passage1': Room("narrow passage", """A narrow passage bends here from west to north."""),
 
@@ -72,8 +72,6 @@ room['cavern'].s_to = room['passage3']
 room['cliff'].items = [item['key']]
 room['chamber'].items = [item['chest']]
 
-
-
 #
 # Main
 #
@@ -92,19 +90,23 @@ room['chamber'].items = [item['chest']]
 # If the user enters "q", quit the game.
 
 def print_commands():
-    print("""Valid commands:
-    \'n\', \'s\', \'e\', or \'w\'   Move North, South, East, or West.
-    \'take <item>\'           Pickup an item, where <item> is the item name.
-    \'drop <item>\'           Drop an item, where <item> is the item name.
+    print("""Commands:
+    \'n\', \'s\', \'e\', or \'w\'   Move north, south, east, or west.
+    \'inv\'                   Look at your inventory.
+    \'look\'                  Look around.
+    \'look <item>\'           Look at an item.
+    \'take <item>\'           Pickup an item.
+    \'drop <item>\'           Drop an item.
+    \'unlock <item>\'         Unlock a locked item.
+    \'help\'                  See this command list again.
     \'q\'                     Quit\n""")
 
 # Begin Program
 possible_directions = ['n', 's', 'e', 'w']
 player_name = input("\nPlease enter your name.\n")
-print(f"\nHi {player_name}.  Good luck on your adventure.")
+print(f"\nHi {player_name}.  Good luck on your adventure. Type 'help' for a list of commands.")
 player = Player(player_name, room['outside'])
 player.print_location_status()
-print_commands()
 
 # REPL 
 while True:
@@ -119,6 +121,10 @@ while True:
         if cmd in possible_directions:
             player.try_direction(cmd)
             continue
+        elif cmd == 'look':
+            player.print_location_status()
+        elif cmd == 'help':
+            print_commands()
     elif num_words == 2:
         verb = cmd[0]
         item_name = cmd[1]
@@ -128,6 +134,14 @@ while True:
         elif verb == 'drop':
             player.try_drop_item_from_inventory(item_name)
             continue
+        elif verb == 'unlock':
+            # unlock container
+            continue
+        elif verb == 'look':
+            # get item description. Make dynamic so user can look in containers.
+            continue
+        elif verb == 'inv':
+            player.look_at_inventory()
+            continue
         else:
             print("\nInvalid input, please try again.")
-    print_commands()
