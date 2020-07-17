@@ -9,13 +9,14 @@ class Player:
 
     def get_item(self, item):
         self.item.append(item)
+        # self.current_room.items.remove(item)
 
     def remove_item(self, item):
         return self.item.remove(item)
 
-    def print_item(self, item):
+    def print_item(self):
         if len(self.item) >0:
-            print('{self.name} has these items:')
+            print(f'{self.name} has these items:')
             for i in self.item:
                 print(i)
         

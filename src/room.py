@@ -15,6 +15,8 @@ class Room:
         self.s_to = s_to
         self.e_to = e_to
         self.w_to = w_to
+        self.items =  []
+      
 
     def __str__(self) :
         
@@ -22,14 +24,14 @@ class Room:
         s = f'{self.name} {self.description} '  
         return s
 
-    # def add_items(self, item):
-    #     self.items.append(item)
+    def add_item(self, item):
+        self.items.append(item)
 
-    # def print_item(self, item):
-
-    #     if len(self.items >0):
-    #         for i in item:
-    #             print('The items in this room:')
-    #             print(i)
-    #     else:
-    #         print('There are No Items In this Room.')      
+    def print_item(self):
+        print('The items in this room:')
+        if self.items != None:
+            for i in self.items:
+                print(i)
+    
+    def remove_item(self,item):
+        self.items.remove(item)
