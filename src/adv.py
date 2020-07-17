@@ -94,7 +94,8 @@ def print_commands():
     \'n\', \'s\', \'e\', or \'w\'   Move north, south, east, or west.
     \'inv\'                   Look at your inventory.
     \'look\'                  Look around.
-    \'look <item>\'           Look at an item.
+    \'look at <item>\'        Look at an item.
+    \'look in <item>\'        See all the items in a container.
     \'take <item>\'           Pickup an item.
     \'drop <item>\'           Drop an item.
     \'unlock <item>\'         Unlock a locked item.
@@ -125,6 +126,9 @@ while True:
             player.print_location_status()
         elif cmd == 'help':
             print_commands()
+        elif cmd == 'inv':
+            player.look_at_inventory()
+            continue
     elif num_words == 2:
         verb = cmd[0]
         item_name = cmd[1]
@@ -137,11 +141,16 @@ while True:
         elif verb == 'unlock':
             # unlock container
             continue
-        elif verb == 'look':
-            # get item description. Make dynamic so user can look in containers.
-            continue
-        elif verb == 'inv':
-            player.look_at_inventory()
-            continue
-        else:
-            print("\nInvalid input, please try again.")
+    elif num_words == 3:
+        verb = cmd[0]
+        preposition = cmd[1]
+        item_name = cmd[2]
+        if verb == 'look':
+            if preposition == 'at':
+                player.look_at_item(item_name)
+                continue
+            elif preposition == 'in':
+                # look in container
+                continue
+    else:
+        print("\nInvalid input, please try again.")
