@@ -36,9 +36,10 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
 # Make a new player object that is currently in the 'outside' room.
-class NewPlayer:
+start_point = room['outside']
+
+NewPlayer = Player("Bob", start_point)
     def __init__(self, name, location):
         self.name = name
         self.location = location
@@ -64,7 +65,7 @@ while True:
 
     if direction_input[0] in direction:
         try:
-            
+
 
 
 #
