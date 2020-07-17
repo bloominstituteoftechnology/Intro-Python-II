@@ -1,10 +1,13 @@
 from room import Room
+from player import Player
+from item import Item
+import helpers
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons" ),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -33,11 +36,48 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+items = {
+    'Sword': Item('Sword:  ', ' A Sharp sword'),
+    'Axe': Item('Axe: ', 'A deadly Viking Battleaxe'),
+    'Staff': Item('Staff :', 'A Magic Staff'),
+    'Crystal': Item('Crystal: ', 'A Magic Crystal'),
+    'Gold': Item('Gold', " A bag of Gold Coins"),
+    'Book of Spells': Item('Book of Spells', 'Better use it for good and not Evil!')
+
+}
+
+
+# room['outside'].items.append(items['sword'])
+
+room['outside'].add_item(items['Sword'])
+room['outside'].add_item(items['Gold'])
+
+room['foyer'].add_item(items['Axe'])
+room['foyer'].add_item(items['Gold'])
+room['overlook'].add_item(items['Staff'])
+room['narrow'].add_item(items['Crystal'])
+room['narrow'].add_item(items['Book of Spells'])
+room['treasure'].add_item(items['Book of Spells'])
+
+
+ 
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player1 = Player('Khajit',  room['outside'])
+
+ 
+
+player1.get_item(items['Staff'])
+player1.get_item(items['Axe'])
+  
+ 
+
+ 
+ 
+player2 = Player('Nord',   'foyer')
 
 # Write a loop that:
 #
@@ -49,3 +89,49 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+play = str(input('Which way to Travel?\n press N for North, \n S for South,\n W for west,\n E for East \n or Q for quit.'))
+pick_up =  input (f'Enter get {player1.current_room.items[0].name}').split(' ')
+
+ 
+while True:
+    print(player1.name, 'is located', player1.current_room)
+    print(player1.print_item())
+    print(player1.current_room.print_item())
+    pick_up =  input (f'Enter get {player1.current_room.items[0].name}').split(' ')
+
+    play = str(input(
+        'Which way to Travel?\n press N for North, \n S for South,\n W for west,\n E for East \n or Q for quit.'))
+    
+    if play == 'q':
+        break
+    if play == 'n':
+ 
+        if player1.current_room.n_to :
+            player1.current_room = player1.current_room.n_to
+        else:
+            print('cannot go that way.')
+            print()
+
+    if play == 's':
+        if player1.current_room.s_to :
+            player1.current_room = player1.current_room.s_to
+        else:
+            print('cannot go that way.')
+            print()
+    if play == 'w':
+        if player1.current_room.w_to:
+            player1.current_room = player1.current_room.w_to
+        else:
+            print('cannot go that way.')
+            print()
+    if play == 'e':
+        if player1.current_room.e_to:
+            player1.current_room = player1.current_room.e_to
+        else:
+            print('cannot go that way.')
+            print()
+    if pick_up[0] == 'get' :
+        player1.get_item(pick_up[1]) 
+    else:
+        continue
+    #    player1.get_item(None)
