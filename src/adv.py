@@ -1,45 +1,64 @@
 from room import Room
-
-# Declare all the rooms
-
-room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
-
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
-
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
-
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
-
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
-}
+from os import system, name
+import sys
+from game import Game
+from player import Player
+from buildRooms import room
 
 
-# Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+### ----------------------------------------------####
+# I have moved the rooms dictionary into the buildRooms file
+# I also moved the linking of the rooms  in to the build rooms file
+### ---------------------------------------------- ###
+
 
 #
 # Main
 #
 
+
+###
+# some of the methods that are used in the game logic
+
+# instanciating a game
+game = Game(Player())
+
+
+
+
+### THE GAME LOOP IS FOUND IN GAME.PY ###
+
+
 # Make a new player object that is currently in the 'outside' room.
 
-# Write a loop that:
+
+# STARTING of the GAME here
+
+
+# this is an flag to see if this is the first time to play the game
+first_time = 1
+
+while True:
+    # the inner loop of if you wanto to play the game
+    if first_time:
+        game.check_if_play()
+    
+    theName = game.okay_play()
+
+    # putting giving the player a name and putting him in the outside room
+    game.player.current_room = room["outside"]
+    game.player.playerName = theName
+    
+    
+    game.play_game() # this is the real loop for the game
+
+
+
+
+
+   
+# Write a loop that:  #####------ This loop will be found in the game.py file ------#####
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
