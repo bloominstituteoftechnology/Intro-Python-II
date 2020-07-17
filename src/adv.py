@@ -35,28 +35,32 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 item = {
-    'bottle' : Item('bottle', 'An empty glass bottle'),
-    'stick' : Item('stick', 'A hefty knotted stick from a tree'),
-    'book' : Item('book', 'A strange book full of glyphs and writing in an unknown language'),
-    'lantern' : Item('lantern', 'A lantern lit with oil'),
-    'coin' : Item('gold coin', 'A worn gold coin'),
-    'key' : Item('pewter key', 'A rusted pewter skeleton key')
+    'bottle' : Item('a bottle', 'an empty glass bottle'),
+    'stick' : Item('a stick', 'a hefty knotted stick from a tree'),
+    'book' : Item('a book', 'a strange book full of glyphs and writing in an unknown language'),
+    'lantern' : Item('a lantern', 'a lantern lit with oil'),
+    'coin' : Item('a single gold coin', 'a worn gold coin'),
+    'key' : Item('a pewter key', 'a rusted pewter skeleton key')
 }
+
+# Testing items to display properly
+# print(item['book'])
+# print(item['book'].item)
 
 # Make a new player object that is currently in the 'outside' room.
 print('\nWelcome to your quest, player... \n')
-time.sleep(1)
+# time.sleep(1)
 name_input = input('Please select a name for your character.\n')
 player = Player(room['outside'], name_input)
 print(f'\n{player.name}?')
-time.sleep(2)
+time.sleep(1)
 print('\nWhat a strange name... ')
 time.sleep(2)
 print('\nAnyhow...\n')
 time.sleep(1)
 print(f'Hello, {player.name}.')
 time.sleep(1)
-print(f'\n\n{player.room}')
+print(f'\n{player.room}')
 time.sleep(1)
 
 #------------------------------------------------------------------------------------

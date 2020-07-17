@@ -6,4 +6,12 @@ class Item:
         self.description = description
 
     def __str__(self):
-        return f'You are holding {item}. {self.description}'
+        return f'It appears to be a {self.description}.'
+
+    def get_item(self):
+        player_items.append(self.item)
+        room_items.remove(self.item)
+
+    def drop_item(self):
+        room_items.append(self.item)
+        player_items.remove(self.item)
