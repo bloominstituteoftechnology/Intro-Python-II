@@ -56,7 +56,6 @@ class Game:
     # This is a list of the action for two word values
     twoWordList = [""]
 
-
     # This is the one word list of actions
     # This list is used to help get the action to perform
     oneWordList = ["n", "s", "e", "w", "q"]
@@ -216,16 +215,18 @@ class Game:
             itemsList = self.player.current_room.items_in_room
             you_have = ""
             period =""
-
+        #breakpoint()
         if len(itemsList) == 0:
            
             possesions = "You don't have anything in your possesion.\n\n"
             return possesions, len(itemsList)
         # the string to which the whole list will be returned
-        s = ""    
+        s = ""  
+        t = "" 
         for i, item in enumerate(itemsList):
             s = s + item.name 
-            if i < len(itemsList) - 1 and len(itemsList) < 1:
+            
+            if i < len(itemsList) - 1 and len(itemsList) > 1:
                 s = s + ", "
         possesions = you_have + s + period
         return possesions, len(itemsList)
@@ -258,7 +259,7 @@ class Game:
         if direction == "e": # This means east
             nextRoom = theRoom.e_to
         if direction == "w": # This means west
-            nextRoom == theRoom.w_to
+            nextRoom = theRoom.w_to
             
         # now will check to see if the dircection is available
         if nextRoom == None:
@@ -410,6 +411,14 @@ class Game:
     def play_game(self):
         print_key = 0 # This key is passed in to the print_room_and_description
                          # Will tell what type of message to print out
+
+
+        # Trying out the re-linking of the rooms
+       # buildRooms.link_rooms() # These Will re-link the room
+       # buildRooms.set_directions(buildRooms.room) # giving new descriptions to the rooms to 
+                                                   # tell the player where they can go.
+
+
         while True:
         # Will now be playing the game will show the current room
             # calling the function that will print out the location where the 

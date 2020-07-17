@@ -22,7 +22,7 @@ class Room:
     # This method is not used because the locations are set in the 
     # adv.py file.
 
-    def __set_next_to_attr(self, n_to, s_to, e_to, w_to):
+    def set_next_to_attr(self, n_to, s_to, e_to, w_to):
         """
         used to set the attributes of what rooms are next to this room
         """
@@ -40,4 +40,26 @@ class Room:
     def add_item(self, newItem):
         self.items_in_room.append(newItem)
 
-    
+    # function that will return the linked rooms in the 
+    # order n , s, e, w
+    # returns 0 if not linked in the direction and 1 if 
+    # linked
+    def return_room_links(self):
+        theList = []
+        if self.n_to == None:
+            theList.append(0)
+        else:
+            theList.append(1)
+        if self.s_to == None:
+            theList.append(0)
+        else:
+            theList.append(1)
+        if self.e_to == None:
+            theList.append(0)
+        else:
+            theList.append(1)
+        if self.w_to == None:
+            theList.append(0)
+        else:
+            theList.append(1)
+        return theList

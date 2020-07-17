@@ -28,7 +28,7 @@ earlier adventurers. The only exits are to the south and a small tunnel to the e
 dark_description="""You are close, don't give up!"""),
 
     "tunnel": Room("Tunnel", """Your inside a tunnel.  
-This tunnel is only large enough to crawl through""", dark_description="""You can't see anything.
+This tunnel is only large enough to crawl through continuing to the east. """, dark_description="""You can't see anything.
 But you managed to begin crawling into the tunnel. You just felt something touch your hand!""",
  is_light=False, animal_monster=Monster("Dirk the snake", "shovel", description="a rattle snake")),
 
@@ -58,8 +58,34 @@ room["great chamber"].w_to = room["tunnel"]
 
 
 
+# This is a method that is used to replace the descriptions of all the rooms with 
+# a made one that will tell you the which directions to go
+def set_directions(room_dict):
+    # looping through the list
+    theLinksList = None
+    dirctions = ["north", "south", "east", "west"]
+    newDescription = "From here you can go "
+    
+    # looping through the dictionary
+    for key in room_dict:
+        more_than_one = False
+        newDescription = "From here you can go "
+        theLinksList = room_dict[key].return_room_links()
+        # now need to add the words
+        for i in range(len(theLinksList)):
+            if theLinksList[i] == 1:
+                if more_than_one == False:
+                    newDescription = newDescription + dirctions[i]
+                    more_than_one = True
+                else:
+                    newDescription = newDescription + " and " + dirctions[i]
+        # now doing adding the new description
+        room_dict[key].description = newDescription
+
+
+
 def set_all_to_none(theRoom):
-    theRoom.__set_next_to_attr(n_to=None, s_to=None, e_to=None, w_to=None)
+    theRoom.set_next_to_attr(n_to=None, s_to=None, e_to=None, w_to=None)
 
 def link(theDir, key_to_link_to, key):
     if theDir == 0:
@@ -107,10 +133,12 @@ def pick_to_link_to(linkedList):
             theDir = choice(theDirections)
             # check if is available
             if is_available(link_to_key=link_to_key, thedir=theDir):
+                #breakpoint()
                 keepTrying = False
                 break
             else:
                 theDirections.pop(theDir)
+               
     # Will return the dir and who to link to
     return theDir, link_to_key
 
