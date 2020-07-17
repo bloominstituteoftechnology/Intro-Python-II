@@ -7,20 +7,12 @@ class Player():
         self.room = room
         self.name = name
 
-    # def __str__(self):
-    #     if self.room == 'outside':
-    #         return f'\nHello, {self.name}! You are {self.room}. {self.description}'
-    #     elif self.room == 'treasure':
-    #         return f'\nYou have found the {self.room}. {self.description}'
-    #     else:
-    #         return f'\nYou are in the {self.room}. {self.description}'
-
     def movement(self, decision):
-        choice = self.movement_choice(decision)
-
-        if choice is not None:
-            self.room = choice
+        if hasattr(self.room, f'{decision}_to'):
+            self.room = getattr(self.room, f'{decision}_to')
             print(self.room)
-
+            return self.room
         else:
-            print('There is only a wall there, try another direction...')
+            print('You can\'t go that way. Please try another direction.')
+            print(self.room)
+            return self.room
