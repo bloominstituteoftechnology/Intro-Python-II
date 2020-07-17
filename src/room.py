@@ -19,8 +19,8 @@ class Room:
         val += f'\n{self.description}'
         return val
 
-    def add_item(self, name, item):
-        self.items[name.lower()] = item
+    def add_item(self, item):
+        self.items[item.name.lower()] = item
 
     def remove_item(self, item_name):
         if item_name.lower() in self.items:

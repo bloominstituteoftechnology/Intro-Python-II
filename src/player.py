@@ -30,11 +30,17 @@ class Player:
             print(f"\n\n🤦 You weren't holding the {prop.name}!")
             return None
 
+    def die(self):
+        self.alive = False
+        print('💀You died.')
+
     def use_prop(self, prop, fixed):
-        if prop in self.props and fixed in self.in_room.items:
-            success = fixed.use(prop)     # use the prop on the fixed item
-            if not success and fixed.dangerous:
-                self.alive = False
-                print('💀You died.')
-            elif not success and not fixed.dangerous:
-                print('🤷 Nothing happened.')
+        success = fixed.use(prop)     # use the prop on the fixed item
+        if not success and fixed.dangerous:
+            self.die()
+        elif not success and not fixed.dangerous:
+            print('🤷 Nothing happened.')
+
+    def use_fixed(self, fixed):
+        if fixed.dangerous:
+            self.die()
