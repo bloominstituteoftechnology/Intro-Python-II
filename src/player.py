@@ -5,7 +5,8 @@ class Player:
     def __init__(self, name, room):
         self.name = name 
         self.room = room 
-    
+        self.inventory = []
+
     def move(self, direction): 
         if direction in ['n', 's', 'e', 'w']: 
             next_room = self.room.get_direction(direction)
@@ -13,4 +14,4 @@ class Player:
                 self.room = next_room
                 print(self.room)
             else: 
-                print("Oops! Can't move in that direction.")
+                print("Oops! Can't move in that direction.")  

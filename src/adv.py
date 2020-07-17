@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item 
 
 # Declare all the rooms
 
@@ -42,6 +43,19 @@ room['treasure'].s_to = room['narrow']
 
 player = Player("Ruby", room['outside'])
 
+rock = Item("Rock", "Just a rock.")
+sword = Item("Sword", "A magical sword.")
+potion = Item("Potion", "Restore's health.")
+rubies = Item("Rubies", "Not gold but still worth keeping.")
+scroll = Item("Scroll", "Left over by the previous adventurers.")
+
+room["outside"].room_items.append(rock) 
+room["outside"].room_items.append(potion)
+room["foyer"].room_items.append(sword)
+room["overlook"].room_items.append(potion)
+room["overlook"].room_items.append(rock) 
+room["narrow"].room_items.append(rubies)
+room["treasure"].room_items.append(scroll)
 
 # Write a loop that:
 #
