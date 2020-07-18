@@ -39,16 +39,7 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 start_point = room['outside']
 
-NewPlayer = Player("Bob", start_point)
-    def __init__(self, name, location):
-        self.name = name
-        self.location = location
-
-    def __str__(self):
-        output = f"{self.name}" + "\n"
-        for i, l in enumerate(self.location):
-            output += "" + str(i+1) + "." + l.name + "\n"
-        return output
+NewPlayer = Player(input("Enter your name: ")start_point)
 
 # Write a loop that:
 #
