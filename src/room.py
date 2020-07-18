@@ -3,7 +3,7 @@
 from utils import clear
 
 class Room:
-    def __init__(self, name, desc, items={}, dark=False, monsters=[], encounter_chance=0):
+    def __init__(self, name, desc, items={}, dark=False, monsters=[], encounter_chance=-1):
         self.name = name
         self.desc = desc
         self.items = items

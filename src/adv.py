@@ -1,10 +1,14 @@
 import random
+from threading import Timer
+import time
 
 from room import Room
 from player import Player
 from item import Item, Treasure, LightSource, Equipment
-from utils import clear
+from utils import clear, space_word
 from battle import Battle
+from skill import Skill
+from monster import Monster
 # Declare all the rooms
 
 
@@ -15,12 +19,20 @@ item = {
     'candle': LightSource('candle', 'illuminates dark areas')
 }
 
+skills = {
+    'attack': Skill('attack', 10, 'attack'),
+    'defend': Skill('defend', 0, 'buff')
+}
+
+slime1 = Monster("slime", 30, 10, 0)
+slime2 = Monster("slime", 30, 10, 0)
+
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", item, encounter_chance=7),
+                     "North of you, the cave mount beckons", item),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", dark=True),
+passages run north and east.""", dark=True,  monsters=[slime1, slime2], encounter_chance=10),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -47,13 +59,16 @@ room['treasure'].s_to = room['narrow']
 
 # Start player at room 'Outside Cave Entrance'
 
-me = Player(room['outside'],50, 10, 5)
+me = Player(room['outside'],50, 10, 5, skills)
 # print(me.base_attack, me.base_defense, me.base_hp)
-random_battle = random.randint(0, 10) <= me.location.encounter_chance
 
+def random_battle():
+    return random.randint(0, 10) <= me.location.encounter_chance
+    
 mode = "explore"
 
 prev_obj = ""
+prev_location = me.location
 
 while mode == "explore":
     isDark = me.location.dark and not me.hasLightSource()
@@ -90,17 +105,33 @@ menu options - q - quit, d -location's description, i - inventory\n")
         
     elif verb =='drop': me.drop_item(obj)
         
-    elif verb == 'go': me.move(obj)
-        
+    elif verb == 'go':
+        prev_location = me.location
+        me.move(obj)
+        if random_battle() and prev_location != me.location:
+            mode = "battle"
     else: print("Invalid input, try again")
 
     prev_obj = obj
+    
+
+def display_monster_stats(monsters):
+    clear()
+    monsters_names = ""
+    monsters_hp = ""
+    for monster in monsters:
+        monsters_names += space_word(monster.name, 12)
+        monsters_hp += space_word(monster.base_hp, 12)
+    return f"{monsters_names}\n{monsters_hp}\n-------------------"
 
 while mode == "battle":
     active_monsters = me.location.monsters
-    print(f"Monsters encountered! Get ready for combat.\n-------------------")
     battle_room = Battle(me, active_monsters)
+    print(f"Monsters encountered! Get ready for combat.\n-------------------")
+    time.sleep(1)
+    print(display_monster_stats(active_monsters))
+
     while len(active_monsters) > 0:
-        player_input = input(f"Select your attack")
+        player_input = input(f"Select your move:\n{me.list_skills()}\n")
 
 

@@ -4,7 +4,7 @@ from utils import clear
 from item import LightSource, Equipment
 
 class Player:
-    def __init__(self, location, base_hp=1, base_attack=0, base_defense=0):
+    def __init__(self, location, base_hp=1, base_attack=0, base_defense=0, skills={}):
         self.location = location
         self.items = {}
         self.base_hp = base_hp
@@ -12,6 +12,7 @@ class Player:
         self.base_defense = base_defense
         self.boosted_attack = 0
         self.boosted_defense = 0
+        self.skills = skills
         
     def list_items(self):
         items = ", ".join([name.__str__() for name in self.items.keys()])
@@ -19,6 +20,11 @@ class Player:
             return f"Player's items: {items}"
         return 'Player currently have no items.'
 
+    def list_skills(self):
+        skills = ", ".join([name.__str__() for name in self.skills.keys()])
+        if skills:
+            return f"Skills: {skills}"
+        return 'Player have no skills.'
     def hasLightSource(self):
         lightSources = [item for item in self.items.values() if isinstance(item, LightSource)]
         return len(lightSources) > 0
