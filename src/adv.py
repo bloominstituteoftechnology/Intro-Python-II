@@ -63,14 +63,14 @@ while(selection != 'q'):
             new_player.pickup_item(new_player.current_room.items[0])
             new_player.current_room.remove_item(new_player.current_room.items[0])
             selection = input('Make your next move:\n')
-    if selection == 'd':
+    elif selection == 'd':
         if len(new_player.current_items) < 1:
             selection = input('You have no items to drop. Please make your next move:\n')
         else:
             new_player.current_room.add_item(new_player.current_items[0])
             new_player.drop_item(new_player.current_items[0])
 
-    if new_player.current_room == room['outside'] and selection == 'n':
+    elif new_player.current_room == room['outside'] and selection == 'n':
         new_player.current_room = room['foyer']
         print(new_player.current_room)
         selection = input('Make your next move:\n')
@@ -116,6 +116,9 @@ while(selection != 'q'):
         new_player.current_room = room['narrow']
         print(new_player.current_room)
         selection = input('Please select a direction to move using n, s, e, w, or quit with q:\n')
+
+    else:
+        selection = input('Please try again. Make your next move:\n')
     
 
     
