@@ -1,0 +1,121 @@
+from room import Room
+from player import Player
+from items import Item
+import time
+import re
+
+# Declare all the rooms
+
+room = {
+    'outside':  Room("outside the Cave Entrance",
+                     "North of you, the cave mount beckons."),
+
+    'foyer':    Room("in a Foyer", """Dim light filters in from the south. Dusty
+passages run north and east."""),
+
+    'overlook': Room("on the Grand Overlook", """A steep cliff appears before you, falling
+into the darkness. Ahead to the north, a light flickers in
+the distance, but there is no way across the chasm."""),
+
+    'narrow':   Room("in a Narrow Passage", """The narrow passage bends here from west
+to north. The smell of gold permeates the air."""),
+
+    'treasure': Room("in the Treasure Chamber", """You've found the long-lost treasure
+chamber! Sadly, it has already been completely emptied by
+earlier adventurers. The only exit is to the south."""),
+}
+
+# Link rooms together
+room['outside'].n_to = room['foyer']
+room['foyer'].s_to = room['outside']
+room['foyer'].n_to = room['overlook']
+room['foyer'].e_to = room['narrow']
+room['overlook'].s_to = room['foyer']
+room['narrow'].w_to = room['foyer']
+room['narrow'].n_to = room['treasure']
+room['treasure'].s_to = room['narrow']
+
+# Initializing list for item discovery
+room_list = [key for key in room]
+
+# Creating items for game
+item = {
+    'bottle' : Item('a bottle', 'an empty glass bottle'),
+    'stick' : Item('a stick', 'a hefty knotted stick from a tree'),
+    'book' : Item('a book', 'a strange book full of glyphs and writing in an unknown language'),
+    'lantern' : Item('a lantern', 'a lantern lit with oil'),
+    'coin' : Item('a single gold coin', 'a worn gold coin'),
+    'key' : Item('a pewter key', 'a rusted pewter skeleton key'),
+    'rug' : Item('a large rug', 'a large woven floor rug, intricate but worn and tattered')
+}
+
+# Item initialization
+outside_items = [item['lantern']]
+foyer_items = [item['bottle'], item['book']]
+overlook_items = [item['stick']]
+narrow_items = []
+treasure_items = [item['coin'], item['key']]
+player_items = []
+
+# Testing items to display properly
+# print(item['book'])
+
+# Make a new player object that is currently in the 'outside' room.
+print('\nWelcome to your quest, player... \n')
+# time.sleep(1)
+name_input = input('Please select a name for your character.\n')
+player = Player(room['outside'], name_input)
+
+# Introductory text
+print(f'\n{player.name}?')
+time.sleep(1)
+print('\nWhat a strange name... ')
+time.sleep(2)
+print('\nAnyhow...\n')
+time.sleep(1)
+print(f'Hello, {player.name}.')
+time.sleep(1)
+print(f'\n{player.room}')
+time.sleep(1)
+
+#------------------------------------------------------------------------------------
+# Write a loop that:
+#
+# * Prints the current room name
+# * Prints the current description (the textwrap module might be useful here).
+# * Waits for user input and decides what to do.
+#
+# If the user enters a cardinal direction, attempt to move to the room there.
+# Print an error message if the movement isn't allowed.
+#
+# If the user enters "q", quit the game.
+#------------------------------------------------------------------------------------
+
+# Setting up cardinal directions and decision prompt
+possible_choices = ['n', 'north', 'e', 'east', 's', 'south', 'w', 'west', 
+                    'search', 'scan', 'look', 'around','get', 'pick', 'up', 
+                    'take', 'drop', 'leave', 'use']  
+
+cardinals = ['n', 'north', 'e', 'east', 's', 'south', 'w', 'west']
+
+input_text = 'What would you like to do?'
+
+decision = input(input_text)
+
+# Main game loop
+while 'q' not in decision or 'quit' not in decision:
+    matches = list(set(decision.split()).intersection(possible_choices))
+    if len(matches) == 1:
+        player.room = player.movement(matches[0][0])
+        time.sleep(1)
+        decision = input(input_text)
+    elif len(matches) > 1:
+        if matches[0] in ['search', 'scan', 'look']:
+            print('You see the following items in the room: ')
+            # item_list = [item.item for item in f'foyer_items']
+            # print()
+    else:
+        print('Please select a valid command. Example: "Go north" or "pick up item"')
+        decision = input(input_text)
+
+print('\nYour quest has been abandoned... farewell.')

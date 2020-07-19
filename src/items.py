@@ -15,3 +15,8 @@ class Item:
     def drop_item(self):
         room_items.append(self.item)
         player_items.remove(self.item)
+
+    def room_query(self, item_list):
+        print('As you scan the room, you see the following items:')
+        for i in item_list:
+            print(i)
