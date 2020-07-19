@@ -11,6 +11,13 @@ class Room:
            "e": e_to,
            "w": w_to,
         }
+        # self.items_connection = {
+        #     "outside": "maps",
+        #     "foyer": "maps",
+        #     "overlook": "maps",
+        #     "narrow": "maps",
+        #     "treasure": 'one piece'
+        # }
         self.items = items
 
     def __str__(self):

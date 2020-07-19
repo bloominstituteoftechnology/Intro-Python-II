@@ -96,8 +96,12 @@ while user_is_playing:
        #evaluates player input
     if player_input in possible_choices:
         player.move(player_input)
-        player.addItem()
-        
+    
+        user_choice = input("Would you like to take or drop an item: ")
+        if user_choice == "take":
+            player.addItem()
+        else:
+            player.dropItem()
     else:
         print("you have entered invalid character")
 

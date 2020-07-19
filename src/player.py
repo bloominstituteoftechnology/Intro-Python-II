@@ -33,5 +33,10 @@ class Player:
         else:
             print("There is no items in the room")
 
-    # def dropItem(self):
-    #     if(s)
+    def dropItem(self):
+        if self.current_room.items is not None:
+            result = self.inventory.pop()
+            print(f"you have dropped and item: {result.name}")
+        else :
+            print("There is nothing to drop")
+
