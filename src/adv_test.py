@@ -50,22 +50,21 @@ item = {
 }
 
 # Item initialization
-outside_items = [item['lantern']]
-foyer_items = [item['bottle'], item['book']]
-overlook_items = [item['stick']]
-narrow_items = []
-treasure_items = [item['coin'], item['key']]
-player_items = []
+room['outside'].items = [item['lantern']]
+room['foyer'].items = [item['bottle'], item['book']]
+room['overlook'].items = [item['stick']]
+room['narrow'].items = []
+room['treasure'].items = [item['coin'], item['key']]
 
 # Testing items to display properly
-# print(item['book'])
+print(item['book'])
+
 
 # Make a new player object that is currently in the 'outside' room.
 print('\nWelcome to your quest, player... \n')
 # time.sleep(1)
 name_input = input('Please select a name for your character.\n')
 player = Player(room['outside'], name_input)
-
 # Introductory text
 print(f'\n{player.name}?')
 time.sleep(1)
@@ -112,10 +111,16 @@ while 'q' not in decision or 'quit' not in decision:
     elif len(matches) > 1:
         if matches[0] in ['search', 'scan', 'look']:
             print('You see the following items in the room: ')
-            # item_list = [item.item for item in f'foyer_items']
+            # item_list = [item.item for item in self.room.items]
             # print()
+        elif matches[0] in ['get', 'pick', 'up', 'take', 'drop', 'leave']:
+            print('You have picked up the item.')
+    elif decision == 'show inventory':
+        print(player.player_inventory())
+        decision = input(input_text)
     else:
-        print('Please select a valid command. Example: "Go north" or "pick up item"')
+        print("""Please select a valid command.\n 
+        Example: 'Go north', 'pick up item', or 'show inventory'""")
         decision = input(input_text)
 
 print('\nYour quest has been abandoned... farewell.')
