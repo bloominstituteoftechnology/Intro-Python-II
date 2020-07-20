@@ -18,6 +18,6 @@ class Player():
 
     def player_inventory(self):
         if len(self.inventory) > 0:
-            print(f'You have {[item for item in self.inventory]} in your inventory.\n')
+            print(f'You have {[item.name for item in self.inventory]} in your inventory.\n')
         else:
             return f'You have nothing in your inventory.\n'
