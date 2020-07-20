@@ -16,3 +16,9 @@ class Item:
 
     def on_drop(self):
         print(f'you dropped {self.name}')
+    
+    def set_item(self, item):
+        self.item = item
+
+    def get_item(self):
+        return self.item

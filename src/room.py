@@ -2,48 +2,36 @@
 # description attributes.
 from item import Item
 class Room:
+    number_of_rooms = 0
+    locked = False
+
     def __init__(self, name, description = ''):
         self.name = name
         self.description = description
-        self.n_to = self
-        self.s_to = self
-        self.w_to = self
-        self.e_to = self
+        self.linked_rooms = {}
         self.items = []
+        self.character = None
+        Room.number_of_rooms = Room.number_of_rooms + 1
     
-    # str() method returns room name, desc, and current items
     def __str__(self):
-        output = f'You are now in the {self.name} \n {self.description} \n'
-        for i, c  in enumerate(self.items):
-            output += "Items: " + str(i+1) + ". " + c.name + "\n"
-        return output
-
+        return f'The {self.name} \n-------------------\n{self.description} \n'
+       
     def __repr__(self):
-        return '{ room: ' + self.name + ' n_to: ' + self.n_to.name + ' s_to: ' + self.s_to.name + ' e_to: ' + self.e_to.name + ' w_to: ' + self.w_to.name + ' }'
+        return 'Room(' + self.name + ')'
     
-    # # abtract away current_room = current_room.n_to
-    def move(self, direction):
-        direction = direction + "_to"
-        new = self.__getattribute__(direction)
-        if new == self:
-            print("There is nothing there.")
-        else:
-            print(new)
-        return new
+    def describe(self):
+        print( self.description )
+    
+    # method for linking room together
+    def link_room(self, room_to_link, direction):
+        self.linked_rooms[direction] = room_to_link
 
     # returns a list of directions you can move in 
-    def possible_directions(self):
-        directions = {}
-        directions.update({ 'n': self.n_to, 's': self.s_to, 'w': self.w_to, 'e': self.e_to})
-        print(self)
-        msg = f'You choices are: '
-        for d, r in dict(directions).items():
-            if  r is self:
-                del directions[d]
-            if r != self:
-                msg += d + " "
-        print(msg)
-        return list(directions.values())
+    def get_info(self):
+        print(f'\n {self.name} \n-------------------\n{self.description} \n')
+        for direction in self.linked_rooms:
+            room = self.linked_rooms[direction]
+            print( "The " + room.name + " is " + direction)
     
     # method for addding items to room
     def add_item_to_room(self, name, desc):
@@ -54,17 +42,46 @@ class Room:
     def list_items(self):
         names= []
         for item in self.items:
+            print("*** The room contains " + item.name + "!!")
+        for item in self.items:
             names.append(item.name)
         return names
-
 
     def hasitem(self, item_name):
         return item_name in self.list_items()
     
-    
-    # example getters and setters
+    def move(self, direction):
+  
+        if direction in self.linked_rooms:
+            new_room = self.linked_rooms[direction]
+            if new_room.locked == True:
+                print('------------------- \n ****** The room is locked, you need the key!')
+                return self
+            return new_room
+   
+        else:
+            print("You can't go that way")
+            return self
+
+    #  getters and setters
+
+    # description
     def set_descrip(self, room_description):
         self.description = room_description
 
     def get_descrip(self):
         return self.description
+
+    # character
+    def set_character(self, character):
+        self.character = character
+
+    def get_character(self):
+        return self.character
+
+     # item
+    def set_items(self, items):
+        self.items = items
+
+    def get_items(self):
+        return self.items

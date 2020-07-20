@@ -10,23 +10,13 @@ class Player:
         return f'You, {self.name}, are currently in {self.current_room}'
     
     def get_item(self, item_name):
-        print("itesm", self.current_room.list_items())
-        # print(self.current_room.items[item_name])
-        # print(index)
-        # index = self.current_room.list_items().index(item_name)
-        # item = self.current_room.items[index]
-        # self.current_room.items.remove(item)
-        # self.inventory.append(item)
-        # print(self.inventory)
+        self.inventory.append(item_name)
 
     
     def get_inventory(self):
-        msg = 'your current inventory: '
+        items = []
         for item in self.inventory:
-            msg + item.name
-        print(msg)
-        return self.inventory
+            items.append(item)
+        return items
 
 
-    # def add_item(self, item):
-    #     self.invetory.append(item)
