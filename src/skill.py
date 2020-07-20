@@ -6,3 +6,5 @@ class Skill:
         self.effect = effect
     def __str__(self):
         return self.name
+    def on_skill_call(self):
+        return f"used {self.name}"

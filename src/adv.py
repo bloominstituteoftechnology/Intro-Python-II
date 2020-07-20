@@ -24,8 +24,12 @@ skills = {
     'defend': Skill('defend', 0, 'buff')
 }
 
-slime1 = Monster("slime", 30, 10, 0)
-slime2 = Monster("slime", 30, 10, 0)
+monster_skills = {
+    'attack': Skill('attack', 5, 'attack'),
+}
+
+slime1 = Monster("slime", 30, 5, 0, monster_skills)
+slime2 = Monster("slime", 30, 5, 0, monster_skills)
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -115,23 +119,16 @@ menu options - q - quit, d -location's description, i - inventory\n")
     prev_obj = obj
     
 
-def display_monster_stats(monsters):
-    clear()
-    monsters_names = ""
-    monsters_hp = ""
-    for monster in monsters:
-        monsters_names += space_word(monster.name, 12)
-        monsters_hp += space_word(monster.base_hp, 12)
-    return f"{monsters_names}\n{monsters_hp}\n-------------------"
-
 while mode == "battle":
     active_monsters = me.location.monsters
     battle_room = Battle(me, active_monsters)
     print(f"Monsters encountered! Get ready for combat.\n-------------------")
     time.sleep(1)
-    print(display_monster_stats(active_monsters))
-
+    clear()
+    print(battle_room.display_stats())
     while len(active_monsters) > 0:
-        player_input = input(f"Select your move:\n{me.list_skills()}\n")
-
-
+        battle_room.player_move()
+        print(battle_room.display_stats())
+        for monster in active_monsters:
+            battle_room.monster_move(monster)
+        print(battle_room.display_stats())

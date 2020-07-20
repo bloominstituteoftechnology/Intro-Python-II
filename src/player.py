@@ -23,7 +23,7 @@ class Player:
     def list_skills(self):
         skills = ", ".join([name.__str__() for name in self.skills.keys()])
         if skills:
-            return f"Skills: {skills}"
+            return f"{skills}"
         return 'Player have no skills.'
     def hasLightSource(self):
         lightSources = [item for item in self.items.values() if isinstance(item, LightSource)]
