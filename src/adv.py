@@ -72,20 +72,21 @@ room['parlor'].set_character(evilCasper)
 
 #add items into rooms 
 room['library'].add_item_to_room("treasure", "You win.")
-room['music'].add_item_to_room("crossbow", "A powerful weapon.")
+room['music'].add_item_to_room("crossbow", "A powerful, ancient weapon.")
 room['dining'].add_item_to_room("key", "Unlocks secret room.")
-room['overlook'].add_item_to_room("shield", "Protects you from enemies and evil spirits.")
+room['overlook'].add_item_to_room("gun", "A pistol.")
 # room['library'].add_add_to_room("treasure", "you are winning")
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Player 1", room['outside'])
+name = input('Welcome brave adventurer! Enter your name to get started: ')
+player = Player(name, room['outside'])
 playing = True
 
 current_room = player.current_room # new variable that holds the starting room. 
 # current_room.get_info()
-print("welcome")
+print(F"{player.name}, to play navigate with 'west', 'north', 'south', or 'east', \n To obtain items, type 'get [item]'. To fight enter 'fight' and chose your weapon wisely! \n Find the treasure to win. Beware of enemies!")
 print(current_room.get_info())
 
 while playing is True:
@@ -125,17 +126,17 @@ while playing is True:
             item = second[0]
 
             if item in current_room.list_items():
-                print(" You picked up the " + item + "!!!! \n")
+                print("** You picked up the " + item + " It's been added to your inventory. ** \n")
                 player.get_item(item)
                 current_room.set_items([])
             else: 
-                print('That item is not in this room')
+                print('** That item is not in this room **')
         
         elif first == 'fight':
             if inhabitant is None:
-                print('There are no enemies to fight, not yet.')
+                print('** There are no enemies to fight, not yet. **')
             # player
-            print(inhabitant.name)
+            print(f'{player.name} vs {inhabitant.name}')
             print('Choose your weapon')
             weapon = input()
             if weapon not in player.get_inventory():
@@ -144,6 +145,10 @@ while playing is True:
                 victory = inhabitant.fight(weapon)
                 if victory is True:
                     current_room.set_character(None)
+                else:
+                    print("You lost! Try again.")
+                    playing=False
+
         else:
             print('come agein')
     except ValueError: 
