@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 import textwrap
 
@@ -41,7 +42,10 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Jose", room["outside"])
+player = Player("Jojo", room['outside'])
+
+# initialize items to rooms
+room["foyer"].items = ["coins", "sword"]
 
 # Write a loop that:
 #
@@ -53,39 +57,58 @@ player = Player("Jose", room["outside"])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-
 user_is_playing = True
-#user will then get a welcome message 
-print("Welcome to the Adventure Game 2020")
+# welcome message
+print("Welcome to the adventure game")
 
-#loop starts here
-while user_is_palying:
-    #print current room and description
-    print(player.curret_room)
+while user_is_playing:
+    # print current room & room description
+    print(f"Current room: {player.current_room.name}")
     for line in textwrap.wrap(player.current_room.description, width=200):
         print(line)
-    #take user input
-    user_cmd = input(
-        "[n] North   [s] South  [e] East  [w] West  [q] Quit\n").lower()
-    print(f"You chose {user_cmd}")
-    
-    #user choose a cardinal direction
-    #if user inputs q, quit the game 
-    if user_cmd == "q":
-        print("Bye, come back again")
-        exit()
-        
-    # if user inputs 4 directions
-    if user_cmd in ("n", "s", "e", "w"):
-        user_cmd = f"{user_cmd}_to"
-        # if the direction is available/not none then go to that room
-        if hasattr(player.current_room, user_cmd):
-            player.current_room = getattr(
-                player.current_room, user_cmd)
-         # else the option is not available/none then throw error and back to user input
+    # print out item list
+    print(player.current_room)
+
+    # get user input
+    user_input = input(
+        "Please choose [n]North, [s]South, [e]East  [w]West to MOVE, [i]Inventory [take item_name] Take an item, [drop item_name] Drop an item, or [q] Quit\n").lower().split(" ")
+
+    # if user inputs 1 word
+    if len(user_input) == 1:
+        # if user inputs 1 of 4 directions
+        if user_input[0] in ["n", "s", "e", "w"]:
+            user_input[0] = f"{user_input[0]}_to"
+            player.move(user_input[0])
+
+        # if user inputs i for inventory
+        if user_input[0] == "i":
+            player.get_inventory()
+
+        # if user inputs quit
+        elif user_input[0] == "q":
+            print("You exited the game. Thank you for playing!")
+            user_is_playing = False
+
+    # if user inputs 2 words
+    elif len(user_input) == 2:
+        # take item from a room
+        if user_input[0] == "take" or user_input[0] == "get":
+            # check room content to see if content is there
+            for item in player.current_room.items:
+                if item == user_input[1]:
+                    player.take_item(user_input[1])
+                else:
+                    print("There is no such item in this room.")
+        # drop item to a room
+        elif user_input[0] == "drop":
+            for item in player.inventory:
+                if item == user_input[1]:
+                    player.drop_item(user_input[1])
+                else:
+                    print(f"{player.name} doesn't have this item in inventory")
         else:
-            print("There's not room with your chosen direction.")
-    # any other user input will throw any error
+            print("Invalid entry. Please enter 'get' or 'drop' followed by the item. ")
+
+    # else error message of not valid entry
     else:
-        print(
-            "Please choose 1 of the 5 given options: [n] North   [s] South  [e] East  [w] West  [q] Quit")
+        print("Invalid entry.")
