@@ -2,7 +2,6 @@ from room import Room
 from player import Player
 from item import Item
 
-
 # Declare all the rooms
 
 room = {
@@ -63,59 +62,55 @@ room['narrow'].e_to = room['library']
 room['library'].w_to = room['narrow']
 room['treasure'].s_to = room['narrow']
 
-# Items
-book = Item("book", "Contains a treasure map.")
-crossbow = Item("crossbow", "A powerful weapon.")
-key = Item("key", "Unlocks secret room.")
-shield = Item("shield", "Protects you from enemies and evil spirits.")
-
-room['library'].items = [book]
-room['music'].items = [crossbow, shield]
-room['dining'].items = [key]
-
+#add items into rooms 
+room['library'].add_item_to_room("treasure", "You win.")
+room['music'].add_item_to_room("crossbow", "A powerful weapon.")
+room['dining'].add_item_to_room("key", "Unlocks secret room.")
+room['overlook'].add_item_to_room("shield", "Protects you from enemies and evil spirits.")
+# room['library'].add_add_to_room("treasure", "you are winning")
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Player 1", room['outside'])
-# Write a loop that:
 
+player.current_room.add_item_to_room('item', 'test item')
 playing = True
 
-print(f"\n Welcome {player.name}! \n")
-
-current_room = room['outside']
-
+print(f"\n Welcome {player.name}! \n")  # welcome messages 
 print(f'You are standing in the {player.current_room.name}, just north of you lies a large mansion. \n')
 
-while playing is True:
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-    selection = input("Enter direction to move >> ") # * Waits for user input and decides what to do.
-# If the user enters a cardinal direction, attempt to move to the room there.
-    try: 
-        if selection == "n" and current_room.n_to is not None:
-            current_room = current_room.n_to
-            print(f'\n{current_room}')
-        elif selection == "s" and current_room.s_to is not None:
-            current_room = current_room.s_to
-            print(f'\n{current_room}')
-        elif selection == 'w' and current_room.w_to is not None:
-            current_room = current_room.w_to
-            print(f'\n{current_room}')
-        elif selection == 'e' and current_room.e_to is not None:
-            current_room = current_room.e_to
-            print(f'\n{current_room}')
-        elif selection == 'd':
-            print(f'\n{current_room}')
+current_room = room['outside'] # new variable that holds the starting room. 
+def determine_action(first, second=None):
+    global current_room
+    global playing
+    if first in ['n', 's', 'e', 'w', 'd', 'q']:
+        # if the command is d then print all possible directions 
+        if first == 'd':
             current_room.possible_directions()
-        elif selection == 'q':
+        # if the 
+        elif first == 'q':
             print('Goodbye')
             playing = False
         else:
-        # elif selection == 'n' or selection == 'w' or selection == 's' or selection == 'e': 
-            print("You can't go that way. Enter d to see your current location and possible directions; enter q to exit")
-    except ValueError: 
-        print("That move isn't allowed please choose another direction. ") # Print an error message if the movement isn't allowed.
+            current_room = current_room.move(first)
 
-# If the user enters "q", quit the game.
+    elif first in ['get', 'take' 'pick'] and second in current_room.list_items():
+        print(current_room.hasitem(second))
+        print("first", first, "second", second)
+        player.get_item(second)
+        # item = self.current_room.items[index]get 
+        # player.get_inventory()
+    else:
+        print('come agein')
+
+
+while playing is True:
+    selection = input("Enter direction to move >> ").lower().split(' ')
+    # try: 
+        # if the user enters single command and that command is a direction or q or d 
+    determine_action(*selection)
+
+    # except ValueError: 
+        # print("That move isn't allowed please choose another direction. ") # Print an error message if the movement isn't allowed.
+
