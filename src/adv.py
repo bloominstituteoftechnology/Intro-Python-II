@@ -42,7 +42,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Jojo", room['outside'])
+player = Player("Jose JP Joe Joe", room['outside'])
 
 # initialize items to rooms
 room["foyer"].items = ["coins", "sword"]
