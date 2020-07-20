@@ -56,15 +56,13 @@ room['overlook'].items = [item['stick']]
 room['narrow'].items = []
 room['treasure'].items = [item['coin'], item['key']]
 
-# Testing items to display properly
-print(item['book'])
-
 
 # Make a new player object that is currently in the 'outside' room.
 print('\nWelcome to your quest, player... \n')
 # time.sleep(1)
 name_input = input('Please select a name for your character.\n')
 player = Player(room['outside'], name_input)
+
 # Introductory text
 print(f'\n{player.name}?')
 time.sleep(1)
@@ -93,7 +91,7 @@ time.sleep(1)
 # Setting up cardinal directions and decision prompt
 possible_choices = ['n', 'north', 'e', 'east', 's', 'south', 'w', 'west', 
                     'search', 'scan', 'look', 'around','get', 'pick', 'up', 
-                    'take', 'drop', 'leave', 'use']  
+                    'take', 'drop', 'leave', 'remove', 'use', 'room']  
 
 cardinals = ['n', 'north', 'e', 'east', 's', 'south', 'w', 'west']
 
@@ -102,25 +100,34 @@ input_text = 'What would you like to do?'
 decision = input(input_text)
 
 # Main game loop
-while 'q' not in decision or 'quit' not in decision:
+while 'quit' not in decision:
     matches = list(set(decision.split()).intersection(possible_choices))
     if len(matches) == 1:
         player.room = player.movement(matches[0][0])
         time.sleep(1)
         decision = input(input_text)
     elif len(matches) > 1:
+        item_choice = decision.split()[-1]
         if matches[0] in ['search', 'scan', 'look']:
-            print('You see the following items in the room: ')
-            # item_list = [item.item for item in self.room.items]
-            # print()
-        elif matches[0] in ['get', 'pick', 'up', 'take', 'drop', 'leave']:
-            print('You have picked up the item.')
+            print('You see the following items in the room: \n')
+            print([item.item for item in player.room.items], '\n')
+            decision = input(input_text)
+        elif matches[0] in ['get', 'pick', 'up', 'take']:
+            player.inventory.append(item[f'{item_choice}'])
+            player.room.items.remove(item[f'{item_choice}'])
+            print('You have picked up that item.\n')
+            decision = input(input_text)
+        elif matches[0] in ['drop', 'leave', 'remove']:
+            player.inventory.remove(item[f'{item_choice}'])
+            player.room.items.append(item[f'{item_choice}'])
+            print('You have dropped that item.')
+            decision = input(input_text)
     elif decision == 'show inventory':
         print(player.player_inventory())
         decision = input(input_text)
     else:
         print("""Please select a valid command.\n 
-        Example: 'Go north', 'pick up item', or 'show inventory'""")
+        Example: 'Go north', 'pick up item', 'search room', or 'show inventory'""")
         decision = input(input_text)
 
 print('\nYour quest has been abandoned... farewell.')

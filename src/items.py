@@ -7,11 +7,3 @@ class Item:
 
     def __str__(self):
         return f'{self.item}'
-
-    def get_item(self):
-        player_items.append(self.item)
-        room_items.remove(self.item)
-
-    def drop_item(self):
-        room_items.append(self.item)
-        player_items.remove(self.item)

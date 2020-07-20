@@ -13,7 +13,7 @@ class Player():
             print('\n', self.room)
             return self.room
         else:
-            print('\nYou can\'t go that way. Please try another direction.\n')
+            print('\nThat didn\'t work. Try something else.\n')
             return self.room
 
     def player_inventory(self):
