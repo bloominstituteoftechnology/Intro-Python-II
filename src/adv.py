@@ -106,27 +106,33 @@ while 'quit' not in decision:
         player.room = player.movement(matches[0][0])
         time.sleep(1)
         decision = input(input_text)
+        
     elif len(matches) > 1:
-        item_choice = decision.split()[-1]
+
         if matches[0] in ['search', 'scan', 'look']:
             print('You see the following items in the room: \n')
             print([item.item for item in player.room.items], '\n')
             decision = input(input_text)
+
         elif matches[0] in ['get', 'pick', 'up', 'take']:
-            player.inventory.append(item[f'{item_choice}'])
-            player.room.items.remove(item[f'{item_choice}'])
-            print('You have picked up ', item[f'{item_choice}'], '.\n')
+            player.inventory.append(item[f'{decision.split()[-1]}'])
+            player.room.items.remove(item[f'{decision.split()[-1]}'])
+            print('You have picked up ', item[f'{decision.split()[-1]}'], '.\n')
             decision = input(input_text)
+
         elif matches[0] in ['drop', 'leave', 'remove']:
-            player.inventory.remove(item[f'{item_choice}'])
-            player.room.items.append(item[f'{item_choice}'])
-            print('You have dropped ', item[f'{item_choice}'], '.\n')
+            player.room.items.append(item[f'{decision.split()[-1]}'])
+            player.inventory.remove(item[f'{decision.split()[-1]}'])
+            print('You have dropped ', item[f'{decision.split()[-1]}'], '.\n')
             decision = input(input_text)
+
         elif decision[0] == 'describe':
             print('It is a ', item[f'{decision[-1]}'].description, '.')
+
     elif decision == 'show inventory':
         print(player.player_inventory())
         decision = input(input_text)
+
     else:
         print("""Please select a valid command.\n 
         Example: 'Go north', 'pick up item', 'search room', or 'show inventory'""")
