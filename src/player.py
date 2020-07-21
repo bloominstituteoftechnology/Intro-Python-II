@@ -7,15 +7,17 @@ class Player:
         self.current_room = current_room
         self.items = []
         
-    # def get_item(self, item):
-    #     # remove item from current room
-    #     self.current_room.remove_item(item)
-    #     # add item 
-    #     self.items.append(item)
-    #     return(f'You now have item {item.name}{item.description}')
-    # def __str__(self):
-    #     return(f'{self.name} now has items {self.items}')
-        
+# get item 
+    def getItem(self, item):
+        return self.items.append(item)
+    
+# drop item 
+    def dropItem(self, item):
+        return self.items.remove(item)
+
+# return item to current_room 
+    def __repr__(self):
+        return(f'Welcome to {self.current_room}')
 
         
     

@@ -3,43 +3,45 @@ from room import Room
 from item import Item
 # Declare all the rooms
 
+#
+# Main
+#
+# Make a new player object that is currently in the 'outside' room. n_to
+# create obj
+# bracket in dict room
+# player_room = starter room
+
+item = {
+    'teddys': Item('Teddy', 'A childs favorite stuffed animal'),
+    'rocket ship': Item('Rocket Ship', 'for the little Nasa that always lived inside of you'),
+    'Pug': Item('Pug', 'The dog everyone talks about and always wanted'),
+    'Computer desk': Item('Computer Desk', 'I think we all can agree, we want a new one'), 
+    'Love': Item('Love', 'we all need more of it in 2020!!!')
+}
+
+
+
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", 
-                     [
-                         Item("teddy bear ", "brown fat teddy bear for children"),
-                         Item("Rihanna poster", "large white poster for teenager")
-                     ]),
+                     "North of you, the cave mount beckons", item['teddys']),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", 
-                     [
-                         Item("teddy bear ", "brown fat teddy bear for children"),
-                         Item("Rihanna poster", "large white poster for teenager")
-                     ]),
+                     item['rocket ship']),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm.""", 
-                     [
-                         Item("teddy bear ", "brown fat teddy bear for children"),
-                         Item("Rihanna poster", "large white poster for teenager")
-                     ]),
+                     item['Pug']),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air.""",  
-                     [
-                         Item("teddy bear ", "brown fat teddy bear for children"),
-                         Item("Rihanna poster", "large white poster for teenager")
-                     ]),
+                    item['Computer desk']),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south.""", 
-                     [
-                         Item("teddy bear ", "brown fat teddy bear for children"),
-                         Item("Rihanna poster", "large white poster for teenager")
-                     ]),
+                    item['Love']),
 }
 
 
@@ -54,19 +56,20 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
-# Make a new player object that is currently in the 'outside' room.
-# create obj
-# bracket in dict room
-# player_room = starter room
+
 
 player_name = input("Choose your name: ")
 player_room = room["outside"]
 
 player = Player(player_name, player_room, [])
 print(player)
+
+new_player = Player(player_name, room['outside'])
+
+print(f'Welcome back, {new_player}')
+
+
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -77,7 +80,10 @@ print(player)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
 while True:
+    
+    
     current_room = player.current_room
     print(
         f'You are located at {current_room.name} that is {current_room.description}')

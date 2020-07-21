@@ -15,9 +15,7 @@ class Room:
         self.w_to = None
 
     # add list of [items]
-
-    # def printItems():
-    # print(items)
     
-    # def
+    def __repr__(self):
+        return(f'{self.name}: {self.description}')
     
