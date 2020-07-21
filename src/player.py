@@ -55,6 +55,7 @@ class Player:
             print("There is nothing of interest here.\n")
     
     def try_add_item_to_inventory(self, item_name):
+        #TODO: Add ability to take an item out of a container.
         for item in self.current_room.items:
             if item.name == item_name:
                 if item.isheavy == False:
@@ -95,3 +96,24 @@ class Player:
                     print(item.description)
                     break
             print(f"There is no {item_name} here.")
+
+    def open_item(self, item_name):
+        for item in self.current_room.items or self.inventory:
+            if item.name == item_name and item.iscontainer == True:
+                if item.islocked == False and item.isopen == False:
+                    item.isopen = True
+                    print(f"You open the {item.name}.")
+                    break
+                elif item.islocked == False and item.isopen == True:
+                    print(f"The {item.name} is already open.")
+                    break
+                elif item.islocked == True:
+                    print(f"The {item_name} is locked.")
+                    break
+            elif item.iscontainer == False:
+                print("You can't open that.")
+                break
+        print(f"There is no {item_name} here.")
+    
+    #TODO: Add unlock_item() and look_in_item() functions
+        

@@ -71,6 +71,7 @@ room['cavern'].s_to = room['passage3']
 # Add items to room
 room['cliff'].items = [item['key']]
 room['chamber'].items = [item['chest']]
+#TODO: Add items inside of chest.
 
 #
 # Main
@@ -99,6 +100,7 @@ def print_commands():
     \'take <item>\'           Pickup an item.
     \'drop <item>\'           Drop an item.
     \'unlock <item>\'         Unlock a locked item.
+    \'open <item>\'           Open a closed item.
     \'help\'                  See this command list again.
     \'q\'                     Quit\n""")
 
@@ -140,6 +142,9 @@ while True:
             continue
         elif verb == 'unlock':
             # unlock container
+            continue
+        elif verb == 'open':
+            player.open_item(item_name)
             continue
     elif num_words == 3:
         verb = cmd[0]

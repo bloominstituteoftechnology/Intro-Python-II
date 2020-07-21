@@ -1,4 +1,5 @@
 class Item:
+    #TODO: Add ability for item to have inventory.
     def __init__(self, name, description, iscontainer, isopen, islocked, isheavy):
         self.name = name
         self.description = description
