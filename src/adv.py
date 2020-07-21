@@ -92,8 +92,6 @@ possible_choices = ['n', 'north', 'e', 'east', 's', 'south', 'w', 'west',
                     'search', 'scan', 'look','get', 'pick', 'up', 'describe', 
                     'take', 'drop', 'leave', 'remove', 'use', 'room']  
 
-cardinals = ['n', 'north', 'e', 'east', 's', 'south', 'w', 'west']
-
 input_text = 'What would you like to do?'
 
 decision = input(input_text)
@@ -108,7 +106,7 @@ while 'quit' not in decision:
         decision = input(input_text)
 
     elif len(matches) > 1:
-        
+
         if matches[0] in ['search', 'scan', 'look']:
             print('You see the following items in the room: \n')
             print([item.item for item in player.room.items], '\n')
