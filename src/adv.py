@@ -106,9 +106,9 @@ while 'quit' not in decision:
         player.room = player.movement(matches[0][0])
         time.sleep(1)
         decision = input(input_text)
-        
-    elif len(matches) > 1:
 
+    elif len(matches) > 1:
+        
         if matches[0] in ['search', 'scan', 'look']:
             print('You see the following items in the room: \n')
             print([item.item for item in player.room.items], '\n')
