@@ -2,12 +2,10 @@
 # description attributes.
 
 class Room: 
-    def __init__(self, name, description, room_items=None): 
+    def __init__(self, name, description): 
         self.name = name
         self.description = description
-        self.room_items = room_items 
-        if room_items is None: 
-            self.room_items = []
+        self.items = [] 
         self.n_to = None
         self.s_to = None
         self.e_to = None
@@ -15,7 +13,7 @@ class Room:
 
     def __str__(self):
         string = ""
-        string += f'You are currently in the: {self.name}\n{self.description}\n Item(s) in room: {self.room_items}'
+        string += f'You are currently in the: {self.name}\n{self.description}\n Item(s) in room: {self.items}'
         return string
 
     def get_direction(self, direction):
@@ -29,3 +27,11 @@ class Room:
             return self.w_to
         else:
             return None
+
+    def add_items(self, item): 
+        self.items.append(item) 
+
+    def take_item(self, item): 
+        if item in self.items: 
+            self.items.remove(item) 
+    

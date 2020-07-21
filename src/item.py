@@ -3,14 +3,11 @@ class Item:
         self.name = name
         self.description = description 
 
-    def on_take(self): 
-        item = self.name 
-        print(f'You picked up {item}.')
+    def __repr__(self):
+        return f"{self.name}, Desc: {self.description}"
 
-    def on_drop(self): 
-        item = self.name 
-        print(f'You dropped {item}.')
+    def on_take(self):
+        print(f"You have picked up a {self.name}")
 
-    def __repr__(self): 
-        return f'{self.name} - {self.description}'
-
+    def on_drop(self):
+        print(f"You have dropped a {self.name}")

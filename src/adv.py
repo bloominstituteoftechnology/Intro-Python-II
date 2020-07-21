@@ -49,13 +49,13 @@ potion = Item("Potion", "Restore's health.")
 rubies = Item("Rubies", "Not gold but still worth keeping.")
 scroll = Item("Scroll", "Left over by the previous adventurers.")
 
-room["outside"].room_items.append(rock) 
-room["outside"].room_items.append(potion)
-room["foyer"].room_items.append(sword)
-room["overlook"].room_items.append(potion)
-room["overlook"].room_items.append(rock) 
-room["narrow"].room_items.append(rubies)
-room["treasure"].room_items.append(scroll)
+room["outside"].items.append(rock) 
+room["outside"].items.append(potion)
+room["foyer"].items.append(sword)
+room["overlook"].items.append(potion)
+room["overlook"].items.append(rock) 
+room["narrow"].items.append(rubies)
+room["treasure"].items.append(scroll)
 
 # Write a loop that:
 #
@@ -73,11 +73,46 @@ directions = ['n', 's', 'e', 'w']
 print(player.room)
 
 while True:
-    cmd = input("Please enter a direction : ")
+    cmd = input("Please enter a valid input : ")
     if cmd in directions:
         player.move(cmd)
+    
+    elif cmd == 'i': 
+        player.display_inventory()  
+
+    elif cmd == 'take rock': 
+        player.add_item(rock) 
+
+    elif cmd == 'drop rock': 
+        player.drop_item(rock) 
+    
+    elif cmd == 'take sword': 
+        player.add_item(sword) 
+
+    elif cmd == 'drop sword': 
+        player.drop_item(sword) 
+    
+    elif cmd == 'take potion': 
+        player.add_item(potion) 
+    
+    elif cmd == 'drop potion': 
+        player.drop_item(potion) 
+    
+    elif cmd == 'take rubies': 
+        player.add_item(rubies)
+    
+    elif cmd == 'drop rubies': 
+        player.drop_item(rubies) 
+    
+    elif cmd == 'take scroll': 
+        player.add_item(sword) 
+
+    elif cmd == 'drop sword': 
+        player.drop_item(sword)
+
     elif cmd == 'q':
         print("Thanks for Playing! :)")
         break
     else:
-        print("Oops! Choose a valid direction.")
+        print("Oops! Choose a valid input.") 
+    
