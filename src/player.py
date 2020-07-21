@@ -113,7 +113,30 @@ class Player:
             elif item.iscontainer == False:
                 print("You can't open that.")
                 break
-        print(f"There is no {item_name} here.")
+            print(f"There is no {item_name} here.")
     
-    #TODO: Add unlock_item() and look_in_item() functions
+    def unlock_item(self, item_name, with_key):
+        valid_key = False
+        for key in self.inventory:
+            if key.name == with_key and key.name == 'key':
+                valid_key = True
+
+        for item in self.current_room.items or self.inventory:
+            if item.name == item_name and valid_key == True:
+                if item.islocked == True:
+                    item.islocked = False
+                    self.inventory.remove(key)
+                    print(f"You unlocked the {item_name}.\n")
+                    break
+                else:
+                    print(f"You can't unlock the {item_name}.\n")
+                    break
+            elif item.name == item_name:
+                print(f"You can't find the proper key.\n")
+                break
+            else:
+                print(f"You can't find the {item_name}.\n")
+
+           
+    #TODO: look_in_item() functions
         

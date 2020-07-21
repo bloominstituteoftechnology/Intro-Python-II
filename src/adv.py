@@ -32,18 +32,18 @@ room = {
 #Declare all the items
 
 item = {
-    'sword': Item("rusty sword", """A rusty sword lies here.""", False, False, True, False),
+    'sword': Item("rusty sword", """A rusty sword lies here."""),
 
-    'coin': Item("gold coin", """There is a small gold coin here. Might be valuable.""", False, False, True, False),
+    'coin': Item("gold coin", """There is a small gold coin here. Might be valuable."""),
 
-    'key': Item("key", """A dingy key lies here. Might be useful.""", False, False, True, False),
+    'key': Item("key", """A dingy key lies here. Might be useful."""),
 
-    'rations': Item("rations", """Some old military rations are here. Hopefully they haven't expired.""", False, False, True, False),
+    'rations': Item("rations", """Some old military rations are here. Hopefully they haven't expired."""),
 
     'hookshot': Item("hookshot", """A spring-loaded, trigger-pulled hook attached to
         lengthy chains. It can can attack enemies at a distance, 
         retrieve remote items, and attach onto certain surfaces 
-        (like wood) to pull you across large distances.""", False, False, True, False),
+        (like wood) to pull you across large distances."""),
 
     'chest': Item("chest", """A dusty old chest lies in the corner here.""", True, False, True, True),
 }
@@ -93,16 +93,16 @@ room['chamber'].items = [item['chest']]
 def print_commands():
     print("""Commands:
     \'n\', \'s\', \'e\', or \'w\'   Move north, south, east, or west.
-    \'inv\'                   Look at your inventory.
-    \'look\'                  Look around.
-    \'look at <item>\'        Look at an item.
-    \'look in <item>\'        See all the items in a container.
-    \'take <item>\'           Pickup an item.
-    \'drop <item>\'           Drop an item.
-    \'unlock <item>\'         Unlock a locked item.
-    \'open <item>\'           Open a closed item.
-    \'help\'                  See this command list again.
-    \'q\'                     Quit\n""")
+    \'inv\'                         Look at your inventory.
+    \'look\'                        Look around.
+    \'look at <item>\'              Look at an item.
+    \'look in <item>\'              See all the items in a container.
+    \'take <item>\'                 Pickup an item.
+    \'drop <item>\'                 Drop an item.
+    \'unlock <item> with <key>\'    Unlock a locked item.
+    \'open <item>\'                 Open a closed item.
+    \'help\'                        See this command list again.
+    \'q\'                           Quit\n""")
 
 # Begin Program
 possible_directions = ['n', 's', 'e', 'w']
@@ -140,12 +140,11 @@ while True:
         elif verb == 'drop':
             player.try_drop_item_from_inventory(item_name)
             continue
-        elif verb == 'unlock':
-            # unlock container
-            continue
         elif verb == 'open':
             player.open_item(item_name)
             continue
+        elif verb == 'unlock':
+            print(f"\nWhat should I unlock the {item_name} with?")
     elif num_words == 3:
         verb = cmd[0]
         preposition = cmd[1]
@@ -157,5 +156,11 @@ while True:
             elif preposition == 'in':
                 # look in container
                 continue
+    elif num_words == 4:
+        verb = cmd[0]
+        item_name = cmd[1]
+        key_name = cmd[3]
+        if verb == 'unlock':
+            player.unlock_item(item_name, key_name)
     else:
         print("\nInvalid input, please try again.")
