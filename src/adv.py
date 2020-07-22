@@ -32,18 +32,15 @@ room = {
 #Declare all the items
 
 item = {
-    'sword': Item("rusty sword", """A rusty sword lies here."""),
+    'sword': Item("sword", """A rusty sword lies here."""),
 
-    'coin': Item("gold coin", """There is a small gold coin here. Might be valuable."""),
+    'coin': Item("coin", """There is a small gold coin here. Might be valuable."""),
 
     'key': Item("key", """A dingy key lies here. Might be useful."""),
 
     'rations': Item("rations", """Some old military rations are here. Hopefully they haven't expired."""),
 
-    'hookshot': Item("hookshot", """A spring-loaded, trigger-pulled hook attached to
-        lengthy chains. It can can attack enemies at a distance, 
-        retrieve remote items, and attach onto certain surfaces 
-        (like wood) to pull you across large distances."""),
+    'hookshot': Item("hookshot", """A rusty hookshot lays here.  It might be useful."""),
 
     'chest': Item("chest", """A dusty old chest lies in the corner here.""", True, False, True, True),
 }
@@ -68,10 +65,12 @@ room['passage3'].s_to = room['chasm']
 room['passage3'].n_to = room['cavern']
 room['cavern'].s_to = room['passage3']
 
-# Add items to room
-room['cliff'].items = [item['key']]
+# Add items to rooms
+room['cliff'].items = [item['key'], item['sword']]
 room['chamber'].items = [item['chest']]
-#TODO: Add items inside of chest.
+
+# Add items to chest
+item['chest'].inventory = [item['coin'], item['hookshot'], item['rations']]
 
 #
 # Main
@@ -97,8 +96,12 @@ def print_commands():
     \'look\'                        Look around.
     \'look at <item>\'              Look at an item.
     \'look in <item>\'              See all the items in a container.
-    \'take <item>\'                 Pickup an item.
+    \'get <item>\'                  Pickup an item.
+    \'get <item> from <container>\' Get an item from a container.
+    \'get all\'                     Get all items.
+    \'put <item> in <container>     Put an item in a container.
     \'drop <item>\'                 Drop an item.
+    \'drop all\'                    Drop all items.
     \'unlock <item> with <key>\'    Unlock a locked item.
     \'open <item>\'                 Open a closed item.
     \'help\'                        See this command list again.
@@ -124,22 +127,28 @@ while True:
         if cmd in possible_directions:
             player.try_direction(cmd)
             continue
-        elif cmd == 'look':
+        elif cmd == 'look' or cmd == 'l':
             player.print_location_status()
         elif cmd == 'help':
             print_commands()
-        elif cmd == 'inv':
+        elif cmd == 'inv' or cmd == 'i':
             player.look_at_inventory()
             continue
     elif num_words == 2:
         verb = cmd[0]
         item_name = cmd[1]
         if verb == 'get' or verb == 'take':
-            player.try_add_item_to_inventory(item_name)
-            continue
+            if item_name == 'all':
+                for item in player.current_room.items:
+                    player.add_item_to_inventory(item.name)
+            else:
+                player.add_item_to_inventory(item_name)
         elif verb == 'drop':
-            player.try_drop_item_from_inventory(item_name)
-            continue
+            if item_name == 'all':
+                for item in player.inventory:
+                    player.drop_item_from_inventory(item.name)
+            else:
+                player.drop_item_from_inventory(item_name)
         elif verb == 'open':
             player.open_item(item_name)
             continue
@@ -154,13 +163,17 @@ while True:
                 player.look_at_item(item_name)
                 continue
             elif preposition == 'in':
-                # look in container
+                player.look_in_item(item_name)
                 continue
     elif num_words == 4:
         verb = cmd[0]
-        item_name = cmd[1]
-        key_name = cmd[3]
+        item1_name = cmd[1]
+        item2_name = cmd[3]
         if verb == 'unlock':
-            player.unlock_item(item_name, key_name)
+            player.unlock_item(item1_name, item2_name)
+        elif verb == 'get' or verb == 'take':
+            player.get_item_from_container(item1_name, item2_name)
+        elif verb == 'put':
+            player.put_item_in_container(item1_name, item2_name)
     else:
         print("\nInvalid input, please try again.")
