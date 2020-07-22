@@ -26,6 +26,7 @@ class Player:
         item.on_take()
         self.inventory.append(item)
     
+
     def drop_item(self, item): 
         item.on_drop()
         self.inventory.remove(item)

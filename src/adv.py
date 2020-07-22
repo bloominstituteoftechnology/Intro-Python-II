@@ -82,33 +82,43 @@ while True:
 
     elif cmd == 'take rock': 
         player.add_item(rock) 
+        player.room.take_item(rock)
 
     elif cmd == 'drop rock': 
         player.drop_item(rock) 
+        player.room.add_items(rock)
     
     elif cmd == 'take sword': 
         player.add_item(sword) 
-
-    elif cmd == 'drop sword': 
-        player.drop_item(sword) 
-    
-    elif cmd == 'take potion': 
-        player.add_item(potion) 
-    
-    elif cmd == 'drop potion': 
-        player.drop_item(potion) 
-    
-    elif cmd == 'take rubies': 
-        player.add_item(rubies)
-    
-    elif cmd == 'drop rubies': 
-        player.drop_item(rubies) 
-    
-    elif cmd == 'take scroll': 
-        player.add_item(sword) 
+        player.room.take_item(sword)
 
     elif cmd == 'drop sword': 
         player.drop_item(sword)
+        player.room.add_items(sword)
+    
+    elif cmd == 'take potion': 
+        player.add_item(potion) 
+        player.room.take_item(potion)
+    
+    elif cmd == 'drop potion': 
+        player.drop_item(potion) 
+        player.room.add_items(potion)
+    
+    elif cmd == 'take rubies': 
+        player.add_item(rubies) 
+        player.room.take_item(rubies)
+    
+    elif cmd == 'drop rubies': 
+        player.drop_item(rubies) 
+        player.room.add_items(rubies)
+    
+    elif cmd == 'take scroll': 
+        player.add_item(scroll)
+        player.room.take_item(scroll)
+
+    elif cmd == 'drop scroll': 
+        player.drop_item(scroll) 
+        player.room.add_items(scroll)
 
     elif cmd == 'q':
         print("Thanks for Playing! :)")
