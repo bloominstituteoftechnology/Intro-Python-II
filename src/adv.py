@@ -1,9 +1,5 @@
 from room import Room
 from player import Player
-from item import Item
-
-import textwrap
-
 # Declare all the rooms
 
 room = {
@@ -42,10 +38,6 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Jose JP Joe Joe", room['outside'])
-
-# initialize items to rooms
-room["foyer"].items = ["coins", "sword"]
 
 # Write a loop that:
 #
@@ -57,58 +49,32 @@ room["foyer"].items = ["coins", "sword"]
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-user_is_playing = True
-# welcome message
-print("Welcome to the adventure game")
 
-while user_is_playing:
-    # print current room & room description
-    print(f"Current room: {player.current_room.name}")
-    for line in textwrap.wrap(player.current_room.description, width=200):
-        print(line)
-    # print out item list
-    print(player.current_room)
+player = Player("JP", room['outside'])
+game_on = True
 
-    # get user input
-    user_input = input(
-        "Please choose [n]North, [s]South, [e]East  [w]West to MOVE, [i]Inventory [take item_name] Take an item, [drop item_name] Drop an item, or [q] Quit\n").lower().split(" ")
-
-    # if user inputs 1 word
-    if len(user_input) == 1:
-        # if user inputs 1 of 4 directions
-        if user_input[0] in ["n", "s", "e", "w"]:
-            user_input[0] = f"{user_input[0]}_to"
-            player.move(user_input[0])
-
-        # if user inputs i for inventory
-        if user_input[0] == "i":
-            player.get_inventory()
-
-        # if user inputs quit
-        elif user_input[0] == "q":
-            print("You exited the game. Thank you for playing!")
-            user_is_playing = False
-
-    # if user inputs 2 words
-    elif len(user_input) == 2:
-        # take item from a room
-        if user_input[0] == "take" or user_input[0] == "get":
-            # check room content to see if content is there
-            for item in player.current_room.items:
-                if item == user_input[1]:
-                    player.take_item(user_input[1])
-                else:
-                    print("There is no such item in this room.")
-        # drop item to a room
-        elif user_input[0] == "drop":
-            for item in player.inventory:
-                if item == user_input[1]:
-                    player.drop_item(user_input[1])
-                else:
-                    print(f"{player.name} doesn't have this item in inventory")
-        else:
-            print("Invalid entry. Please enter 'get' or 'drop' followed by the item. ")
-
-    # else error message of not valid entry
+def move(dir):
+    new_dir = dir[0] + "_to"
+    if hasattr(player.current_location, new_dir):
+        return getattr(player.current_location, new_dir)
     else:
-        print("Invalid entry.")
+        print(f"The move you have specified isn't allowed. Please read the instruction again. {player.current_location.name}")
+        return player.current_location
+
+print(f"Welcome to Adventure Super Cool Game {player.name}! {player.current_location}")
+
+while game_on:
+    if player.current_location != None:
+        user_input = input("Please enter direction [n] for North, [s] for South, [e] for East or [w] for West. If you wish to Quit enter [q] ")
+    #when entering Q player will quit game
+    if(user_input == "q"):
+        print("You've quit the game. Goodbye")
+        #once quit games turns off
+        game_on = False
+    elif user_input in ['n', 's', 'e', 'w']:
+        player.current_location = move(user_input)
+        print(player.current_location)
+    #if a move is not allowed this will prompt asking user to enter a new move. a hint will also prompt to help user
+    else:
+        print(f"The move you have specified isn't ALLOWED. Pay attention to hints for choosing the direction correctly.\n{player.current_location}")
+
