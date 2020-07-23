@@ -71,10 +71,11 @@ while game_on:
         print("You've quit the game. Goodbye")
         #once quit games turns off
         game_on = False
+    #moves player can make.
     elif user_input in ['n', 's', 'e', 'w']:
         player.current_location = move(user_input)
         print(player.current_location)
     #if a move is not allowed this will prompt asking user to enter a new move. a hint will also prompt to help user
     else:
-        print(f"The move you have specified isn't ALLOWED. Pay attention to hints for choosing the direction correctly.\n{player.current_location}")
+        print(f"The move you have specified isn't ALLOWED. Read the HINTS for choosing the correct direction.\n{player.current_location}")
 
