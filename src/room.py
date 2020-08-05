@@ -16,9 +16,10 @@ class Room:
     def __str__ (self):
         if self.isLit:
             if len(self.items) == 0:
-                return f'\nRoom: {self.name}\nDescription: {self.description}\n'
+                return f'\nDescription: {self.description}\nYour bag is empty.'
+
             else:
-                return f'\nRoom: {self.name}\nDescription: {self.description}\nYou see {self.items} in the area.'
+                return f'Description: {self.description}\nYou see {self.items} in the area.'
 
         else:
             return f'\nThe dark is all consuming.\nYou cannot see anything.'

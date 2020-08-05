@@ -1,7 +1,8 @@
 from room import Room
 from player import Player
 from game_controller import GameController
-import sys
+from item import Item
+from item import LightSource
 
 # Declare all the rooms
 
@@ -28,6 +29,9 @@ earlier adventurers. The only exit is to the south."""),
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
+torch_foyer = LightSource('burning touch', 'A wooden touch, which should burn for some time.')
+room['outside'].items.append(torch_foyer)
+
 room['outside'].s_to = None
 room['outside'].e_to = None
 room['outside'].w_to = None
@@ -56,39 +60,27 @@ room['treasure'].w_to = None
 # Main
 #
 
-items = []
 done = False
-current_room = room['outside']
 game_controller = GameController()
 
 # Make a new player object that is currently in the 'outside' room.
-player1 = Player('Chris', current_room)
+player1 = Player('Drizzt', room['outside'])
+
 # Write a loop that:
 while not done:
-    current_room.isLit = False
-    if current_room == room['outside']:
-        current_room.isLit = True
-    else:
-        current_room.isLit = player1.light_source_on
+    
+    game_controller.enterRoom(player1)
 
     print(f'\n{player1}')
 
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
-    print(f'\n{current_room}')
+    print(f'\n{player1.current_room}')
 
 # * Waits for user input and decides what to do.
     commands = input('> ').split(',')
-    print(f'verified commands: {commands} ... adv.py line 82')
+    print(f'verified commands: {commands}') # TESTING ONLY
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
     for command in commands:
-            game_controller.roomOperation(current_room, player1, command)
-        # elif command == 'n' or 'north':
-            
-        # elif command == 's':
-        #     print('s pressed')
-        # elif command == 'e':
-        #     print('e pressed')
-        # elif command == 'w':
-        #     print('w pressed')
+            game_controller.roomOperation(player1, command)
