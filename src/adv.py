@@ -39,9 +39,11 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(room["outside"])
+player = Player("Player 1", room["outside"])
 
-print("Welcome to your adventure!")
+# TODO: add player input for name
+
+print(f"Welcome to your adventure {player.name}!")
 while True:
     player.location()
 

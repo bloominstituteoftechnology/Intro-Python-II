@@ -8,7 +8,8 @@ class Player:
     # determines if player can move to a room
     new_room = True
 
-    def __init__(self, current_room):
+    def __init__(self, name, current_room):
+        self.name = name
         self.current_room = current_room
 
     # method to print out players current location
