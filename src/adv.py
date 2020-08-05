@@ -1,6 +1,5 @@
 from room import Room
 from player import Player
-import textwrap
 
 # Declare all the rooms
 
@@ -35,18 +34,17 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(room["overlook"])
+player = Player(room["outside"])
 
 print("Welcome to your adventure!")
 while True:
-    print(f"You are currently in {player.current_room.name}")
-    for des in textwrap.wrap(player.current_room.description):
-        print(des)
+    player.location()
+
     command = input("Enter a direction you'd like to go: ")
     # Write a loop that:
     #
@@ -60,3 +58,5 @@ while True:
     # If the user enters "q", quit the game.
     if command == 'q':
         break
+    else:
+        player.moveTo(command)
