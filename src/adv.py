@@ -6,7 +6,8 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
+    'foyer':    Room("Foyer",
+                     """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
