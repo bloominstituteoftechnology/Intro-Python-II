@@ -34,53 +34,81 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-
 #
 # Main
 #
-player.location is room['foyer']
+
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside'])
-starting_room = Player(room['outside'])
-current_room = Player(room['outside'])
-outside = Player(room['outside'])
-overlook_room = Player(room['overlook'])
-foyer_room = Player(room['foyer'])
-treasure_room = Player(room['treasure'])
-narrow_room = Player(room['narrow'])
+starting_room = 1
+current_room = 1
+outside = 1
+overlook_room = 3
+foyer_room = 2
+treasure_room = 5
+narrow_room = 4
 # Write a loop that:
 while True:
    # Prints the current room name
-    print(player.location)
-    command = input("> ").split(',')
+    
+    command = input("> Input n, e, s, or w to move that direction ").split(',')
 
     if command[0] == 'q':
-        break
-            
+        break     
     elif command[0] == 'n':
-        if current_room == foyer_room:
+        if current_room == 2:
+            current_room = 3
             overlook_room = Player(room['overlook'])
             print(overlook_room.location)
-        elif current_room == outside:
+        elif current_room == 1:
             foyer_room = Player(room['foyer'])
+            current_room = 2
             print(foyer_room.location)
-        elif current_room == treasure_room:
-            print('You can only go south')
-        elif current_room == narrow_room:
+        elif current_room == 5:
+            print('You can only go south')         
+        elif current_room == 4:
+            current_room = 5
             treasure_room = Player(room['treasure'])
             print(treasure_room.location)
+        elif current_room == 3:
+            print("You can only move South")
     elif command[0] == 's':
         outside_room = Player(room['outside'])
-        if starting_room == outside_room:
-            print('You can only move north')
+        if current_room == 1:
+            print('You can only move North')
+            current_room = 1
+        elif current_room == 2:
+            current_room = 1
             outside_room = Player(room['outside'])
-        elif current_room == foyer_room:
-            current_room = Player(room['outside'])
-            print(current_room.location)
+            print(outside_room.location)
+        elif current_room == 5:
+            current_room = 4
+            narrow_room = Player(room['narrow'])
+            print(narrow_room.location)
+        elif current_room == 4:
+            print('You can only move north or West')
+        elif current_room == 3:
+            current_room = 2
+            foyer_room = Player(room['foyer'])
+            print(foyer_room.location)
+    
 
-    # elif command[0] == 'e':
+    elif command[0] == 'e':
+        if current_room == 2:
+             current_room = 4
+             narrow_room = Player(room['narrow'])
+             print(narrow_room.location)
+        else:
+            print('You cannot move east')
 
-    # elif command[0] == 'w':
+
+    elif command[0] == 'w':
+        if current_room == 4:
+            current_room = 2
+            foyer_room = Player(room['foyer'])
+            print(foyer_room.location)
+        else:
+            print("You can't move West")
 
 # * 
     
