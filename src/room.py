@@ -1,13 +1,9 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
 
-class Room():
-    def __init__(self, name, attributes):
+class Room:
+    def __init__(self, name, description):
         self.name = name
-        self.attributes = attributes
-
-
-room1 = Room('hallway', 'dark creepy')
-print(room1.name)
-print(room1.attributes)
-print(room1)
+        self.description = description
+    def __str__(self):
+        return(f"Room Name: {self.name}, Description: {self.description}")    

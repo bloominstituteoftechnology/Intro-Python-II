@@ -1,5 +1,19 @@
 from room import Room
 
+from player import Player
+import time 
+from move import *
+
+
+'''
+#bonus dots
+
+def dots(n):
+    for i in range(n):
+        time.sleep(.17)
+        print('*')
+'''        
+
 # Declare all the rooms
 
 room = {
@@ -49,3 +63,34 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+player = Player('Zeb', room['outside'])
+
+print(f'Hello {player.name}! Ready to play the game?')
+
+'''
+dots(5)
+'''
+
+move = input('Type press anything to start!')
+
+
+'''
+dots(2)
+'''
+
+while move != 'q':
+    #dots(5)    
+    print(f"Location: {player.current_room.name}")
+    #dots(2)
+    print(f"{player.current_room.description}")
+    #dots(2)
+    move = move_check()
+
+    try:
+        player.current_room = getatt(player.current_room, f'{move}_to')
+    except:
+        print('Ran into wall silly') 
+
+

@@ -1,19 +1,9 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 
-class Player():
-    def __init__(self, name, moves, attributes):
+class Player:
+    def __init__(self, name, current_room):
         self.name = name
-        self.moves = moves
-        self.attributes = attributes
-
-    def room_placement(self):
-        print("Hello I move " + self.moves)    
-    
-
-
-player1 = Player('George','west', 'strong and tall')
-print(player1.name)
-print(player1.attributes)
-print(player1.room_placement())
-
+        self.current_room = current_room
+    def __str__(self):
+        return(f"{self.name} is in {self.current_room}")    
