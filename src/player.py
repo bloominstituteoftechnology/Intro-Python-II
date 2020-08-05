@@ -18,6 +18,8 @@ class Player:
             print(f"You are currently in {self.current_room.name}")
             for des in textwrap.wrap(self.current_room.description):
                 print(des)
+            for item in self.current_room.items:
+                print(item)
 
     # method to determine which way the player chooses to move
     # and if they can go that way.
