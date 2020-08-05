@@ -1,4 +1,7 @@
 from room import Room
+from player import Player
+from item import Item
+
 
 # Declare all the rooms
 
@@ -38,7 +41,26 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+# Declare Player:
+player = Player(
+    current_room=room["outside"],
+    name="David davis"
+)
+# Declare items
+item = {
+    'lighter': Item("lighter", "Half empty lighter", 1),
+    'survival_knife': Item("survival knife", "Fishing knife", 2),
+    'note1': Item("bloody dress", "Bloddy dress on the floor",  3),
+    'note2': Item("torn note", "A half of a note", 4),
+    'note3': Item("old shoe", "Old dress shoe", 5),
+}
 
+# Add Items to Rooms:
+room['outside'].addItem(item['survival_knife'])
+room['foyer'].addItem(item['lighter'])
+room['foyer'].addItem(item['bloddy dress'])
+room['overlook'].addItem(item['torn note'])
+room['narrow'].addItem(item['old shoe'])
 # Write a loop that:
 #
 # * Prints the current room name
