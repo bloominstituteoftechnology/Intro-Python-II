@@ -1,18 +1,7 @@
 from room import Room
 from player import Player
-import argparse
+from game_controller import GameController
 import sys
-
-# Argument Parser
-
-# explore_parser = argparse.ArgumentParser()
-# explore_parser.add_argument("n", "--north", help="Moves player north")
-# explore_parser.add_argument("w", "--west", help="Moves player west")
-# explore_parser.add_argument("s", "--south", help="Moves player south")
-# explore_parser.add_argument("e", "--east", help="Moves player east")
-# explore_parser.add_argument("q", "--quit", help="Quits the game")
-
-# args = explore_parser.parse_args()
 
 # Declare all the rooms
 
@@ -39,44 +28,67 @@ earlier adventurers. The only exit is to the south."""),
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
+room['outside'].s_to = None
+room['outside'].e_to = None
+room['outside'].w_to = None
+
 room['foyer'].n_to = room['overlook']
+room['foyer'].s_to = room['outside']
 room['foyer'].e_to = room['narrow']
+room['foyer'].w_to = None
+
+room['overlook'].n_to = None
 room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
+room['overlook'].e_to = None
+room['overlook'].w_to = None
+
 room['narrow'].n_to = room['treasure']
+room['narrow'].s_to = None
+room['narrow'].e_to = None
+room['narrow'].w_to = room['foyer']
+
+room['treasure'].n_to = None
 room['treasure'].s_to = room['narrow']
+room['treasure'].e_to = None
+room['treasure'].w_to = None
 
 #
 # Main
 #
 
-directions = ['n', 's', 'e', 'w']
+items = []
 done = False
+current_room = room['outside']
+game_controller = GameController()
 
 # Make a new player object that is currently in the 'outside' room.
-player1 = Player('Chris', room["outside"])
+player1 = Player('Chris', current_room)
 # Write a loop that:
 while not done:
+    current_room.isLit = False
+    if current_room == room['outside']:
+        current_room.isLit = True
+    else:
+        current_room.isLit = player1.light_source_on
+
+    print(f'\n{player1}')
+
 # * Prints the current room name
-    print(f'\n{player1.current_room}')
 # * Prints the current description (the textwrap module might be useful here).
-    print(f'\ntest room')
+    print(f'\n{current_room}')
+
 # * Waits for user input and decides what to do.
     commands = input('> ').split(',')
+    print(f'verified commands: {commands} ... adv.py line 82')
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
     for command in commands:
-# If the user enters "q", quit the game.
-        if command == 'q':
-            sys.exit(1)
-        elif command == 'n':
-            print('n pressed')
-            #check if the player can move to the north
-            # if there is, set that room to the player's location
-        elif command == 's':
-            print('s pressed')
-        elif command == 'e':
-            print('e pressed')
-        elif command == 'w':
-            print('w pressed')
+            game_controller.roomOperation(current_room, player1, command)
+        # elif command == 'n' or 'north':
+            
+        # elif command == 's':
+        #     print('s pressed')
+        # elif command == 'e':
+        #     print('e pressed')
+        # elif command == 'w':
+        #     print('w pressed')
