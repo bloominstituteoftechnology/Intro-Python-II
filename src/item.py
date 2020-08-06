@@ -3,6 +3,9 @@ class Item:
         self.name = name
         self.description = description
 
+    def __str__(self):
+        return f'a {self.name}'
+
 class LightSource(Item):
 
     def __init__(self, name, description, isLit: bool = True, durability: int = 100):

@@ -16,10 +16,15 @@ class Room:
     def __str__ (self):
         if self.isLit:
             if len(self.items) == 0:
-                return f'\nDescription: {self.description}\nYour bag is empty.'
-
+                f'\n{self.description}\nYour bag is empty.\nYou probably will not last long without equipment.\n \nWhat will you do?'
             else:
-                return f'Description: {self.description}\nYou see {self.items} in the area.'
-
+              item_list = []
+              for item in self.items:
+                item_list.append(item)
+                if len(item_list) > 1:
+                    item_string = ','.join(item_list)
+                    return f'{self.description}\nYou see {item_string} in the area.\n \nWhat will you do?'
+                else:
+                    return f'{self.description}\nYou see {item_list[0]} in the area.\n \nWhat will you do?'
         else:
             return f'\nThe dark is all consuming.\nYou cannot see anything.'

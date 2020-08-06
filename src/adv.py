@@ -29,12 +29,12 @@ earlier adventurers. The only exit is to the south."""),
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
-torch_foyer = LightSource('burning touch', 'A wooden touch, which should burn for some time.')
-room['outside'].items.append(torch_foyer)
-
 room['outside'].s_to = None
 room['outside'].e_to = None
 room['outside'].w_to = None
+torch_foyer = LightSource('burning touch', 'A wooden touch, which should burn for some time.')
+room['outside'].items.append(torch_foyer)
+room['outside'].isLit = True
 
 room['foyer'].n_to = room['overlook']
 room['foyer'].s_to = room['outside']
@@ -79,7 +79,7 @@ while not done:
 
 # * Waits for user input and decides what to do.
     commands = input('> ').split(',')
-    print(f'verified commands: {commands}') # TESTING ONLY
+    # print(f'verified commands: {commands}') # TESTING ONLY
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
     for command in commands:

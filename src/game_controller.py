@@ -8,10 +8,11 @@ class GameController:
         self.commandOptions = ['n', 'north', 's', 'south', 'e', 'east', 'w', 'west', 'l', 'light']
 
     def enterRoom(self, player: Player):
-        room = player.current_room
-        room.isLit = False
-        if player.light_source_on or room == room['outside']:
-            room.isLit = player.light_source_on
+        current_room = player.current_room
+        if current_room.name == 'outside':
+            current_room.isLit = False
+        if player.light_source_on:
+            current_room.isLit = player.light_source_on
 
     def roomOperation(self, player: Player, command: str):
         room = player.current_room
