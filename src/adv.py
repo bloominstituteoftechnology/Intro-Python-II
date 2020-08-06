@@ -37,10 +37,16 @@ room['treasure'].s_to = room['narrow']
 
 # make some items
 
-items = [Item("sword", "sharp"), Item("rock", "dull")]
+foyer_items = [Item("dagger", "sharp with a wooden handle")]
+overlook_items = [Item("rock", "round and dull"), Item("torch", "unlit")]
+narrow_items = [Item("branch", "jagged with two leaves")]
+treasure_items = [Item("coin", "nice and shiny!")]
 
 # put items in room
-room['foyer'].add_items(items)
+room['foyer'].add_items(foyer_items)
+room['overlook'].add_items(overlook_items)
+room['narrow'].add_items(narrow_items)
+room['treasure'].add_items(treasure_items)
 
 # Main
 #
@@ -50,11 +56,20 @@ player = Player("Player 1", room["outside"])
 
 # TODO: add player input for name
 
-print(f"Welcome to your adventure {player.name}!")
+print(f"Welcome to your adventure {player.name}!\n")
+print("""How to play:
+Movement: (n,e,s,w)
+See inventory: (i or inventory)
+Pickup item: (get/take 'item')
+Drop item: (drop 'item')
+Location: (loc)
+Quit: (q)
+""")
+
 while True:
     player.location()
 
-    command = input("Enter a direction you'd like to go: ").split(' ')
+    command = input("> ").split(' ')
     # Write a loop that:
     #
     # * Prints the current room name
@@ -66,6 +81,7 @@ while True:
     #
     # If the user enters "q", quit the game.
     if command[0] == 'q':
+        print("Till next time adventurer!")
         break
     else:
         player.command(command)

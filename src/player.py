@@ -15,11 +15,7 @@ class Player:
     # method to print out players current location
     def location(self):
         if self.new_room == True:
-            print(f"You are currently in {self.current_room.name}")
-            for des in textwrap.wrap(self.current_room.description):
-                print(des)
-            for item in self.current_room.items:
-                print(item)
+            self.print_location()
 
     def command(self, command):
         if len(command) == 1:
@@ -45,10 +41,13 @@ class Player:
             self.new_room = True
         elif command == 'i' or command == 'inventory':
             self.print_inventory()
+        elif command == 'loc':
+            self.print_location()
         else:
-            print("Can't move in that direction, choose another option (n,e,s,w)")
+            print("Can't do that action")
 
     def item_command(self, command):
+        self.new_room = False
         action = command[0]
         item_name = command[1]
         if action == 'get' or action == 'take':
@@ -73,6 +72,16 @@ class Player:
 
         print("You do not have that item in your inventory")
         return None
+
+    def print_location(self):
+        print(f"You are currently in {self.current_room.name}\n")
+        for des in textwrap.wrap(self.current_room.description):
+            print(des)
+        # prints items in room if there are any
+        if len(self.current_room.items) > 0:
+            print("\nIn the room you see:")
+            for item in self.current_room.items:
+                print(item)
 
     def print_inventory(self):
         print("Inventory:")
