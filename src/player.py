@@ -5,12 +5,12 @@ import textwrap
 
 class Player:
 
-    # determines if player can move to a room
-    new_room = True
-
     def __init__(self, name, current_room):
         self.name = name
         self.current_room = current_room
+        self.items = []
+        # determines if player can move to a room
+        self.new_room = True
 
     # method to print out players current location
     def location(self):
@@ -20,6 +20,12 @@ class Player:
                 print(des)
             for item in self.current_room.items:
                 print(item)
+
+    def command(self, command):
+        if len(command) == 1:
+            self.moveTo(command[0])
+        elif len(command) == 2:
+            self.pickup_item(command)
 
     # method to determine which way the player chooses to move
     # and if they can go that way.
@@ -39,3 +45,17 @@ class Player:
             self.new_room = True
         else:
             print("Can't move in that direction, choose another option (n,e,s,w)")
+
+    def pickup_item(self, command):
+        action = command[0]
+        item_name = command[1]
+        if action == 'get' or action == 'take':
+            item = self.current_room.has_item(item_name)
+            if item != None:
+                self.items.append(item)
+                self.current_room.items.remove(item)
+                print(self.items)
+        else:
+            print("Can't do that action")
+        # self.items.append(item)
+        # print(f"You picked up {item}")

@@ -54,7 +54,7 @@ print(f"Welcome to your adventure {player.name}!")
 while True:
     player.location()
 
-    command = input("Enter a direction you'd like to go: ")
+    command = input("Enter a direction you'd like to go: ").split(' ')
     # Write a loop that:
     #
     # * Prints the current room name
@@ -65,7 +65,7 @@ while True:
     # Print an error message if the movement isn't allowed.
     #
     # If the user enters "q", quit the game.
-    if command == 'q':
+    if command[0] == 'q':
         break
     else:
-        player.moveTo(command)
+        player.command(command)
