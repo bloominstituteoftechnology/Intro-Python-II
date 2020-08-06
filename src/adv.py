@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -33,19 +35,53 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+# make some items
+
+foyer_items = [Item("dagger", "sharp with a wooden handle")]
+overlook_items = [Item("rock", "round and dull"), Item("torch", "unlit")]
+narrow_items = [Item("branch", "jagged with two leaves")]
+treasure_items = [Item("coin", "nice and shiny!")]
+
+# put items in room
+room['foyer'].add_items(foyer_items)
+room['overlook'].add_items(overlook_items)
+room['narrow'].add_items(narrow_items)
+room['treasure'].add_items(treasure_items)
+
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Player 1", room["outside"])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+# TODO: add player input for name
+
+print(f"Welcome to your adventure {player.name}!\n")
+print("""How to play:
+Movement: (n,e,s,w)
+See inventory: (i or inventory)
+Pickup item: (get/take 'item')
+Drop item: (drop 'item')
+Location: (loc)
+Quit: (q)
+""")
+
+while True:
+    player.location()
+
+    command = input("> ").split(' ')
+    # Write a loop that:
+    #
+    # * Prints the current room name
+    # * Prints the current description (the textwrap module might be useful here).
+    # * Waits for user input and decides what to do.
+    #
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    # Print an error message if the movement isn't allowed.
+    #
+    # If the user enters "q", quit the game.
+    if command[0] == 'q':
+        print("Till next time adventurer!")
+        break
+    else:
+        player.command(command)
