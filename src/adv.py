@@ -68,4 +68,4 @@ while True:
         print("Better luck next time!")
         break
     else:
-        print("I did not understand that command\n")
+        print("Sorry! Invalid direction! try Again!\n")
