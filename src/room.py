@@ -26,7 +26,3 @@ class Room:
 
         print("Item is not in the room")
         return None
-
-    def get_item(self, item):
-        index = self.items.index(item)
-        return self.items[index]

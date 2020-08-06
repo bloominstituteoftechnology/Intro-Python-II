@@ -23,39 +23,58 @@ class Player:
 
     def command(self, command):
         if len(command) == 1:
-            self.moveTo(command[0])
+            self.single_command(command[0])
         elif len(command) == 2:
-            self.pickup_item(command)
+            self.item_command(command)
 
     # method to determine which way the player chooses to move
     # and if they can go that way.
-    def moveTo(self, direction):
+    def single_command(self, command):
         self.new_room = False
-        if direction == 'n' and self.current_room.n_to != 0:
+        if command == 'n' and self.current_room.n_to != 0:
             self.current_room = self.current_room.n_to
             self.new_room = True
-        elif direction == 'e' and self.current_room.e_to != 0:
+        elif command == 'e' and self.current_room.e_to != 0:
             self.current_room = self.current_room.e_to
             self.new_room = True
-        elif direction == 's'and self.current_room.s_to != 0:
+        elif command == 's'and self.current_room.s_to != 0:
             self.current_room = self.current_room.s_to
             self.new_room = True
-        elif direction == 'w' and self.current_room.w_to != 0:
+        elif command == 'w' and self.current_room.w_to != 0:
             self.current_room = self.current_room.w_to
             self.new_room = True
+        elif command == 'i' or command == 'inventory':
+            self.print_inventory()
         else:
             print("Can't move in that direction, choose another option (n,e,s,w)")
 
-    def pickup_item(self, command):
+    def item_command(self, command):
         action = command[0]
         item_name = command[1]
         if action == 'get' or action == 'take':
             item = self.current_room.has_item(item_name)
             if item != None:
+                item.on_take()
                 self.items.append(item)
                 self.current_room.items.remove(item)
-                print(self.items)
+        elif action == 'drop':
+            item = self.has_item(item_name)
+            if item != None:
+                item.on_drop()
+                self.current_room.items.append(item)
+                self.items.remove(item)
         else:
             print("Can't do that action")
-        # self.items.append(item)
-        # print(f"You picked up {item}")
+
+    def has_item(self, item_name):
+        for item in self.items:
+            if item.name == item_name:
+                return item
+
+        print("You do not have that item in your inventory")
+        return None
+
+    def print_inventory(self):
+        print("Inventory:")
+        for item in self.items:
+            print(item.name)
