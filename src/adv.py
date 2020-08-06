@@ -54,7 +54,10 @@ commands = ["N", "S", "E", "W"]
 while True:
     userInput = input(f"Great! Now enter which direction you will choose to go. Here are your options: {commands}. Enter Q if you would like to quit.")
 
-    command = input("> ").split(',')
+    if userInput == 'Q':
+        break
+
+#    command = input("> ").split(',')
 
 #    if command[0] == 'q':
 #        break
