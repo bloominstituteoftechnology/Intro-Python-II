@@ -2,9 +2,9 @@
 # currently.
 
 class Player:
-    def __init__(self, location, mana, backpack, player_type, hp):
-        self.location = location
-        self.mana = mana
-        self.backpack = backpack
-        self.player_type = player_type
-        self.hp = hp
+    def __init__(self, name, current_room, items):
+        self.name = name
+        self.current_room = current_room
+        self.items = []
+    def get_items(self, item):
+        return self.items.append(item)
