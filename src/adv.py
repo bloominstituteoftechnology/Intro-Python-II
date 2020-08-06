@@ -75,44 +75,51 @@ room['narrow'].addItem(item['old shoe'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-# Start The Game:
-game_running = True
+
+# Game Loop:
+
+
+def game_loop():
+
+    # Start The Game:
+    game_running = True
 
 # Intro Text:
-print(f"\nYour name is {player.name}...\n")
-print("The sky thunders as it begins to pour.\nYou see an eerie cave entrance straight ahead of you.\nTo view your controls, enter 'C'.\n")
+    print(f"\nYour name is {player.name}...\n")
+    print("The sky thunders as it begins to pour.\nYou see an eerie cave entrance straight ahead of you.\nTo view your controls, enter 'C'.\n")
+
 
 # Create Input Variable:
 player_input = ""
 
 while game_running == True:
 
-    # Quit Function:
-    if player_input.lower() == "q":
-        print("\nThank you for playing!")
-        quit()
+        # Quit Function:
+        if player_input.lower() == "q":
+            print("\nThank you for playing!")
+            quit()
 
    # Take Item Function:
-    if player.current_room.items != []:
-        for i in player.current_room.items:
-            if player_input.lower() == f"take {i.name}":
-                player.takeItem(i)
-                player.current_room.removeItem(i)
-    else:
-        if "take" in player_input.lower():
+       if player.current_room.items != []:
+            for i in player.current_room.items:
+                if player_input.lower() == f"take {i.name}":
+                    player.takeItem(i)
+                    player.current_room.removeItem(i)
+        else:
+            if "take" in player_input.lower():
             print("There is nothing to take.")
 
     # Drop Item Function:
-    if player.items != []:
-        for i in player.items:
-            if player_input.lower() == f"drop {i.name}":
+        if player.items != []:
+            for i in player.items:
+                if player_input.lower() == f"drop {i.name}":
                 player.dropItem(i)
                 player.current_room.addItem(i)
-    else:
-        if "drop" in player_input:
+        else:
+            if "drop" in player_input:
             print("You don't have any items...")
 
-    # Drop Item Function:
+        # Drop Item Function:
         if player.items != []:
             for i in player.items:
                 if player_input.lower() == f"drop {i.name}":
@@ -122,5 +129,88 @@ while game_running == True:
             if "drop" in player_input:
                 print("You don't have any items...")
 
-                # Repeating Message:
+            # Repeating Message:
         player_input = str(input("What will you do?: "))
+
+        # Controls Function:
+        if player_input.lower() == 'c':
+            print("\nControls:\n'W' = Up\n'A' = Left\n'S' = Down\n'D' = Right\n'Q' = Quit.\n'R' = Check Current Room\n'I' = Check Inventory.\n'take (item name)' = Take the specified item.\n'drop (item name)' = Drop the specified item.\n")
+
+        # Check Room Function:
+        elif player_input.lower() == 'r':
+            print(f"\n{player}\n")
+
+        # Check Inventory Function:
+        elif player_input.lower() == 'i':
+            if player.items != []:
+                print("\nInventory:")
+                for i in player.items:
+                    print(i)
+            else:
+                print("\n    Your bag is empty...\n")
+
+    # Direction Up Function:
+        elif player_input.lower() == 'w':
+            if player.current_room.n_to != []:
+                player.current_room = player.current_room.n_to
+                print(
+                    f"\nYou enter the {player.current_room.name}.\n{player.current_room.description}\n")
+                if player.current_room.items != []:
+                    for i in player.current_room.items:
+                        print(f"    You see a ({i.name}) on the ground.\n")
+            else:
+                print("\nThere's nothing of interest in that direction.\n")
+
+        # Direction Left Function:
+        elif player_input.lower() == 'a':
+            if player.current_room.w_to != []:
+                player.current_room = player.current_room.w_to
+                print(
+                    f"\nYou enter the {player.current_room.name}.\n{player.current_room.description}\n")
+                if player.current_room.items != []:
+                    for i in player.current_room.items:
+                        print(f"    You see a ({i.name}) on the ground.\n")
+            else:
+                print("\nThere's nothing of interest in that direction.\n")
+
+        # Direction Down Function:
+        elif player_input.lower() == 's':
+            if player.current_room.s_to != []:
+                player.current_room = player.current_room.s_to
+                print(
+                    f"\nYou enter the {player.current_room.name}.\n{player.current_room.description}\n")
+                if player.current_room.items != []:
+                    for i in player.current_room.items:
+                        print(f"    You see a ({i.name}) on the ground.\n")
+            else:
+                print("\nThere's nothing of interest in that direction.\n")
+
+    # Direction Right Function:
+        elif player_input == 'd':
+            if player.current_room.e_to != []:
+                player.current_room = player.current_room.e_to
+                print(
+                    f"\nYou enter the {player.current_room.name}.\n{player.current_room.description}\n")
+                if player.current_room.items != []:
+                    for i in player.current_room.items:
+                        print(f"    You see a ({i.name}) on the ground.\n")
+            else:
+                print("\nThere's nothing of interest in that direction.\n")
+
+        player_input = str(input("\nTry again? y/n: "))
+        if player_input == "y":
+            print("Good Luck!")
+            game_running = True
+            player.current_room = room['outside']
+            player.items = []
+            room['outside'].addItem(item['survival_knife'])
+            room['foyer'].addItem(item['lighter'])
+            room['foyer'].addItem(item['bloody dress'])
+            room['overlook'].addItem(item['torn note'])
+            room['narrow'].addItem(item['old shoe'])
+            game_loop()
+        elif player_input == "n":
+            print("Goodbye!")
+            quit()
+
+game_loop()
