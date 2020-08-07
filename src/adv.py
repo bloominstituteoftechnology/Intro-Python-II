@@ -1,26 +1,35 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
+items = {
+    'sword': Item("Sword", "sword description"),
+    'scissors': Item("Scissors", "scissors description"),
+    'rock': Item("Rock", "Rock description"),
+    'drill': Item("Drill", "drill description"),
+    'taser': Item("Taser", "taser description"),
+}
+
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [items['sword']]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [items['rock']]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", [items['drill']]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", [items['scissors']]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", [items['taser']]),
 }
-
 
 # Link rooms together
 
@@ -39,13 +48,46 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+name = input("enter player's name\n>")
+player = Player(name, room["outside"])
+print(f"{player.name} is in {player.room.name}")
+
+def try_direction(direction, room):
+    attr = direction + "_to"
+    if hasattr(room, attr):
+        return getattr(room, attr)
+    else:
+        print("you cant go that way")
+        return room 
+
+while True:
+    print(player.room.name)
+    print(player.room.description)
+
+    user_input = input("\n> ").lower().split()
+
+    if user_input == "q":
+        break
+        
+    elif len(user_input) == 1:
+        user_input = user_input[0][0]
+        player.room = try_direction(user_input, player.room)
+
+    elif len(user_input) == 2:
+        word = user_input[0]
+        item = user_input[1]
+
+        if word == "grab":
+            if item in player.room.items:
+                player.room.items.remove(item)
+                player.inventory.append(item)
+                print(f"{item.name} was added to the inventory")
+        
+        elif word == "drop":
+            if item in player.inventory:
+                player.inventory.remove(item)
+                player.room.items.append(item)
+                print(f"{item.name} was removed from the inventory")
+    
+    else:
+        print("I don't understand that")

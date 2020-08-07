@@ -38,7 +38,7 @@ while not user == 9:
             print("Computer chose paper...computer wins :(")
             losses += 1
         else:
-            print("Computer chose scissors...you wins :)")
+            print("Computer chose scissors...you wins:)")
             wins += 1
 
     #user chooses PAPER
