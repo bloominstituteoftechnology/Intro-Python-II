@@ -8,3 +8,6 @@ class Player:
         self.items = []
     def get_items(self, item):
         return self.items.append(item)
+    def drop_items(self, item):
+        return self.items.remove(item)
+    

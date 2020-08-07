@@ -33,7 +33,6 @@ earlier adventurers. The only exit is to the south.""", item['home']),
 }
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -44,39 +43,60 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # 1. Make a new player object that is currently in the 'outside' room.
-
-player_name = input("Choose your player name: ")
+player_name = input("\nChoose your player name: ")
 player_room = room['outside']
 
 player = Player(player_name, player_room, [])
+
+print(f"""\nWelcome {player.name}! The goal of this game is to find the treasure! 
+Please input 'n', 's', 'e', or 'w' to move to a different location. 
+Note that not all directions may be allowed at any given time. 
+You may also input 'q' at any time to quit!\n""")
 
 # Write a loop that:
 while True:
 
     # 2. Prints the current room name
     # 3. Prints the current description (the textwrap module might be useful here).
-    location = player.current_room
-    print(f"""\n    Welcome {player.name}! The goal of this game is to find the treasure! 
-    You are currently located at the {player_room.name}. {player_room.description}. 
-    Please input 'n', 's', 'e', or 'w' to move to a different location. 
-    Note that not all directions may be allowed at any given time. 
-    You may also input 'q' at any time to quit!\n""")
+    print(f'\nYour current location is: {player.current_room.name}. {player.current_room.description}\n')
+    print('\nIf there is an item here, you can either \'get\' or \'take\' it by its name.\n')
+    print(f'\nThis room\'s items include: {player.current_room.items.name}\n')
 
+    # breakpoint()
     # 4. Waits for user input and decides what to do.
     command = input("> ").split(',')
 
+
+    # print(f'{player.current_room[item]}')
+    # print(f'{player.current_room.name}: {player.current_room.description}')
+
     # 5. If the user enters "q", quit the game.
     if command[0] == 'q':
-        print(f"Thanks for playing!")
+        print(f"\nThank you for playing!\n")
         break
 
     # 6. If the user enters a cardinal direction, attempt to move to the room there.
     # 7. Print an error message if the movement isn't allowed.
+
     elif command[0].lower() == 'n' or command[0].lower() == 'north':
-        pass
+        if hasattr(player.current_room, 'n_to'):
+            player.current_room = player.current_room.n_to
+        else: 
+            print('You are unable to move north.')
     elif command[0].lower() == 's' or command[0].lower() == 'south':
-        pass
+        if hasattr(player.current_room, 's_to'):
+            player.current_room = player.current_room.s_to
+        else: 
+            print('You are unable to move south.')     
     elif command[0].lower() == 'e' or command[0].lower() == 'east':
-        pass
+        if hasattr(player.current_room, 'e_to'):
+            player.current_room = player.current_room.n_to
+        else: 
+            print('You are unable to move east.')
     elif command[0].lower() == 'w' or command[0].lower() == 'west':
-        pass
+        if hasattr(player.current_room, 'w_to'):
+            player.current_room = player.current_room.n_to
+        else: 
+            print('You are unable to move west.')
+    else:
+        print('Please enter a valid response: n, s, e, w, or q')
