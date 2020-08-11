@@ -2,6 +2,7 @@ import sys
 from room import Room
 from player import Player
 from player import player_info
+from items import items
 
 # Declare all the rooms
 
@@ -44,22 +45,19 @@ passages run north and east."""),
 
 }
 
-#foyer
-#bathroom
-#bedroom
-#study
-#kitchen
+# room['bathroom'].e_to = room['bedroom']
+# room['bedroom'].w_to = room['bathroom']
+# room['bedroom'].s_to = room['hall']
+# room['hall'].n_to = room['bedroom']
+# room['study'].n_to = room['hall']
+# room['hall'].s_to = room['study']
+# room['stairs'].e_to = room['hall']
+# room['hall'].w_to = room['stairs']
+# room['stairs'].s_to = room['foyer']
+# room['foyer'].n_to = room['stairs']
+# room['stairs'].w_to = room['foyer']
+# room{'foyer'}.s_to = room['final_door']
 
-#bathroom->bedroom
-#bedroom->hall
-#study->hall
-#hall->bedroom
-#hall->study
-#hall->stairs
-#stairs->foyer
-#foyer->kitchen
-#kitchen->foyer
-#foyer->door
 
 # I guess I should number doors....?
 

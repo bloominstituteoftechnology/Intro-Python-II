@@ -1,3 +1,5 @@
+from items from items
+
 inventory = {
     'slot_1': 'empty',
     'slot_2': 'empty',
