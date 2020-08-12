@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -49,3 +49,33 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player = Player("JP", room['outside'])
+game_on = True
+
+def move(dir):
+    new_dir = dir[0] + "_to"
+    if hasattr(player.current_location, new_dir):
+        return getattr(player.current_location, new_dir)
+    else:
+        print(f"The move you have specified isn't allowed. Please read the instruction again. {player.current_location.name}")
+        return player.current_location
+
+print(f"Welcome to Adventure Super Cool Game {player.name}! {player.current_location}")
+
+while game_on:
+    if player.current_location != None:
+        user_input = input("Please enter direction [n] for North, [s] for South, [e] for East or [w] for West. If you wish to Quit enter [q] ")
+    #when entering Q player will quit game
+    if(user_input == "q"):
+        print("You've quit the game. Goodbye")
+        #once quit games turns off
+        game_on = False
+    #moves player can make.
+    elif user_input in ['n', 's', 'e', 'w']:
+        player.current_location = move(user_input)
+        print(player.current_location)
+    #if a move is not allowed this will prompt asking user to enter a new move. a hint will also prompt to help user
+    else:
+        print(f"The move you have specified isn't ALLOWED. Read the HINTS for choosing the correct direction.\n{player.current_location}")
+
