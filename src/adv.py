@@ -103,13 +103,13 @@ while trapped:
     
     def switch(movement) :
         if movement == 'n' or movement=='N':
-            print("move north")
+            Room.n_to()
         elif movement =='s' or movement=='S':
-            print("move south")
+            Room.s_to()
         elif movement == 'w' or movement=='W':
-            print("move west")
+            Room.w_to()
         elif movement == 'e' or movement=='E':
-            print("move east")
+            Room.e_to()
         elif movement == 'q' or movement=='Q':
             trapped = False
             sys.exit()
