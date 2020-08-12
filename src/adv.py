@@ -1,6 +1,8 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -33,11 +35,26 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# if user pushes n:
+# - foyer to outside
+# - overlook to foyer
+# - treasure to narrow
+# If user pushes e:
+# - narrow to foyer
+# If user pushes s:
+# - narrow to treasure
+# - foyer to overlook
+# - outside to foyer
+# If user pushes w:
+# -foyer to narrow
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+player = Player("Aelin", room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +66,17 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+directions = ['n', 's', 'e', 'w']
+
+print(player.room)
+
+while True:
+    cmd = input("Please enter a valid input: ")
+    if cmd in directions:
+        player.move(cmd)
+    elif cmd == 'q':
+        print("That is the end of your journey!")
+        break
+    else:
+        print("Invalid input! Choose more wisely!")
