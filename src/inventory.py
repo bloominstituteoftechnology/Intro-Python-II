@@ -1,4 +1,4 @@
-from items from items
+from items import items
 
 inventory = {
     'slot_1': 'empty',
