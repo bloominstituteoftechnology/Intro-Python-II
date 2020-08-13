@@ -1,10 +1,10 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("Outside Cave Entrance", "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -39,13 +39,36 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player(room['outside'])
+
 # Write a loop that:
 #
+while True:
+
 # * Prints the current room name
+    print(player.room.name)
 # * Prints the current description (the textwrap module might be useful here).
+    print(player.room.description)
 # * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
+    user_input = input('> ')
 # If the user enters "q", quit the game.
+    if user_input == 'q':
+        break
+# If the user enters a cardinal direction, attempt to move to the room there.
+    next_room = None
+    if user_input == 'north' or user_input == 'n':
+        next_room = player.room.n_to
+    elif user_input == 'south' or user_input == 's':
+        next_room = player.room.s_to
+    elif user_input == 'east' or user_input == 'e':
+        next_room = player.room.e_to
+    elif user_input == 'west' or user_input == 'w':
+        next_room = player.room.w_to
+# Print an error message if the movement isn't allowed.
+    if next_room is None:
+        print('\nSorry Boo, that way is to purgatory, choose another cardinal direction')
+    else:
+        player.room = next_room
+
+    print('\n')
+
