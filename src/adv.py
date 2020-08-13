@@ -169,29 +169,23 @@ while user_input != 'q':
         # remove item from room
         action = user_input.split()
         print(action)
-        # action_verb = action[0]
-        # action_item = action[1]
-        # player.take(action_item)
+        action_verb = action[0]
+        action_item = action[1]
+        player.take(action_item)
         
         # CALL HERE for item on take
+        items[action_item].on_take()
         print("Take me jesus")
-    
-    elif "take" in user_input:
-        # add item to player inventory
-        # remove item from room
-        action = user_input.split()
-        print(action)
-        # action_verb = action[0]
-        # action_item = action[1]
-        # player.take(action_item)
-        
-        # CALL HERE for item on take
-        print("Take me jesus")
+
     
     elif "drop" in user_input:
         # item from player to the items list on the room object
         # remove action item from player
+        items[action_item].on_drop()
         print("Drop it like its hot")
+
+    elif user_input == "i":
+        player.inventory
 #
 # If the user enters "q", quit the game.
 
