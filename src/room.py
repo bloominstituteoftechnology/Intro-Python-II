@@ -25,3 +25,9 @@ class Room:
 
     def __repr__(self):
         return f"{self.name}: {self.description}"
+    
+    def took(self, item):
+        self.items.remove(item)
+        
+    def added(self, item):
+        self.items.append(item)

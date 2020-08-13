@@ -76,11 +76,11 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 items = {
-    'sword': Item("Sword", "Mighty sword"),
-    'coins': Item("Coins", "Gold is worth much in these parts"),
-    'skull': Item("Dead man", "The sxull of traveler"),
-    'food': Item("Mushroom", "Stay healthy in these times"),
-    "elixr": Item("Elixr", "Inhale for good omens")
+    'sword': Item("sword", "Mighty sword"),
+    'coins': Item("coins", "Gold is worth much in these parts"),
+    'skull': Item("skull", "The sxull of traveler"),
+    'food': Item("mushroom", "Stay healthy in these times"),
+    "elixr": Item("elixr", "Inhale for good omens")
 
 }
 
@@ -123,14 +123,14 @@ while user_input != 'q':
     print(f"\n{user} has entered the {player.current_room.name}.\n\n")
 # Prints the current description (the textwrap module might be useful here).
     print(player.current_room.description)
-    print(f"Items: {current_room.items}")
+    print(f"Items: {player.current_room.items}")
 
 # Waits for user input and decides what to do.
     user_input = input('\nWhich way do you want to do or go?\n'
                       'Directions: [n] North [s] South [e] East [w] West\n'
                       'Items: take (item), drop (item), or inspect (item)\n'
-                      '[i] Inventory\n'
-                      'or [q] Quit:\n')
+                      '[i] Inventory'
+                      'or [q] Quit: ')
     print("\n")
 #   
 # If the user enters a cardinal direction, attempt to move to the room there.
@@ -168,24 +168,31 @@ while user_input != 'q':
         # add item to player inventory
         # remove item from room
         action = user_input.split()
-        print(action)
-        action_verb = action[0]
-        action_item = action[1]
-        player.take(action_item)
         
+        action_verb = str(action[0])
+        action_item = str(action[1])
+        print(action_verb, action_item)
+        player.take(action_item)
+        player.current_room.items.remove(items[action_item])
         # CALL HERE for item on take
         items[action_item].on_take()
-        print("Take me jesus")
 
     
     elif "drop" in user_input:
         # item from player to the items list on the room object
         # remove action item from player
+        action_verb = action[0]
+        action_item = action[1]
+        print(action_verb, action_item)
+        player.drop(action_item)
+        player.current_room.items.append(items[action_item])
         items[action_item].on_drop()
-        print("Drop it like its hot")
 
     elif user_input == "i":
-        player.inventory
+        print("Inventory:", player.items)
+
+    else:
+        print("NOT A OPTION")
 #
 # If the user enters "q", quit the game.
 

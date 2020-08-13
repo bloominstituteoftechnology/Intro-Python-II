@@ -14,5 +14,5 @@ class Player:
     def drop(self, item):
         self.items.remove(item)
 
-    def inventory(self, item):
-        print(self.items)
+    def inventory(self):
+        print(f" I'm in my bag {self.items}")
