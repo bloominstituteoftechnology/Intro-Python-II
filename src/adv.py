@@ -1,10 +1,11 @@
 from room import Room
-
+from player import Player
+import textwrap
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -21,16 +22,17 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+player = Player('', '')
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
+room['outside'].w_to = room['foyer']
 room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
+room['foyer'].w_to = room['overlook']
+room['foyer'].d_to = room['narrow']
 room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
+room['narrow'].a_to = room['foyer']
+room['narrow'].w_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 #
@@ -38,7 +40,6 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +50,19 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+start_game = input("Would you like to play a game? (y,n) ")
+if start_game == "y":
+    user_name = input("What would you like to be called? ")
+    player = Player(user_name, room['outside'])
+    while True:
+            print(f"{player.name} you are at {player.location.name} and {player.location.description} \n")
+            user = input(f"{player.name} where would you like to go? [w] north [s] south [a] west [d] east [q] quit: ")
+            if user in ["w", "s", "a", "d"]:
+                player.move(user)
+            elif user == "q":
+                print("Ending Simulation")
+                break
+            else:
+                print("Please try another input.")
+else: 
+    print("Maybe next time")
