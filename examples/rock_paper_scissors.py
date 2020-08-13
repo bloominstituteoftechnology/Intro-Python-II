@@ -1,3 +1,5 @@
+#@ code to reference when coding game
+
 #import module we need
 import random
 
