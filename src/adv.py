@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,15 +39,51 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
 
 # Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
+while True:
+    current_room = player.current_room
+# Prints the current room name
+    print(f"You have entered the {player.current_room.name}")
+# Prints the current description (the textwrap module might be useful here).
+    print(player.current_room.description)
+# Waits for user input and decides what to do.
+    user_input = input("Choose a direction (n, s, e, w)")
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
+    if user_input == "n":
+        if current_room.n_to is not None:
+            player.current_room = current_room.n_to
+        else:
+            #  handle error
+            pass
+
+    if user_input == "s":
+        if current_room.s_to is not None:
+            player.current_room = current_room.s_to
+        else:
+            #  handle error
+            pass
+
+    if user_input == "e":
+        if current_room.e_to is not None:
+            player.current_room = current_room.e_to
+        else:
+            #  handle error
+            pass
+
+    if user_input == "w":
+        if current_room.w_to is not None:
+            player.current_room = current_room.w_to
+        else:
+            #  handle error
+            pass
 #
 # If the user enters "q", quit the game.
 
+#  Add a REPL parser to `adv.py` that accepts directional commands to move the player
+#   * After each move, the REPL should print the name and description of the player's current room
+#   * Valid commands are `n`, `s`, `e` and `w` which move the player North, South, East or West
+#   * The parser should print an error if the player tries to move where there is no room.
