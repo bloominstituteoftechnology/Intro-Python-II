@@ -3,4 +3,8 @@ class Item:
         self.name = name
         self.description = description
         
-    
+    def on_take(self):
+        return
+        
+    def __repr__(self):
+        return f"{self.name}"      

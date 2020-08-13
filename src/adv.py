@@ -1,7 +1,60 @@
 from room import Room
 from player import Player
+from item import Item
 
+"""
+MVP 1 done
+
+MVP 2 
+Make rooms able to hold multiple items : DONE
+Make the player able to carry multiple items : DONE
+Add items to the game that the user can carry around : DONE
+Add get [ITEM_NAME] and drop [ITEM_NAME] commands to the parser
+MORE ON THIS:
+Add a new type of sentence the parser can understand: two words.
+
+Until now, the parser could just understand one sentence form:
+
+verb
+
+such as "n" or "q".
+
+But now we want to add the form:
+
+verb object
+
+such as "take coins" or "drop sword".
+
+Split the entered command and see if it has 1 or 2 words in it to determine if it's the first or second form.
+
+? x = input("Enter comma-separated numbers: ").split(',')
+* EG if it is north, the lenght of returned list should be 1, else two
+
+Implement support for the verb get followed by an Item name. This will be used to pick up Items.
+
+If the user enters get or take followed by an Item name, look at the contents of the current Room to see if the item is there.
+
+If it is there, remove it from the Room contents, and add it to the Player contents.
+
+If it's not there, print an error message telling the user so.
+
+Add an on_take method to Item.
+
+Call this method when the Item is picked up by the player.
+
+on_take should print out "You have picked up [NAME]" when you pick up an item.
+
+The Item can use this to run additional code when it is picked up.
+
+Add an on_drop method to Item. Implement it similar to on_take.
+
+Implement support for the verb drop followed by an Item name. This is the opposite of get/take.
+
+Add the i and inventory commands that both show a list of items currently carried by the player.
+
+"""
 # Declare all the rooms
+valid_inputs = ['q', 'n', 's', 'e', 'w']
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -22,6 +75,21 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+items = {
+    'sword': Item("Sword", "Mighty sword"),
+    'coins': Item("Coins", "Gold is worth much in these parts"),
+    'skull': Item("Dead man", "The sxull of traveler"),
+    'food': Item("Mushroom", "Stay healthy in these times"),
+    "elixr": Item("Elixr", "Inhale for good omens")
+
+}
+
+room['foyer'].items = [items['sword'], items['skull']]
+room['treasure'].items = [items['coins'], items['skull'], items['elixr']]
+room['narrow'].items = [items['food']]
+room['narrow'].items = [items['elixr']]
+
+
 
 # Link rooms together
 
@@ -39,21 +107,35 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+user = input("Hey friend, are you ready for your adventure time. If so, enter your name else, press q to quit: ")
+if user == 'q':
+    raise "Exit game"
 
-player = Player(room['outside'])
+user_input = ''
+valid_input = ['n', 's', 'e', 'w', 'q']
+
+player = Player(user, room['outside'])
 
 # Write a loop that:
-while True:
+while user_input != 'q':
     current_room = player.current_room
 # Prints the current room name
-    print(f"You have entered the {player.current_room.name}")
+    print(f"\n{user} has entered the {player.current_room.name}.\n\n")
 # Prints the current description (the textwrap module might be useful here).
     print(player.current_room.description)
+    print(f"Items: {current_room.items}")
+
 # Waits for user input and decides what to do.
-    user_input = input("Choose a direction (n, s, e, w)")
-#
+    user_input = input('\nWhich way do you want to do or go?\n'
+                      'Directions: [n] North [s] South [e] East [w] West\n'
+                      'Items: take (item), drop (item), or inspect (item)\n'
+                      '[i] Inventory\n'
+                      'or [q] Quit:\n')
+    print("\n")
+#   
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
+
     if user_input == "n":
         if current_room.n_to is not None:
             player.current_room = current_room.n_to
@@ -61,26 +143,55 @@ while True:
             #  handle error
             pass
 
-    if user_input == "s":
+    elif user_input == "s":
         if current_room.s_to is not None:
             player.current_room = current_room.s_to
         else:
             #  handle error
             pass
 
-    if user_input == "e":
+    elif user_input == "e":
         if current_room.e_to is not None:
             player.current_room = current_room.e_to
         else:
             #  handle error
             pass
 
-    if user_input == "w":
+    elif user_input == "w":
         if current_room.w_to is not None:
             player.current_room = current_room.w_to
         else:
             #  handle error
             pass
+        
+    elif "take" in user_input:
+        # add item to player inventory
+        # remove item from room
+        action = user_input.split()
+        print(action)
+        # action_verb = action[0]
+        # action_item = action[1]
+        # player.take(action_item)
+        
+        # CALL HERE for item on take
+        print("Take me jesus")
+    
+    elif "take" in user_input:
+        # add item to player inventory
+        # remove item from room
+        action = user_input.split()
+        print(action)
+        # action_verb = action[0]
+        # action_item = action[1]
+        # player.take(action_item)
+        
+        # CALL HERE for item on take
+        print("Take me jesus")
+    
+    elif "drop" in user_input:
+        # item from player to the items list on the room object
+        # remove action item from player
+        print("Drop it like its hot")
 #
 # If the user enters "q", quit the game.
 

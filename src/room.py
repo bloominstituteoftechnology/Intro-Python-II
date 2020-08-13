@@ -12,7 +12,7 @@ class Room:
             name: room name
             description: describes room
             n/s/e/w_to: indictates direction that can a pklayer can morve to 
-            iems: list of items in room
+            iems: list of Item objects fir room
         
         """
         self.name = name
@@ -23,5 +23,5 @@ class Room:
         self.w_to: Room = None
         self.items = []
 
-    # def __str__(self):
-    #     return f"{self.name}: {self.description}"
+    def __repr__(self):
+        return f"{self.name}: {self.description}"
