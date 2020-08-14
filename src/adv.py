@@ -63,11 +63,11 @@ potion = Item("Potion", "Restore's health.")
 rubies = Item("Rubies", "Its a gift, I guess.")
 scroll = Item("Scroll", "They couldnt leave behind any gold but they can leave a scroll.")
 
-room["outside"].items.append(rock) 
+room["outside"].items.append(gold) 
 room["outside"].items.append(potion)
 room["foyer"].items.append(sword)
 room["overlook"].items.append(potion)
-room["overlook"].items.append(rock) 
+room["overlook"].items.append(gold) 
 room["narrow"].items.append(rubies)
 room["treasure"].items.append(scroll)
 
@@ -94,13 +94,13 @@ while True:
     elif cmd == 'i': 
         player.display_inventory()  
 
-    elif cmd == 'take rock': 
-        player.add_item(rock) 
-        player.room.take_item(rock)
+    elif cmd == 'take gold': 
+        player.add_item(gold) 
+        player.room.take_item(gold)
 
-    elif cmd == 'drop rock': 
-        player.drop_item(rock) 
-        player.room.add_items(rock)
+    elif cmd == 'drop gold': 
+        player.drop_item(gold) 
+        player.room.add_items(gold)
     
     elif cmd == 'take sword': 
         player.add_item(sword) 
