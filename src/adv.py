@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -56,6 +57,20 @@ room['treasure'].s_to = room['narrow']
 
 player = Player("Aelin", room['outside'])
 
+rock = Item("Rock", "Just a rock.")
+sword = Item("Sword", "A magical sword.")
+potion = Item("Potion", "Restore's health.")
+rubies = Item("Rubies", "Not gold but still worth keeping.")
+scroll = Item("Scroll", "Left over by the previous adventurers.")
+
+room["outside"].items.append(rock) 
+room["outside"].items.append(potion)
+room["foyer"].items.append(sword)
+room["overlook"].items.append(potion)
+room["overlook"].items.append(rock) 
+room["narrow"].items.append(rubies)
+room["treasure"].items.append(scroll)
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -72,11 +87,55 @@ directions = ['n', 's', 'e', 'w']
 print(player.room)
 
 while True:
-    cmd = input("Please enter a valid input: ")
+    cmd = input("Please enter a valid input : ")
     if cmd in directions:
         player.move(cmd)
+    
+    elif cmd == 'i': 
+        player.display_inventory()  
+
+    elif cmd == 'take rock': 
+        player.add_item(rock) 
+        player.room.take_item(rock)
+
+    elif cmd == 'drop rock': 
+        player.drop_item(rock) 
+        player.room.add_items(rock)
+    
+    elif cmd == 'take sword': 
+        player.add_item(sword) 
+        player.room.take_item(sword)
+
+    elif cmd == 'drop sword': 
+        player.drop_item(sword)
+        player.room.add_items(sword)
+    
+    elif cmd == 'take potion': 
+        player.add_item(potion) 
+        player.room.take_item(potion)
+    
+    elif cmd == 'drop potion': 
+        player.drop_item(potion) 
+        player.room.add_items(potion)
+    
+    elif cmd == 'take rubies': 
+        player.add_item(rubies) 
+        player.room.take_item(rubies)
+    
+    elif cmd == 'drop rubies': 
+        player.drop_item(rubies) 
+        player.room.add_items(rubies)
+    
+    elif cmd == 'take scroll': 
+        player.add_item(scroll)
+        player.room.take_item(scroll)
+
+    elif cmd == 'drop scroll': 
+        player.drop_item(scroll) 
+        player.room.add_items(scroll)
+
     elif cmd == 'q':
-        print("That is the end of your journey!")
+        print("Thanks for Playing! :)")
         break
     else:
-        print("Invalid input! Choose more wisely!")
+        print("Oops! Choose a valid input.") 
