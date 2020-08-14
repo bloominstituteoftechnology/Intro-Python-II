@@ -57,11 +57,11 @@ room['treasure'].s_to = room['narrow']
 
 player = Player("Aelin", room['outside'])
 
-rock = Item("Rock", "Just a rock.")
-sword = Item("Sword", "A magical sword.")
+rock = Item("Gold", "Glorious Gold")
+sword = Item("Sword", "A somewhat magical thing.")
 potion = Item("Potion", "Restore's health.")
-rubies = Item("Rubies", "Not gold but still worth keeping.")
-scroll = Item("Scroll", "Left over by the previous adventurers.")
+rubies = Item("Rubies", "Its a gift, I guess.")
+scroll = Item("Scroll", "They couldnt leave behind any gold but they can leave a scroll.")
 
 room["outside"].items.append(rock) 
 room["outside"].items.append(potion)
@@ -135,7 +135,7 @@ while True:
         player.room.add_items(scroll)
 
     elif cmd == 'q':
-        print("Thanks for Playing! :)")
+        print("Your quest has ended!")
         break
     else:
         print("Oops! Choose a valid input.") 
