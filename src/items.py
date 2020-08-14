@@ -1,4 +1,4 @@
-items = {
+items = [
     'item_1': "matches",
     'item_2': "lantern",
     'item_3': "flashlight",
@@ -25,4 +25,4 @@ items = {
     'item_24': "note_1",
     'item_25': "note_2",
     'item_26': "note_3",
-}
+]
