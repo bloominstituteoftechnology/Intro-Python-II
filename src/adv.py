@@ -118,6 +118,6 @@ while trapped:
             trapped = False
             sys.exit()
         else:
-            print("Please be sure to enter n, s, e, w, or q")
+            print("Incorrect direction inserted! Please be sure to enter n, s, e, w, or q below to proceed")
 
     switch(movement)
