@@ -1,6 +1,9 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -33,11 +36,37 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# if user pushes n:
+# - foyer to outside
+# - overlook to foyer
+# - treasure to narrow
+# If user pushes e:
+# - narrow to foyer
+# If user pushes s:
+# - narrow to treasure
+# - foyer to overlook
+# - outside to foyer
+# If user pushes w:
+# -foyer to narrow
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+player = Player("Aelin", room['outside'])
+
+sword = Item("Sword", "A somewhat magical thing.")
+potion = Item("Potion", "Restore's health.")
+rubies = Item("Rubies", "Its a gift, I guess.")
+scroll = Item("Scroll", "They couldn't leave behind any gold but they can leave a scroll.")
+
+room["outside"].items.append(potion)
+room["foyer"].items.append(sword)
+room["overlook"].items.append(potion)
+room["narrow"].items.append(rubies)
+room["treasure"].items.append(scroll)
 
 # Write a loop that:
 #
@@ -49,3 +78,61 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+directions = ['n', 's', 'e', 'w']
+
+print(player.room)
+
+while True:
+    cmd = input("Please enter a valid input : ")
+    if cmd in directions:
+        player.move(cmd)
+    
+    elif cmd == 'i': 
+        player.display_inventory()  
+
+    elif cmd == 'take gold': 
+        player.add_item(gold) 
+        player.room.take_item(gold)
+
+    elif cmd == 'drop gold': 
+        player.drop_item(gold) 
+        player.room.add_items(gold)
+    
+    elif cmd == 'take sword': 
+        player.add_item(sword) 
+        player.room.take_item(sword)
+
+    elif cmd == 'drop sword': 
+        player.drop_item(sword)
+        player.room.add_items(sword)
+    
+    elif cmd == 'take potion': 
+        player.add_item(potion) 
+        player.room.take_item(potion)
+    
+    elif cmd == 'drop potion': 
+        player.drop_item(potion) 
+        player.room.add_items(potion)
+    
+    elif cmd == 'take rubies': 
+        player.add_item(rubies) 
+        player.room.take_item(rubies)
+    
+    elif cmd == 'drop rubies': 
+        player.drop_item(rubies) 
+        player.room.add_items(rubies)
+    
+    elif cmd == 'take scroll': 
+        player.add_item(scroll)
+        player.room.take_item(scroll)
+
+    elif cmd == 'drop scroll': 
+        player.drop_item(scroll) 
+        player.room.add_items(scroll)
+
+    elif cmd == 'q':
+        print("Your quest has ended!")
+        break
+    else:
+        print("Oops! Choose a valid input.") 
