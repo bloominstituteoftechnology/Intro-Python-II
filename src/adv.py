@@ -57,17 +57,14 @@ room['treasure'].s_to = room['narrow']
 
 player = Player("Aelin", room['outside'])
 
-rock = Item("Gold", "Glorious Gold")
 sword = Item("Sword", "A somewhat magical thing.")
 potion = Item("Potion", "Restore's health.")
 rubies = Item("Rubies", "Its a gift, I guess.")
-scroll = Item("Scroll", "They couldnt leave behind any gold but they can leave a scroll.")
+scroll = Item("Scroll", "They couldn't leave behind any gold but they can leave a scroll.")
 
-room["outside"].items.append(gold) 
 room["outside"].items.append(potion)
 room["foyer"].items.append(sword)
 room["overlook"].items.append(potion)
-room["overlook"].items.append(gold) 
 room["narrow"].items.append(rubies)
 room["treasure"].items.append(scroll)
 

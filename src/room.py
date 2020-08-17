@@ -5,6 +5,7 @@ class Room:
     def __init__(self, name, description):
         self.name = name
         self.description = description
+        self.items = []
         self.n_to = None
         self.s_to = None
         self.e_to = None
@@ -12,7 +13,7 @@ class Room:
 
     def __str__(self):
         string = ""
-        string += f"You are currently in the: {self.name}\n{self.description}"
+        string += f'You are currently in the: {self.name}\n{self.description}\n Item(s) in room: {self.items}'
         return string
 
     def get_direction(self, direction):
@@ -26,6 +27,7 @@ class Room:
             return self.w_to
         else:
             return None
+
     def add_items(self, item): 
         self.items.append(item) 
 
