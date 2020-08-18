@@ -1,5 +1,7 @@
 from items import items
 
+# this might need to be changed to a class because I will need a function somewhere to check if the inventory is full.
+
 inventory = {
     'slot_1': 'empty',
     'slot_2': 'empty',

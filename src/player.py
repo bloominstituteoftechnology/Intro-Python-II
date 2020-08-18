@@ -16,10 +16,10 @@
 
 class Player: 
     
-    def __init__(self, current_room, name):
+    def __init__(self, name, current_room):
         self.current_room=current_room
         self.name=name
         # self.player_info=player_info # pretty sure this would be a dict indicating what they are holding
     
     def __str__(self):
-        return f"{self.current_room} {self.player_info}"
+        return f"{self.current_room}"

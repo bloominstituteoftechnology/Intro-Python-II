@@ -107,13 +107,21 @@ while trapped:
     
     def switch(movement) :
         if movement == 'n' or movement=='N':
+            print("You've stumbled into: " player.current_room)
             player.current_room = player.current_room.n_to
+            print("You've moved North to: "player.current_room)
         elif movement =='s' or movement=='S':
+            print("You've stumbled into: " player.current_room)
             player.current_room = player.current_room.s_to
+            print("You've moved South to: "player.current_room)
         elif movement == 'w' or movement=='W':
+            print("You've stumbled into: " player.current_room)
             player.current_room = player.current_room.w_to
+            print("You've moved West to: "player.current_room)
         elif movement == 'e' or movement=='E':
+            print("You've stumbled into: " player.current_room)
             player.current_room = player.current_room.e_to
+            print("You've moved East to: "player.current_room)
         elif movement == 'q' or movement=='Q':
             trapped = False
             sys.exit()
