@@ -7,7 +7,7 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -47,6 +47,7 @@ name = input("What is your name? ")
 key = None
 new_player = Player(name, room["outside"])
 is_playing = True
+not_valid = "Invalid key. Please try again."
 # Write a loop that:
 #
 # * Prints the current room name
@@ -58,8 +59,9 @@ is_playing = True
 #
 # If the user enters "q", quit the game.
 while is_playing:
-    print( f"{new_player.name}, you are currently in the {new_player.room.name}.\n{new_player.room.description}")
+    print( f"{new_player.name}, you are currently in the {new_player.room.name}.\n{new_player.room.description}\n")
     key = input("Select the first letter of the direction you would like to move. Or press 'q' to quit. ")
+    print("-------------------------")
     try:
         if key == "q":
             print("Thanks for playing.")
@@ -67,21 +69,29 @@ while is_playing:
         if new_player.room == room['outside']:
             if key == "n":
                 new_player.room = new_player.room.n_to
+            elif key != "n" or key !="q":
+                print(not_valid)
         elif new_player.room == room['foyer']:
             if key == "s":
                 new_player.room = new_player.room.s_to
-            if key == "n":
+            elif key == "n":
                 new_player.room = new_player.room.n_to
-            if key == "e":
+            elif key == "e":
                 new_player.room = new_player.room.e_to
+            elif key != "n" or key != "s" or key != "e" or key !="q":
+                print(not_valid)
         elif new_player.room == room['overlook']:
             if key == "s":
                 new_player.room = new_player.room.s_to
+            elif key != "s" or key !="q":
+                print(not_valid)
         elif new_player.room == room["narrow"]:
             if key == "w":
                 new_player.room = new_player.room.w_to
-            if key == "n":
+            elif key == "n":
                 new_player.room = new_player.room.n_to
+            elif key != "n" or key != "w" or key !="q":
+                print(not_valid)
         elif new_player.room == room['treasure']:
             if key == "s":
                 new_player.room = new_player.room.s_to
