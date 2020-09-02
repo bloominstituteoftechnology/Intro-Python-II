@@ -44,9 +44,8 @@ wrapper = textwrap.TextWrapper(width=50)
 
 # Make a new player object that is currently in the 'outside' room.
 name = input("What is your name?")
-
+key = None
 new_player = Player(name, room["outside"])
-cur_room = new_player.room
 is_playing = True
 # Write a loop that:
 #
@@ -59,7 +58,33 @@ is_playing = True
 #
 # If the user enters "q", quit the game.
 while is_playing:
-    print( f"Welcome to the game, {new_player.name}. You are currently in {new_player.room.name}.")
-    input("Which direction would you like to move?")
-    
-    
+    print( f"{new_player.name}, you are currently in the {new_player.room.name}\n. {new_player.room.description}")
+    key = input("Select the first letter of the direction you would like to move. Or press 'q' to quit.")
+    try:
+        if key == "q":
+            print("Thanks for playing.")
+            is_playing = False
+        if new_player.room == room['outside']:
+            if key == "n":
+                new_player.room = new_player.room.n_to
+        elif new_player.room == room['foyer']:
+            if key == "s":
+                new_player.room = new_player.room.s_to
+            if key == "n":
+                new_player.room = new_player.room.n_to
+            if key == "e":
+                new_player.room = new_player.room.e_to
+        elif new_player.room == room['overlook']:
+            if key == "s":
+                new_player.room = new_player.room.s_to
+        elif new_player.room == room["narrow"]:
+            if key == "w":
+                new_player.room = new_player.room.w_to
+            if key == "n":
+                new_player.room = new_player.room.n_to
+        elif new_player.room == room['treasure']:
+            if key == "s":
+                new_player.room = new_player.room.s_to
+
+    except AttributeError:
+        print("Please select a valid choice.")

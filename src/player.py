@@ -8,7 +8,7 @@ class Player:
     
     def __str__(self):
         data = f"{self.name}\n"
-        data += f"{self.room}\n"
+        data += f"You are in the {self.room}\n"
         return data
 
     def __repr__(self):
