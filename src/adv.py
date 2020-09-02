@@ -43,7 +43,7 @@ wrapper = textwrap.TextWrapper(width=50)
 #
 
 # Make a new player object that is currently in the 'outside' room.
-name = input("What is your name?")
+name = input("What is your name? ")
 key = None
 new_player = Player(name, room["outside"])
 is_playing = True
@@ -58,8 +58,8 @@ is_playing = True
 #
 # If the user enters "q", quit the game.
 while is_playing:
-    print( f"{new_player.name}, you are currently in the {new_player.room.name}\n. {new_player.room.description}")
-    key = input("Select the first letter of the direction you would like to move. Or press 'q' to quit.")
+    print( f"{new_player.name}, you are currently in the {new_player.room.name}.\n{new_player.room.description}")
+    key = input("Select the first letter of the direction you would like to move. Or press 'q' to quit. ")
     try:
         if key == "q":
             print("Thanks for playing.")
@@ -87,4 +87,4 @@ while is_playing:
                 new_player.room = new_player.room.s_to
 
     except AttributeError:
-        print("Please select a valid choice.")
+        print("Can't move that direction.")
