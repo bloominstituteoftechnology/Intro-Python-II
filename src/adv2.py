@@ -79,8 +79,8 @@ while True:
     elif command[0] == 'n':
         if current_room == 2:
             current_room = 3
-            player.this_room = room['overlook']
-            print(player.this_room)
+            player.overlook = room['overlook']
+            print(player.overlook)
         elif current_room == 1:
             player.foyer_room = room['foyer']
             current_room = 2
@@ -131,36 +131,65 @@ while True:
             print("You can't move West")
 
     if current_room == 1:
-        item_selection = (input("grab or leave an item, press 1 or 2:"))
-        if item_selection == '1':
-            #search it as a string
-            #loop through the array to find it
+        item_selection = int(input("grab or leave an item, press 1 to grab an item or 2 to leave one:"))
+        
+        if item_selection == 1:
+           
+            
+            ##got it to print out inventory and select items based on the one you picked fron an enumarated list
             selected_inventory = room['outside']
-            player.add_to_inventory(selected_inventory.items[0])
             roominv.outside_room = room['outside']
-            roominv.outside_room.remove_from_inventory_room(selected_inventory.items[0])
+            player.print_inventory()
+            roominv.outside.print_inventory()
+            item_selection = int(input("choose the number of the item to pick up"))
+            
+            player.add_to_inventory(selected_inventory.items[item_selection])
+            roominv.outside_room.remove_from_inventory_room(selected_inventory.items[item_selection])
+            player.print_inventory()
+            roominv.outside.print_inventory()
+            continue
+            
         else:
-            try:
-                player.remove_from_inventory(selected_inventory.items[0])
-                roominv.outside_room.add_to_inventory_room(selected_inventory.items[0])
-            except:
-                print("No HealthPotion to remove")
-                continue
-    elif current_room == 2:
-        item_selection = (input("grab or leave an item, press 1 or 2:"))
-        if item_selection == '1':
+            # try:
+            player.print_inventory()
+            item_selection = int(input("choose the number of the item to put down"))
+            selected_inventory = room['outside']
+            player.remove_from_inventory(player.inventory[item_selection])
+            roominv.outside_room = room['outside']
+            roominv.outside_room.add_to_inventory_room(selected_inventory.items[item_selection])
+            player.print_inventory()
+            roominv.print_inventory()
+            continue
+            # except:
+            #     print("Not an item to remove or invalid number")
+            #     continue
+    if current_room == 2:
+        item_selection = int(input("grab or leave an item, press 1 to grab an item or 2 to leave one:"))
+        
+        if item_selection == 1:
             #search it as a string
             #loop through the array to find it
-            selected_inventory = room['foyer']
-            player.add_to_inventory(selected_inventory.items[0])
             roominv.foyer = room['foyer']
-            roominv.foyer.remove_from_inventory_room(selected_inventory.items[0])
+            selected_inventory = room['foyer']
+            roominv.foyer.print_inventory()
+            player.print_inventory()
+            item_selection = int(input("choose the number of the item to pick up"))
+            
+        
+            #search it as a string
+            #loop through the array to find it
+      
+            player.add_to_inventory(selected_inventory.items[item_selection])
+           
+            roominv.foyer.remove_from_inventory_room(selected_inventory.items[item_selection])
         else:
             try:
-                player.remove_from_inventory(selected_inventory.items[0])
-                roominv.foyer.add_to_inventory_room(selected_inventory.items[0])
+                player.remove_from_inventory(selected_inventory.items[item_selection])
+                roominv.foyer.add_to_inventory_room(selected_inventory.items[item_selection])
+                player.print_inventory()
+                roominv.print_inventory()
             except:
-                print("No ManaPotion to remove")
+                print("No item to remove")
                 continue
     elif current_room == 3:
         item_selection = (input("grab or leave an item, press 1 or 2:"))
@@ -178,7 +207,7 @@ while True:
                 player.remove_from_inventory(selected_inventory.items[0])
                 roominv.overlook.add_to_inventory_room(selected_inventory.items[0])
             except:
-                print("No ManaPotion to remove")
+                print("No item to remove")
                 continue
 
     elif current_room == 4:
@@ -212,5 +241,5 @@ while True:
                 player.remove_from_inventory(selected_inventory.items[0])
                 roominv.treasure.add_to_inventory_room(selected_inventory.items[0])
             except:
-                print("No ManaPotion to remove")
+                print("No item to remove")
                 continue

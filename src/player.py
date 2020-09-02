@@ -16,7 +16,7 @@ class Player:
         
 
     def print_inventory(self):
-        print("Your inventory is", [f"{p.name}: {p.description}" for p in self.inventory])
+        print("Your inventory is", [f"{c} : {p.name}: {p.description}" for c, p in enumerate(self.inventory)])
 
 
  
