@@ -1,4 +1,6 @@
 from room import Room
+from items import Item
+from player import Player
 
 # Declare all the rooms
 
@@ -22,6 +24,7 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 
+
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -39,6 +42,10 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player1 = Player("Playe 1", room["outside"])
+
+is_playing = True
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +56,33 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while is_playing:
+    print(player1.location.name)
+    print(player1.location.description)
+
+    user_input = input(">>>ENTER A SINGLE COMMAND>>> ")
+
+    if user_input == "q":
+        break
+    elif user_input == "n":
+        if hasattr(player1.location, "n_to"):
+            player1.location = player1.location.n_to
+        else:
+            print("No available path that way")
+    elif user_input == "e":
+        if hasattr(player1.location, "e_to"):
+            player1.location = player1.location.e_to
+        else:
+           print("No available path that way")
+    elif user_input == "s":
+        if hasattr(player1.location, "s_to"):
+            player1.location = player1.location.s_to
+        else:
+            print("No available path that way")
+    elif user_input == "w":
+        if hasattr(player1.locationn, "w_to"):
+            player1.location = player1.location.w_to
+        else:
+            print("No available path that way")
+    else:
+        print("invalid input, try again....")
