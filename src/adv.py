@@ -24,6 +24,9 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
+
+# NOTE How is n_to, s_to, e_to, w_to valid if not a member of Room Class?
+
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -32,6 +35,9 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+# print('outside south:', room['outside'].n_to) # NOTE Valid
+# print('outside south:', room['outside'].s_to) # NOTE Will give error
 
 #
 # Main
