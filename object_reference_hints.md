@@ -1,4 +1,4 @@
-Remember that multiple variables can refer to the same object.
+playerRemember that multiple variables can refer to the same object.
 
 In the diagram below, there are only 2 `Room` objects, total. (There are more in the game, obviously, but in this diagram, there are 2.)
 
