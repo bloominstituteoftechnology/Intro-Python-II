@@ -20,7 +20,7 @@ class Player:
         if len(self.current_room.items) <= 0:
             room_items = "Nothing." 
         elif len(self.current_room.items) == 1:
-            room_items = f"{self.current_room[0].name}"
+            room_items = f"{self.current_room.items[0].name}"
         else:
             for item in self.current_room.items:
                 room_items += f"{item.name}\n"
@@ -47,12 +47,21 @@ class Player:
                 print(f"{item} not found.")
                 return None
     
+    def select_inventory_item(self, item):
+        for i in self.inventory:
+            if i.name.lower() == str(item).lower():
+                return i
+            else:
+                print(f"{item} not found.")
+                return None
+
     def take(self, item):
         self.inventory.append(item)
         self.current_room.items.remove(item)
+        item.taken()
 
     def drop(self, item):
-        for i in self.inventory:
-            if i == item:
-                self.inventory.remove(item)
+        self.inventory.remove(item)
         self.current_room.items.append(item)
+        item.dropped()
+        

@@ -83,7 +83,7 @@ while True:
                 item = player.select_item(user_input[1])
                 player.take(item)
             elif user_input[0] == "d" or user_input[0] == "drop":
-                item = player.select_item(user_input[1])
+                item = player.select_inventory_item(user_input[1])
                 player.drop(item)
             
     
