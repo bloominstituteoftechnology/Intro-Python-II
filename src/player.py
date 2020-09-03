@@ -17,7 +17,16 @@ class Player:
             self.current_room = getattr(self.current_room, f'{direction}_to')
 
     def look(self):
+        if len(self.current_room.items =< 0:
+            room_items = "Nothing." 
+        elif len(self.current_room.items == 1:
+            room_items = f"{self.current_room[0].name}"
+        else:
+            for item in self.current_room.items:
+                room_items += f"{item.name}\n"
+
         print(f"{self.name}, you find yourself in {self.current_room.name}. \n{self.current_room.description}")
+        print(f"You see in this room the following items: {room_items}")
 
     def show_inventory(self):
         if len(self.inventory) <= 0:
