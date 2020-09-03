@@ -38,6 +38,14 @@ class Player:
             print(f"You have {len(self.inventory)} items in your inventory.")
             for item in self.inventory:
                 print(f"\n{item.name}: {item.description}")
+
+    def select_item(self, item):
+        for i in self.current_room.items:
+            if i.name.lower() == str(item).lower():
+                return i
+            else:
+                print(f"{item} not found.")
+                return None
     
     def take(self, item):
         self.inventory.append(item)
