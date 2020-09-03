@@ -13,3 +13,5 @@ class Room:
         # , n_to=None, s_to=None, e_to=None, w_to=None
     def __str__(self):
         return f'{self.name}, {self.description}'
+
+    def 
