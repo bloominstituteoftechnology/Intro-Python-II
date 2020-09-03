@@ -1,10 +1,12 @@
+import sys
 from room import Room
+from player import Player
 
 # Declare all the rooms
-
+ 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons..."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -49,3 +51,48 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+######FORMATING#######
+def spacing():
+    print('\n', end=' ')
+def divider():
+    print('------------------------------------------------')
+######################
+
+
+#game intro
+spacing()
+
+print('Welcome!', end=' ')
+playername = input('Please enter a name: ')
+
+player = Player(playername, room['outside'])
+
+spacing()
+
+print(f'Hello {player.name}, are you ready for an adveture?')
+
+spacing()
+
+#game loop
+while True:
+    ##prints current location and description, prompts user for directions##
+    divider()
+    spacing()
+    print(player)
+    spacing()
+    direction = input('Which way? ').lower()
+    spacing()
+    ########################################################################
+    if len(direction) == 1:
+        #quits loops with 'q'
+        if direction[0] == 'q':
+            sys.exit()
+        #sets direction reseting loop
+        elif direction[0] in ('n','s','e','w'):
+            player.travel(direction[0])
+        #corrects player resets loop
+        else:
+            print('That is not an option, try q to QUIT or n, s, e, or w to move around :)')
+            spacing()
