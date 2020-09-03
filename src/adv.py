@@ -58,5 +58,5 @@ player = Player(room['outside'])
 # If the user enters "q", quit the game.
 
 while 1:
-    print(player + '\n')
+    print(player)
     player.changeRoom(input())
