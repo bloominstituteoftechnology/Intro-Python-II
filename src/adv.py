@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -23,8 +24,6 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
-
 # NOTE How is n_to, s_to, e_to, w_to valid if not a member of Room Class?
 
 room['outside'].n_to = room['foyer']
@@ -45,6 +44,8 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player(room['outside'])
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -55,3 +56,5 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+print(player)
