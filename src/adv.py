@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -43,6 +44,7 @@ directions = ['n', 's', 'e', 'w']
 # Make a new player object that is currently in the 'outside' room.
 player_name = input('What is your name, adventurer? ')
 player = Player(player_name, room['outside'])
+print("To move around the map, press 'n', 'e', 's', 'w'. Look for items to help on your way. For help try 'Help' or 'h'.")
 print(f"Good luck, {player.name}")
 # Write a loop that:
 #

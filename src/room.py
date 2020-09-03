@@ -3,11 +3,15 @@
 from item import Item
 
 class Room:
-     def __init__(self, name, description):
-         super().__init__()
-         self.name = name
-         self.description = description
-         self.items = []
+    def __init__(self, name, description):
+        super().__init__()
+        self.name = name
+        self.description = description
+        self.items = []
 
-     def __str__(self):
-         return f"{self.name}: \n{self.description}"
+    def __str__(self):
+        return f"{self.name}: \n{self.description}"
+
+    def add_item(self, item):
+        self.items.append(item)
+        print(f"{item.name} added to {self.name}")

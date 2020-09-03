@@ -17,9 +17,9 @@ class Player:
             self.current_room = getattr(self.current_room, f'{direction}_to')
 
     def look(self):
-        if len(self.current_room.items =< 0:
+        if len(self.current_room.items) <= 0:
             room_items = "Nothing." 
-        elif len(self.current_room.items == 1:
+        elif len(self.current_room.items) == 1:
             room_items = f"{self.current_room[0].name}"
         else:
             for item in self.current_room.items:
