@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+import sys
 # Declare all the rooms
 
 room = {
@@ -49,3 +50,66 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def the_quest ():
+    #Title
+    print("Welcome to your Quest!")
+    print("Find the Treasue and win the game!")
+
+    #Chose Player name
+    Hero = input("What is your players name? ")
+
+    #Player Location
+    p1 = Player(Hero,'outside')
+    print("Welcome " + Hero + " you are" + " " + p1.location)
+    direction = input("Chose which direction, n (North) , e (East),w (West) ,s (South), press q to quit ")
+    
+    while True:
+        #outside
+        if p1.location == 'outside' and direction == 'n':
+            p1 = Player(Hero,'foyer')
+            print(Hero + " you are located " + " "+ p1.location)
+        
+            #foyer
+        elif p1.location == 'foyer' and direction == 's':
+                p1 = Player(Hero,'outside')
+                print(Hero + " you are located " + " "+ p1.location)
+        elif p1.location == 'foyer' and direction == 'n':
+                 p1 = Player(Hero,'overlook')
+                 print(Hero + " you are located " + " "+ p1.location)
+                 
+             #overlook foyer n
+        elif p1.location == 'overlook' and direction == 's':
+                     p1 = Player(Hero,'foyer')
+                     print(Hero + " you are located " + " "+ p1.location)
+                   
+        
+        elif p1.location == 'foyer' and direction == 'e':
+                p1 = Player(Hero,'narrow')
+                print(Hero + " you are located " + " "+ p1.location)
+            
+   
+                #narrow foyer e
+        elif p1.location == 'narrow' and direction == 'w':
+                    p1 = Player(Hero,'foyer')
+                    print(Hero + " you are located " + " "+ p1.location)
+                    
+        elif p1.location == 'narrow' and direction == 'n':
+                    p1 = Player(Hero,'treasure')         
+                    print('YOU FOUND THE TREASURE!!')
+                    break
+           
+        if direction == 'q':
+            print("Goodbye " + Hero)
+            break
+        else:
+            print("Wrong direction, your are located" + " " + p1.location)
+            direction = input("Chose which direction, n (North) , e (East),w (West) ,s (South), press q to quit ")
+        
+      
+
+
+
+the_quest()
+
+    
