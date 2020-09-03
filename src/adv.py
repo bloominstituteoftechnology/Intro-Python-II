@@ -24,7 +24,6 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -42,7 +41,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-player1 = Player("Playe 1", room["outside"])
+player = Player("Playe 1", room["outside"])
 
 is_playing = True
 
@@ -57,31 +56,31 @@ is_playing = True
 #
 # If the user enters "q", quit the game.
 while is_playing:
-    print(player1.location.name)
-    print(player1.location.description)
+    print(player.location.name)
+    print(player.location.description)
 
     user_input = input(">>>ENTER A SINGLE COMMAND>>> ")
 
     if user_input == "q":
         break
     elif user_input == "n":
-        if hasattr(player1.location, "n_to"):
-            player1.location = player1.location.n_to
+        if hasattr(player.location, "n_to"):
+            player.location = player.location.n_to
         else:
             print("No available path that way")
     elif user_input == "e":
-        if hasattr(player1.location, "e_to"):
-            player1.location = player1.location.e_to
+        if hasattr(player.location, "e_to"):
+            player.location = player.location.e_to
         else:
-           print("No available path that way")
+            print("No available path that way")
     elif user_input == "s":
-        if hasattr(player1.location, "s_to"):
-            player1.location = player1.location.s_to
+        if hasattr(player.location, "s_to"):
+            player.location = player.location.s_to
         else:
             print("No available path that way")
     elif user_input == "w":
-        if hasattr(player1.locationn, "w_to"):
-            player1.location = player1.location.w_to
+        if hasattr(player.location, "w_to"):
+            player.location = player.location.w_to
         else:
             print("No available path that way")
     else:
