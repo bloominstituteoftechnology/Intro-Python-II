@@ -131,8 +131,15 @@ while True:
             print("You can't move West")
 
     if current_room == 1:
-        item_selection = int(input("grab or leave an item, press 1 to grab an item or 2 to leave one:"))
+        item_selection = input("grab or leave an item, press 1 to grab an item or 2 to leave one:")
+        try:
+            item_selection = int(item_selection)
         
+        except ValueError:
+            "Enter in an integer within range please"
+            item_selection = input("grab or leave an item, press 1 to grab an item or 2 to leave one:")
+            continue 
+
         if item_selection == 1:
            
             
@@ -141,25 +148,45 @@ while True:
             roominv.outside_room = room['outside']
             player.print_inventory()
             roominv.outside.print_inventory()
-            item_selection = int(input("choose the number of the item to pick up"))
-            
-            player.add_to_inventory(selected_inventory.items[item_selection])
-            roominv.outside_room.remove_from_inventory_room(selected_inventory.items[item_selection])
-            player.print_inventory()
-            roominv.outside.print_inventory()
-            continue
+            item_selection = input("choose the number of the item to pick up")
+            try:
+                item_selection = int(item_selection)
+                player.add_to_inventory(selected_inventory.inventory[item_selection])
+                roominv.outside_room.remove_from_inventory_room(selected_inventory.inventory[item_selection])
+                player.print_inventory()
+                roominv.outside.print_inventory()
+                continue
+            except ValueError:
+                "Choose a valid number in range that is an integer"
+                item_selection = input("choose the number of the item to pick up")
+                item_selection = int(item_selection)
+                player.add_to_inventory(selected_inventory.inventory[item_selection])
+                roominv.outside_room.remove_from_inventory_room(selected_inventory.inventory[item_selection])
+                player.print_inventory()
+                roominv.outside.print_inventory()
+                continue
             
         else:
-            # try:
             player.print_inventory()
-            item_selection = int(input("choose the number of the item to put down"))
-            selected_inventory = room['outside']
-            player.remove_from_inventory(player.inventory[item_selection])
-            roominv.outside_room = room['outside']
-            roominv.outside_room.add_to_inventory_room(selected_inventory.items[item_selection])
-            player.print_inventory()
-            roominv.print_inventory()
-            continue
+            item_selection = input("choose the number of the item to put down")
+            try:
+                item_selection = int(item_selection)
+                selected_inventory = room['outside']
+                roominv.outside_room = room['outside']
+                roominv.outside_room.add_to_inventory_room(player.inventory[item_selection])
+                player.remove_from_inventory(player.inventory[item_selection])
+                player.print_inventory()
+                roominv.outside_room.print_inventory()
+                continue
+            except ValueError:
+
+                selected_inventory = room['outside']
+                roominv.outside_room = room['outside']
+                roominv.outside_room.add_to_inventory_room(player.inventory[item_selection])
+                player.remove_from_inventory(player.inventory[item_selection])
+                player.print_inventory()
+                roominv.outside_room.print_inventory()
+                continue
             # except:
             #     print("Not an item to remove or invalid number")
             #     continue
