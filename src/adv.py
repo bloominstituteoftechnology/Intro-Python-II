@@ -1,10 +1,11 @@
 from room import Room
+from items import Item
+from player import Player
 
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("Outside Cave Entrance", "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -39,6 +40,10 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player("Playe 1", room["outside"])
+
+is_playing = True
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +54,33 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while is_playing:
+    print(player.location.name)
+    print(player.location.description)
+
+    user_input = input(">>>ENTER A SINGLE COMMAND>>> ")
+
+    if user_input == "q":
+        break
+    elif user_input == "n":
+        if hasattr(player.location, "n_to"):
+            player.location = player.location.n_to
+        else:
+            print("No available movement that way")
+    elif user_input == "e":
+        if hasattr(player.location, "e_to"):
+            player.location = player.location.e_to
+        else:
+            print("No available movement that way")
+    elif user_input == "s":
+        if hasattr(player.location, "s_to"):
+            player.location = player.location.s_to
+        else:
+            print("No available movement that way")
+    elif user_input == "w":
+        if hasattr(player.location, "w_to"):
+            player.location = player.location.w_to
+        else:
+            print("No available movement that way")
+    else:
+        print("invalid input, try again..")
