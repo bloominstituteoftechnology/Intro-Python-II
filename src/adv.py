@@ -1,5 +1,13 @@
 from room import Room
 from player import Player
+from item import Item
+
+# Declare all the items
+pistol = Item("Pistol", "Mid range gun with medium damage")
+shotgun = Item("Shot Gun", "Close range gun with high damage")
+assault_rifle = Item("Assault Rifle", "Long range gun with high damage") 
+sniper_rifle = Item("Sniper Rifle", "Very long range gun with very high damage")
+grenade = Item("Grenade", "Good for AOE damage")
 
 # Declare all the rooms
 
@@ -77,6 +85,3 @@ while True:
     elif direction.lower() == 'w':
         if hasattr(player.room, 'w_to'):
             player.room = player.room.w_to
-
-# inside of rooms put -self.items = []
-# player inventory self.inventory = []
