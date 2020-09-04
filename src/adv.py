@@ -77,3 +77,6 @@ while True:
     elif direction.lower() == 'w':
         if hasattr(player.room, 'w_to'):
             player.room = player.room.w_to
+
+# inside of rooms put -self.items = []
+# player inventory self.inventory = []
