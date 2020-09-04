@@ -29,9 +29,9 @@ items = {
    'rabbitFriend': Item("Rabbit", "A rabbit who likes to live in adventurers backpacks")
 }
 
-room['narrow'].items = items['rabbitFriend']
-room['overlook'].items = items['hundred']
-room['foyer'].items = items['lightsaber']
+room['narrow'].items.append(items['rabbitFriend'])
+room['overlook'].items.append(items['hundred'])
+room['foyer'].items.append(items['lightsaber'])
 
 # Link rooms together
 
@@ -63,7 +63,8 @@ helpstring = print("You can use the following commands: \n N: Move North \n E: M
 #
 while True:
     if player.room.items != []:
-        print(player.room.items)
+        for item in player.room.items:
+            print(item)
     else:
         print('No items in this room.')
     print(
@@ -73,42 +74,46 @@ while True:
          "\n", 
          player.room.description
          )
-    direction = (input("Input a command: ")).lower()
+    direction = (input("Input a command: ")).lower().split()
     if len(direction) == 1:
-        if direction == "q": 
+        if direction[0] == "q": 
             break
-        elif direction == "n":
+        elif direction[0] == "n":
             if hasattr(player.room, "n_to"):
                 player.room = player.room.n_to
             else: 
                 print("You don't find a room to the north of you")
-        elif direction == "e":
+        elif direction[0] == "e":
             if hasattr(player.room, "e_to"):
                 player.room = player.room.e_to
             else:
                 print("You don't find a room to the east of you")
-        elif direction == "s":
+        elif direction[0] == "s":
             if hasattr(player.room, "s_to"):
                 player.room = player.room.s_to
             else:
                 print("You don't find a room to the south of you")
-        elif direction == "w":
+        elif direction[0] == "w":
             if hasattr(player.room, "w_to"):
                 player.room = player.room.w_to
             else:
                 print("You don't find a room to the west of you")
-        elif direction == "i":
+        elif direction[0] == "i":
             if player.inventory != []:
-                print(player.inventory)
+                for item in player.inventory:
+                    print(item)
             else:
                 print(f"Your satchel is empty, {player.name}")
-        elif direction == "h":
+        elif direction[0] == "h":
             print("You can use the following commands: \n N: Move North \n E: Move East \n S: Move South \n W: Move West \n T or Take + Item: Take item \n D or Drop + Item: Drop Item \n I: examine Inventory \n H: Help (prints the commands) \n Q: Quit if this be thy wish")
     elif len(direction) == 2:
         if direction[0] == "t" or direction[0] == "take":
             player.take(player.room.items[0])
+            player.room.items.remove[0]
+            print("You picked up an item")
         elif direction[0] == "d" or direction[0] == "drop":
             player.drop(player.room.items[0])
+            player.room.items.append[player.inventory[0]]
     # print(direction)
 
 
