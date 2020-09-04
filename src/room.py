@@ -4,7 +4,6 @@ from item import Item
 
 class Room:
     def __init__(self, name, description):
-        super().__init__()
         self.name = name
         self.description = description
         self.items = []

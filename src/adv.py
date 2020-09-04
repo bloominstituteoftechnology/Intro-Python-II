@@ -48,7 +48,7 @@ def add_room_items():
 #
 
 directions = ['n', 's', 'e', 'w']
-actions = ['take', 'drop']
+actions = ['take', 'drop', 't', 'd']
 
 # Make a new player object that is currently in the 'outside' room.
 player_name = input('What is your name, adventurer? ')
@@ -102,7 +102,7 @@ while True:
 
         elif user_input[0] == "inv" or user_input[0] == "inventory":
                 player.show_inventory()
-
+                continue
         elif user_input[0] in directions:
             try:
                 player.change_room(user_input[0])
