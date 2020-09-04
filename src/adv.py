@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,6 +40,12 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player_name = input("What is your name?\n")
+
+player = Player(player_name,room['outside'])
+
+print(f"\n\Hello {player.name}!\n")
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +56,41 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+    current_room = player.room
+
+    print(f"you are in the {player.room.room_name} room \n")
+    print(f"{current_room.room_description}\n\n")
+    move = input(
+        'Choose a direction to move. You can choose n,s,e,w or q if you want to quit: ')
+
+    if move == 'n':
+        if current_room.n_to is not None:
+            player.room = current_room.n_to
+            print(f"\nYou have gone north and")
+        else:
+            print("\n*** It seems like you can't go that way ***\n")
+    elif move == 's':
+        if current_room.s_to is not None:
+            player.room = current_room.s_to
+            print(f"\nYou have gone south and")
+        else:
+            print("\n*** It seems like you can't go that way ***\n")
+    elif move == 'e':
+        if current_room.e_to is not None:
+            player.room = current_room.e_to
+            print(f"\nYou have gone east and")
+        else:
+            print("\n*** It seems like you can't go that way ***\n")
+    elif move == 'w':
+        if current_room.w_to is not None:
+            player.room = current_room.w_to
+            print(f"\nYou have gone west and")
+        else:
+            print("\n*** It seems like you can't go that way ***\n")
+    elif move == 'q':
+        exit()
+    else:
+        print('\n*** Enter a valid direction or you will be stuck in this room forever!! ***\n')
+
