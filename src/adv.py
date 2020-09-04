@@ -1,11 +1,12 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", Item('sword', 'cuts through anything')),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -35,6 +36,7 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 print(type(room))
+
 #
 # Main
 #
@@ -43,6 +45,9 @@ name = input("\nPlayer Name:")
 # Make a new player object that is currently in the 'outside' room.
 new_player = Player(name, room['outside'])
 
+print(room['outside'].__dict__)
+print(room['outside'].items)
+# print()
 # Write a loop that:
 user_is_playing = True     
 
@@ -57,7 +62,7 @@ while user_is_playing:
     print(f'{new_player.location.description}\n')
 
     # * Waits for user input and decides what to do.
-    direction = input("which direction do you want to go?")
+    direction = input(f"Which direction do you want to go {new_player.name}?")
 
     # quit the game if direction is q
     if direction == 'q':
