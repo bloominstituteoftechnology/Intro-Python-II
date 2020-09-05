@@ -4,6 +4,7 @@
 class Player():
     def __init__(self, room):
         self.room = room
+        self.items = []
         
     def __str__(self):
         return f"Room: {self.room.name}\nDesc: {self.room.description}"
@@ -34,3 +35,6 @@ class Player():
         else:
             print(f"[Error] Unexpected Input: {mov}")
             print("Expected: n, e, s, w, q")
+
+    def pickUpItem(self, item):
+        self.items.append(item)

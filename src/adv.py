@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,6 +35,11 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+# Add Items
+room['outside'].addItem(Item('Sword', 'used to slice up enemies'))
+room['foyer'].addItem(Item('Bow', 'used to shoot enemies from afar'))
+room['treasure'].addItem(Item('Gold Coin', 'some loot left behind'))
 
 # print('outside south:', room['outside'].n_to) # NOTE Valid
 # print('outside south:', room['outside'].s_to) # NOTE Will give error
