@@ -3,9 +3,13 @@
 
 class Room():
     def __init__(self, name, description):
-        self.name = name.replace(' ', '_')  # One 'word' names
+        self.name = name
         self.description = description
         self.items = []
-    
-    def addItem(self, item):
-        self.items.append(item)
+
+    def __str__(self):
+        itemsString = ""
+        for item in self.items:
+            itemsString += f"({item.name} - {item.description}), "
+
+        return f"Room: {self.name}\nDesc: {self.description}\nItems: {itemsString[:-2]}"

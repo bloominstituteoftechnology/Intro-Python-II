@@ -5,9 +5,6 @@ class Player():
     def __init__(self, room):
         self.room = room
         self.items = []
-        
-    def __str__(self):
-        return f"Room: {self.room.name}\nDesc: {self.room.description}"
 
     def changeRoom(self, mov):
         if mov == 'q':
@@ -33,8 +30,47 @@ class Player():
             else:
                 print("West is not a valid direction")
         else:
-            print(f"[Error] Unexpected Input: {mov}")
+            print("[Error] Unexpected Input:", mov)
             print("Expected: n, e, s, w, q")
 
-    def pickUpItem(self, item):
-        self.items.append(item)
+    def modifyItem(self, command):
+        args = command.split() # List containing take/drop and item name
+        if len(args) < 2:
+            print('[Error]: Unexpected Input:', command)
+        else:
+            modifier = args[0]
+            itemname = ""
+            # Full itemname if spaces are included eg 'Gold Coin' input
+            # NOTE Needs to be fixed
+            if len(args) > 2:
+                for arg in args:
+                    itemname += f"{arg}"
+            else:
+                itemname = args[1]
+            # Check item exists in room
+            item = None
+            for i in self.room.items:
+                if i.name == itemname:
+                    item = i
+                    break
+            if item == None:
+                # Check item exists on player
+                for i in self.items:
+                    if i.name == itemname:
+                        item = i
+            # If item doesn't exist, print error
+            if item == None:
+                print(f"[Error]: Could not find item named \"{itemname}\"")
+                return
+                
+            # Check modifier
+            if modifier == 'take':
+                self.room.items.remove(item)
+                self.items.append(item)
+                print('You picked up the', item.name)
+            elif modifier == 'drop':
+                self.items.remove(item)
+                self.room.items.append(item)
+                print('You dropped the', item.name)
+            else:
+                print(f'[Error]: invalid modifier {modifier}, use take/drop.')

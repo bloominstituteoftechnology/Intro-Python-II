@@ -37,9 +37,9 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Add Items
-room['outside'].addItem(Item('Sword', 'used to slice up enemies'))
-room['foyer'].addItem(Item('Bow', 'used to shoot enemies from afar'))
-room['treasure'].addItem(Item('Gold Coin', 'some loot left behind'))
+room['outside'].items.append(Item('Sword', 'used to slice up enemies'))
+room['foyer'].items.append(Item('Bow', 'used to shoot enemies from afar'))
+room['treasure'].items.append(Item('Gold Coin', 'some loot left behind'))
 
 # print('outside south:', room['outside'].n_to) # NOTE Valid
 # print('outside south:', room['outside'].s_to) # NOTE Will give error
@@ -62,7 +62,10 @@ player = Player(room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-
 while 1:
-    print(player)
-    player.changeRoom(input())
+    print(player.room)
+    command = input()
+    if command.find(' ') != -1:
+        player.modifyItem(command)
+    else:
+        player.changeRoom(command)
