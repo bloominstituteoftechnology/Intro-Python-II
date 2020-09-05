@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -23,6 +25,7 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
+# NOTE How is n_to, s_to, e_to, w_to valid if not a member of Room Class?
 
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
@@ -33,11 +36,21 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add Items
+room['outside'].items.append(Item('Sword', 'used to slice up enemies'))
+room['foyer'].items.append(Item('Bow', 'used to shoot enemies from afar'))
+room['treasure'].items.append(Item('Gold Coin', 'some loot left behind'))
+
+# print('outside south:', room['outside'].n_to) # NOTE Valid
+# print('outside south:', room['outside'].s_to) # NOTE Will give error
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+player = Player(room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +62,17 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+print(player.room)
+# Used to not spam the prompt in terminal unless you actually change rooms
+lastRoom = player.room
+
+# Game loop
+while 1:
+    command = input()
+    if command.find(' ') != -1:
+        player.modifyItem(command)
+    else:
+        player.changeRoom(command)
+        if lastRoom != player.room:
+            print(player.room)
+        lastRoom = player.room
