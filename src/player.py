@@ -9,6 +9,10 @@ class Player():
     def changeRoom(self, mov):
         if mov == 'q':
             exit()
+        elif mov == 'i':
+            print("Inventory: ")
+            for item in self.items:
+                print(f"\t{item.name} - {item.description}")
         elif mov == 'n':
             if hasattr(self.room, 'n_to'):
                 self.room = self.room.n_to
@@ -31,7 +35,7 @@ class Player():
                 print("West is not a valid direction")
         else:
             print("[Error] Unexpected Input:", mov)
-            print("Expected: n, e, s, w, q")
+            print("Expected: n, e, s, w, i, q")
 
     def modifyItem(self, command):
         args = command.split() # List containing take/drop and item name
@@ -43,8 +47,9 @@ class Player():
             # Full itemname if spaces are included eg 'Gold Coin' input
             # NOTE Needs to be fixed
             if len(args) > 2:
-                for arg in args:
-                    itemname += f"{arg}"
+                for arg in args[1:]:
+                    itemname += f"{arg} "
+                itemname = itemname[:-1]
             else:
                 itemname = args[1]
             # Check item exists in room
@@ -64,7 +69,7 @@ class Player():
                 return
                 
             # Check modifier
-            if modifier == 'take':
+            if modifier == 'take' or modifier == 'get' or modifier == 'grab':
                 self.room.items.remove(item)
                 self.items.append(item)
                 print('You picked up the', item.name)
