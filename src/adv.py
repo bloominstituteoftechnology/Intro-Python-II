@@ -62,10 +62,17 @@ player = Player(room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+print(player.room)
+# Used to not spam the prompt in terminal unless you actually change rooms
+lastRoom = player.room
+
+# Game loop
 while 1:
-    print(player.room)
     command = input()
     if command.find(' ') != -1:
         player.modifyItem(command)
     else:
         player.changeRoom(command)
+        if lastRoom != player.room:
+            print(player.room)
+        lastRoom = player.room
