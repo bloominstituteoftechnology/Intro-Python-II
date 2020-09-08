@@ -39,7 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player('Adam', 'outside')
+player = Player('Adam', room['outside'])
 
 # Write a loop that:
 #
@@ -54,7 +54,39 @@ player = Player('Adam', 'outside')
 selection = 0
 
 while selection != 'q':
-    print(f'\n*****\nLocation: {player.current_room}\n')
-    print(f'Description: {room[player.current_room]}\n*****')
+    print(f'\n*****\nLocation: {player.current_room.name}\n')
+    print(f'Description: {player.current_room.description}\n*****')
     
-    input("\nPlease enter 'n', 's', 'e', or 'w'\n(or 'q' to quit):")
+    selection = input("\nEnter 'n', 's', 'e', or 'w' to move\nor 'q' to quit: ")
+    
+    if selection == 'n':
+        try:
+            player.current_room = player.current_room.n_to
+            print('\n...Moving north...')
+        except AttributeError:
+            print('\nCannot travel north from here')
+    
+    elif selection == 's':
+        try:
+            player.current_room = player.current_room.s_to
+            print('\n...Moving south...')
+        except AttributeError:
+            print('\nCannot travel south from here')
+    
+    elif selection == 'e':
+        try:
+            player.current_room = player.current_room.e_to
+            print('\n...Moving east...')
+        except AttributeError:
+            print('\nCannot travel east from here')
+    
+    elif selection == 'w':
+        try:
+            player.current_room = player.current_room.w_to
+            print('\n...Moving west...')
+        except AttributeError:
+            print('\nCannot travel west from here')
+            
+    else:
+        print('\nPlease enter a valid selection')
+    
