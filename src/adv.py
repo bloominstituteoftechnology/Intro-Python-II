@@ -36,8 +36,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Add items to rooms
-room['foyer'].addItem(Item("Sword", "An old rusty blade, but still dangerous in the right hands."))
-room['overlook'].addItem(Item("Coin", "Looks like a remnant of a great treasure."))
+room['foyer'].add_item(Item("Sword", "An old rusty blade, but still dangerous in the right hands."))
+room['overlook'].add_item(Item("Coin", "Looks like a remnant of a great treasure."))
 
 # Make a new player object that is currently in the 'outside' room.
 print("WELCOME TO PYTHON ADVENTURE GAME!!!")
@@ -68,6 +68,7 @@ while True:
         if pickup_item_input == "y":
             item = player.current_room.items[0]
             player.take_item(item.name, player.current_room.name)
+            player.current_room.remove_item(item)
 
     selected_direction = input("Choose a direction --> [n, s, e, w]").lower()
 
