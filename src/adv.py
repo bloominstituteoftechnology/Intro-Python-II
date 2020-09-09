@@ -71,12 +71,12 @@ while True:
             player.take_item(item.name, player.current_room.name)
             player.current_room.remove_item(item)
 
-    selected_direction = input("Choose a direction --> [n, s, e, w]").lower()
+    selected_direction = input("Choose an action:\n[n, s, e, w] = Move\n[i] = Show Inventory\n[drop *item] = Drop Item\n--> ").lower()
 
     if selected_direction == "q":
         print("\n--- Thank you for playing the game ---")
         break
-    elif selected_direction == "show inventory":
+    elif selected_direction == "i":
       player.show_inventory()
     elif selected_direction in possible_directions:
         try:
@@ -85,4 +85,4 @@ while True:
             print("--- You bump into a wall ---\n")
 
     else:
-        print("\n--- Error: Please select a valid direction ---\n")
+        print("\n--- Error: Please select a valid action ---\n")
