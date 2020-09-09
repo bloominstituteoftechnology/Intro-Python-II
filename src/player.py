@@ -15,7 +15,7 @@ class Player:
 
   def take_item(self, item, room):
     self.items.append(item)
-    print(f"Picked up {item} in {room}")
+    print(f"\n*Picked up {item} in {room}")
 
   def show_inventory(self):
     print("\nInventory:")
