@@ -15,5 +15,4 @@ class Player:
 
   def take_item(self, item, room):
     self.items.append(item)
-    # TODO: take away item from room
     print(f"Picked up {item} in {room}")
