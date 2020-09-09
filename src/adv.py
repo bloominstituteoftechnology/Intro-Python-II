@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -49,3 +50,50 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+new_player = Player("Ashley", room['outside'])
+
+def game_input(command, player):
+    end_game = False
+    if command == 'n':
+        if player.current_room.n_to != None:
+            player.current_room = player.current_room.n_to
+            display_room_description(player.current_room)
+        else:
+            print("Sorry, can't go this way!")
+    elif command == 's':
+        if player.current_room.s_to != None:
+            player.current_room = player.current_room.s_to
+            display_room_description(player.current_room)
+        else:
+            print("Nope, try again!")
+    elif command == 'e':
+        if player.current_room.e_to != None:
+            player.current_room = player.current_room.e_to
+            display_room_description(player.current_room)
+        else:
+            print("Are you lost? This isn't the way")
+    elif command == 'w':
+        if player.current_room.w_to != None:
+            player.current_room = player.current_room.w_to
+            display_room_description(player.current_room)
+        else:
+            print("Made a wrong turn, try again!")
+    elif command == 'q':
+        end_game = True
+    else:
+        print('Please enter a valid direction')
+    return end_game
+
+
+def display_room_description(room):
+    print(f'You are in {room.name}')
+    print(room.description)
+end_game = False
+
+display_room_description(new_player.current_room)
+
+while end_game == False:
+    end_game = game_input(str(input()), new_player)
+
+print('Thanks for playing!')
