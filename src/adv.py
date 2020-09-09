@@ -37,8 +37,7 @@ room['treasure'].s_to = room['narrow']
 
 # Add items to rooms
 room['foyer'].add_item(Item("Sword", "An old rusty blade, but still dangerous in the right hands."))
-room['overlook'].add_item(Item("Coin", "Looks like a remnant of a great treasure."))
-room['treasure'].add_item(Item("Empty_Chest", ""))
+room['treasure'].add_item(Item("Coin", "Looks like a remnant of a great treasure."))
 
 # Make a new player object that is currently in the 'outside' room.
 print("WELCOME TO PYTHON ADVENTURE GAME!!!")
@@ -60,23 +59,24 @@ print(f"\n---------- Welcome {player.name}! Get ready to start your adventure! -
 possible_directions = ["n", "s", "e", "w"]
 
 while True:
+    print("-------------------------------------------------------")
     print(f"Location: \033[1m{player.current_room.name}\033[0m")
     print(player.current_room.description)
 
     if len(player.current_room.items) > 0:
         print(f"*You found a {player.current_room.items[0].name}!*")
-        pickup_item_input = input("Pick up item? --> 'y/n'").lower()
+        pickup_item_input = input("Pick up item? [y/n]\n--> ").lower()
         if pickup_item_input == "y":
             item = player.current_room.items[0]
             player.take_item(item.name, player.current_room.name)
             player.current_room.remove_item(item)
 
     selected_direction = input("""
-    Choose an action:
+  Choose an action:
     Move           = [n, s, e, w]
     Show Inventory = [i]
     Drop Item      = [drop *item]
-    --> """).lower()
+  --> """).lower()
 
     if selected_direction == "q":
         print("\n--- Thank you for playing the game ---")
