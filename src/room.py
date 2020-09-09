@@ -7,17 +7,12 @@ class Room:
 
   def get_direction(self, direction):
     if direction == "n":
-      print("Moving North")
       return self.n_to
     elif direction == "s":
-      print("Moving South")
       return self.s_to
     elif direction == "e":
-      print("Moving East")
       return self.e_to
     elif direction == "w":
-      print("Moving West")
       return self.w_to
     else:
-      print("Invalid Direction")
       return None

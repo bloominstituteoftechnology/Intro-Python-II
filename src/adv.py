@@ -40,9 +40,10 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+print("WELCOME TO PYTHON ADVENTURE GAME!!!")
 player_name = input("Please enter your name --> ")
-player = Player(player_name, Room("outside", "In the outside room"))
-print(f"Welcome {player.name}! Get ready to start your adventure!")
+player = Player(player_name, room["outside"])
+print(f"---------- Welcome {player.name}! Get ready to start your adventure! ----------\n*press 'q' to quit")
 
 # Write a loop that:
 #
@@ -58,12 +59,18 @@ print(f"Welcome {player.name}! Get ready to start your adventure!")
 possible_directions = ["n", "s", "e", "w"]
 
 while True:
-    print(player.current_room.name)
+    print(f"Location: {player.current_room.name}")
     print(player.current_room.description)
 
-    selected_direction = input("Choose a direction --> [n, s, e, w]")
+    selected_direction = input("Choose a direction --> [n, s, e, w]").lower()
 
-    if selected_direction in possible_directions:
-        player.move(selected_direction)
+    if selected_direction == "q":
+        print("--- Thank you for playing the game ---")
+        break
+    elif selected_direction in possible_directions:
+        try:
+            player.move(selected_direction)
+        except:
+            print("--- You bumped into a wall ---")
     else:
-        print("--- Error --- Please select a valid direction")
+        print("--- Error: Please select a valid direction ---")
