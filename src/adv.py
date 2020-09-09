@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,7 +40,10 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 start_point = room['outside']
 
-NewPlayer = Player(input("Enter your name: "), start_point)
+NewPlayer = input("Enter your name: ")
+player = Player(NewPlayer)
+
+print(player, start_point)
 
 # Write a loop that:
 #
@@ -49,13 +53,15 @@ NewPlayer = Player(input("Enter your name: "), start_point)
 
 direction = ["n", "s", "e", "w"]
 
-while True:
-    direction_input = input("\n Where too, player? \n n for north \n s for south \n e for east \n w for west \n q to quit game")
+def moving()
 
-    print(direction_input)
+# while True:
+#     direction_input = input("\n Where too, player? \n n for north \n s for south \n e for east \n w for west \n q to quit game")
 
-    if direction_input[0] in direction:
-        try:
+#     print(direction_input)
+
+#     if direction_input[0] in direction:
+#         try:
 
 
 
