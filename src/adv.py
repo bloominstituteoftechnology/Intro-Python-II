@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -51,6 +52,12 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+outside = room['outside']
+player = Player('koo', outside)
+print(player)
+print(room['outside'])
+# print(room['outside'].n_to)
 
 # Write a loop that:
 #
