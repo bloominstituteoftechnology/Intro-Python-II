@@ -4,6 +4,7 @@ class Player:
   def __init__(self, name, current_room):
     self.name = name
     self.current_room = current_room
+    self.items = []
 
   def move(self, direction):
     next_room = self.current_room.get_direction(direction)
@@ -11,4 +12,8 @@ class Player:
       self.current_room = next_room
     else:
       print("You bumped into a wall")
-      
+
+  def take_item(self, item, room):
+    self.items.append(item)
+    # TODO: take away item from room
+    print(f"Picked up {item} in {room}")
