@@ -23,6 +23,17 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
+"""
+|---------------------|
+|overlook -  treasure |
+|  |            |     |
+|foyer    -   narrow  |
+|  |                  |
+|outside              |
+|---------------------|
+
+"""
+
 
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
@@ -32,6 +43,8 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+
 
 #
 # Main
