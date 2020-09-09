@@ -59,18 +59,18 @@ print(f"---------- Welcome {player.name}! Get ready to start your adventure! ---
 possible_directions = ["n", "s", "e", "w"]
 
 while True:
-    print(f"Location: {player.current_room.name}")
+    print(f"Location: \033[1m{player.current_room.name}\033[0m")
     print(player.current_room.description)
 
     selected_direction = input("Choose a direction --> [n, s, e, w]").lower()
 
     if selected_direction == "q":
-        print("--- Thank you for playing the game ---")
+        print("\n--- Thank you for playing the game ---")
         break
     elif selected_direction in possible_directions:
         try:
             player.move(selected_direction)
         except:
-            print("--- You bumped into a wall ---")
+            print("--- You bump into a wall ---\n")
     else:
-        print("--- Error: Please select a valid direction ---")
+        print("\n--- Error: Please select a valid direction ---\n")
