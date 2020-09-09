@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -40,7 +41,6 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 newPlayer = Player("Claudia", room["outside"])
-print(newPlayer)
 
 # Write a loop that:
 #
@@ -56,13 +56,16 @@ print(newPlayer)
 directions = ['n', 's', 'w', 'e']
 
 while True:
-    print(f"{newPlayer.name} you are currently in {newPlayer.current_room}")
-    print(f"{newPlayer.current_room.description}")
-    selection = input("Enter the direction you want to go in i.e 'n', 's', 'e', 'w' :\n")
+    print(f"{newPlayer.name} you are currently in {newPlayer.current_room}\n")
+    wrappedDescription = textwrap.wrap(newPlayer.current_room.description)
+    for line in wrappedDescription:
+        print(line)
+
+    selection = input("Enter the direction you want to go in i.e 'n', 's', 'e', 'w' :  ")
     if selection in directions:
-        print(f"You entered {selection}")
+        newPlayer.move(selection)
     elif selection == 'q':
         print("Thanks for playing")
-        break;
+        break
     else:
         print("You didn't enter a proper direction. i.e 'n', 's', 'e', 'w' ")
