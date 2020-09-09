@@ -61,11 +61,41 @@ while True:
     for line in wrappedDescription:
         print(line)
 
-    selection = input("Enter the direction you want to go in i.e 'n', 's', 'e', 'w' :  ")
-    if selection in directions:
-        newPlayer.move(selection)
-    elif selection == 'q':
+    direction = input("Enter the direction you want to go in i.e 'n', 's', 'e', 'w' :  ")
+
+    currentLocation = newPlayer.current_room
+
+    if direction == 'n':
+        if currentLocation.n_to != None:
+            print("You moved north\n")
+            newPlayer.current_room = currentLocation.n_to
+        else :
+            print("There is no room in that direction, try another one.\n")  
+
+    elif direction == 's':
+        if currentLocation.s_to != None:
+            print("You moved south\n")
+            newPlayer.current_room = currentLocation.s_to
+        else :
+            print("There is no room in that direction, try another one.\n")
+
+    elif direction == 'e':
+        if currentLocation.e_to != None:
+            print("You moved east\n")
+            newPlayer.current_room = currentLocation.e_to
+        else :
+            print("There is no room in that direction, try another one.\n")
+
+    elif direction == 'w':
+        if currentLocation.w_to != None:
+            print("You moved west\n")
+            newPlayer.current_room = currentLocation.w_to
+        else :
+            print("There is no room in that direction, try another one.\n")
+
+    elif direction == 'q':
         print("Thanks for playing")
         break
+    
     else:
         print("You didn't enter a proper direction. i.e 'n', 's', 'e', 'w' ")
