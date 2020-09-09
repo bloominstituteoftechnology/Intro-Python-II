@@ -19,6 +19,8 @@ class Player:
 
   def show_inventory(self):
     print("\nInventory:")
+    if len(self.items) == 0:
+      print("empty")
     for item in self.items:
       print(f"  {item}")
     print("")
