@@ -8,4 +8,4 @@ class Room:
         # The room should also have n_to, s_to, e_to, and w_to attributes which point to the room in that respective direction.
 
     def __str__(self):
-        return f"This is {self.name}"
+        return f"{self.name}"
