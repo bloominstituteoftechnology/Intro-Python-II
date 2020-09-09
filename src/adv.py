@@ -71,7 +71,12 @@ while True:
             player.take_item(item.name, player.current_room.name)
             player.current_room.remove_item(item)
 
-    selected_direction = input("Choose an action:\n[n, s, e, w] = Move\n[i] = Show Inventory\n[drop *item] = Drop Item\n--> ").lower()
+    selected_direction = input("""
+    Choose an action:
+    Move           = [n, s, e, w]
+    Show Inventory = [i]
+    Drop Item      = [drop *item]
+    --> """).lower()
 
     if selected_direction == "q":
         print("\n--- Thank you for playing the game ---")
