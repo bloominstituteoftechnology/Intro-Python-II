@@ -1,4 +1,3 @@
-
 from room import Room
 from player import Player
 from item import Item
@@ -67,7 +66,8 @@ while True:
         print(f"*You found a {player.current_room.items[0].name}!*")
         pickup_item_input = input("Pick up item? --> 'y/n'").lower()
         if pickup_item_input == "y":
-            print(f"Picked up item in {player.current_room.name}")
+            item = player.current_room.items[0]
+            player.take_item(item.name, player.current_room.name)
 
     selected_direction = input("Choose a direction --> [n, s, e, w]").lower()
 
