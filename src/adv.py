@@ -38,6 +38,7 @@ room['treasure'].s_to = room['narrow']
 # Add items to rooms
 room['foyer'].add_item(Item("Sword", "An old rusty blade, but still dangerous in the right hands."))
 room['overlook'].add_item(Item("Coin", "Looks like a remnant of a great treasure."))
+room['treasure'].add_item(Item("Empty_Chest", ""))
 
 # Make a new player object that is currently in the 'outside' room.
 print("WELCOME TO PYTHON ADVENTURE GAME!!!")
@@ -75,6 +76,8 @@ while True:
     if selected_direction == "q":
         print("\n--- Thank you for playing the game ---")
         break
+    elif selected_direction == "show inventory":
+      player.show_inventory()
     elif selected_direction in possible_directions:
         try:
             player.move(selected_direction)
