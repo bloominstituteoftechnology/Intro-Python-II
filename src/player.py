@@ -5,4 +5,10 @@ class Player:
         self.name = name
         self.current_room = current_room
 
-7
+    def __str__(self):
+        return f"Name: {self.name}\nCurrent room: {self.current_room}"
+
+
+if __name__ == "__main__":
+    a = Player("Bob", "Bob's Room") # __repr__ works
+    print(a)
