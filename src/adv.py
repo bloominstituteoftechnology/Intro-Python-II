@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -23,7 +25,7 @@ earlier adventurers. The only exit is to the south."""),
 
 # Declare all the items
 
-items = {
+item = {
     'sword':    Item("sword", """a close range weapon used to defeat enemies, cut tall grass and break open clay pots"""),
     'rupee':    Item("rupee", """this is the primary local unit of currency and can be used to purchase items from the local store"""),
     'key':      Item("key", """this key looks like it would fit into a lock on a treasure chest."""),
@@ -45,10 +47,10 @@ room['treasure'].s_to = room['narrow']
 
 # Add items to room:
 
-room['outside'].items = [item['sword']]
-room['foyer'].items = [item['ruppee'], item['potion']]
-room['overlook'].items = [item['hookshot']]
-room['treasure'].items = [item['key']]
+room['outside'].item = [item['sword']]
+room['foyer'].item = [item['ruppee'], item['potion']]
+room['overlook'].item = [item['hookshot']]
+room['treasure'].item = [item['key']]
 
 #
 # Main
