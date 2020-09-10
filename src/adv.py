@@ -76,6 +76,8 @@ def text_adventure_game():
         elif selection == 'q':
             print("Game Over!")
             active_game = False
+        else:
+            print("There is nothing to explore in that direction!")
 
 text_adventure_game()
 
