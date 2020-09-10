@@ -9,3 +9,7 @@ class Player:
 
     def __str__(self):
         return f'{self.name} is at the {self.current_room}'
+
+    def move(self, direction):
+        self.current_room = self.current_room.__call__(direction)
+        return  self.current_room

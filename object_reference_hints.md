@@ -53,3 +53,5 @@ room['foyer'] -> Room("Foyer")
 ```
 
 _Assigning doesn't copy the object. It just makes another reference to the same object._
+
+https://raw.githubusercontent.com/asweigart/textadventuredemo/master/snippets/movement.py

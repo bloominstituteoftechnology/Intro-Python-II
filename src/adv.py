@@ -23,7 +23,7 @@ player = Player(name = player_name, current_room = room['outside'])
 # If the user enters "q", quit the game.
 
 #Print current room name
-print(f"Welcome {player.name}! You are currently in the room {player.current_room}")
+print(f'Welcome {player.name}! You are currently in the room {player.current_room}')
 
 while True:
 
@@ -31,7 +31,7 @@ while True:
     #Selection has to be an input
     selection = input("""Choose a direction:
     North(n), South(s), East(e), West(w),
-    or Quit(q) """) 
+    or Quit(q) """)
 
     try:
         #Have to cast input as a string
@@ -43,9 +43,9 @@ while True:
 
         elif selection in ('n','s','e','w'):
             #Need to think through this part
-            #print(f"You are entering {player.current_room}")
 
-            print(f"{player.current_room}")
+            player.move(selection)
+            print(f"{player.name} {player.current_room}")
 
         else:
             print("Please choose a valid direction.")
