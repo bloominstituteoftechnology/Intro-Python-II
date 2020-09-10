@@ -88,21 +88,30 @@ while True:
   Choose an action:
     Move           = [n, s, e, w]
     Show Inventory = [i]
-    Grab Item      = [grab *item]
+    Take Item      = [take *item]
     Drop Item      = [drop *item]
   --> """).lower()
+  
+    split_cmd = selected_direction.split()
 
-    if selected_direction == "q":
-        print("\n--- Thank you for playing the game ---")
-        break
-    elif selected_direction == "i":
-      player.show_inventory()
-    elif selected_direction in possible_directions:
-        try:
-            player.move(selected_direction)
-        except:
-            print("--- You bump into a wall ---\n")
+    if len(split_cmd) == 1:
 
-    else:
-        print("\n--- Error: Please select a valid action ---\n")
+      if selected_direction == "q":
+          print("\n--- Thank you for playing the game ---")
+          break
+      elif selected_direction == "i":
+        player.show_inventory()
+      elif selected_direction in possible_directions:
+          try:
+              player.move(selected_direction)
+          except:
+              print("--- You bump into a wall ---\n")
+      else:
+          print("\n--- Error: Please select a valid action ---\n")
+    
+    elif len(split_cmd) == 2:
+      verb = split_cmd[0]
+      noun = split_cmd[1]
+
+      #take/drop logic
 
