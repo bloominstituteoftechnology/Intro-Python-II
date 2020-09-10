@@ -54,8 +54,11 @@ directions = ['n', 's', 'e', 'w']
 player = Player(room['outside'])
 
 while True:
+    print("\n")
     print(player.current_room.name)
+    print("\n")
     print(player.current_room.description)
+    print("\n")
     
     user_input = input('Where would you like to go? >>>')
 
