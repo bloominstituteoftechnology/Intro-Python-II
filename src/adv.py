@@ -110,12 +110,17 @@ while True:
           print("\n--- Error: Please select a valid action ---\n")
     
     elif len(split_cmd) == 2:
-      command = (split_cmd[0]).lower()
-      item = split_cmd[1]
+      command = (split_cmd[0])
+      item_cmd = (split_cmd[1]).title()
 
       #take/drop logic
       if command == "take":
-        print("take something")
+        for item in player.current_room.items:
+          if item.name == item_cmd:
+            player.take_item(item, player.current_room.name)
+            player.current_room.remove_item(item)
+          else:
+            print(f"{item_cmd} not in here")
       elif command == "drop":
         print("drop something")
       else:
