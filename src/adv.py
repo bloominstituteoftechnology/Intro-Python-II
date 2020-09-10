@@ -57,8 +57,22 @@ def text_adventure_game():
         player_one.room.print_name()
         player_one.room.print_description()
         selection = input("What would you like to do? Or press 'q' to quit ")
-        if selection == 'n':
+        if player_one.room == room['outside'] and selection == 'n':
             player_one.room = room['foyer']
+        elif player_one.room == room['foyer'] and selection == 's':
+            player_one.room = room['outside']
+        elif player_one.room == room['foyer'] and selection == 'n':
+            player_one.room = room['overlook']
+        elif player_one.room == room['foyer'] and selection == 'e':
+            player_one.room = room['narrow']
+        elif player_one.room == room['overlook'] and selection == 's':
+            player_one.room = room['foyer']
+        elif player_one.room == room['narrow'] and selection == 'w':
+            player_one.room = room['foyer']
+        elif player_one.room == room['narrow'] and selection == 'n':
+            player_one.room = room['treasure']
+        elif player_one.room == room['treasure'] and selection == 's':
+            player_one.room = room['narrow']                            
         elif selection == 'q':
             print("Game Over!")
             active_game = False
