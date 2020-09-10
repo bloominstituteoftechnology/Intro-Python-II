@@ -53,10 +53,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-outside = room['outside']
-player = Player('koo', outside)
-print(player)
-print(room['outside'])
+
 # print(room['outside'].n_to)
 
 # Write a loop that:
@@ -69,3 +66,23 @@ print(room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+current_room = room['outside']
+player = Player('student', current_room)
+user = ''
+i = 0
+print('\n==== WELCOME TO THE ADVENTURE ====', '\n'*3)
+
+while not user == 'q':
+    print(f'\nPlayer currently in \n{player.current_room}\n')
+    # print(player)
+    print(f'Keyboard Hit#: {i}\n')
+    i += 1
+
+    user = input("[n] north  [e] east   [s] south [w] west  [q] Quit\n")
+
+    print('\n   ...Loading\n   Please Wait\n')
+    player.move(user)
+
+print('\n'*3, '==== END OF THE ADVENTURE ====\n')
+print('Thanks for enjoying the adventure!\nSee you next time!\n')
