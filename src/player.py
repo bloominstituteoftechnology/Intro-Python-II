@@ -16,17 +16,20 @@ class Player:
 
   def take_item(self, item, room):
     self.items.append(item)
-    print(f"\n*Picked up {item.name} in {room}.")
+    print("-------------------------------------------------------")
+    print(f"*Picked up {item.name} in {room}.")
 
   def drop_item(self, item):
     self.items.remove(item)
     self.current_room.add_item(item)
+    print("-------------------------------------------------------")
     print(f"*Dropped {item.name}.")
 
   def show_inventory(self):
-    print("\nInventory:")
+    print("-------------------------------------------------------")
+    print("Inventory:")
     if len(self.items) == 0:
       print("empty")
     for item in self.items:
       print(f"  {item.name}")
-    print("")
+    #print("")
