@@ -1,10 +1,11 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+"""North of you, the cave mount beckons"""),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -32,7 +33,7 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-
+room['overlook'].e_to = room['treasure']
 #
 # Main
 #
@@ -49,3 +50,41 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+directions = ['n', 's', 'e', 'w']
+
+player = Player("Fady", room['outside'])
+
+print(f"Game Instructions: q is to quit, directions are n, e, s, & w/")
+
+while True:
+
+
+    
+    print(player.current_room.name)
+    print(player.current_room.description)
+
+    user_input = input(f"{player.name} What direction would you like to go? >>>>>")
+
+    if user_input == 'n':
+        if player.current_room.n_to:
+            player.current_room = player.current_room.n_to
+        else:
+            print("There's nothing in that direction, try again!")
+    if user_input == 's':
+        if player.current_room.s_to:
+            player.current_room = player.current_room.s_to
+        else:
+            print("There's nothing in that direction, try again!")
+    if user_input == 'e':
+        if player.current_room.e_to:
+            player.current_room = player.current_room.e_to
+        else:
+            print("There's nothing in that direction, try again!")
+    if user_input == 'w':
+        if player.current_room.w_to:
+            player.current_room = player.current_room.w_to
+        else:
+            print("There's nothing in that direction, try again!")
+
+    if user_input == 'q':
+        exit(0)
