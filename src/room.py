@@ -10,3 +10,6 @@ class Room:
 
     def print_description(self):
         print(f'{self.description}')
+
+    def outside_routes(self):
+        return()

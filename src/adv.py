@@ -39,7 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player_one = Player('Zelda', room['foyer'])
+player_one = Player('Zelda', room['outside'])
 
 # Write a loop that:
 #
@@ -51,14 +51,18 @@ player_one = Player('Zelda', room['foyer'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-active_game = True
-selection = "null"
-while active_game == True:
-    player_one.room.print_name()
-    player_one.room.print_description()
-    selection = input("What would you like to do? Or press 'q' to quit ")
-    if selection == 'q':
-        print("Game Over!")
-        break
+def text_adventure_game():
+    active_game = True
+    while active_game == True:
+        player_one.room.print_name()
+        player_one.room.print_description()
+        selection = input("What would you like to do? Or press 'q' to quit ")
+        if selection == 'n':
+            player_one.room = room['foyer']
+        elif selection == 'q':
+            print("Game Over!")
+            active_game = False
+
+text_adventure_game()
 
 
