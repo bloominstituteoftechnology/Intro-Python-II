@@ -21,7 +21,7 @@ class Player:
   def drop_item(self, item):
     self.items.remove(item)
     self.current_room.add_item(item)
-    print(f"Dropped {item.name}.")
+    print(f"*Dropped {item.name}.")
 
   def show_inventory(self):
     print("\nInventory:")
