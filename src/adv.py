@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player1 = Player(room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +51,28 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+playing = None
+menu = input(f'Welcome to Darkest Dungeons! To play press p to quit press q\n')
+if menu == 'q':
+    print('Thanks For Playing!')
+    playing = False
+elif menu == 'p':
+    print('\nPress n, s, e, w to go in any of the cardinal directions available in each room!')
+    playing = True
+while playing:
+    direction = input(f'\n{player1.currentRoom}choose a direction!\n')
+
+    if direction == 'n' and player1.currentRoom.n_to != None:
+        player1.currentRoom = player1.currentRoom.n_to
+    elif direction == 's' and player1.currentRoom.s_to != None:
+        player1.currentRoom = player1.currentRoom.s_to
+    elif direction == 'e' and player1.currentRoom.e_to != None:
+        player1.currentRoom = player1.currentRoom.e_to
+    elif direction == 'w' and player1.currentRoom.w_to != None:
+        player1.currentRoom = player1.currentRoom.w_to
+    elif direction == 'q':
+        print('\nThanks For Playing')
+        playing = False
+    else:
+        print('\nPlease choose a valid direction!')
