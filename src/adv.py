@@ -57,24 +57,38 @@ print(f"\n---------- Welcome {player.name}! Get ready to start your adventure! -
 # If the user enters "q", quit the game.
 
 possible_directions = ["n", "s", "e", "w"]
+item_action_done = False
 
+# LOGIC FUNCTIONS
+def check_items_in_room():
+  items_in_room = ""
+  if len(player.current_room.items) > 0:
+    print(f"\nItems in room:")
+    for item in player.current_room.items:
+      items_in_room += item.name
+    print(items_in_room)
+        #print(f"*You found a {player.current_room.items[0].name}!*")
+        #pickup_item_input = input("Pick up item? [y/n]\n--> ").lower()
+        #if pickup_item_input == "y":
+            #item = player.current_room.items[0]
+            #player.take_item(item.name, player.current_room.name)
+            #player.current_room.remove_item(item)
+        #elif pickup_item_input != "n":
+            #print("\n--- Error: Please select a valid action ---\n")
+
+# GAME LOOP
 while True:
     print("-------------------------------------------------------")
     print(f"Location: \033[1m{player.current_room.name}\033[0m")
     print(player.current_room.description)
 
-    if len(player.current_room.items) > 0:
-        print(f"*You found a {player.current_room.items[0].name}!*")
-        pickup_item_input = input("Pick up item? [y/n]\n--> ").lower()
-        if pickup_item_input == "y":
-            item = player.current_room.items[0]
-            player.take_item(item.name, player.current_room.name)
-            player.current_room.remove_item(item)
+    check_items_in_room()
 
     selected_direction = input("""
   Choose an action:
     Move           = [n, s, e, w]
     Show Inventory = [i]
+    Grab Item      = [grab *item]
     Drop Item      = [drop *item]
   --> """).lower()
 
@@ -91,3 +105,4 @@ while True:
 
     else:
         print("\n--- Error: Please select a valid action ---\n")
+
