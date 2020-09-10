@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -38,8 +38,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
-new_player = Player('outside')
+user_name = input("What is your name, Quester?")
+new_player = Player(user_name, 'outside')
 
 # Write a loop that:
 #
@@ -53,8 +53,8 @@ new_player = Player('outside')
 # If the user enters "q", quit the game.
 
 
-while not user == "q":
-    print(new_player.room)
+# while not user == "q":
+#     print(new_player.room)
 
 
 
