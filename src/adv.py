@@ -63,10 +63,12 @@ item_action_done = False
 def check_items_in_room():
   items_in_room = ""
   if len(player.current_room.items) > 0:
-    print(f"\nItems in room:")
+    print("-------------------------------------------------------\n")
+    print(f"Items in room:")
     for item in player.current_room.items:
       items_in_room += f"{item.name}\n"
     print(items_in_room)
+    print("-------------------------------------------------------")
         #print(f"*You found a {player.current_room.items[0].name}!*")
         #pickup_item_input = input("Pick up item? [y/n]\n--> ").lower()
         #if pickup_item_input == "y":
@@ -105,7 +107,8 @@ while True:
           try:
               player.move(selected_direction)
           except:
-              print("--- You bump into a wall ---\n")
+              print("-------------------------------------------------------")
+              print("--- You bump into a wall ---")
       else:
           print("\n--- Error: Please select a valid action ---\n")
     
