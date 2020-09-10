@@ -65,7 +65,7 @@ def check_items_in_room():
   if len(player.current_room.items) > 0:
     print(f"\nItems in room:")
     for item in player.current_room.items:
-      items_in_room += item.name
+      items_in_room += f"{item.name}\n"
     print(items_in_room)
         #print(f"*You found a {player.current_room.items[0].name}!*")
         #pickup_item_input = input("Pick up item? [y/n]\n--> ").lower()
