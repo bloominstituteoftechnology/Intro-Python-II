@@ -1,4 +1,5 @@
 # Write a class to hold player information, e.g. what room they are in currently.
+from room import Room
 
 class Player:
   def __init__(self, name, current_room):
@@ -15,7 +16,7 @@ class Player:
 
   def take_item(self, item, room):
     self.items.append(item)
-    print(f"\n*Picked up {item} in {room}.")
+    print(f"\n*Picked up {item.name} in {room}.")
 
   def drop_item(self, item):
     self.items.remove(item)
@@ -27,5 +28,5 @@ class Player:
     if len(self.items) == 0:
       print("empty")
     for item in self.items:
-      print(f"  {item}")
+      print(f"  {item.name}")
     print("")
