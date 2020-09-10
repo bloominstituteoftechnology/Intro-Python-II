@@ -26,7 +26,7 @@ earlier adventurers. The only exit is to the south."""),
 # Declare all the items
 
 item = {
-    'sword':    Item("sword", """a close range weapon used to defeat enemies, cut tall grass, and break open clay pots"""),
+    'sword':    Item("sword", """a close range weapon used to defeat enemies, cut tall grass, and break open clay pots."""),
 
     'rupee':    Item("rupee", """this is the primary local unit of currency and can be used to purchase items from the local shops."""),
 
@@ -36,7 +36,7 @@ item = {
 
     'hookshot': Item("hookshot", """a spring-loaded, trigger-pulled hooks attached to lengthy chains. It can attack enemies at a distance,
         retrieve remote items, and attach onto certain surfaces
-        (like wood) to pull you accross large distances."""),
+        (like wood) to pull you accross large distances.""")
 }
 
 
