@@ -15,7 +15,7 @@ class Room:
 
 
     def __call__(self, direction):
-        print(f"Room.__call__ called! direction={direction}")
+        # print(f"Room.__call__ called! direction={direction}")
         self.direction_method = {
             "n": self.n_to,
             "s": self.s_to,

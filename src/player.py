@@ -11,5 +11,8 @@ class Player:
         return f'{self.name} is at the {self.current_room}'
 
     def move(self, direction):
-        self.current_room = self.current_room.__call__(direction)
-        return  self.current_room
+        if self.current_room.__call__(direction) == None:
+            print(f"You cannot go in that direction, you are staying in {self.current_room.name}")
+        else:
+            self.current_room = self.current_room.__call__(direction)
+            return  self.current_room
