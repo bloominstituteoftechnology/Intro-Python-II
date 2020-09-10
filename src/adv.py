@@ -38,8 +38,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-user_name = input("What is your name, Quester?")
-new_player = Player(user_name, 'outside')
+user_name = input("What is your name, Quester? ")
+new_player = Player(user_name, room['outside'])
 
 # Write a loop that:
 #
@@ -52,9 +52,33 @@ new_player = Player(user_name, 'outside')
 #
 # If the user enters "q", quit the game.
 
+user = True
+while not user == "q":
+    print(new_player)
 
-# while not user == "q":
-#     print(new_player.room)
+    user = input("Which direction would you like to go?  [n] North  [s] South  [e] East  [w] West   [q] Quit ")
+
+    if user == "n":
+        if new_player.current_room.n_to is not None:
+            new_player.current_room = new_player.current_room.n_to
+        else:
+            print(f"Movement not allowed, {new_player.name}!")
+    elif user == "s":
+        if new_player.current_room.s_to is not None:
+            new_player.current_room = new_player.current_room.s_to
+        else:
+            print(f"Movement not allowed, {new_player.name}!")
+    elif user == "e":
+        if new_player.current_room.e_to is not None:
+            new_player.current_room = new_player.current_room.e_to
+        else:
+            print(f"Movement not allowed, {new_player.name}!")
+    elif user == "w":
+        if new_player.current_room.w_to is not None:
+            new_player.current_room = new_player.current_room.w_to
+        else:
+            print(f"Movement not allowed, {new_player.name}!")
+
 
 
 
