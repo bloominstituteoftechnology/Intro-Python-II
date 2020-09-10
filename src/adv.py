@@ -14,9 +14,11 @@ room = {
 
     'narrow':   Room("Narrow Passage", "The narrow passage bends here from west to north. The smell of gold permeates the air."),
 
+    'throne':   Room("Throne Room", "The giant Ogre King stands ominously in the center of the Throne Room. The only way forward or back is to fight him"),
+
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure chamber! 
-Sadly, it has already been completely emptied by earlier adventurers. 
-The only exit is to the south."""),
+    Fill your pockets with all the gold they can carry and when you're ready, 
+    exit to the south."""),
 }
 
 
@@ -28,8 +30,9 @@ room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
 room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['narrow'].n_to = room['throne']
+room['throne'].n_to = room['treasure']
+room['treasure'].s_to = room['throne']
 
 #
 # Main
@@ -37,7 +40,7 @@ room['treasure'].s_to = room['narrow']
 
 # Add items to rooms
 room['foyer'].add_item(Item("Sword", "An old rusty blade, but still dangerous in the right hands."))
-room['treasure'].add_item(Item("Coin", "Looks like a remnant of a great treasure."))
+room['treasure'].add_item(Item("Treasure", "It's the long lost Ogre King's treasure!"))
 
 # Make a new player object that is currently in the 'outside' room.
 print("WELCOME TO PYTHON ADVENTURE GAME!!!")
