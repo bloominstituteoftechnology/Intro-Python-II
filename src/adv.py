@@ -131,3 +131,6 @@ while True:
       else:
         print("--- Did not understand command ---")
 
+    else:
+      print("--- Did not understand command ---")
+
