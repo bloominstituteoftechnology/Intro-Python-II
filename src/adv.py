@@ -110,8 +110,14 @@ while True:
           print("\n--- Error: Please select a valid action ---\n")
     
     elif len(split_cmd) == 2:
-      verb = split_cmd[0]
-      noun = split_cmd[1]
+      command = (split_cmd[0]).lower()
+      item = split_cmd[1]
 
       #take/drop logic
+      if command == "take":
+        print("take something")
+      elif command == "drop":
+        print("drop something")
+      else:
+        print("--- Did not understand command ---")
 
