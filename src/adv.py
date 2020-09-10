@@ -122,7 +122,9 @@ while True:
           else:
             print(f"{item_cmd} not in here")
       elif command == "drop":
-        print("drop something")
+        for item in player.items:
+          if item.name == item_cmd:
+            player.drop_item(item)
       else:
         print("--- Did not understand command ---")
 
