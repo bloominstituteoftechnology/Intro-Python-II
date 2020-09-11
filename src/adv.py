@@ -81,9 +81,10 @@ while not user == 'q':
 
     user = input("[n] north  [e] east   [s] south [w] west  [q] Quit\n")
 
-    if(user != 'q'):
-        print('\n   ...Loading\n   Please Wait\n')
-        player.move(user)
+    if(user == 'q'):
+        break
+    print('\n   ...Loading\n   Please Wait\n')
+    player.move(user)
 
 print('\n'*3, '==== END OF THE ADVENTURE ====\n')
 print('Thanks for enjoying the adventure!\nSee you next time!\n')
