@@ -10,4 +10,5 @@ class Players:
         if player.current_room.n_to is not None:
             player.current_room = player.current_room.n_to
         else:
-            print("you cannot move in that direction")
+            print("----you cannot move in that direction----")
+            print()

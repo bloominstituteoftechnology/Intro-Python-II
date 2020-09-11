@@ -73,22 +73,25 @@ while True:
         if player.current_room.n_to is not None:
             player.current_room = player.current_room.n_to
         else:
-            print("you cannot move in that direction")
+            print("----you cannot move in that direction----")
+            print()
     elif cmd == 's':
         if player.current_room.s_to is not None:
             player.current_room = player.current_room.s_to
         else:
-            print("you cannot move in that direction")
+            print("----you cannot move in that direction----")
+            print()
     elif cmd == 'e':
         if player.current_room.e_to is not None:
             player.current_room = player.current_room.e_to
         else:
-            print("you cannot move in that direction")
+            print("----you cannot move in that direction----")
+            print()
     elif cmd == 'w':
         if player.current_room.w_to is not None:
             player.current_room = player.current_room.w_to
         else:
-            print("you cannot move in that direction")
+            print("----you cannot move in that direction----")
+            print()
     else:
         print("I did not understand the command")
-    
