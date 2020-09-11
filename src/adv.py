@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -46,7 +47,6 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 
-
 #
 # Main
 #
@@ -68,12 +68,17 @@ room['treasure'].s_to = room['narrow']
 # If the user enters "q", quit the game.
 
 current_room = room['outside']
+# current_room.list[Item('sword', 'this is sharp')]
+current_room.append_item(Item('sword', 'this is sharp'))
+current_room.append_item(Item('boots', 'this is shoes'))
+
 player = Player('student', current_room)
 user = ''
 i = 0
 print('\n==== WELCOME TO THE ADVENTURE ====', '\n'*3)
 
 while not user == 'q':
+
     print(f'\nPlayer currently in \n{player.current_room}\n')
     # print(player)
     print(f'Keyboard Hit#: {i}\n')
