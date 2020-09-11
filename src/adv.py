@@ -82,7 +82,7 @@ def cls():
   os.system('cls' if os.name=='nt' else 'clear')
 
 # DECLARE ENEMIES
-guardian = Player("Guardian", room['throne'], 1000, 50)
+guardian = Player("Guardian", room['throne'], 100, 50)
 
 # PROPERTIES
 playing = True
@@ -111,6 +111,11 @@ while playing == True:
         print("YOU DIED!")
         playing = False
         break
+      elif guardian.hp <= 0:
+        print("YOU SLAYED THE GUARDIAN!!\nYou may now enter the Treasure Room!")
+        fighting_enemy = False
+        break
+
       
       fighting_cmd = input("""
     Choose an action:
