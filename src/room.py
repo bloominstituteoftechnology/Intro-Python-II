@@ -2,9 +2,10 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description):
+    def __init__(self, name, description, items: List[Item]=None):
         self.name = name
         self.description = description
+        self.items: List[Item] = items
 
     def get_direction(self, direction):
         if direction == 'n':
@@ -15,5 +16,8 @@ class Room:
             return self.e_to
         elif direction == 'w':
             return self.w_to
-        else:
-            return None
+
+    def add_item(self, item):
+
+    def __repr__(self):
+        return f'Room({repr(self.name)})'

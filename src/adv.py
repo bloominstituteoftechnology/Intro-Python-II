@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from items import Item
 
 # Declare all the rooms
 
@@ -23,6 +24,7 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 
+
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -37,7 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-directions = ['n', 's', 'e', 'w']
+directions = ['n', 's', 'e', 'w', 'q']
 player = Player(room['outside'])
 
 while True:
@@ -46,13 +48,18 @@ while True:
 
     usr_input = input("Where would you like to go? ")
     
-    if usr_input == 'q' or 'quit':
-        break
-    elif usr_input in directions:
-        player.move(usr_input)
+    try:
+        while usr_input not in directions:
+            print("\nInput a valid direction [n, s, e, w]\n")
+            usr_input = input("Where would you like to go? ")
+        
+        if usr_input == 'q':
+            break
 
-    else:
-        print("Input a valid direction [n, s, e, w]")
+        player.move(usr_input)
+        
+    except AttributeError as error:
+        print("\nYou can't move that way!!\n")
 
 # Make a new player object that is currently in the 'outside' room.
 
