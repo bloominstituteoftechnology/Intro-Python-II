@@ -1,26 +1,32 @@
 from room import (Room, valid_directions)
 from player import Player
+from item import Item
 
+#Items
+sword = Item('sword', 'a sharp two-edged sword')
+coins = Item('coins', 'a bag of gold coins')
+torch = Item('torch', 'a bright torch')
+cloak = Item('cloak', 'a warm cloak')
+helmet = Item('helmet', 'a helmet made of damascus steel')
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [cloak]), 
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [sword]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", [helmet]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", [torch]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", [coins]),
 }
 
 
@@ -34,6 +40,7 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
 
 #
 # Main
@@ -69,6 +76,7 @@ while True:
         print(player.current_room)
         current_room = player.current_room
     current_room = player.current_room
+    print(f'Items in room: {current_room.show_items()}')
     user_input = input('Where would you like to go? n, e, s or w?: ')
     if user_input == 'q':
         break
