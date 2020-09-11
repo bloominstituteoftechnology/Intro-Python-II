@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -35,7 +36,10 @@ room['treasure'].s_to = room['narrow']
 
 #
 # Main
-#
+# player
+player = Player('Robin', room['outside'])
+
+print(room['outside'])
 
 # Make a new player object that is currently in the 'outside' room.
 
@@ -49,3 +53,22 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+direction = input(
+    'Where do you want to go \n  N, S, E, W, Q (please use single letter only Q is to quit)').lower().strip()
+
+while True:
+    print(player.current_room)
+    cmd = input("-> ").lower()
+    if cmd in ["n", "e", "s", "w"]:
+        current_room = player.current_room
+        next_room = getattr(current_room, f"{cmd}_to")
+        if next_room is not None:
+            player.current_room = next_room
+        else:
+            print("Nothing there")
+    elif cmd == "q":
+        print("leaving already?")
+        exit()
+    else:
+        print("Let us do this again")
