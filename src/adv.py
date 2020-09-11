@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from item import Item
+import os
 
 # Declare all the rooms
 
@@ -81,8 +82,12 @@ def check_items_in_room():
         #elif pickup_item_input != "n":
             #print("\n--- Error: Please select a valid action ---\n")
 
+def cls():
+  os.system('cls' if os.name=='nt' else 'clear')
+
 # GAME LOOP
 while True:
+    
     print("-------------------------------------------------------")
     print(f"Location: \033[1m{player.current_room.name}\033[0m")
     print(player.current_room.description)
@@ -105,9 +110,11 @@ while True:
           print("\n--- Thank you for playing the game ---")
           break
       elif selected_direction == "i":
+        cls()
         player.show_inventory()
       elif selected_direction in possible_directions:
           try:
+              cls()
               player.move(selected_direction)
           except:
               print("-------------------------------------------------------")
@@ -121,6 +128,7 @@ while True:
 
       #take/drop logic
       if command == "take":
+        cls()
         for item in player.current_room.items:
           if item.name == item_cmd:
             player.take_item(item, player.current_room.name)
@@ -128,12 +136,15 @@ while True:
           else:
             print(f"{item_cmd} not in here")
       elif command == "drop":
+        cls()
         for item in player.items:
           if item.name == item_cmd:
             player.drop_item(item)
       else:
+        cls()
         print("--- Did not understand command ---")
 
     else:
+      cls()
       print("--- Did not understand command ---")
 
