@@ -1,68 +1,67 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 from room import Room
+from item import Item
 
-direction_names = {
-    'n': 'North',
-    's': 'South',
-    'e': 'East',
-    'w': 'West'
-}
 class Player:
-    def __init__(self, name, current_room, inventory = []):
+    def __init__(self, name, current_room):
         self.name = name
         self.current_room = current_room
-        self.inventory = inventory
-        self.name_of_last_item_handled = "it"
-    def try_direction(self, cmd):
-        attribute = cmd + '_to'
-        if hasattr(self.current_room, attribute):
-            self.current_room = getattr(self.current_room, attribute)
-            self.print_location_status()
+        self.inventory = []
+
+    def __str__(self):
+        print(f"{self.name} is currently in room {self.current_room}.")
+
+    def change_room(self, direction):
+        if getattr(self.current_room, f'{direction}_to'):
+            self.current_room = getattr(self.current_room, f'{direction}_to')
+
+    def look(self):
+        if len(self.current_room.items) <= 0:
+            room_items = "Nothing." 
+        elif len(self.current_room.items) == 1:
+            room_items = f"{self.current_room.items[0].name}"
         else:
-            print(f"\nYou cannot move {direction_names[cmd]} from here. Please try another direction.\n")
-    def print_location_status(self):
-        print(f'\nYou are now in room: {self.current_room.name}\n')
-        print(f"{self.current_room.description}\n")
-        num_items = len(self.current_room.items)
-        if num_items > 0:
-            s = "\n     "
-            item_descriptions = s + s.join(str(item) for item in self.current_room.items)
-            item_plural = "item" if num_items == 1 else "items"
-            print(f"This room has {num_items} {item_plural} in it: {item_descriptions}\n")
+            for item in self.current_room.items:
+                room_items += f"{item.name}\n"
+
+        print(f"{self.name}, you find yourself in {self.current_room.name}. \n{self.current_room.description}")
+        print(f"You see in this room the following items: {room_items}")
+
+    def show_inventory(self):
+        if len(self.inventory) <= 0:
+            print(f"You havent picked up anything yet, {self.name}.")
+        elif len(self.inventory) == 1:
+            print(f"You have 1 item in your inventory, {self.name}.")
+            print(f"{self.inventory[0].name}: {self.inventory[0].description}")
         else:
-            print("There are no items in this room.\n")
-    def try_add_item_to_inventory(self, item_name):
-        if item_name == "it":
-            item_name = self.name_of_last_item_handled
-        for item in self.current_room.items:
-            if item.name == item_name:
-                self.name_of_last_item_handled = item_name
-                self.inventory.append(item)
-                self.current_room.items.remove(item)
-                item.on_take()
-                break
-        else:
-            print(f"\n...ERM, there is no item named \"{item_name}\" in this room.\n")
-    def try_drop_item_from_inventory(self, item_name):
-        if item_name == "it":
-            item_name = self.name_of_last_item_handled
-        for item in self.inventory:
-            if item.name == item_name:
-                self.name_of_last_item_handled = item_name
-                self.current_room.items.append(item)
-                self.inventory.remove(item)
-                item.on_drop()
-                print(f"The {item_name} is now in room: {self.current_room.name}.\n")
-                break
-        else:
-            print(f"\n... Erm, you do not have an item named \"{item_name}\" in your inventory.\n")
-    def print_inventory(self):
-        num_items = len(self.inventory)
-        if num_items > 0:
-            s = "\n     "
-            item_descriptions = s + s.join(str(item) for item in self.inventory)
-            item_plural = "item" if num_items == 1 else "items"
-            print(f"\nYou have {num_items} {item_plural} in your inventory: {item_descriptions}\n")
-        else:
-            print("\nYou have 0 items in your inventory.\n")
+            print(f"You have {len(self.inventory)} items in your inventory, {self.name}")
+            for item in self.inventory:
+                print(f"\n{item.name}: {item.description}")
+
+    def select_item(self, item):
+        for i in self.current_room.items:
+            if i.name.lower() == str(item).lower():
+                return i
+            else:
+                print(f"{item} not found.")
+                return None
+
+    def select_inventory_item(self, item):
+        for i in self.inventory:
+            if i.name.lower() == str(item).lower():
+                return i
+            else:
+                print(f"{item} not found.")
+                return None
+
+    def take(self, item):
+        self.inventory.append(item)
+        self.current_room.items.remove(item)
+        item.taken()
+    
+    def drop(self, item):
+        self.inventory.remove(item)
+        self.current_room.items.remove(item)
+        item.dropped()
+    
