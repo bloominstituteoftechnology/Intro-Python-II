@@ -23,8 +23,3 @@ class Enemy:
     else:
       print("MISS")
       print("-------------------------------------------------------")
-
-room = Room("hallway", "sdf")
-player = Player("Matt", room, 300, 100)
-
-ogre = Enemy("Ogre", 200, 50)

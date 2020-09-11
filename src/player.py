@@ -1,5 +1,7 @@
 # Write a class to hold player information, e.g. what room they are in currently.
 from room import Room
+# from enemy import Enemy
+import random
 
 class Player:
   def __init__(self, name, current_room, hp, atk):
@@ -16,10 +18,27 @@ class Player:
     else:
       print("You bumped into a wall")
 
+  def attack(self, enemy):
+    attack_chance = random.randint(1, 5)
+    print("-------------------------------------------------------")
+    print(f"{self.name} attacked!")
+    if attack_chance != 1:
+      print("HIT!")
+      enemy.hp -= self.atk
+      print(f"{enemy.name} now has {enemy.hp} HP")
+      print("-------------------------------------------------------")
+    else:
+      print("MISS")
+      print("-------------------------------------------------------")
+
   def take_item(self, item, room):
     self.items.append(item)
     print("-------------------------------------------------------")
     print(f"*Picked up {item.name} in {room}.")
+    if item.name == "Armour":
+      print(f"HP +100")
+    elif item.name == "Sword":
+      print("ATK +200")
 
   def drop_item(self, item):
     self.items.remove(item)

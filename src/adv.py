@@ -16,7 +16,9 @@ room = {
 
     'narrow':   Room("Narrow Passage", "The narrow passage bends here from west to north. The smell of gold permeates the air."),
 
-    'throne':   Room("Throne Room", "The giant Ogre King stands ominously in the center of the Throne Room. The only way forward or back is to fight him"),
+    'throne':   Room("Throne Room", "!--- BATTLE ---!\nA giant Guardian stands ominously in the center of the Throne Room. The only way out of here is to fight him!"),
+
+    'dungeon':  Room("Dungeon", "Down the stairs from the narrow you enter the dungeon. A place filled with a tormented history."),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure chamber! 
     Fill your pockets with all the gold they can carry and when you're ready, 
@@ -33,7 +35,10 @@ room['foyer'].e_to = room['narrow']
 room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['throne']
+room['dungeon'].n_to = room['narrow']
+room['narrow'].s_to = room['dungeon']
 room['throne'].n_to = room['treasure']
+room['throne'].s_to = room['narrow']
 room['treasure'].s_to = room['throne']
 
 #
@@ -42,6 +47,7 @@ room['treasure'].s_to = room['throne']
 
 # Add items to rooms
 room['foyer'].add_item(Item("Sword", "An old rusty blade, but still dangerous in the right hands."))
+room['dungeon'].add_item(Item("Armour", "Steel armour, it has seen its share of battle but will still provide much needed protection from any *Enemies close-by"))
 room['treasure'].add_item(Item("Treasure", "It's the long lost Ogre King's treasure!"))
 
 # Make a new player object that is currently in the 'outside' room.
@@ -76,20 +82,29 @@ def cls():
   os.system('cls' if os.name=='nt' else 'clear')
 
 # DECLARE ENEMIES
-guardian = Enemy("Guardian", 1000, 50)
+guardian = Player("Guardian", room['throne'], 1000, 50)
 
 # PROPERTIES
 playing = True
 possible_directions = ["n", "s", "e", "w"]
 fighting_actions = ["atk", "i", "take", "drop"]
 item_action_done = False
-fighting_enemy = True
+fighting_enemy = False
 
 # GAME LOOP
 while playing == True:
 
+    for item in player.items:
+      if item.name == "Sword":
+        player.atk = 300
+      elif item.name == "Armour":
+        player.hp = 300
+
+    if player.current_room.name == "Throne Room":
+      print("In the throne room")
+      fighting_enemy = True
+
     while fighting_enemy == True:
-      cls()
       guardian.attack(player)
       
       if player.hp <= 0:
@@ -107,11 +122,19 @@ while playing == True:
 
       split_fight_cmd = fighting_cmd.split()
 
-      if split_fight_cmd[0] in fighting_actions:
-        print("valid attack")
+      atk_cmd = split_fight_cmd[0]
+      print(atk_cmd)
+
+      if atk_cmd in fighting_actions:
+        if atk_cmd == "atk":
+          print("attttackckcing")
+          player.attack(guardian)
       else:
         print("\n--- Error: Please select a valid action ---\n")
-    
+
+    if playing == False:
+      break
+
     print("-------------------------------------------------------")
     print(f"Location: \033[1m{player.current_room.name}\033[0m")
     print(player.current_room.description)
@@ -147,6 +170,7 @@ while playing == True:
               print("--- You bump into a wall ---")
       else:
           print("\n--- Error: Please select a valid action ---\n")
+          cls()
     
     elif len(split_cmd) == 2:
       command = (split_cmd[0])
