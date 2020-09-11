@@ -9,6 +9,15 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.item_list = []
+    
+    def __str__(self):
+        ret = f"{self.name}\n"
+        for i, c in enumerate(self.item_list):
+            ret += "    " + str(i+1) + ": " + c.name +"\n"
+        ret += "    " + str(1+2) + ": Exit"
+
+        return ret
 
     def get_direction(self, direction):
         if direction == 'n':

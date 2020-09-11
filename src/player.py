@@ -4,6 +4,7 @@ class Player:
     def __init__(self, name, current_room):
         self.name = name
         self.current_room = current_room
+        self.inventory = []
         
     def __str__(self):
         player_string = f"Player is in the {self.current_room}"
@@ -14,3 +15,5 @@ class Player:
             self.current_room = next_room
         else:
             print("There's no room in that direction!")
+
+    
