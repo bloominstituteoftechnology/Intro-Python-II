@@ -60,11 +60,21 @@ player = Player('Pete', room['outside'])
 #
 # If the user enters "q", quit the game.
 
+valid_commands = ('get', 'drop')
+
 def is_direction(str):
     """
     returns true from string if it is a valid
     """
     return str in valid_directions
+
+def is_command(str):
+    #checks if command is valid
+    split_str = str.split(" ")
+    if split_str.__len__() == 2:
+        return split_str[0] in valid_commands
+    else:
+        return str
 
 print(f'Welcome {player.name}, press q at any time to quit')
 print(f'You are currently {player.current_room.name}')
@@ -82,6 +92,8 @@ while True:
         break
     elif is_direction(user_input):
         player.move(user_input)
+    elif is_command(user_input):
+        player.do(user_input)
     else:
         print('Sorry that is not a valid command, please try again!')
 
