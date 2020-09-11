@@ -62,6 +62,6 @@ class Player:
     
     def drop(self, item):
         self.inventory.remove(item)
-        self.current_room.items.remove(item)
+        self.current_room.items.append(item)
         item.dropped()
     
