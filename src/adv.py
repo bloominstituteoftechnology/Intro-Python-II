@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from item import Item
+from enemy import Enemy
 import os
 
 # Declare all the rooms
@@ -46,7 +47,7 @@ room['treasure'].add_item(Item("Treasure", "It's the long lost Ogre King's treas
 # Make a new player object that is currently in the 'outside' room.
 print("WELCOME TO PYTHON ADVENTURE GAME!!!")
 player_name = input("Please enter your name --> ")
-player = Player(player_name, room["outside"])
+player = Player(player_name, room["outside"], 200, 100)
 print(f"\n---------- Welcome {player.name}! Get ready to start your adventure! ----------\n*press 'q' to quit\n")
 
 # Write a loop that:
@@ -60,9 +61,6 @@ print(f"\n---------- Welcome {player.name}! Get ready to start your adventure! -
 #
 # If the user enters "q", quit the game.
 
-possible_directions = ["n", "s", "e", "w"]
-item_action_done = False
-
 # LOGIC FUNCTIONS
 def check_items_in_room():
   items_in_room = ""
@@ -73,20 +71,46 @@ def check_items_in_room():
       items_in_room += f"{item.name}\n"
     print(items_in_room)
     print("-------------------------------------------------------")
-        #print(f"*You found a {player.current_room.items[0].name}!*")
-        #pickup_item_input = input("Pick up item? [y/n]\n--> ").lower()
-        #if pickup_item_input == "y":
-            #item = player.current_room.items[0]
-            #player.take_item(item.name, player.current_room.name)
-            #player.current_room.remove_item(item)
-        #elif pickup_item_input != "n":
-            #print("\n--- Error: Please select a valid action ---\n")
 
 def cls():
   os.system('cls' if os.name=='nt' else 'clear')
 
+# DECLARE ENEMIES
+guardian = Enemy("Guardian", 1000, 50)
+
+# PROPERTIES
+playing = True
+possible_directions = ["n", "s", "e", "w"]
+fighting_actions = ["atk", "i", "take", "drop"]
+item_action_done = False
+fighting_enemy = True
+
 # GAME LOOP
-while True:
+while playing == True:
+
+    while fighting_enemy == True:
+      cls()
+      guardian.attack(player)
+      
+      if player.hp <= 0:
+        print("YOU DIED!")
+        playing = False
+        break
+      
+      fighting_cmd = input("""
+    Choose an action:
+      Fight          = [atk]
+      Show Inventory = [i]
+      Take Item      = [take *item]
+      Drop Item      = [drop *item]
+    --> """).lower()
+
+      split_fight_cmd = fighting_cmd.split()
+
+      if split_fight_cmd[0] in fighting_actions:
+        print("valid attack")
+      else:
+        print("\n--- Error: Please select a valid action ---\n")
     
     print("-------------------------------------------------------")
     print(f"Location: \033[1m{player.current_room.name}\033[0m")
@@ -108,7 +132,9 @@ while True:
 
       if selected_direction == "q":
           print("\n--- Thank you for playing the game ---")
+          playing = False
           break
+
       elif selected_direction == "i":
         cls()
         player.show_inventory()

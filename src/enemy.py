@@ -12,14 +12,17 @@ class Enemy:
     return f"[{self.name}] - HP: {self.hp}, ATK: {self.atk}"
 
   def attack(self, player: Player):
-    attack_chance = random.randint(1, 4)
+    attack_chance = random.randint(1, 3)
+    print("-------------------------------------------------------")
     print(f"{self.name} attacked!")
     if attack_chance != 1:
       print("HIT!")
       player.hp -= self.atk
       print(f"{player.name} now has {player.hp} HP")
+      print("-------------------------------------------------------")
     else:
       print("MISS")
+      print("-------------------------------------------------------")
 
 room = Room("hallway", "sdf")
 player = Player("Matt", room, 300, 100)
