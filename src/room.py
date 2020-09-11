@@ -5,10 +5,13 @@ class Room:
     def __init__(self, name, description):
         self.name = name
         self.description = description
+        self.items = []
+        self.secrets = []
         self.n_to = None
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.c_to = None
     
     def __str__(self):
         return f'Location: {self.name} \n{self.description}\n'
