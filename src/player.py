@@ -25,10 +25,21 @@ class Player:
                      print(line)
         
                 print("*******************************************************************\n")
+
+                self.current_room.print_items()      
             else:
                 print("There is no room in that direction, try another one.\n")  
     def add_item(self, item):
+        item.take_item()
+        self.inventory.append(item)
     
     def drop_item(self, item):
+        item.drop_item()
+        self.inventory.remove(item)
 
     def display_items(self):
+        print("*******************************************************************")
+        print(f"{self.name}'s current inventory:")
+        for item in self.inventory:
+            print(str(item)+ "\n")
+        print("*******************************************************************\n")
