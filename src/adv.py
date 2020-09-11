@@ -1,5 +1,6 @@
-from room import Room
-
+from room import Room, valid_directions
+from player import Player
+from items import Item
 # Declare all the rooms
 
 room = {
@@ -33,11 +34,28 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+#items
+item = {
+    'coins':  Item("Coins: ~~[Money", "--Just a few lose coins to take to the tavern]~~"),
+    'tools':  Item("Tool: ~~[Grappling hook", "--This might come in handy. It is very heavy]~~"),
+    'jewel': Item("Jewel: ~~[Gem", "--Next time you ask that stranger for information. He might be willing to help for this type of payment]~~"),
+    'torch': Item("Tool: ~~[Torch", "--Let there be light. Is someone sneaking around? Why is this on the floor?!?]~~"),
+    'trap': Item("Misc: ~~[Tripped Trap", "--An abandoned trap that has been tripped. If cleaned up it could be useful.]~~"),
+    'medallion': Item("Jewel: ~~[Medallion", "--It reflects light and glows slightly orange it may be magical. There is an inscription in an unknown language. Inscription:Hul werud ezes ulud egembelu owog. Kyul buol engumet ullyetuk.]~~ "),
+}
+
+room['outside'].items = []
+room['foyer'].items = [str(item['coins']), str(item['trap'])]
+room['overlook'].items = [str(item['jewel']),str(item['medallion']),str(item['trap'])]
+room['narrow'].items = [str(item['jewel']), str(item['coins']), str(item['torch'])]
+room['treasure'].items = [str(item['tools'])]
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+players = Player('Dom', room['outside'])
 
 # Write a loop that:
 #
@@ -50,4 +68,48 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
+def is_direction(str):
+    """
+        returns true from string if it is a valid
+    """
+    return str in valid_directions
+
+print(f'Welcome {players.name}, press q at any time to quit')
+print(f'You are currently {players.current_room.name}')
+print(players.current_room.description)
+current_room = players.current_room
+items = current_room.items
+
+def item_check(room_items):
+    if room_items != []:
+        return True
+    else:
+        return False
+
+while True:
+    if current_room != players.current_room:
+        print(players.current_room)
+        current_room = players.current_room
+        items = current_room.items         
+    user_input = input('What would you like to do? Choose direction n, e, s or w? Or "view" Room: ')
+    if user_input == 'q':
+        break
+    elif is_direction(user_input):
+        players.move(user_input)
+    elif user_input.lower().strip() == 'view':
+        if item_check(items) == True:
+          print('In this room you will find these items: ')
+          for item in items:
+            print(item)
+          choice = str(input('Would you like to pick up these items: y or n '))
+          if choice == 'y':
+            players.pick_up(items)            
+            print('Your inventory now contains ' + str(players.inventory))
+            items.clear()
+          else:
+            user_input = input('What would you like to do? Choose direction n, e, s or w? Or "view" Room: ')                      
+        else:
+          print('There are no items in this room')
+    else:
+        print('Sorry that is not a valid command, please try again!')
 
