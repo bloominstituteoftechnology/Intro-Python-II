@@ -94,7 +94,7 @@ def print_valid_commands():
 
     # REPL Start:
     while True:
-        cmd = input("What would you like to do?").strip().lower().split
+        cmd = input("What would you like to do? ").strip().lower().split()
         num_words = len(cmd)
 
         if num_words == 1:
