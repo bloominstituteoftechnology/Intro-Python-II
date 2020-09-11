@@ -13,3 +13,15 @@ class Room:
 
     def __str__(self):
         return f"{self.name}"
+
+    def get_direction(self, direction):
+        if direction == 'n':
+            return self.n_to
+        if direction == 's':
+            return self.s_to
+        if direction == 'e':
+            return self.e_to
+        if direction == 'w':
+            return self.w_to
+        else:
+            return None
