@@ -2,7 +2,7 @@ from room import Room
 
 from player import Player
 from item import Item
-import sys
+
 # Declare all the rooms
 
 room = {
@@ -39,6 +39,9 @@ room['treasure'].s_to = room['narrow']
 directions = ['n', 's', 'e', 'w']
 player = Player(room['outside'])
 
+room["overlook"].items.append(Item("flashlight", "a flashlight"))
+room["foyer"].items.append(Item("sword", "a sword"))
+room["treasure"].items.append(Item("coins", "a gold coin"))
 while True:
     print(player.current_room.name)
     print(player.current_room.description)

@@ -2,9 +2,21 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description):
+    def __init__(self, name, description, items):
         self.name = name
         self.description = description
+        self.items = []
+    def add_item(self, item):
+        self.items.append(item)
+    def print_items(self):
+        output = ""
+        if len(self.items)== 0:
+            return None
+        else:
+            for item in self.items:
+                output += f"{item.name}"
+            
+        return output
 
     def get_direction(self, direction):
         if direction == 'n':
