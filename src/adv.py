@@ -1,9 +1,10 @@
 from room import Room
 from player import Player
+from item import Item
+
 import textwrap
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -23,9 +24,9 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
+#
 # Link rooms together
-
+#
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -34,6 +35,16 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+#
+# Items
+#
+sword = Item("Sword", "Master sword, kills anything in one swing")
+map = Item("Map", "Map of the entire world to aid you in your adventures")
+slingshot = Item("Slingshot", "Practice your aim, a hit in the right location will keep you alive")
+coffee = Item("Coffee", "This magical recipe will refill all your energy")
+crossbow = Item("Crossbow", "Not as powerful as the sword but still a good weapon to have")
+
 
 #
 # Main
