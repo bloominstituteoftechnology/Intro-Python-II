@@ -2,10 +2,10 @@
 # currently.
 
 class Player:
-    def __init__(self, name):
+    def __init__(self, name, location="outside"):
         # attributes
         self.name = name
-        self.location = "outside"
+        self.location = location
 
     def __str__(self):
         return f"{self.name} is in the {self.location}"

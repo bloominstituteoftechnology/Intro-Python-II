@@ -2,7 +2,6 @@ from room import Room
 from player import Player
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -24,7 +23,6 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -37,36 +35,33 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+
 # Make a new player object that is currently in the 'outside' room.
-start_point = room['outside']
-
-NewPlayer = input("Enter your name: ")
-player = Player(NewPlayer)
-
-print(player, start_point)
+player = Player("Bob", room['outside'])
 
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
-
-direction = ["n", "s", "e", "w"]
-
-def moving()
-
-# while True:
-#     direction_input = input("\n Where too, player? \n n for north \n s for south \n e for east \n w for west \n q to quit game")
-
-#     print(direction_input)
-
-#     if direction_input[0] in direction:
-#         try:
-
-
-
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while True:
+    direction = ["n", "s", "e", "w"]
+
+    print(player)
+
+    direction_input = input("Which direction? \n n for North \n s for South \n e for East \n w for West \n q to Quit \n Enter value: ")
+
+    print(direction_input)
+
+    if direction_input in direction:
+        print(f"moving {direction_input}")
+        if direction_input == "n":
+            current_room = Room.name
+
+            current_name = room["foyer"]
+            print(current_room)
