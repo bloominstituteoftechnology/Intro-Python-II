@@ -1,15 +1,19 @@
 #import module we need
 import random
-
+import os
+print(os.getcwd())
 #file i/o functions for historical results
+
+path_history = os.getcwd()+"/examples/history.txt"
+
 def load_results():
-    text_file = open("history.txt", "r")
+    text_file = open(path_history, "r")
     history = text_file.read().split(",")
     text_file.close()
     return history
 
 def save_results( w, t, l):
-    text_file = open("history.txt", "w")
+    text_file = open(path_history, "w")
     text_file.write( str(w) + "," + str(t) + "," + str(l))
     text_file.close()
 
