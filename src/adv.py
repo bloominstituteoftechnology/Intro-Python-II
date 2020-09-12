@@ -1,21 +1,22 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [Item("Rock", "medium sized rock"), Item("Stick", "fallen tree twig")]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [Item("Sword", "sword of iron")]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", [Item("Cape", "raggedy cape"), Item("Eggs", "3 eggs inside a bird nest")]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", [Item("Boots", "someone's old shoes"), Item("Bones", "animal remais")]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
@@ -54,9 +55,10 @@ player_one = Player('Zelda', room['outside'])
 def text_adventure_game():
     active_game = True
     while active_game == True:
-        player_one.room.print_name()
-        player_one.room.print_description()
-        selection = input("What would you like to do? Or press 'q' to quit ")
+        print(f'\n{"*" * 58}')
+        player_one.room.print_room_info()
+        player_one.room.check_items()
+        selection = input(f"\nWhat would you like to do? Or press 'q' to quit ")
         if player_one.room == room['outside'] and selection == 'n':
             player_one.room = room['foyer']
         elif player_one.room == room['foyer'] and selection == 's':
@@ -74,7 +76,7 @@ def text_adventure_game():
         elif player_one.room == room['treasure'] and selection == 's':
             player_one.room = room['narrow']                            
         elif selection == 'q':
-            print("Game Over!")
+            print(f"\nGame Over!")
             active_game = False
         else:
             print("There is nothing to explore in that direction!")
