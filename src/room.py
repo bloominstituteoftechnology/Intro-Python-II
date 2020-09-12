@@ -1,14 +1,6 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
 
-# * Add the ability to add items to rooms.
-
-#   * The `Room` class should be extended with a `list` that holds the `Item`s
-#     that are currently in that room.
-
-#   * Add functionality to the main loop that prints out all the items that are
-#     visible to the player when they are in that room.
-
 class Room:
 
     def __init__(self, name, description):
@@ -34,6 +26,15 @@ class Room:
         output += f"\n[West] {self.w_to.name}" if hasattr(self, "w_to") else ""
         return output
 
-    def append_item(self, item):
+    def add_item(self, item):
         self.list.append(item)
         print(f'Item {item.name} added to {self.name}\n')
+        return
+
+    def remove_item(self, item):
+        try:
+            self.list.remove(item)
+            print(f"{item.name} has been removed from {self.name}")
+        except:
+            print(f"{item.name} is not in the room.\n")
+        return
