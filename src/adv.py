@@ -62,7 +62,6 @@ def text_adventure_game():
         print(f'\n{"*" * 58}')
         player_one.room.print_room_info()
         player_one.room.room_items()
-        player_one.check_inventory()
         selection = input(
             f"\nWhat would you like to do? Or press 'q' to quit ")
         command = selection.split(' ', 1)
@@ -70,13 +69,14 @@ def text_adventure_game():
             player_one.on_take(command[0], command[1])
         elif command[0].lower() in drop_command:
             player_one.on_drop(command[0], command[1])
+        elif selection in inventory_command:
+            player_one.check_inventory()  
         elif selection in directions:
             player_one.move_to(selection)
         elif selection == 'q':
-            print(f"\nGame Over!")
+            print(f'\n{"*" * 58}\n')
+            print(f"Game Over!".center(58, ' '))
+            print(f'\n{"*" * 58}\n')
             active_game = False
-        else:
-            print("There is nothing to explore in that direction!")
-
 
 text_adventure_game()

@@ -30,9 +30,11 @@ class Room:
     def remove_item(self, item):
         for i in self.items:
             if(i.name.lower() == item.lower()):
-                self.items.remove(i) 
-                print(f"\nYou have picked up: {i.name}")
+                self.items.remove(i)
+                print(f'\n{"*" * 58}\n')  
+                print(f"You have picked up: {i.name}".center(58, ' '))
 
     def add_item(self, item):
-        self.items.append(item) 
-        print(f"\nYou have dropped: {item.name}")
+        self.items.append(item)
+        print(f'\n{"*" * 58}\n') 
+        print(f"You have dropped: {item.name}".center(58, ' '))

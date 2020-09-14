@@ -14,16 +14,20 @@ class Player:
         if (move_room != ""):
             self.room = move_room
         else:
-            print("\nYou may not go in this direction!\n")
+            print(f'\n{"*" * 58}\n')
+            print("You may not go in this direction!".center(58, ' '))
 
 
     def check_inventory(self):
         if len(self.inventory) > 0:
-            print(f"\nYour inventory currently contains:")
+            print(f'\n{"*" * 58}\n')
+            print(f"Your inventory currently contains:".center(58, ' '))
             for i in self.inventory:
-                print(i)
+                item = i
+                print(f'{i}'.center(58, ' '))
         else :
-            print(f"\nYour inventory is currently empty")
+            print(f'\n{"*" * 58}\n')
+            print(f"Your inventory is currently empty".center(58, ' '))
 
     def on_take(self, command, item):
         if command == 'take' or 'get':
