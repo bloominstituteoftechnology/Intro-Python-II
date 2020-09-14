@@ -5,11 +5,15 @@ class Room:
         self.name = name
         self.description = description
         self.items = items
+        self.n_to = ""
+        self.e_to = ""
+        self.s_to = ""
+        self.w_to = ""
 
     def print_room_info(self):
         print(f'\n{self.name}\n\n{self.description}\n')
 
-    def check_items(self):
+    def room_items(self):
         if len(self.items) > 0:
             print(f'This room contains the following items:')
             for i in self.items:

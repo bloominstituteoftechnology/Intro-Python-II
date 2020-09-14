@@ -52,29 +52,18 @@ player_one = Player('Zelda', room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+directions = ['n', 'e', 's', 'w']
+
 def text_adventure_game():
     active_game = True
     while active_game == True:
         print(f'\n{"*" * 58}')
         player_one.room.print_room_info()
-        player_one.room.check_items()
+        player_one.room.room_items()
+        player_one.check_inventory()
         selection = input(f"\nWhat would you like to do? Or press 'q' to quit ")
-        if player_one.room == room['outside'] and selection == 'n':
-            player_one.room = room['foyer']
-        elif player_one.room == room['foyer'] and selection == 's':
-            player_one.room = room['outside']
-        elif player_one.room == room['foyer'] and selection == 'n':
-            player_one.room = room['overlook']
-        elif player_one.room == room['foyer'] and selection == 'e':
-            player_one.room = room['narrow']
-        elif player_one.room == room['overlook'] and selection == 's':
-            player_one.room = room['foyer']
-        elif player_one.room == room['narrow'] and selection == 'w':
-            player_one.room = room['foyer']
-        elif player_one.room == room['narrow'] and selection == 'n':
-            player_one.room = room['treasure']
-        elif player_one.room == room['treasure'] and selection == 's':
-            player_one.room = room['narrow']                            
+        if selection in directions:
+            player_one.move_to(selection)                           
         elif selection == 'q':
             print(f"\nGame Over!")
             active_game = False
