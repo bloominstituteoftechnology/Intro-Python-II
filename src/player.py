@@ -21,6 +21,13 @@ class Player:
         if len(self.inventory) > 0:
             print(f"\nYour inventory currently contains:")
             for i in self.inventory:
-                print(f"\n{i.name}: {i.description}")
+                print(i)
         else :
-            print(f"\nYour inventory is currently empty")        
+            print(f"\nYour inventory is currently empty")
+
+    def on_take(self, command, item):
+        if command == 'take' or 'get':
+            self.inventory.append(self.room.get_item(item.lower()))
+            self.room.remove_item(item.lower())
+            pass  
+              

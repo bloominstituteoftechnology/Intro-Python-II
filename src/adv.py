@@ -23,7 +23,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -53,6 +52,7 @@ player_one = Player('Zelda', room['outside'])
 #
 # If the user enters "q", quit the game.
 directions = ['n', 'e', 's', 'w']
+get_commands = ['take', 'get']
 
 def text_adventure_game():
     active_game = True
@@ -61,15 +61,18 @@ def text_adventure_game():
         player_one.room.print_room_info()
         player_one.room.room_items()
         player_one.check_inventory()
-        selection = input(f"\nWhat would you like to do? Or press 'q' to quit ")
-        if selection in directions:
-            player_one.move_to(selection)                           
+        selection = input(
+            f"\nWhat would you like to do? Or press 'q' to quit ")
+        command = selection.split(' ', 1)
+        if command[0].lower() in get_commands:
+            player_one.on_take(command[0], command[1])
+        elif selection in directions:
+            player_one.move_to(selection)
         elif selection == 'q':
             print(f"\nGame Over!")
             active_game = False
         else:
             print("There is nothing to explore in that direction!")
 
+
 text_adventure_game()
-
-

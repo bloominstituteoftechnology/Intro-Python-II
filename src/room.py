@@ -4,11 +4,12 @@ class Room:
     def __init__(self, name, description, items = []):
         self.name = name
         self.description = description
-        self.items = items
         self.n_to = ""
         self.e_to = ""
         self.s_to = ""
         self.w_to = ""
+        self.items = items
+        
 
     def print_room_info(self):
         print(f'\n{self.name}\n\n{self.description}\n')
@@ -19,4 +20,15 @@ class Room:
             for i in self.items:
                 print(f'{i.name}: {i.description}')
         else:
-            print('No items available in this room') 
+            print('No items available in this room')
+
+    def get_item(self, item):
+        for i in self.items:
+            if(i.name.lower() == item.lower()):
+                return(i)         
+
+    def remove_item(self, item):
+        for i in self.items:
+            if(i.name.lower() == item.lower()):
+                self.items.remove(i) 
+                print(f"\nYou have picked up: {i.name}")
