@@ -58,3 +58,23 @@ player = Player("Steve", "outside", "Rock")
 #
 # If the user enters "q", quit the game.
 
+playing = True
+
+while playing:
+    current_room = rooms[player.current_room]
+    print(f"-----\n{current_room.name}\n{current_room.description}")
+
+    cmd = input(" >>> ")
+
+    if cmd in ["n", "s", "e", "w"]:
+        if hasattr(current_room, f"{cmd}_to"):
+            player.current_room = getattr(current_room, f"{cmd}_to")
+            print(f"Moving {cmd.upper()}")
+        else:
+            print(f"Can't move {cmd.upper()}")
+
+    elif cmd == "q":
+        playing = False
+        print("Goodbye!")
+    else:
+        print(f"I do not understand {cmd}")
