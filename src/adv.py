@@ -78,5 +78,8 @@ def text_adventure_game():
             print(f"Game Over!".center(58, ' '))
             print(f'\n{"*" * 58}\n')
             active_game = False
+        else:
+            print(f'\n{"*" * 58}\n')  
+            print(f"Invalid input".center(58, ' ')) 
 
 text_adventure_game()

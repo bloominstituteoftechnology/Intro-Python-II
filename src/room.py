@@ -22,17 +22,17 @@ class Room:
         else:
             print('No items available in this room')
 
-    def get_item(self, item):
+    def get_item(self, item):      
         for i in self.items:
-            if(i.name.lower() == item.lower()):
-                return(i)         
-
-    def remove_item(self, item):
-        for i in self.items:
-            if(i.name.lower() == item.lower()):
+            if (i.name.lower() == item.lower()):
                 self.items.remove(i)
                 print(f'\n{"*" * 58}\n')  
                 print(f"You have picked up: {i.name}".center(58, ' '))
+                return(i)
+                break
+        else: 
+            print(f'\n{"*" * 58}\n')  
+            print(f"Make sure the item is available".center(58, ' '))             
 
     def add_item(self, item):
         self.items.append(item)

@@ -32,8 +32,6 @@ class Player:
     def on_take(self, command, item):
         if command == 'take' or 'get':
             self.inventory.append(self.room.get_item(item.lower()))
-            self.room.remove_item(item.lower())
-            pass
 
     def on_drop(self, command, item):
         if command == 'drop':
@@ -41,5 +39,9 @@ class Player:
                 if i.name.lower() == item.lower():
                     self.inventory.remove(i)
                     self.room.add_item(i)
-                    pass  
+                    break
+            else:
+                print(f'\n{"*" * 58}\n')  
+                print(f"The item you tried to drop is not in your inventory".center(58, ' ')) 
+              
               
