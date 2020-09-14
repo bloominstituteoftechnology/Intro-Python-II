@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -32,6 +33,24 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+#list of items
+
+items = {'greatsword': Item("greatsword","Ancient sword of Elves"),
+        'warhammer': Item("warhammer","Dwarven WarHammer"),
+        'Armor': Item("Armor","Dragonscale armor"),
+        'Potion': Item("Potion","Potion of resist Poison"),
+        'Banner': Item("Banner","House Banner"),
+        'Ring': Item("Ring","Pearl Ring")}
+
+#Put items in Rooms
+
+room['foyer'].items = [items['greatsword'],items['Potion']]
+room['treasure'].items = [items['Ring']]
+room['overlook'].items = [items['Banner']]
+room['narrow'].items = [items['Armor'],]
+
+print (room['foyer'].items)
 
 #
 # Main
