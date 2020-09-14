@@ -29,5 +29,13 @@ class Player:
         if command == 'take' or 'get':
             self.inventory.append(self.room.get_item(item.lower()))
             self.room.remove_item(item.lower())
-            pass  
+            pass
+
+    def on_drop(self, command, item):
+        if command == 'drop':
+            for i in self.inventory:
+                if i.name.lower() == item.lower():
+                    self.inventory.remove(i)
+                    self.room.add_item(i)
+                    pass  
               

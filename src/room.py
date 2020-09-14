@@ -32,3 +32,7 @@ class Room:
             if(i.name.lower() == item.lower()):
                 self.items.remove(i) 
                 print(f"\nYou have picked up: {i.name}")
+
+    def add_item(self, item):
+        self.items.append(item) 
+        print(f"\nYou have dropped: {item.name}")

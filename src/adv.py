@@ -53,6 +53,8 @@ player_one = Player('Zelda', room['outside'])
 # If the user enters "q", quit the game.
 directions = ['n', 'e', 's', 'w']
 get_commands = ['take', 'get']
+drop_command = ['drop']
+inventory_command = ['i', 'inventory']
 
 def text_adventure_game():
     active_game = True
@@ -66,6 +68,8 @@ def text_adventure_game():
         command = selection.split(' ', 1)
         if command[0].lower() in get_commands:
             player_one.on_take(command[0], command[1])
+        elif command[0].lower() in drop_command:
+            player_one.on_drop(command[0], command[1])
         elif selection in directions:
             player_one.move_to(selection)
         elif selection == 'q':
