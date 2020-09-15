@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from weapon import Weapon
 
 # Declare rooms
 
@@ -62,7 +63,8 @@ playing = True
 
 while playing:
     current_room = rooms[player.current_room]
-    print(f"-----\n{current_room.name}\n{current_room.description}")
+    print("--------------------")
+    print(current_room)
 
     cmd = input(" >>> ")
 
