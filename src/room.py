@@ -8,9 +8,9 @@ class Room:
         self.storage = storage
     
     def __str__(self):
-        output = "\n"
-        output += f"{self.name}\n"
+        output = f"{self.name}\n"
         output += f"{self.description}\n"
+        output += f"Objects: {', '.join(self.storage)}\n"
         output += "Exits to the: "
         output += " [North] " if hasattr(self, "n_to") else ""
         output += " [South] " if hasattr(self, "s_to") else ""
