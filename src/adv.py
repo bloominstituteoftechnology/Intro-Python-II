@@ -51,7 +51,7 @@ rooms['treasure'].s_to = 'narrow'
 
 # Make a new player object that is currently in the 'outside' room.
 
-player = Player("Steve", "outside", "Rock")
+player = Player("Steve", "outside", [])
 
 # Write a loop that:
 #
@@ -68,20 +68,42 @@ playing = True
 
 while playing:
     current_room = rooms[player.current_room]
+
     print("--------------------")
     print(current_room)
 
-    cmd = input(" >>> ")
+    commands = input(" >>> ").lower().strip().split()
 
-    if cmd in ["n", "s", "e", "w"]:
-        if hasattr(current_room, f"{cmd}_to"):
-            player.current_room = getattr(current_room, f"{cmd}_to")
-            print(f"Moving {cmd.upper()}")
-        else:
-            print(f"Can't move {cmd.upper()}")
+    if len(commands) == 1:
+        cmd = commands[0]
+        
+        if cmd in ["n", "s", "e", "w"]:
+            if hasattr(current_room, f"{cmd}_to"):
+                player.current_room = getattr(current_room, f"{cmd}_to")
+                print(f"Moving {cmd.upper()}")
+            else:
+                print(f"Can't move {cmd.upper()}")
+        
+        elif cmd == "q":
+            playing = False
+            print("Goodbye!")
 
-    elif cmd == "q":
-        playing = False
-        print("Goodbye!")
+    elif len(commands) == 2:
+
+        if commands[0] == "get":
+            # check if item exists in room
+            if commands[1] in [item.name for item in current_room.storage]:
+                # add to player storage
+                player.storage.append(next((item for item in current_room.storage if item.name == commands[1])))
+                # remove from room
+                current_room.storage[:] = [item for item in current_room.storage if not item.name == commands[1]]
+
+        elif commands[0] == "drop":
+            # TODO: drop
+            pass
+
+        if len(player.storage) > 0:
+            print(f"You have: {player.storageString()}")
+    
     else:
-        print(f"I do not understand {cmd}")
+        print(f"I do not understand `{cmd}`")

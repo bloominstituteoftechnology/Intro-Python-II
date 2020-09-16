@@ -10,7 +10,7 @@ class Room:
     def __str__(self):
         output = f"{self.name}\n"
         output += f"{self.description}\n"
-        output += f"Objects: {', '.join(self.storage)}\n"
+        output += f"Objects: {', '.join([item.name for item in self.storage])}\n"
         output += "Exits to the: "
         output += " [North] " if hasattr(self, "n_to") else ""
         output += " [South] " if hasattr(self, "s_to") else ""
