@@ -1,13 +1,18 @@
 from room import Room
 from player import Player
+from item import Item
 from weapon import Weapon
+
+# Declare items
+
+rocks = Item("rocks", "Small rocks. Good for a slingshot, if you had one.")
 
 # Declare rooms
 
 rooms = {
     'outside':  Room("Outside Cave Entrance",
                     "North of you, the cave mouth beckons",
-                    ["Small rocks"]),
+                    [rocks]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", 
