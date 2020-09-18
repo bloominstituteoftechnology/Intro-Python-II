@@ -37,7 +37,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Bob", room['outside'])
+player_name = input("What is your name?: ")
+player = Player(player_name, "outside")
 
 # Write a loop that:
 #
@@ -61,7 +62,4 @@ while True:
     if direction_input in direction:
         print(f"moving {direction_input}")
         if direction_input == "n":
-            current_room = Room.name
-
-            current_name = room["foyer"]
-            print(current_room)
+            
