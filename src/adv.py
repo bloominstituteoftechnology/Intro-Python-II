@@ -1,7 +1,7 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -23,7 +23,6 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -38,6 +37,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player_name = input("What is your name?: ")
+player = Player(player_name, "outside")
 
 # Write a loop that:
 #
@@ -49,3 +50,16 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while True:
+    direction = ["n", "s", "e", "w"]
+
+    print(player)
+
+    direction_input = input("Which direction? \n n for North \n s for South \n e for East \n w for West \n q to Quit \n Enter value: ")
+
+    print(direction_input)
+
+    if direction_input in direction:
+        print(f"moving {direction_input}")
+        if direction_input == "n":
+            
