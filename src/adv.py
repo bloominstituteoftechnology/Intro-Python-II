@@ -91,19 +91,27 @@ while playing:
     elif len(commands) == 2:
 
         if commands[0] == "get":
-            # check if item exists in room
-            if commands[1] in [item.name for item in current_room.storage]:
+            # remove item if exists
+            item = current_room.removeItem(commands[1])
+            if item:
                 # add to player storage
-                player.storage.append(next((item for item in current_room.storage if item.name == commands[1])))
-                # remove from room
-                current_room.storage[:] = [item for item in current_room.storage if not item.name == commands[1]]
+                player.storage.append(item)
+            else:
+                print(f"A `{commands[1]}` does not exist here.")
 
         elif commands[0] == "drop":
-            # TODO: drop
-            pass
+            # remove item if exists
+            item = player.removeItem(commands[1])
+            if item:
+                # add to room storage
+                current_room.storage.append(item)
+            else:
+                print(f"You don't have a `{commands[1]}` to drop.")
 
         if len(player.storage) > 0:
             print(f"You have: {player.storageString()}")
+        else:
+            print("You are not carrying anything.")
     
     else:
         print(f"I do not understand `{cmd}`")
