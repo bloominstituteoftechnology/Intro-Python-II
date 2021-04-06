@@ -1,25 +1,70 @@
 from player import Player
 from room import Room
+from item import Item, Trinket, VitaminPack, Container
+
+#Items List
+necklace = Trinket(
+    -1,
+    "a priceless necklace is in one of these rooms somewhere",
+    1
+)
+
+notebook = Trinket(
+    -1,
+    "no one knows how old this notebook is or who even wrote it... there appears to be strange characters on several pages...and is that.. blood?!?",
+    1
+)
+
+backpack = Container(
+    1,
+    "backpack",
+    "this backpack can hold everything except maybe your sanity",
+    [necklace]
+)
+
+items = [necklace.name, notebook.name, backpack.name]
 
 # Declare all the rooms
-
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room(
+        "Outside Cave Entrance",
+        "North of you, the cave mount beckons. The path is steep and treacherous, but the mystery draws you in."),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    Room(
+        "Foyer", 
+        """
+        Dim light filters in from the south. Dusty
+        passages run north and east. There is an aging yellow velvet couch on the corner and it that... a backpack?!?""",
+        [backpack]
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
+),
+
+    'overlook': Room(
+        "Grand Overlook", 
+        """
+        A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.
+        """,
+        [notebook]
+),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'narrow':   Room(
+        "Narrow Passage", 
+        """
+        The narrow passage bends here from west
+to north. The smell of gold permeates the air. Or is that just the mold in the corners...? Through cobwebs and patch of dirt in the corner of the floor a small flash catches your eyes. Is that...no it can't be. It is a priceless antinque necklace that you quickly stash into your backpack."
+        """,
+        [necklace]
+),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
+    'treasure': Room(
+        "Treasure Chamber", 
+        """
+        You've found the long-lost rumored treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. There are scribblings on the wall. It looks like nothing at first, but then you realize that it is a map of another complex entirely. You quickly sketch down the map in your notebook. The eery stillness of the chamber creeps you out majorly. Happy with the necklace and the mystery of the notebook's characters, as well as the enigma of the new map, you set off as fast as you can to figure out what it all means. You exit to find out what the next level brings.
+        """),
 }
 
 
