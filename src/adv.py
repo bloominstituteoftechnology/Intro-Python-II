@@ -1,3 +1,4 @@
+from player import Player
 from room import Room
 
 # Declare all the rooms
@@ -39,7 +40,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-playerone = Playerone(room['outside'], "player one has arrived outside the room.")
+player = Player(room['outside'], "player one has arrived outside the room.")
 
 def instructions():
     return """
@@ -97,7 +98,7 @@ def travel(input):
         elif input == "w" or input == "west" or input == "left":
             player.current_room = player.current_room.w_to
     else:
-        sys_print("Wrong Way! There's nothing over there.")
+        print("Wrong Way! There's nothing over there.")
 
 def prompt(s):
     # print a quicklist of commands
