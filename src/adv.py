@@ -1,8 +1,11 @@
 from room import Room
-
+from player import Player
+from item import Item
 # Declare all the rooms
 
+#dictionary
 room = {
+    #key     :  value
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
@@ -33,19 +36,53 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+#inventory linking
+room['outside'].inventory = [Item("key", """key to treasure box"""), Item("lantern", """a light to guide you""")]
+room['foyer'].inventory =  [Item("wand", """just in case you need magic"""),Item("shield", """to protect you"""),]
+room['overlook'].inventory = [Item("cape", """because it's cold out here"""),Item("snack", """because low blood sugar"""),]
+room['narrow'].inventory = [Item("beer", """who doesn't want beer in narrow passages??"""),Item("diamond", """because shiny"""),]
+room['treasure'].inventory = [Item("gold", """it's about time this pays off"""),Item("job offer", """ongoing income is always nice"""),]
+
+'''LEFT TO DO 
+- Add two-word commands to the parser
+- Add the get and drop commands to the parser
+'''
 # Main
-#
 
-# Make a new player object that is currently in the 'outside' room.
+#done: Make a new player object that is currently in the 'outside' room.
+player =  Player(room['outside']) 
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+# done: Write a loop that:
+
+# * done: Prints the current room name
+# * done: Prints the current description (the textwrap module might be useful here).
+# * done: Waits for user input and decides what to do.
+
+while True:
+    print(player.current_room)
+    print(player.current_room.name)
+    print(player.current_room.description)
+    print(f"Inventory: {player.current_room.inventory}")
+    s = input("enter N/S/E/W direction to move OR enter 'take' to take inventory: ").lower()[0] 
+
+    if s == 'q':
+        print('see you later')
+    elif s == 't':
+        for i in player.current_room.inventory:
+            i.on_take()
+    elif s == 'n'or's'or'e'or'q':
+        player.current_room = player.try_move(s)
+    else:
+        print("oops")
+
+
+
+'''Should work n, N, north, North, NORTH <---- for each cardinal direction, 
+could use .lower or .upper on input or just take first letter ("/n>").lower()[0]'''
+
+# done:If the user enters a cardinal direction, attempt to move to the room there.
+# done: Print an error message if the movement isn't allowed.
+
+# done:If the user enters "q", quit the game.
+
+
