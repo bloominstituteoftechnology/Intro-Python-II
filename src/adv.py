@@ -1,10 +1,11 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                    "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -33,11 +34,23 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+
 #
 # Main
 #
 
+def try_dir(dir, current_room):
+    attribute = dir+'_to'
+    if hasattr(current_room, attribute):
+        return getattr(current_room, attribute)
+    else:
+        print('You may not go this way')
+        return current_room
+
 # Make a new player object that is currently in the 'outside' room.
+
+player = Player("Tristan", room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +62,14 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+    print(player)
+    cmd = input('>>').lower().split()
+    first_arg = cmd[0]
+    second_arg = cmd[-1]
+    if first_arg == 'q':
+        break
+    elif first_arg == 'go':
+        player.current_room = try_dir(second_arg[0], player.current_room)
+        print(player.current_room.description)
