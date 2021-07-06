@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,8 +40,33 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+new_player = Player("Scott Schindler", room['outside'])
+# print(new_player) ??? Why can't I print new player?
+
 # Write a loop that:
-#
+
+selection = ""
+while selection != "q":
+    selection = input(f"Hi {new_player.name}. You are currently in {new_player.room} room. please enter 'N', 'S', 'W', 'E' to indicate where you would like to travel to: ")
+    if selection == "N":
+        if new_player.room.n_to == None:
+            print("try agains")
+        else:
+            new_player.room = new_player.room.n_to
+
+    elif selection == "S":
+        new_player.room = new_player.room.s_to
+
+    elif selection == "W":
+        new_player.room = new_player.room.w_to
+
+    elif selection == "E":
+        new_player.room = new_player.room.e_to
+
+    # print(f'you are now in room {new_player.room}')
+
+
+
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
