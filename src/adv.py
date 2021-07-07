@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -36,16 +37,53 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+directs = ['n', 'e', 's', 'w']
+aroom = 'outside'
+
+while True:
+    print()
+    if aroom == 'outside':
+        print('Outside Cave Entrance')
+        print("North of you, the cave mount beckons")
+    elif aroom == 'foyer':
+        print("Foyer")
+        print("Dusty passages run north and east.")
+    elif aroom == 'overlook':
+        print('Grand Overlook')
+        print("A steep cliff appears before you, falling into the darkness.")
+    elif aroom == 'narrow':
+        print("Narrow Passage")
+        print("The narrow passage bends here from west to north.")
+    command = input('Where do you want to go?').strip()
+    if command.lower() in ('n'):
+        if aroom == 'outside':
+            aroom = 'foyer'
+        elif aroom == 'foyer':
+            aroom = 'overlook'
+        else:
+            print('There is no open path in that direction')
+    elif command.lower() in ('s'):
+        if aroom == 'foyer':
+            aroom = 'outside'
+        elif aroom == 'overlook':
+            aroom = 'foyer'
+        else:
+            print('There is no open path in that direction')
+    elif command.lower() in ('q'):
+        break
+    else:
+        print('Please enter a valid command')
+
 
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
-#
+
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
-#
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
-#
+
 # If the user enters "q", quit the game.
