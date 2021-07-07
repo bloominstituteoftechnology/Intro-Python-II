@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from player import PlayerInventory
 
 # Declare all the rooms
 
@@ -7,11 +9,11 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", items = {'candle': 'Looks new', 'Notepad': "There is writing on it, but it is not legible"}),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", items = {'Stick': 'Just a stick', 'Rock': "Just a rock. Shape is a bit interesting though."}),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
@@ -33,11 +35,35 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Player inventory
+
+player_inventory = PlayerInventory(items=None)
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+print("Welcome to THE MOST AWSOME ADVENTURE EVER!!\n\nThis adventure starts when you find yourself wondering in the great woods. You are a young adventurer keen on making a name for yourself as a great treasure hunter.\nCan you find your first treasure?\n")
+player = Player(input("Please enter your character name: "), room['outside'], player_inventory)
+
+print(f'\n{player.current_room}\n')
+
+action = input("Where would you like to move? Move North(n), South(s), East(e), or West(w) \nView Inventory(i) \nPick Up Item(p) \nQuit Game(q)\n\n")
+
+player.action_input(action)
+
+# Write a loop that:
+while True:
+    if action == 'q':
+        break
+    elif player.current_room is not None:
+        player.display_room()
+        action = input("Where would you like to move next? Move North(n), South(s), East(e), or West(w) \nView(i) \nPick Up Item(p) \nQuit Game(q)\n\n")
+        player.action_input(action)
+        continue
+    else:
+        print("This room does not exist. Please try again.")  # Else is not being used
 
 # Write a loop that:
 #
@@ -49,3 +75,6 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+
