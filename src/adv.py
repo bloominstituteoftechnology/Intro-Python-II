@@ -1,13 +1,20 @@
 from room import Room
+from player import Player
+from item import Item
+
+# Declare items for various location.
+rock = Item('rocks', 'Rock on the ground')
+stick = Item('sticks','Wooden stick')
+torch = Item('torch', 'Torch on the wall')
+chest = Item('chest','Rusty opened chest')
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",[rock, stick]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [torch]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -18,7 +25,7 @@ to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", [chest]),
 }
 
 
@@ -32,6 +39,19 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+def isActionable(cmd):
+    tokenList = cmd.split()
+
+    if len(tokenList) == 2 :
+        for token in tokenList:
+            if token in player.capability:
+                return True
+            else:
+                return False
+    else:
+        print('Missing or too many arguments. Correct action example: "take rock" ')
+        return False
 
 #
 # Main
@@ -49,3 +69,25 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player = Player("Fool",room["outside"])
+#room['outside'].items.append('Rock')
+
+
+while True:
+    print(player)
+    cmd = input('---> ')
+    
+    if (cmd == 'q'):
+        break
+    elif cmd in ['n','s','e','w']:
+        player.travel(cmd)
+    elif isActionable(cmd):
+        player.action(cmd)
+    else:
+        print(f'*****\n\
+        Valid Direction: n-move north, s-south, e-east, w-west\n\
+        Valid Command: {player.capability}\n\
+        To quit: q\n*****\n')
+
+
