@@ -1,4 +1,11 @@
 from room import Room
+from player import Player
+from item import Item
+
+# Declare items available
+
+sword = Item('Sword', 'A short and rusty blade, must of been left here ages ago!')
+shield = Item('Shield', 'a small wooden shield')
 
 # Declare all the rooms
 
@@ -21,7 +28,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -33,19 +39,93 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+# ##################################################################### #
+#                                 Main                                  #
+# ##################################################################### #
 
-# Make a new player object that is currently in the 'outside' room.
+# Name input
+name = input("What is your adventurer's name? ")
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+# Player object starts 'outside'
+player = Player(room['outside'], name)
+
+# Greeting for when you enter the game
+print(f"\nGreetings {player.playerName}, you can control your adventure using the keys: N, E, S, W to move around the dungeon and Q to end your time here")
+
+# Add items to foyer room
+def add_items_to_foyer():
+    if player.currentRoom.name != room['foyer'].name:
+        room['foyer'].items.pop()
+        room['foyer'].items.pop()
+    if player.currentRoom.name == room['foyer'].name:
+        room['foyer'].items.append(sword)
+        room['foyer'].items.append(shield)
+
+
+# game loop
+game_over = False
+
+while game_over == False:
+
+    player_move = input("\n[N] North, [E] East, [S] South, [W] West, [Q] Quit, [I] Items >> ").upper()
+
+    # Inventory inputs
+    
+    if player_move == 'I':
+
+        print(*player.playerItem, sep = "\n")
+
+        item_input = input("[Drop] or [Take] [Item] >> ").upper()
+        
+        if item_input == 'DROP SWORD':
+            player.playerItem.remove(sword)
+            print(f'\n{sword.itemName} has been dropped')
+        
+        if item_input == 'TAKE SWORD':
+            player.playerItem.append(sword)
+            print(f"{sword.itemName} has been picked up")
+
+        if item_input == 'DROP SHIELD':
+            player.playerItem.remove(shield)
+            print(f'\n{shield.itemName} has been dropped')
+        
+        if item_input == 'TAKE SHIELD':
+            player.playerItem.append(shield)
+            print(f"{shield.itemName} has been picked up")
+            
+
+    # Player movement
+
+    if player_move == 'N' or player_move == 'E' or player_move == 'S' or player_move == 'W' or player_move == 'Q':
+
+        if player_move == 'N' and player.currentRoom.n_to != None:
+            player.currentRoom = player.currentRoom.n_to
+            add_items_to_foyer()
+            print(player.currentRoom)
+
+        elif player_move == 'E' and player.currentRoom.e_to != None:
+            player.currentRoom = player.currentRoom.e_to
+            add_items_to_foyer()
+            print(player.currentRoom)
+        
+        elif player_move == 'S' and player.currentRoom.s_to != None:
+            player.currentRoom = player.currentRoom.s_to
+            add_items_to_foyer()
+            print(player.currentRoom)
+
+        elif player_move == 'W' and player.currentRoom.w_to != None:
+            player.currentRoom = player.currentRoom.w_to
+            add_items_to_foyer()
+            print(player.currentRoom)
+
+        elif player_move == 'N' and player.currentRoom.n_to == None or player_move == 'E' and player.currentRoom.e_to == None or player_move == 'S' and player.currentRoom.s_to == None or player_move == 'W' and player.currentRoom.w_to == None:
+            print('This seems to be the wrong way, please choose a different direction')
+
+        elif player_move == 'Q':
+            print("Good bye!")
+            game_over = True
+
+
+
+    # else:
+    #     print('Invalid command, please choose from the given options')
