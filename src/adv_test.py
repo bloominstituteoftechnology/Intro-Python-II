@@ -23,18 +23,16 @@ print(f"\nWelcome {player_name}!")
 print('\nEnter "q" to quit the game.')
 print("Navigate by entering [N,E,S,W]\n")
 print(f"Current room: {player.current_room.name}")
-print(f"Description: {player.current_room.description}")
+print(f"Description: {player.current_room.description}\n")
 
 while True:
-    action = input("\nWhat next? ").lower().split(" ")
-    if action[0] in ['n', 'e', 's', 'w']:
-        player.move(action[0])
-    elif action[0] in ['take', 'get', 'pick', 'grab', 'hold', 'drop']:
-        player.handle_items(action[0], action[1])
-    elif action[0] in ['i','inventory']:
-        player.inventory()
-    elif action[0] in ["q", 'quit', 'exit']:
+    action = input("\nWhat next? ").upper()
+    if action in ['N', 'E', 'S', 'W']:
+        player.move(action)
+    # elif action[0] in ['take','get','pick','drop']:
+    #     player.inventory(action[0],action[1])
+    elif action == "Q":
         print("\nGame Over\n")
         sys.exit()
     else:
-        print("\nInvalid command!")
+        print("\nInvalid command!\n")
