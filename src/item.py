@@ -1,0 +1,34 @@
+class Item:
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+    
+    def __repr__(self):
+        return f'{self.name} {self.description}'
+
+"""class Treasure(Item):
+    def __init__(self, name, description):
+        super().__init__()
+            self.name = name
+            self.description = description"""
+
+
+
+
+"""class Weapon(Item):
+    def __init__(self, variety, damagePoints):
+        super().__init__(name, description)
+        self.variety = variety
+        self.damagePoints = damagePoints"""
+
+"""class Sword(Weapon)
+    def __init__(self, ):
+        super().__init__(variety, damagePoints)"""
+
+"""
+add inventory
+how pick up or drop?
+currency?  separate class?  or subclass?
+warlock class inherits from player?  
+health points? 
+"""
