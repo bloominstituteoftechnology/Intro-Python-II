@@ -1,0 +1,10 @@
+make player.drop_item--check unitlevel --check integration DONE
+
+make room.add_item-- checked at unit level-- check integration DONE
+
+
+logic for drop adv 113-130 start at line 117DONE EXCEPT ERROR
+
+
+make error if item not in list
+show inventory of items through repl
