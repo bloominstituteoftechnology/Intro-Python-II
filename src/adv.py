@@ -3,22 +3,15 @@ from room import Room
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("Outside Laboratory Entrance", """North of you, the door to the laboratory is slightly ajar"""),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    Room("Foyer", """Dim light filters in from the south. Hallways lit by red emergency lights run north and east."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'storage': Room("Storage Room", """A room with stuff to be discussed later. A door in some direction is locked"""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'crawl':   Room("Crawl Space", """The East hallway ends in rubble, impassible, however a small panel is removed exposing a small tunnel heading further north."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+    'control': Room("Control Room", """You enter what seemed to have been the control room for the laboratory. Unfortunately no power seems to be connected to the room, making it useless. The only exit is to the south."""),
 }
 
 
@@ -26,18 +19,20 @@ earlier adventurers. The only exit is to the south."""),
 
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['foyer'].n_to = room['storage']
+room['foyer'].e_to = room['crawl']
+room['storage'].s_to = room['foyer']
+room['crawl'].s_to = room['foyer']
+room['crawl'].n_to = room['control']
+room['control'].s_to = room['crawl']
 
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+p1 = Player(You, outside )
 
 # Write a loop that:
 #
@@ -49,3 +44,15 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True: 
+    #print current room
+    #print room description
+
+    direction = input("What direction would you like to go? (n,e,s,w")
+
+    if direction == "q":
+        #function to finish game
+        #finishGame()
+    elif direction == "n":
+        #currentRoom.n_to?
