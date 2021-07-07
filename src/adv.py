@@ -1,10 +1,12 @@
 from room import Room
+from player import Player
+from item import Item
+import sys
 
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("Outside Cave Entrance", "North of you, the cave mount beckons", [Item("cup"), Item("pencil"), Item("tea-cups"), Item("coins")]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -37,15 +39,55 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
 
+# Make a new player object that is currently in the 'outside' room.
+player_name = input("Hello, Please Enter Your Name >>> ")
+player = Player(player_name, room['outside'])
+print("Where Am I now? ")
+print(player)
+
+directions = "Enter your directions>>>\n" + "1) South "  + "2) North "  +"3) East " + "4) West"
+
+def try_directions(direction, current_room):
+    attribute = direction + '_to'
+    if hasattr(current_room, attribute):
+        return getattr(current_room, attribute)
+    else:
+        print("CAUTION:You cannot go that direction")
+        return current_room
+    
+print(directions) 
+user_input = ''        
 # Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+while user_input != "q":    
+    print(player.current_room.name)
+    print(player.current_room.description)
+    user_input = input(">")
+    user_input = user_input.split()    
+    if len(user_input) == 1:
+        user_input = user_input[0][0].lower()    # Print an error message if the movement isn't allowed.    
+        if user_input == 'i':
+            player.show_items()
+        elif user_input == 'q':
+            print("See you next time!")
+            break
+        player.current_room = try_directions(user_input, player.current_room) 
+        
+    elif (len(user_input) > 1):
+        method = user_input[0].lower()
+        item = user_input[1].lower()
+       
+        if method == "add":
+            player.add_items(item)
+        elif method == "get":
+            player.get_item(item)
+
+        elif method == "drop":
+            player.delete_items(item)
+            print("You have deleted "+ item)      
+
+print("Thanks for using this app")        
+            
+
+
+                
