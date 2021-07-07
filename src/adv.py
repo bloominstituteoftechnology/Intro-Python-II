@@ -1,6 +1,7 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -36,10 +37,59 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+old_room = room['outside']
 
+new_room = room['outside']
+new_Player = Player(new_room , "name")
+#print(room["outside"])
+#print([(k, room[k]) for k in room])
+#print(room['outside'].n_to)
+
+print(old_room)
+direction = (input("[E] East  [N] North   [W] West    [S] South     [Q] Quit\n")).upper()
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
+
+while not direction == "Q":
+    
+    if direction == "N":
+        if new_room.n_to == None:
+            print("Can't go there")
+        else:
+            new_room = new_room.n_to
+            print(new_room)
+                
+    elif direction == "S":
+        if new_room.s_to == None:
+            print("Can't go there")
+        else:
+            new_room = new_room.s_to
+            print(new_room)
+            
+    elif direction == "E":
+        if new_room.e_to == None:
+            print("Can't go there")
+        else:
+            new_room = new_room.e_to
+            print(new_room)
+            
+    
+    elif direction == "W":
+        if new_room.w_to == None:
+            print("Can't go there")
+        else:
+            new_room = new_room.w_to
+            print(new_room)
+            
+        
+        
+        
+        
+    
+
+#    print("newplayer",new_Player)
+    direction = (input("[E] East  [N] North   [W] West    [S] South     [Q] Quit\n")).upper()
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
