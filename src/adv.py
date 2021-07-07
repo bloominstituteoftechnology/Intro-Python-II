@@ -1,4 +1,12 @@
 from room import Room
+from player import Player1
+from os import system, name
+
+def clearScr():
+    if name == "nt":
+        _=system('cls')
+    else:
+        _ = system('clear')
 
 # Declare all the rooms
 
@@ -38,7 +46,11 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+clearScr()
+player_name = input("Enter your name: ")
+player = Player1('Griffin', room['outside'])
 
+# print(player.name)
 # Write a loop that:
 #
 # * Prints the current room name
