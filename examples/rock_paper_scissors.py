@@ -76,4 +76,4 @@ while not user == 9:
     user = int(input("[1] Rock  [2] Paper   [3] Scissors    [9] Quit\n"))
 
 # #game over, save results
-save_results(wins, ties, losses)
+save_results(wins, ties, losses);
