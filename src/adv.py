@@ -1,4 +1,7 @@
 from room import Room
+from player import Player
+
+print('Welcome to a Haunted House Adventure!')
 
 # Declare all the rooms
 
@@ -21,9 +24,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
-# Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -33,18 +33,36 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+name = input('Howdy, what is your name?')
 
-# Make a new player object that is currently in the 'outside' room.
+player1 = Player(name, room['outside'])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
+dir = input(f'Start exploring, {player1.name}! You are in the {player1.room}Press [s] to move South, [n] for North, [e] for East, [w] for West, and [q] to quit: ')
+for answer in dir:
+    if answer not in ['n', 's', 'e', 'w', 'q']:
+        print("Sorry that's not a possible direction!")
+        continue
+    elif answer == 'q':
+        print('Thanks for playing!')
+        break
+    else:
+        player_location = player1.room
+        print(f'You are now in {player_location}: ')
+        print(player_location.description)
+
+        if dir == 'n':
+            player_location = player_location.n_to
+        elif dir == 's':
+            player_location = player_location.s_to
+        elif dir == 'w':
+            player_location = player_location.w_to
+        elif dir == 'e':
+            player_location = player_location.e_to
+        else:
+            print("Oops you can't move that way")
+        break  # to stop infinite loop
+
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
