@@ -1,0 +1,1 @@
+try_direction(s, player.current_room)
