@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -20,7 +22,6 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
 
 # Link rooms together
 
@@ -49,3 +50,25 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# Create a player
+# Let player input their name
+player = Player(input("Please enter your name: "), room['outside'])
+print(player.current_room)
+
+directions = ['n', 's', 'e', 'w']
+
+# Create basic REPL loop
+while True:
+    # READ command
+    cmd = input("~~> ").lower()
+    # Check if it's n/s/e/w/q
+    if cmd in directions:
+        # Make player travel in that direction
+        player.travel(cmd)
+    elif cmd == "q":
+        # Quit game
+        print(f"Goodbye {player.name}!")
+        exit()
+    else:
+        print("I did not recognize that command.")
