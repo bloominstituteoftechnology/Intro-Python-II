@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -20,7 +21,6 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
 
 # Link rooms together
 
@@ -49,3 +49,33 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+game = True
+player = Player('Brandon', room['outside'])
+
+while game:
+    try:
+        selection = input("Select where to go: ")
+        attribute = selection + "_to"
+
+        def movement(dir):
+            player.move(attribute)
+            print(f'\n{player.name} moved {dir} to {player.current_room.name}')
+            print(f'{player.current_room.description}\n')
+
+        if selection == "n":
+            movement('north')
+        if selection == "s":
+            movement('south')
+        if selection == "e":
+            movement('east')
+        if selection == "w":
+            movement('west')
+        if selection == "q":
+            print("Game over")
+            game = False
+        else:
+            print('Please select n, s, e, w, or q')
+     
+    except AttributeError:
+        print(f'You can\'t go that direction\n')
