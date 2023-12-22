@@ -24,5 +24,8 @@ def guessing_game():
     else:
       print("Too big!")
 
-if __name__ == '__main__':
-  guessing_game()
+# if __name__ == '__main__':
+#   guessing_game()
+
+# or we can just do this:
+guessing_game()
